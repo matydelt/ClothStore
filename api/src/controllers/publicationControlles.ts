@@ -1,13 +1,14 @@
 import { Request, Response } from "express"
 import UserSchema, { User } from "../models/user";
+import PublicationSchema, { Publication } from "../models/publication";
 
-export default class UserController {
+export default class PublicationController {
 
-    static async setUser(req: Request, res: Response) {
+    static async setPublication(req: Request, res: Response) {
         try {
-            const { firstName, lastName, phone, email, password } = req.body
-            const user: User = new UserSchema({ phone, email, password, name: { firstName, lastName } });
-            await user.save();
+            const { name, images } = req.body
+            const publication: Publication = new PublicationSchema({ name, images });
+            await publication.save();
             res.sendStatus(200);
         } catch (e) {
             console.log(e)

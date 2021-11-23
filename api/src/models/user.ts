@@ -8,7 +8,7 @@ export interface User extends mongoose.Document {
 
 const UserSchema = new Schema({
     name: {
-        fistName: {
+        firstName: {
             type: String,
             required: [true, "falta first name"]
         },
