@@ -18,7 +18,6 @@
 //                       `=---='  
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.ts');
-import conn from './src/db'
 
 // Syncing all the models at once.
 
