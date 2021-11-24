@@ -29,4 +29,15 @@ export default class PublicationController {
             res.sendStatus(500)
         }
     }
+
+    static async deletePublications(req: Request, res: Response): Promise<void>{
+        try {
+            const{_id}= req.params
+            await PublicationSchema.deleteOne({_id})
+            res.json("Elemento Borrado")
+        } catch (error) {
+            console.log(error)
+            res.sendStatus(500)
+        }
+    }
 }
