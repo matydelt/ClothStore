@@ -46,6 +46,10 @@ const UserSchema = new Schema({
     shopping: {
         type: [Schema.Types.ObjectId],
         ref: "Shopping"
+    },
+    active:{
+        type:Boolean,
+        default:true
     }
 
 })
