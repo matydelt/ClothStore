@@ -1,10 +1,14 @@
 import React from "react";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth } from "../hooks/useAuth";
 
-const LoginButton = (): JSX.Element => {
-  const { loginWithRedirect } = useAuth0();
+interface Props {
+  email: string;
+  password: string;
+}
 
-  return <button onClick={() => loginWithRedirect()}>Log In</button>;
+const LoginButton = (props: Props): JSX.Element => {
+  const { signin } = useAuth();
+  return <button onClick={() => signin(props)}>Log In</button>;
 };
 
 export default LoginButton;
