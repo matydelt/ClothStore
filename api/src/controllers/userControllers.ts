@@ -15,16 +15,18 @@ export default class UserController {
         }
 
     }
-    // static async getUser(req: Request, res: Response): Promise<void> {
-    //     try {
-    //         const { email, password } = req.query
-    //         const user = await UserSchema.findOne({ email:email })
-    //         if (user && user.password === password)
-    //             res.json(user);
-    //         else res.send("usuario o contraseña erronea")
-    //     } catch (e) {
-    //         console.log(e)
-    //         res.sendStatus(500)
-    //     }
-    // }
+    static async getUser(req: Request, res: Response): Promise<void> {
+        try {
+            const { email, password } = req.query
+            res.send("hola mundo")
+            // const user = await UserSchema.findOne({ email:email })
+            // if (user && user.password === password)
+            //     res.json(user);
+            // else res.send("usuario o contraseña erronea")
+            // res.sendStatus(200)
+        } catch (e) {
+            console.log(e)
+            res.sendStatus(500)
+        }
+    }
 }
