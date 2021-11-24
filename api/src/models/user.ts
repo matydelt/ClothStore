@@ -4,6 +4,9 @@ export interface User extends mongoose.Document {
     name: object;
     email: string;
     password: string;
+    phone: string;
+    publications: [Schema.Types.ObjectId];
+    shopping: [Schema.Types.ObjectId]
 }
 
 const UserSchema = new Schema({
@@ -38,7 +41,11 @@ const UserSchema = new Schema({
     },
     publications: {
         type: [Schema.Types.ObjectId],
-        ref: "Product"
+        ref: "Publication"
+    },
+    shopping: {
+        type: [Schema.Types.ObjectId],
+        ref: "Shopping"
     }
 
 })

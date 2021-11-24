@@ -27,4 +27,15 @@ export default class UserController {
             res.sendStatus(500)
         }
     }
+    static async putUser(req: Request, res: Response) {
+        try {
+            const { id, publications, shopping } = req.body
+            const user = await UserSchema.findById(id)
+            console.log(user)
+
+        } catch (e) {
+            console.log(e)
+            res.sendStatus(500)
+        }
+    }
 }
