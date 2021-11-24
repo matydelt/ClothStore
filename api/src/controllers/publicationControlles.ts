@@ -9,7 +9,7 @@ export default class PublicationController {
             const { name, images, id, stock, mark, detail, price } = req.body
             const publication: Publication = new PublicationSchema({ name, images, stock, mark, detail, price });
             await publication.save();
-            await UserSchema.findByIdAndUpdate(id, { _id: id }, (e, doc) => doc?.publications.push(publication._id))
+            await UserSchema.findById(id)
             res.sendStatus(200);
         } catch (e) {
             console.log(e)

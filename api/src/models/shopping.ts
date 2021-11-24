@@ -4,6 +4,7 @@ export interface Shopping extends Mongoose.Document {
     publications: "Product";
     price: number;
     amount: number;
+    state: boolean;
 }
 
 const ShoppingSchema = new Schema({
@@ -13,11 +14,15 @@ const ShoppingSchema = new Schema({
     },
     amount: {
         type: Number,
-        required: [true, "necesita una cantidad"]
+        required: [true, "necesita un amount"]
     },
     price: {
         type: Number,
-        required: [true, "necesita precio"]
+        required: [true, "necesita price"]
+    },
+    state: {
+        type: Boolean,
+        required: [true, "necesita un state"]
     }
 
 })
