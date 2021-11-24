@@ -1,12 +1,15 @@
 import mongoose, { Schema, model } from "mongoose";
+import { Publication } from "./publication";
+import { Shopping } from "./shopping";
 
 export interface User extends mongoose.Document {
     name: object;
     email: string;
     password: string;
     phone: string;
-    publications: [Schema.Types.ObjectId];
-    shopping: [Schema.Types.ObjectId]
+    publications: [Publication];
+    shopping: [Shopping];
+    photo: string;
 }
 
 const UserSchema = new Schema({
@@ -40,17 +43,21 @@ const UserSchema = new Schema({
         },
     },
     publications: {
-        type: [Schema.Types.ObjectId],
+        type: ["Publication"],
         ref: "Publication"
     },
     shopping: {
-        type: [Schema.Types.ObjectId],
+        type: ["Shopping"],
         ref: "Shopping"
     },
     active:{
         type:Boolean,
         default:true
-    }
+    },
+    photo: {
+        type: String
+    },
+
 
 })
 

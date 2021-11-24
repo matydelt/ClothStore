@@ -5,8 +5,9 @@ export default class UserController {
 
     static async setUser(req: Request, res: Response) {
         try {
-            const { firstName, lastName, phone, email, password } = req.body
-            const user: User = new UserSchema({ phone, email, password, name: { firstName, lastName } });
+
+            const { firstName, lastName, phone, email, password, photo } = req.body
+            const user: User = new UserSchema({ phone, email, password, name: { firstName, lastName }, photo });
             await user.save();
             res.sendStatus(200);
         } catch (e) {
