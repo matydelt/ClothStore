@@ -15,7 +15,6 @@ const PublicationSchema = new Schema({
         type: [],
     },
 
-
 })
 
 export default model<Publication>("Publication", PublicationSchema);
