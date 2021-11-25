@@ -1,23 +1,52 @@
 import React, { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
-import { registerUser } from "../redux/actions/index";
+import { registerUser } from "../redux/actions/userActions";
 import { useDispatch } from "react-redux";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+// import FormControlLabel from "@mui/material/FormControlLabel";
+// import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 interface FormInterface {
   firstName: string;
   lastName: string;
   email: string;
-  dni: string;
   password: string;
   confirmPassword: string;
 }
 
-const RegisterForm = (): JSX.Element => {
+const Copyright = (props: any) => {
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      <Link color="inherit">Nombre de la página</Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+};
+
+const theme = createTheme();
+
+const RegisterForm = () => {
   const [input, setInput] = useState<FormInterface>({
     firstName: "",
     lastName: "",
     email: "",
-    dni: "",
     password: "",
     confirmPassword: "",
   });
@@ -26,11 +55,11 @@ const RegisterForm = (): JSX.Element => {
 
   const { signup } = useAuth();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setInput({ ...input, [e.target.name]: e.target.value });
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    setInput({ ...input, [e.currentTarget.name]: e.currentTarget.value });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     if (input.confirmPassword !== input.password) {
       alert("The passwords must be the same");
       return;
@@ -42,71 +71,118 @@ const RegisterForm = (): JSX.Element => {
       firstName: "",
       lastName: "",
       email: "",
-      dni: "",
       password: "",
       confirmPassword: "",
     });
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="firstName">First Name</label>
-      <input
-        type="text"
-        name="firstName"
-        id="firstName"
-        value={input.firstName}
-        onInput={handleChange}
-        required
-      />
-      <label htmlFor="lastName">Last Name</label>
-      <input
-        type="text"
-        name="lastName"
-        id="lastName"
-        value={input.lastName}
-        onInput={handleChange}
-        required
-      />
-      <label htmlFor="email">Email</label>
-      <input
-        type="email"
-        name="email"
-        id="email"
-        value={input.email}
-        onInput={handleChange}
-        required
-      />
-      <label htmlFor="dni">DNI</label>
-      <input
-        type="text"
-        name="dni"
-        id="dni"
-        value={input.dni}
-        onInput={handleChange}
-      />
-      <label htmlFor="password">Password</label>
-      <input
-        type="password"
-        name="password"
-        id="password"
-        value={input.password}
-        onInput={handleChange}
-        required
-      />
-      <label htmlFor="confirmPassword">Confirm Password</label>
-      <input
-        type="password"
-        name="confirmPassword"
-        id="confirmPassword"
-        value={input.confirmPassword}
-        onInput={handleChange}
-        required
-      />
-      {input.confirmPassword === input.password ? undefined : (
-        <p>Password is different</p>
-      )}
-    </form>
+    <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign up
+          </Typography>
+          <Box component="form" sx={{ mt: 3 }} onSubmit={handleSubmit}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="given-name"
+                  name="firstName"
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="Nombre"
+                  autoFocus
+                  value={input.firstName}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="lastName"
+                  label="Apellido"
+                  name="lastName"
+                  autoComplete="family-name"
+                  value={input.lastName}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="email"
+                  label="Dirección de email"
+                  name="email"
+                  autoComplete="email"
+                  value={input.email}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="password"
+                  label="Contraseña"
+                  type="password"
+                  id="password"
+                  autoComplete="new-password"
+                  value={input.password}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="confirmPassword"
+                  label="Confirmar Contraseña"
+                  type="password"
+                  autoComplete="new-password"
+                  value={input.confirmPassword}
+                  onChange={handleChange}
+                  error={input.confirmPassword !== input.password}
+                  helperText={
+                    input.confirmPassword !== input.password &&
+                    "Contraseña incorrecta"
+                  }
+                />
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              disabled={input.confirmPassword !== input.password}
+            >
+              Sign up
+            </Button>
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <Link variant="body2">Ya tienes una cuenta?</Link>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+        <Copyright sx={{ mt: 5 }} />
+      </Container>
+    </ThemeProvider>
   );
 };
 
