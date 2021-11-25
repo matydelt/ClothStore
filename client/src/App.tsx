@@ -1,14 +1,16 @@
 import React from "react";
 import { ProvideAuth } from "./hooks/useAuth";
-import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import AuthenticationButton from "./components/AuthenticationButton";
+import { Route, Routes } from "react-router";
+import Home from "./components/home/Home";
+import CrearPublicacion from "./components/crearPublicacion/CrearPublicacion";
 
 const App = (): JSX.Element => {
   return (
     <ProvideAuth>
       <Routes>
-        <Route path="/" element={<AuthenticationButton />}></Route>
+        <Route path="/" element={<Home />} />
+        <Route path="nueva-publicacion" element={<CrearPublicacion />} />
       </Routes>
     </ProvideAuth>
   );
