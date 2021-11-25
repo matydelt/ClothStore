@@ -4,12 +4,12 @@ import React from 'react';
 import axios from 'axios';
 import Resizer from "react-image-file-resizer";
 
-export default function SubidaImagenes({ form, setForm }: any) {
+export default function FileUpload({ form, setForm }: any): JSX.Element {
 
-    function handleImagenes(e: any) {
+    function handleImagenes(e: { target: { files: any; }; }) {
 
-        let files = e.target.files;
-        let allUploadedFiles = form.images;
+        let files: File[] = e.target.files;
+        let allUploadedFiles: {}[] = form.images;
 
         if (files) {
             for (let index = 0; index < files.length; index++) {
