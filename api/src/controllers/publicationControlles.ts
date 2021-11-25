@@ -32,15 +32,11 @@ export default class PublicationController {
             
             if (name && name !== ""){
                 allPublications = allPublications.filter(e=>{
-                    console.log(e);
-                    console.log(e.name.search(name));
                     return e.name.search(name)>-1;
                 });
             }
 
             allPublications = allPublications.slice((charXPage * (pag -  1)) , (charXPage * (pag -  1)) + charXPage )
-            
-            console.log(allPublications);
             
             res.json(allPublications);
         } catch (e) {
@@ -56,7 +52,7 @@ export default class PublicationController {
             // await publication.save();
             res.sendStatus(200);
         } catch (e) {
-            // console.log(e)
+            console.log(e)
             res.sendStatus(500)
         }
     }
