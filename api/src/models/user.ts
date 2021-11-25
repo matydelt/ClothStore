@@ -1,14 +1,20 @@
 import mongoose, { Schema, model } from "mongoose";
+import { Publication } from "./publication";
+import { Shopping } from "./shopping";
 
 export interface User extends mongoose.Document {
     name: object;
     email: string;
     password: string;
+    phone: string;
+    publications: [Publication];
+    shopping: [Shopping];
+    photo: string;
 }
 
 const UserSchema = new Schema({
     name: {
-        fistName: {
+        firstName: {
             type: String,
             required: [true, "falta first name"]
         },
@@ -37,9 +43,17 @@ const UserSchema = new Schema({
         },
     },
     publications: {
-        type: [Schema.Types.ObjectId],
-        ref: "Product"
-    }
+        type: ["Publication"],
+        ref: "Publication"
+    },
+    shopping: {
+        type: ["Shopping"],
+        ref: "Shopping"
+    },
+    photo: {
+        type: String
+    },
+
 
 })
 

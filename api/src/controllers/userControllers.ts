@@ -5,8 +5,9 @@ export default class UserController {
 
     static async setUser(req: Request, res: Response) {
         try {
-            const { title, author } = req.body
-            const user: User = new UserSchema({ title: title, author: author });
+
+            const { firstName, lastName, phone, email, password, photo } = req.body
+            const user: User = new UserSchema({ phone, email, password, name: { firstName, lastName }, photo });
             await user.save();
             res.sendStatus(200);
         } catch (e) {
@@ -17,8 +18,22 @@ export default class UserController {
     }
     static async getUser(req: Request, res: Response) {
         try {
-            const books: User[] = await UserSchema.find();
-            res.json(books);
+            const { email, password } = req.query
+            const user = await UserSchema.find().findOne({ _email: email })
+            if (user && user.password === password)
+                res.json(user);
+            else res.send("usuario o contraseña erronea")
+        } catch (e) {
+            console.log(e)
+            res.sendStatus(500)
+        }
+    }
+    static async putUser(req: Request, res: Response) {
+        try {
+            const { id, publications, shopping } = req.body
+            const user = await UserSchema.findById(id)
+            console.log(user)
+
         } catch (e) {
             console.log(e)
             res.sendStatus(500)

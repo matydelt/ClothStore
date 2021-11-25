@@ -1,10 +1,13 @@
 import express from "express"
 const router = express.Router();
+const users = require("./users.ts")
+const publications = require("./publications")
+const cloudinary = require("./cloudinary")
 
-import UserController from "../controllers/userControllers";
 
-// console.log(BooksController.setBook)
-router.post("/auth/new", UserController.setUser)
-router.get("/auth/get", UserController.getUser)
-
-module.exports = router;
+module.exports = {
+    router,
+    users,
+    publications,
+    cloudinary
+};
