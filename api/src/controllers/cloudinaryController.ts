@@ -16,8 +16,6 @@ export default class CloudinaryController {
     static async imageUpload(req: Request, res: Response) {
 
         try {
-            console.log(req.body.image);
-
             let result = await cloudinary.uploader.upload(req.body.image, {
                 public_id: `${Date.now()}`,
                 resource_type: "auto"
@@ -31,18 +29,20 @@ export default class CloudinaryController {
             console.log(error);
             return res.sendStatus(500);
         }
-        
+
     }
 
     static async removeImage(req: Request, res: Response) {
+        const { imageId } = req.body;
 
         try {
-            
-            return res.sendStatus(200);
+            cloudinary.uploader.destroy(imageId, () => {
+                return res.sendStatus(200);
+            });
         } catch (error) {
             console.log(error);
             return res.sendStatus(500);
         }
-        
+
     }
 }

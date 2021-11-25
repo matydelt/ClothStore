@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Avatar, Button, Container, Divider, FormControl, Grid, Input, InputAdornment, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
+import { Avatar, Button, Container, Badge, FormControl, Grid, Input, InputAdornment, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import { Box, shadows } from '@mui/system';
 import Home from '../home/Home';
 import axios from 'axios';
 import SubidaImagenes from '../subidaImagenes/SubidaImagenes';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 export default function CrearPublicacion() {
 
@@ -22,18 +23,36 @@ export default function CrearPublicacion() {
 
 
     function handleForm(e: any) {
-        console.log(e.target.value);
         setForm({ ...form, [e.target.name]: e.target.value })
     }
 
     function submitForm(e: any) {
         e.preventDefault();
-        console.log(form);
+        
+        // setForm({...form, images: images.map((img: any) => img.url) });
+        // console.log(form)
 
         axios.post('http://localhost:3001/publications/new', form).then(({ data }) => {
             console.log(data);
-
+            setForm({
+                name: '',
+                detail: '',
+                mark: '',
+                categorie: '',
+                gender: '',
+                stock: 0,
+                price: 0,
+                images: []
+            });
         });
+    }
+
+    function removeImage(imageId: string) {
+        axios.post('http://localhost:3001/removeimage', {imageId}).then(({ data }) => {
+            console.log(data);
+            setForm({...form, images: images.filter((img: any) => img.public_id !== imageId)});
+        }).catch(err => console.log(err));
+        
     }
 
 
@@ -41,10 +60,6 @@ export default function CrearPublicacion() {
     return (<>
 
         <Home></Home>
-
-        {/* {JSON.stringify(form.images)} */}
-        {console.log(form.images)
-        }
 
         <Box sx={{ backgroundColor: '#f5f5f5', minHeight: '30vh' }}>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -191,11 +206,24 @@ export default function CrearPublicacion() {
                     </Box>
 
                                 {form.images && form.images.map((image: any) => {
-                                    return <Avatar key={image.public_id}
+                                    return <Badge key={image.public_id}
+                                    onClick={() => removeImage(image.public_id)}
+                                    overlap="circular"
+                                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                                    badgeContent={
+                                        <CancelIcon sx={{cursor: 'pointer'}}></CancelIcon>
+                                    }
+                                    
+                                  >
+                                    <Avatar
                                         alt="image"
-                                        src={image}
+                                        src={image.url}
                                         sx={{ width: 150, height: 150, m: 1, mt:2 }}
+                                        
                                     />
+                                  </Badge>
+                                    
+                                    
                                 })
                                 }
 
