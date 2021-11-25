@@ -22,8 +22,21 @@ export default class PublicationController {
     }
     static async getPublications(req: Request, res: Response): Promise<void> {
         try {
-            const publications: Publication[] = await PublicationSchema.find()
-            res.json(publications);
+            const { page, order, name } = req.body
+            let allPublications:Array<any>;
+            allPublications = await PublicationSchema.find();
+            
+            if (name && name !== ""){
+                allPublications = allPublications.filter(e=>{
+                    console.log(e);
+                    console.log(e.name.search(name));
+                    return e.name.search(name)>-1;
+                });
+            }
+            
+            console.log(allPublications);
+            
+            res.json(allPublications);
         } catch (e) {
             console.log(e)
             res.sendStatus(500)
