@@ -5,7 +5,7 @@ interface FormInterface {
   firstName: string;
   lastName: string;
   email: string;
-  dni: number;
+  dni: string;
   password: string;
   confirmPassword: string;
 }
@@ -15,7 +15,7 @@ const RegisterForm = (): JSX.Element => {
     firstName: "",
     lastName: "",
     email: "",
-    dni: 0,
+    dni: "",
     password: "",
     confirmPassword: "",
   });
@@ -33,6 +33,14 @@ const RegisterForm = (): JSX.Element => {
     }
     e.preventDefault();
     signup(input);
+    setInput({
+      firstName: "",
+      lastName: "",
+      email: "",
+      dni: "",
+      password: "",
+      confirmPassword: "",
+    });
   };
 
   return (
