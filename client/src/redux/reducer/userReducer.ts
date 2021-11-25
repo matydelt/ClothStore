@@ -1,9 +1,10 @@
-import { Action } from "../actions/index";
+import { Action } from "../actions/userActions";
+import { User } from "./stateTypes";
 
 interface UserState {
   loading?: boolean;
-  userInfo?: any;
-  error?: any;
+  userInfo?: User;
+  error?: string;
 }
 
 const userRegisterReducer = (
@@ -14,9 +15,9 @@ const userRegisterReducer = (
     case "USER_REGISTER_REQUEST":
       return { ...state, loading: true };
     case "USER_REGISTER_SUCCESS":
-      return { ...state, loading: false, userInfo: action.payload };
+      return { ...state, loading: false, userInfo: action.payload?.success };
     case "USER_REGISTER_FAIL":
-      return { ...state, loading: false, error: action.payload };
+      return { ...state, loading: false, error: action.payload?.error };
     default:
       return state;
   }
@@ -30,9 +31,11 @@ const userSigninReducer = (
     case "USER_SIGNIN_REQUEST":
       return { ...state, loading: true };
     case "USER_SIGNIN_SUCCESS":
-      return { ...state, loading: false, userInfo: action.payload };
+      return { ...state, loading: false, userInfo: action.payload?.success };
     case "USER_SIGNIN_FAIL":
-      return { ...state, loading: false, error: action.payload };
+      return { ...state, loading: false, error: action.payload?.error };
+    case "USER_LOGOUT":
+      return {};
     default:
       return state;
   }
