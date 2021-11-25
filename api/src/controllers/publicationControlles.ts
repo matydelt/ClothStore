@@ -6,10 +6,13 @@ export default class PublicationController {
 
     static async setPublication(req: Request, res: Response) {
         try {
-            const { name, images, id, stock, mark, detail, price } = req.body
-            const publication: Publication = new PublicationSchema({ name, images, stock, mark, detail, price });
+            const { name, images, id, stock, mark, detail, price, categorie, gender } = req.body
+            const publication: Publication = new PublicationSchema({ name, images, stock, mark, detail, price, categorie, gender, author: id });
             await publication.save();
-            await UserSchema.findById(id)
+            const user = await UserSchema.findById(id)
+
+            user?.publications.push(publication)
+            await user?.save();
             res.sendStatus(200);
         } catch (e) {
             console.log(e)
@@ -17,16 +20,60 @@ export default class PublicationController {
         }
 
     }
-    // static async getUser(req: Request, res: Response): Promise<void> {
-    //     try {
-    //         const { email, password } = req.query
-    //         const user = await UserSchema.findOne({ email:email })
-    //         if (user && user.password === password)
-    //             res.json(user);
-    //         else res.send("usuario o contraseña erronea")
-    //     } catch (e) {
-    //         console.log(e)
-    //         res.sendStatus(500)
-    //     }
-    // }
+    static async getPublications(req: Request, res: Response): Promise<void> {
+        try {
+            const { page, order, name } = req.query
+
+            let pag: number = page ? +page : 1;
+            const charXPage: number = 9;
+            
+            let allPublications:Array<any>;
+            allPublications = await PublicationSchema.find();
+            
+            if (name && name !== ""){
+                allPublications = allPublications.filter(e=>{
+                    return e.name.search(name)>-1;
+                });
+            }
+
+            allPublications = allPublications.slice((charXPage * (pag -  1)) , (charXPage * (pag -  1)) + charXPage )
+            
+            res.json(allPublications);
+        } catch (e) {
+            console.log(e)
+            res.sendStatus(500)
+        }
+    }
+
+    static async putPublication(req: Request, res: Response) {
+        try {
+            // const { name, images } = req.body
+            // const publication: Publication = new PublicationSchema({ name, images });
+            // await publication.save();
+            res.sendStatus(200);
+        } catch (e) {
+            console.log(e)
+            res.sendStatus(500)
+        }
+    }
+
+    static async deletePublications(req: Request, res: Response): Promise<void>{
+        try {
+            const{_id}= req.params
+            await PublicationSchema.deleteOne({_id})
+            res.json("Elemento Borrado")
+        } catch (error) {
+            console.log(error)
+            res.sendStatus(500)
+        }
+    }
+    static async putStock(req: Request, res: Response): Promise<void> {
+        try {
+            const { id, stock } = req.body
+            await PublicationSchema.findById(id).updateOne({ stock: stock })
+            res.send("stock modificado");
+        } catch (e) {
+            console.log(e)
+        }
+    }
 }

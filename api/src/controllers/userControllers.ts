@@ -5,8 +5,9 @@ export default class UserController {
 
     static async setUser(req: Request, res: Response) {
         try {
-            const { firstName, lastName, phone, email, password } = req.body
-            const user: User = new UserSchema({ phone, email, password, name: { firstName, lastName } });
+
+            const { firstName, lastName, phone, email, password, photo } = req.body
+            const user: User = new UserSchema({ phone, email, password, name: { firstName, lastName }, photo });
             await user.save();
             res.sendStatus(200);
         } catch (e) {
@@ -35,6 +36,17 @@ export default class UserController {
 
         } catch (e) {
             console.log(e)
+            res.sendStatus(500)
+        }
+    }
+
+    static async banUser(req:Request, res: Response){
+        try {
+            const {id}=req.body
+            await UserSchema.updateOne({_id:id},{$set:{active:false}})
+            res.json("El usuario se marco como inactivo")
+        } catch (error) {
+            console.log("error en banUser")
             res.sendStatus(500)
         }
     }
