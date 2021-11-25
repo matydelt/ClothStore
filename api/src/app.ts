@@ -2,7 +2,7 @@ import express, { Application, Request, Response, NextFunction } from 'express';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
-const { users, publications } = require("./routes/index")
+const { users, publications, cloudinary } = require("./routes/index")
 require('./db.ts'); // conexion a base de datos 
 
 const server: Application = express();
@@ -23,7 +23,7 @@ server.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-server.use('/', [users, publications]);
+server.use('/', [users, publications, cloudinary]);
 // server.use('/', publications);
 
 // Error catching endware.
