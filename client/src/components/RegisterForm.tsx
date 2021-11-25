@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
+import { registerUser } from "../redux/actions/index";
+import { useDispatch } from "react-redux";
 
 interface FormInterface {
   firstName: string;
@@ -20,6 +22,8 @@ const RegisterForm = (): JSX.Element => {
     confirmPassword: "",
   });
 
+  const dispatch = useDispatch();
+
   const { signup } = useAuth();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -33,6 +37,7 @@ const RegisterForm = (): JSX.Element => {
     }
     e.preventDefault();
     signup(input);
+    dispatch(registerUser(input));
     setInput({
       firstName: "",
       lastName: "",
