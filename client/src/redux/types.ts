@@ -17,6 +17,7 @@ export type Publication = {
     author: string;
     gender: string;
     _id: string;
+    cantidad: number
 }
 
 export type Publications = Publication[];
