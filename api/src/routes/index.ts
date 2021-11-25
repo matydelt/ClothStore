@@ -1,10 +1,10 @@
 import express from "express"
 const router = express.Router();
 
-import BooksController from "../controllers/BooksController";
+import UserController from "../controllers/userControllers";
 
 // console.log(BooksController.setBook)
-router.post("/book/new", BooksController.setBook)
-router.get("/book/get", BooksController.getBook)
+router.post("/auth/new", UserController.setUser)
+router.get("/auth/get", UserController.getUser)
 
 module.exports = router;
