@@ -6,8 +6,8 @@ export default class PublicationController {
 
     static async setPublication(req: Request, res: Response) {
         try {
-            const { name, images, id, stock, mark, detail, price, categorie, gender } = req.body
-            const publication: Publication = new PublicationSchema({ name, images, stock, mark, detail, price, categorie, gender, author: id });
+            const { name, images, id, stock, mark, detail, price, category, gender } = req.body
+            const publication: Publication = new PublicationSchema({ name, images, stock, mark, detail, price, category, gender, author: id });
             await publication.save();
             const user = await UserSchema.findById(id)
 

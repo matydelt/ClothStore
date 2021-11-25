@@ -1,13 +1,13 @@
 import mongoose, { Schema, model } from "mongoose";
 
 export interface Publication extends mongoose.Document {
-    name: object;
+    name: string;
     images: [];
     stock: number;
     mark: string;
     detail: string;
     price: number;
-    categorie: string;
+    category: string;
     author: Schema.Types.ObjectId;
     gender: string;
 }
@@ -35,7 +35,7 @@ const PublicationSchema = new Schema({
         type: Number,
         required: [true, "necesita precio"]
     },
-    categorie: {
+    category: {
         type: String,
         required: [true, "se require categoria valida"],
         enum: ["Remera", "Patanlon", "Zapatillas", "Zapatos"]
