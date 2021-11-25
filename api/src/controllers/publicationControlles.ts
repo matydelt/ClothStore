@@ -23,6 +23,10 @@ export default class PublicationController {
     static async getPublications(req: Request, res: Response): Promise<void> {
         try {
             const { page, order, name } = req.body
+ 
+            let pag: number = page ? page : 1;
+            const charXPage: number = 9;
+            
             let allPublications:Array<any>;
             allPublications = await PublicationSchema.find();
             
@@ -33,6 +37,8 @@ export default class PublicationController {
                     return e.name.search(name)>-1;
                 });
             }
+            
+            allPublications = allPublications.slice((charXPage * (pag -  1)) , (charXPage * (pag -  1)) + charXPage )
             
             console.log(allPublications);
             
