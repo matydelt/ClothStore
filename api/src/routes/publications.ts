@@ -4,7 +4,6 @@ const router = express.Router();
 
 router.get("/publications", PublicationController.getPublications)
 router.post("/publications/new", PublicationController.setPublication)
-router.delete("/publications/:_id",PublicationController.deletePublications)
-
+router.delete("/publications/:_id", PublicationController.deletePublications)
 router.put("/publications/stock", PublicationController.putStock)
 module.exports = router;

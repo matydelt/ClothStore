@@ -6,11 +6,8 @@ export default class PublicationController {
 
     static async setPublication(req: Request, res: Response) {
         try {
-            const { name, images, id, stock, mark, detail, price, categorie, gender } = req.body
-
-            let imagesUrl = images.map((img: any) => img.url)
-            
-            const publication: Publication = new PublicationSchema({ name, images: imagesUrl, stock, mark, detail, price, categorie, gender, author: id });
+            const { name, images, id, stock, mark, detail, price, category, gender } = req.body
+            const publication: Publication = new PublicationSchema({ name, images, stock, mark, detail, price, category, gender, author: id });
             await publication.save();
             const user = await UserSchema.findById(id)
 
@@ -29,18 +26,18 @@ export default class PublicationController {
 
             let pag: number = page ? +page : 1;
             const charXPage: number = 9;
-            
-            let allPublications:Array<any>;
-            allPublications = await PublicationSchema.find();
-            
-            if (name && name !== ""){
-                allPublications = allPublications.filter(e=>{
-                    return e.name.search(name)>-1;
+
+            let allPublications: Array<any>;
+            allPublications = await PublicationSchema.find().sort({ field: "asc", test: 1 })
+
+            if (name && name !== "") {
+                allPublications = allPublications.filter(e => {
+                    return e.name.search(name) > -1;
                 });
             }
 
-            allPublications = allPublications.slice((charXPage * (pag -  1)) , (charXPage * (pag -  1)) + charXPage )
-            
+            allPublications = allPublications.slice((charXPage * (pag - 1)), (charXPage * (pag - 1)) + charXPage)
+
             res.json(allPublications);
         } catch (e) {
             console.log(e)
@@ -60,10 +57,10 @@ export default class PublicationController {
         }
     }
 
-    static async deletePublications(req: Request, res: Response): Promise<void>{
+    static async deletePublications(req: Request, res: Response): Promise<void> {
         try {
-            const{_id}= req.params
-            await PublicationSchema.deleteOne({_id})
+            const { _id } = req.params
+            await PublicationSchema.deleteOne({ _id })
             res.json("Elemento Borrado")
         } catch (error) {
             console.log(error)
