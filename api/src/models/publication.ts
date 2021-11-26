@@ -42,7 +42,7 @@ const PublicationSchema = new Schema({
     },
     author: {
         type: Schema.Types.ObjectId,
-        require: [true, "necesita id de author"]
+        // require: [true, "necesita id de author"]
     },
     gender: {
         type: String,
