@@ -30,11 +30,13 @@ export default class PublicationController {
         try {
             const { page, order, name } = req.query
 
+            const { mark, category, gender, price } = req.body
+            
             let pag: number = page ? +page : 1;
             const charXPage: number = 9;
 
             let allPublications: Array<any>;
-            allPublications = await PublicationSchema.find().sort({ field: "asc", test: 1 })
+            allPublications = await PublicationSchema.find()
 
             if (name && name !== "") {
                 allPublications = allPublications.filter(e => {
@@ -71,6 +73,25 @@ export default class PublicationController {
                         else return 0
                     })
                     break;
+            }
+            // filtros { mark, category, gender, price }
+            
+            if (mark && mark !== "") {
+                allPublications = allPublications.filter(e => {
+                    return e.mark == mark;
+                });
+            }
+            
+            if (category && category !== "") {
+                allPublications = allPublications.filter(e => {
+                    return e.category == category;
+                });
+            }
+            
+            if (gender && gender !== "") {
+                allPublications = allPublications.filter(e => {
+                    return e.gender == gender;
+                });
             }
             
             allPublications = allPublications.slice((charXPage * (pag - 1)), (charXPage * (pag - 1)) + charXPage)
