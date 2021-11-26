@@ -2,7 +2,7 @@ import mongoose, { Schema, model } from "mongoose";
 
 export interface Publication extends mongoose.Document {
     name: string;
-    images: [];
+    images: object[];
     stock: number;
     mark: string;
     detail: string;
@@ -13,13 +13,18 @@ export interface Publication extends mongoose.Document {
     order: string;
 }
 
+
 const PublicationSchema = new Schema({
     name: {
         type: String,
         required: [true, "falta product name"]
     },
     images: {
-        type: [String],
+        type: [{
+            public_id: String,
+            url: String,
+            _id: false 
+        }]
     },
     stock: {
         type: Number,

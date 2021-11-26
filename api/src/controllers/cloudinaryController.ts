@@ -1,10 +1,13 @@
 // @ts-nocheck
 import { Request, Response } from "express"
-import UserSchema, { User } from "../models/user";
-import PublicationSchema, { Publication } from "../models/publication";
 import cloudinary from 'cloudinary';
 
 
+// cloudinary.config({
+//     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+//     api_key: process.env.CLOUDINARY_API_KEY,
+//     api_secret: process.env.CLOUDINARY_API_SECRET
+// });
 cloudinary.config({
     cloud_name: 'christiannordfors',
     api_key: '456175174758593',
@@ -13,7 +16,7 @@ cloudinary.config({
 
 export default class CloudinaryController {
 
-    static async imageUpload(req: Request, res: Response) {
+    static async imageUpload(req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
 
         try {
             let result = await cloudinary.uploader.upload(req.body.image, {
@@ -32,7 +35,7 @@ export default class CloudinaryController {
 
     }
 
-    static async removeImage(req: Request, res: Response) {
+    static async removeImage(req: Request, res: Response): Promise<Response<any, Record<string, any>> | undefined> {
         const { imageId } = req.body;
 
         try {
