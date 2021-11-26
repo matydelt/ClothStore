@@ -18,6 +18,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import Publicaciones from './publicaciones/publicaciones';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -159,6 +160,8 @@ export default function PrimarySearchAppBar() {
   );
 
   return (
+    <Box>
+
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
@@ -232,6 +235,10 @@ export default function PrimarySearchAppBar() {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
+    </Box>
+    <Box>
+     <Publicaciones/>
+    </Box>
     </Box>
   );
 }
