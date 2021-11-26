@@ -5,17 +5,23 @@ import PublicationSchema, { Publication } from "../models/publication";
 export default class PublicationController {
 
     static async setPublication(req: Request, res: Response) {
+
+        const { publicationId } = req.query;
+
         try {
             const { name, images, id, stock, mark, detail, price, categorie, gender } = req.body
 
-            let imagesUrl = images.map((img: any) => img.url)
-            
-            const publication: Publication = new PublicationSchema({ name, images: imagesUrl, stock, mark, detail, price, categorie, gender, author: id });
-            await publication.save();
-            const user = await UserSchema.findById(id)
+            if (publicationId) {
+                await PublicationSchema.findByIdAndUpdate(publicationId, { name, images, stock, mark, detail, price, categorie, gender }, {new: true});
+            } else {
+                const publication: Publication = new PublicationSchema({ name, images, stock, mark, detail, price, categorie, gender, author: id });
+                await publication.save();
+                const user = await UserSchema.findById(id)
 
-            user?.publications.push(publication)
-            await user?.save();
+                user?.publications.push(publication)
+                await user?.save();
+            }
+
             res.sendStatus(200);
         } catch (e) {
             console.log(e)
@@ -41,6 +47,23 @@ export default class PublicationController {
         } catch (e) {
             console.log(e)
             res.sendStatus(500)
+        }
+    }
+
+    static async getPublication(req: Request, res: Response): Promise<void> {
+        try {
+            const { publicationId } = req.query;
+
+            const publication = await PublicationSchema.findById(publicationId);
+
+            if (publication) {
+                res.json(publication);
+            } else {
+                res.json({ msg: 'La publicación no existe' })
+            }
+        } catch (error) {
+            console.log(error)
+            res.sendStatus(500);
         }
     }
 }

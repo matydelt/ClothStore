@@ -29,7 +29,7 @@ export default function FileUpload({ form, setForm }: any): JSX.Element {
             variant="contained"
             component="label"
         >
-            Subir fotos
+            Subir imágenes
             <input
                 onChange={(e) => handleImagenes(e)}
                 accept="images/*"
