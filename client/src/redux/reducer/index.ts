@@ -28,6 +28,8 @@ const reducer = (
             return { ...state, loading: false, userInfo: action.payload };
         case "USER_REGISTER_FAIL":
             return { ...state, loading: false, error: action.payload };
+        case "GET_PUBLICATIONS":
+            return { ...state, loading: false, publications: action.payload}
         default:
             return state;
       }
