@@ -3,11 +3,12 @@ import { ProvideAuth } from "./hooks/useAuth";
 import "./App.css";
 import { Route, Routes } from "react-router";
 import Home from "./components/home/Home";
-import CreatePublication from "./components/createPublication/CreatePublication";
-
+import CrearPublicacion from "./components/crearPublicacion/CrearPublicacion";
+import { DataProvider } from "./context/DataProvider";
 
 const App = (): JSX.Element => {
   return (
+    <DataProvider>
     <ProvideAuth>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -15,6 +16,7 @@ const App = (): JSX.Element => {
         <Route path="actualizar-publicacion/:publicationId" element={<CreatePublication />} />
       </Routes>
     </ProvideAuth>
+    </DataProvider>
   );
 };
 
