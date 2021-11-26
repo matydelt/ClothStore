@@ -16,22 +16,6 @@ import { signinUser } from "../redux/actions/userActions";
 
 type FormState = { email: string; password: string };
 
-const Copyright = (props: any) => {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit">Nombre de la página</Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-};
-
 const theme = createTheme();
 
 const LoginForm = () => {
@@ -119,7 +103,6 @@ const LoginForm = () => {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
   );

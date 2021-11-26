@@ -24,22 +24,6 @@ type FormState = {
   confirmPassword: string;
 };
 
-const Copyright = (props: any) => {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit">Nombre de la página</Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-};
-
 const theme = createTheme();
 
 const RegisterForm = () => {
@@ -149,8 +133,11 @@ const RegisterForm = () => {
                   autoComplete="new-password"
                   value={input.password}
                   onChange={handleChange}
-                  error={input.password.length < 6}
+                  error={
+                    input.password.length >= 1 && input.password.length < 6
+                  }
                   helperText={
+                    input.password.length >= 1 &&
                     input.password.length < 6 &&
                     "La contraseña debe tener al menos 6 caracateres"
                   }
@@ -195,7 +182,6 @@ const RegisterForm = () => {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );
