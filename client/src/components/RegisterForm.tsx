@@ -16,13 +16,13 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-interface FormInterface {
+type FormState = {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
   confirmPassword: string;
-}
+};
 
 const Copyright = (props: any) => {
   return (
@@ -43,7 +43,7 @@ const Copyright = (props: any) => {
 const theme = createTheme();
 
 const RegisterForm = () => {
-  const [input, setInput] = useState<FormInterface>({
+  const [input, setInput] = useState<FormState>({
     firstName: "",
     lastName: "",
     email: "",
@@ -56,7 +56,7 @@ const RegisterForm = () => {
   const { signup } = useAuth();
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    setInput({ ...input, [e.currentTarget.name]: e.currentTarget.value });
+    setInput({ ...input, [e.target.name]: e.target.value });
   };
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
@@ -94,7 +94,12 @@ const RegisterForm = () => {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" sx={{ mt: 3 }} onSubmit={handleSubmit}>
+          <Box
+            component="form"
+            sx={{ mt: 3 }}
+            onSubmit={handleSubmit}
+            noValidate
+          >
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -144,6 +149,11 @@ const RegisterForm = () => {
                   autoComplete="new-password"
                   value={input.password}
                   onChange={handleChange}
+                  error={input.password.length < 6}
+                  helperText={
+                    input.password.length < 6 &&
+                    "La contraseña debe tener al menos 6 caracateres"
+                  }
                 />
               </Grid>
               <Grid item xs={12}>
@@ -169,13 +179,18 @@ const RegisterForm = () => {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              disabled={input.confirmPassword !== input.password}
+              disabled={
+                input.confirmPassword !== input.password ||
+                input.password.length < 6
+              }
             >
               Sign up
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link variant="body2">Ya tienes una cuenta?</Link>
+                <Link variant="body2" href="/login">
+                  Ya tienes una cuenta?
+                </Link>
               </Grid>
             </Grid>
           </Box>

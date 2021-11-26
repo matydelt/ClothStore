@@ -5,6 +5,7 @@ import { Route, Routes } from "react-router";
 import Home from "./components/home/Home";
 import CrearPublicacion from "./components/crearPublicacion/CrearPublicacion";
 import RegisterScreen from "./pages/RegisterScreen";
+import LoginScreen from "./pages/LoginScreen";
 
 const App = (): JSX.Element => {
   return (
@@ -13,6 +14,7 @@ const App = (): JSX.Element => {
         <Route path="/" element={<Home />} />
         <Route path="nueva-publicacion" element={<CrearPublicacion />} />
         <Route path="/register" element={<RegisterScreen />}></Route>
+        <Route path="/login" element={<LoginScreen />}></Route>
       </Routes>
     </ProvideAuth>
   );

@@ -25,21 +25,23 @@ export const registerUser =
     }
   };
 
-export const signinUser = () => async (dispatch: Dispatch<Action>) => {
-  dispatch({ type: "USER_SIGNIN_REQUEST" });
-  try {
-    const response = await axios.post("http://localhost:3001/auth/new");
-    dispatch({
-      type: "USER_SIGNIN_SUCCESS",
-      payload: { success: response.data },
-    });
-  } catch (error) {
-    dispatch({
-      type: "USER_SIGNIN_FAIL",
-      payload: { error: (error as Error).message },
-    });
-  }
-};
+export const signinUser =
+  (user: { email: string; password: string }) =>
+  async (dispatch: Dispatch<Action>) => {
+    dispatch({ type: "USER_SIGNIN_REQUEST" });
+    try {
+      const response = await axios.post("http://localhost:3001/auth/new", user);
+      dispatch({
+        type: "USER_SIGNIN_SUCCESS",
+        payload: { success: response.data },
+      });
+    } catch (error) {
+      dispatch({
+        type: "USER_SIGNIN_FAIL",
+        payload: { error: (error as Error).message },
+      });
+    }
+  };
 
 export const logoutUser = () => (dispatch: Dispatch<Action>) => {
   dispatch({ type: "USER_LOGOUT" });
