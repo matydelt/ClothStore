@@ -9,10 +9,10 @@ export default function Publicaciones() {
  const {publications} = useSelector((state: DefaultRootState)=> state)
 
     return (      
-        <Badge>
+        <Badge className="publicationBox">
             {
                 publications.map((e:Publication)=>{                    
-                    return(<CardPublicacion  name={e.name} author={e.author} images={e.images} mark={e.mark} stock={e.stock} price={e.price} categorie={e.categorie} detail={e.detail} gender={e.gender} key={e._id}/>)
+                    return(<CardPublicacion  name={e.name} author={e.author} images={e.images} mark={e.mark} stock={e.stock} price={e.price} categorie={e.categorie} detail={e.detail} gender={e.gender} key={e._id} id={e._id}/>)
                 })
             }
         </Badge>       

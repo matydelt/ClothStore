@@ -13,7 +13,7 @@ const App = (): JSX.Element => {
 
    useEffect(()=>{
      dispatch(publications())
-   },[])
+   },[dispatch])
 
   return (
     <DataProvider>

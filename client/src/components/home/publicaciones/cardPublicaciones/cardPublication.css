@@ -1,0 +1,7 @@
+.namePublication{
+    display: flex;
+    justify-content: center;
+}
+.publication{
+    background-color: rgb(245, 245, 245);
+}
