@@ -7,7 +7,13 @@ export default class PublicationController {
     static async setPublication(req: Request, res: Response) {
         try {
             const { name, images, id, stock, mark, detail, price, category, gender } = req.body
-            const publication: Publication = new PublicationSchema({ name, images, stock, mark, detail, price, category, gender, author: id });
+            function numOrder() {
+                const value: string = (Math.random() *0xffffff *1000000).toString(16);
+                return `${value.slice(0,6)}`
+            }
+            const order: String = numOrder();
+
+            const publication: Publication = new PublicationSchema({ name, images, stock, mark, detail, price, category, gender, order, author: id });
             await publication.save();
             const user = await UserSchema.findById(id)
 
@@ -18,8 +24,8 @@ export default class PublicationController {
             console.log(e)
             res.sendStatus(500)
         }
-
     }
+
     static async getPublications(req: Request, res: Response): Promise<void> {
         try {
             const { page, order, name } = req.query
@@ -35,22 +41,41 @@ export default class PublicationController {
                     return e.name.search(name) > -1;
                 });
             }
-
+            switch(order){
+                case "pmin":
+                    allPublications = allPublications.sort(( a, b )=>{
+                        if(a.price  > b.price) return 1
+                        else if(a.price < b.price) return -1
+                        else return 0
+                    })
+                    break;
+                case "pmax":
+                    allPublications = allPublications.sort(( a, b )=>{
+                        if(a.price < b.price) return 1
+                        else if(a.price > b.price) return -1
+                        else return 0
+                    })
+                    break;
+                case "des":
+                    allPublications = allPublications.sort(( a, b )=>{
+                        if(a.order < b.order) return 1
+                        else if(a.order > b.order) return -1
+                        else return 0
+                    })
+                    break;
+                case "":
+                default:
+                    allPublications = allPublications.sort(( a, b )=>{
+                        if(a.order > b.order) return 1
+                        else if(a.order < b.order) return -1
+                        else return 0
+                    })
+                    break;
+            }
+            
             allPublications = allPublications.slice((charXPage * (pag - 1)), (charXPage * (pag - 1)) + charXPage)
 
             res.json(allPublications);
-        } catch (e) {
-            console.log(e)
-            res.sendStatus(500)
-        }
-    }
-
-    static async putPublication(req: Request, res: Response) {
-        try {
-            // const { name, images } = req.body
-            // const publication: Publication = new PublicationSchema({ name, images });
-            // await publication.save();
-            res.sendStatus(200);
         } catch (e) {
             console.log(e)
             res.sendStatus(500)
@@ -67,6 +92,7 @@ export default class PublicationController {
             res.sendStatus(500)
         }
     }
+
     static async putStock(req: Request, res: Response): Promise<void> {
         try {
             const { id, stock } = req.body

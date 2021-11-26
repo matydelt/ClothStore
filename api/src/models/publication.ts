@@ -10,6 +10,7 @@ export interface Publication extends mongoose.Document {
     category: string;
     author: Schema.Types.ObjectId;
     gender: string;
+    order: string;
 }
 
 const PublicationSchema = new Schema({
@@ -48,6 +49,9 @@ const PublicationSchema = new Schema({
         type: String,
         required: [true, "necesita un gender"],
         enum: ["Hombre", "Mujer", "Niños"]
+    },
+    order: {
+        type: String,
     }
 })
 
