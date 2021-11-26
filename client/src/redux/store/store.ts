@@ -4,7 +4,6 @@ import rootReducer from "../reducer";
 
 const store = createStore (
   rootReducer,
-  {},
   applyMiddleware(thunk),
   );
 
