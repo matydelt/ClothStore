@@ -30,7 +30,7 @@ export default class PublicationController {
         try {
             const { page, order, name } = req.query
 
-            const { mark, category, gender, price } = req.body
+            const { mark, category, gender, price, author } = req.body
             
             let pag: number = page ? +page : 1;
             const charXPage: number = 9;
@@ -74,7 +74,7 @@ export default class PublicationController {
                     })
                     break;
             }
-            // filtros { mark, category, gender, price }
+            // filtros { mark, category, gender, price, author }
             
             if (mark && mark !== "") {
                 allPublications = allPublications.filter(e => {
@@ -94,6 +94,29 @@ export default class PublicationController {
                 });
             }
             
+            if (author && author !== "") {
+                allPublications = allPublications.filter(e => {
+                    return e.author == author;
+                });
+            }
+
+            if (price && price !== "") {
+                allPublications = allPublications.filter(e => {
+                    if(price.search("< ") > -1){
+                        return price.split("< ")[1] <= e.price;
+                    }
+                    if(price.search(" >") > -1){
+                        return ((e.price >= price.split(" > ")[0]) && (e.price <= price.split(" > ")[1]));
+                    }
+                    if(price.search("> ") > -1){
+                        return price.split("> ")[1] >= e.price;
+                    }
+                    if(price.search("=") > -1){
+                        return e.price == price.split("= ")[1];
+                    }
+                });
+            }
+          
             allPublications = allPublications.slice((charXPage * (pag - 1)), (charXPage * (pag - 1)) + charXPage)
 
             res.json(allPublications);
