@@ -8,14 +8,14 @@ import { DataProvider } from "./context/DataProvider";
 
 const App = (): JSX.Element => {
   return (
-    <DataProvider>
-    <ProvideAuth>
+    // <DataProvider>
+    // <ProvideAuth>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="nueva-publicacion" element={<CrearPublicacion />} />
       </Routes>
-    </ProvideAuth>
-    </DataProvider>
+    // </ProvideAuth>
+    // </DataProvider>
   );
 };
 

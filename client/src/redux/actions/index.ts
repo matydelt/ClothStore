@@ -7,14 +7,14 @@ export type Action = {
   payload?: AxiosResponse<any, any> | string;
 };
 
-export const getPublications = () => async (dispatch: Dispatch<Action>) => {
-  try {
-    const response = await axios.get("http://localhost:3001/publications%22);
-    dispatch({ type: "GET_PUBLICATIONS", payload: response.data });
-  } catch (error) {
-    console.error(error);
-  }
-};
+// export const getPublications = () => async (dispatch: Dispatch<Action>) => {
+//   try {
+//     const response = await axios.get("http://localhost:3001/publications%22);
+//     dispatch({ type: "GET_PUBLICATIONS", payload: response.data });
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
 
 export const postPublications =
   (publication: any) => async (dispatch: Dispatch<Action>) => {
