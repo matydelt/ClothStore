@@ -4,6 +4,7 @@ import "./App.css";
 import { Route, Routes } from "react-router";
 import Home from "./components/home/Home";
 import CreatePublication from "./components/createPublication/CreatePublication";
+import PublicationDetail from "./components/publicationDetail/PublicationDetail";
 
 
 const App = (): JSX.Element => {
@@ -13,6 +14,7 @@ const App = (): JSX.Element => {
         <Route path="/" element={<Home />} />
         <Route path="nueva-publicacion" element={<CreatePublication />} />
         <Route path="actualizar-publicacion/:publicationId" element={<CreatePublication />} />
+        <Route path="/:publicationId" element={<PublicationDetail />} />
       </Routes>
     </ProvideAuth>
   );
