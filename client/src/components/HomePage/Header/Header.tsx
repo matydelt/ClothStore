@@ -1,8 +1,4 @@
-import React from 'react'
-// import { Button } from '@mui/material'
-/* import Carousel from 'react-elastic-carousel';
-import { breakPoints } from '../../controllers/breakPoints'; */
-// import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.min.css'
 import 'swiper/swiper.min.css'
@@ -10,8 +6,6 @@ import 'swiper/components/navigation/navigation.min.css';
 import 'swiper/components/pagination/pagination.min.css';
 import 'swiper/components/scrollbar/scrollbar.min.css';
 import './Header.css'
-
-// import Swiper core and required modules
 import SwiperCore, {
     EffectFade, Navigation, Pagination
 } from 'swiper';
@@ -33,21 +27,6 @@ SwiperCore.use([EffectFade, Navigation, Pagination]);
 const Header = () => {
     return (
         <>
-            {/* <Carousel
-            className="contain_header align-items-center"
-            // children= element[]
-            pagination={false}
-            isRTL={false}
-            // itemsToScroll={2}
-            // itemsToShow={2}
-            breakPoints={breakPoints}
-            // showArrows={false}
-            enableAutoPlay={true}
-            >
-                <p>hola</p>
-                <p>chao</p>
-            </Carousel> */}
-
             <header style={{ height: '100vh', background: '#f3f3f3', overflow: 'hidden' }}>
                 <NavBar />
                 <Swiper
@@ -123,7 +102,6 @@ const Header = () => {
                                 letterSpacing: '2px',
                                 lineHeight: {lg: '98px', xl: '120px'}
                             }}
-                        /* color="initial" */
                         >
                             lo mejor para ti.
                         </Typography>

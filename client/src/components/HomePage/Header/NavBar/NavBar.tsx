@@ -1,24 +1,15 @@
-import React from 'react'
-import ButtonScroll from '../../../GeneralComponents/ButtonScroll'
+import React from 'react';
 import ButtonsNav from '../../../GeneralComponents/ButtonsNav'
 import { Link } from 'react-router-dom'
 import Logo from '../../../assets/logo/ClothStore_logotipo_sin_fondo.png';
-import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
-import Typography from '@mui/material/Typography'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import IconButton from '@mui/material/IconButton'
 import {
     MyNavBarHeader,
-    MyToolbarHeader
 } from '../NavBar/NavBarStyles'
 import Box from '@mui/material/Box';
 import Badge from '@mui/material/Badge';
-
-
-
-
-
 
 const NavBar = () => {
 
@@ -58,7 +49,7 @@ const NavBar = () => {
                                 component='a'
                                 href="#"
                                 className='buttonLink colorPrimary textDecoration'
-                                sx={{ fontSize: { xl: '25px' }}}
+                                sx={{ fontSize: { xl: '25px' } }}
                             >
                                 TIENDA
                             </Box>
@@ -93,28 +84,6 @@ const NavBar = () => {
                     </Box>
                 </Toolbar>
             </MyNavBarHeader>
-            {/* <div>
-                <Link to="/">
-                </Link>
-
-                <ButtonsNav
-                    link="/"
-                    text="HOME"
-                    nameClass="buttonNav_homePage"
-                />
-
-                <ButtonScroll
-                    idScroll="#"
-                    text="TIENDA"
-                />
-
-                <ButtonsNav
-                    link="/contacto"
-                    text="CONTACTO"
-                    nameClass="buttonNav_homePage"
-                />
-
-            </div> */}
         </>
     )
 }
