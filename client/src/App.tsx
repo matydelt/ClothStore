@@ -7,6 +7,7 @@ import CrearPublicacion from "./components/crearPublicacion/CrearPublicacion";
 import { DataProvider } from "./context/DataProvider";
 import {  useDispatch } from "react-redux";
 import { publications } from "./redux/actions";
+import HomeUsuarios from "./components/HomeUsuarios/HomeUsuarios";
 
 const App = (): JSX.Element => {
    const dispatch = useDispatch();
@@ -16,14 +17,15 @@ const App = (): JSX.Element => {
    },[])
 
   return (
-    // <DataProvider>
-    // <ProvideAuth>
+    <DataProvider>
+    <ProvideAuth>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="nueva-publicacion" element={<CrearPublicacion />} />
+        <Route path="/perfil" element={<HomeUsuarios/>}/>
       </Routes>
-    // </ProvideAuth>
-    // </DataProvider>
+     </ProvideAuth>
+    </DataProvider>
   );
 };
 
