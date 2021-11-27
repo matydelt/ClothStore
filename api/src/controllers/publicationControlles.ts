@@ -13,6 +13,7 @@ export default class PublicationController {
 
             if (publicationId) {
                 await PublicationSchema.findByIdAndUpdate(publicationId, { name, images, stock, mark, detail, price, categorie, gender }, {new: true});
+                res.json(publicationId);
             } else {
                 const publication: Publication = new PublicationSchema({ name, images, stock, mark, detail, price, categorie, gender, author: id });
                 await publication.save();
@@ -20,9 +21,10 @@ export default class PublicationController {
 
                 user?.publications.push(publication)
                 await user?.save();
+
+                res.json(publication._id);
             }
 
-            res.sendStatus(200);
         } catch (e) {
             console.log(e)
             res.sendStatus(500)

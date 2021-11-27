@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Avatar, Button, Container, Badge, FormControl, Grid, Input, InputAdornment, InputLabel, MenuItem, Select, TextField, Typography, Divider } from '@mui/material';
-import { Box, shadows } from '@mui/system';
+import { Avatar, Button, Container, Badge, FormControl, Grid, Input, InputAdornment, InputLabel, MenuItem, Select, TextField, Typography, Divider, Tooltip } from '@mui/material';
+import { Box } from '@mui/system';
 import Home from '../home/Home';
 import axios from 'axios';
 import FileUpload from '../fileUpload/FileUpload';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { ImageNotSupportedOutlined } from '@mui/icons-material';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+
 
 interface CreatePublicationForm {
     name: string,
@@ -37,6 +39,8 @@ export default function CreatePublication(): JSX.Element {
 
     const { publicationId } = useParams();
 
+    const navigate = useNavigate()
+
 
     useEffect(() => {
         if (publicationId && publicationId.length > 0) {
@@ -60,11 +64,9 @@ export default function CreatePublication(): JSX.Element {
     function submitForm(e: any): void {
         e.preventDefault();
 
-        // setForm({...form, images: images.map((img: any) => img.url) });
-        // console.log(form)
-
         axios.post('http://localhost:3001/publications/new', form, { params: { publicationId } }).then(({ data }) => {
             console.log(data);
+            navigate(`/${data}`)
             setForm({
                 name: '',
                 detail: '',
@@ -98,6 +100,10 @@ export default function CreatePublication(): JSX.Element {
 
                     <Typography variant="h4" component="h4" sx={{ p: 6 }}>
                         {publicationId ? 'Actualiza tu producto' : 'Publica tu producto'}
+                        <Tooltip title="Debes completar los campos y subir al menos una imagen para realizar la publicación">
+                            <HelpOutlineIcon color="info" fontSize="large" sx={{ cursor: 'help', ml: 2 }}></HelpOutlineIcon>
+
+                        </Tooltip>
                     </Typography>
 
                 </Box>
@@ -135,7 +141,8 @@ export default function CreatePublication(): JSX.Element {
                                 name="name"
                                 id="standard-basic"
                                 label="Nombre del producto"
-                                variant="standard" />
+                                variant="standard"
+                            />
 
                             <TextField
                                 onChange={handleForm}
@@ -275,6 +282,7 @@ export default function CreatePublication(): JSX.Element {
                         <Grid item xs={12} sx={{ justifyContent: 'center', display: 'flex' }}>
 
                             <Button
+                                disabled={!name || !mark || !detail || price < 1 || images.length < 1 || !gender || !categorie}
                                 type="submit"
                                 sx={{ backgroundColor: "primary", my: 7 }}
                             >
