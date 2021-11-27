@@ -3,6 +3,7 @@ import PublicationController from "../controllers/publicationControlles";
 const router = express.Router();
 
 router.get("/publications", PublicationController.getPublications)
+router.get("/publication", PublicationController.getPublication)
 router.post("/publications/new", PublicationController.setPublication)
 router.put("/publications/stock", PublicationController.putStock)
 module.exports = router;
