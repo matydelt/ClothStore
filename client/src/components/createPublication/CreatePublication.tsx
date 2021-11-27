@@ -67,6 +67,7 @@ export default function CreatePublication(): JSX.Element {
 
 
     function handleForm(e: any): void {
+        if(e.target.value < 0) return;
         setForm({ ...form, [e.target.name]: e.target.value })
     }
 
@@ -175,6 +176,7 @@ export default function CreatePublication(): JSX.Element {
                                     name="price"
                                     id="standard-adornment-amount"
                                     type="number"
+                                    inputProps={{min: 0}}
                                     startAdornment={<InputAdornment position="start">$</InputAdornment>}
                                 />
                             </FormControl>
@@ -187,6 +189,7 @@ export default function CreatePublication(): JSX.Element {
                                     name="stock"
                                     id="standard-adornment-amount"
                                     type="number"
+                                    inputProps={{min: 0}}
                                 />
                             </FormControl>
 
