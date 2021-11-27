@@ -64,17 +64,17 @@ export default function Reviews({ children }: any) {
 
 
 
-                    <Rating name="read-only" defaultValue={1} value={1} readOnly />
+                    <Rating name="read-only" defaultValue={1} value={1} readOnly size="small" />
                     <Typography variant="h6">Tiene un hilito para afuera</Typography>
                     <DialogContentText sx={{ mb: 2 }}>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi sed laborum ratione dolorum autem tempore maiores quae, molestias culpa fugiat earum eligendi ducimus veniam cupiditate incidunt a dolorem iusto quaerat?
                     </DialogContentText>
-                    <Rating name="read-only" defaultValue={2} value={2} readOnly />
+                    <Rating name="read-only" defaultValue={2} value={2} readOnly size="small" />
                     <Typography variant="h6">Yo lo quería en azul pero no hay opción para el color</Typography>
                     <DialogContentText sx={{ mb: 2 }}>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi sed laborum ratione dolorum autem tempore maiores quae, molestias culpa fugiat earum eligendi ducimus veniam cupiditate incidunt a dolorem iusto quaerat?
                     </DialogContentText>
-                    <Rating name="read-only" defaultValue={0} value={0} readOnly />
+                    <Rating name="read-only" defaultValue={0} value={0} readOnly size="small" />
                     <Typography variant="h6">No hay remeras para no binarios??</Typography>
                     <DialogContentText sx={{ mb: 2 }}>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi sed laborum ratione dolorum autem tempore maiores quae, molestias culpa fugiat earum eligendi ducimus veniam cupiditate incidunt a dolorem iusto quaerat?

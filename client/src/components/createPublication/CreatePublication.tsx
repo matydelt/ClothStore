@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Avatar, Button, Container, Badge, FormControl, Grid, Input, InputAdornment, InputLabel, MenuItem, Select, TextField, Typography, Divider, Tooltip } from '@mui/material';
+import { Avatar, Button, Container, Badge, FormControl, Grid, Input, InputAdornment, InputLabel, MenuItem, Select, TextField, Typography, Divider, Tooltip, CircularProgress } from '@mui/material';
 import { Box } from '@mui/system';
 import Home from '../home/Home';
 import axios from 'axios';
@@ -34,6 +34,8 @@ export default function CreatePublication(): JSX.Element {
         images: []
     });
 
+    const [loadingImage, setLoadingImage] = useState<boolean>(false);
+
     const { name, detail, mark, stock, price, categorie, gender, images } = form;
 
 
@@ -44,14 +46,10 @@ export default function CreatePublication(): JSX.Element {
 
     useEffect(() => {
         if (publicationId && publicationId.length > 0) {
-            console.log(publicationId)
             axios.get('http://localhost:3001/publication', {
                 params: { publicationId: publicationId }
             }).then(({ data }) => {
-                // console.log(data, 'publicacion');
-                setForm({
-                    ...data
-                })
+                setForm({ ...data })
             });
         }
     }, []);
@@ -241,7 +239,7 @@ export default function CreatePublication(): JSX.Element {
 
                         <Grid item xs={6} sx={{ mt: 4 }}>
                             <Grid item xs={12} sx={{ ml: 1 }}>
-                                <FileUpload form={form} setForm={setForm} />
+                               { loadingImage ? <CircularProgress sx={{ ml: 5 }} /> : <FileUpload form={form} setForm={setForm} setLoadingImage={setLoadingImage} />}
                             </Grid>
 
                             {
