@@ -121,7 +121,7 @@ const Header = () => {
                                 fontWeight: '500',
                                 textAlign: 'right',
                                 letterSpacing: '2px',
-                                lineHeight: '120px'
+                                lineHeight: {lg: '98px', xl: '120px'}
                             }}
                         /* color="initial" */
                         >
