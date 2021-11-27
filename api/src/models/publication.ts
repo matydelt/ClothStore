@@ -7,9 +7,10 @@ export interface Publication extends mongoose.Document {
     mark: string;
     detail: string;
     price: number;
-    categorie: string;
+    category: string;
     author: Schema.Types.ObjectId;
     gender: string;
+    order: string;
 }
 
 
@@ -40,7 +41,7 @@ const PublicationSchema = new Schema({
         type: Number,
         required: [true, "necesita precio"]
     },
-    categorie: {
+    category: {
         type: String,
         required: [true, "se require categoria valida"],
         enum: ["Remera", "Patanlon", "Zapatillas", "Zapatos"]
@@ -53,6 +54,9 @@ const PublicationSchema = new Schema({
         type: String,
         required: [true, "necesita un gender"],
         enum: ["Hombre", "Mujer", "Niños"]
+    },
+    order: {
+        type: String,
     }
 })
 
