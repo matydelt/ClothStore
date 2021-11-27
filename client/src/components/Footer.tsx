@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
-import Logo from "../assets/images/zyro-image.png";
+import Logo from "../assets/images/ClothStore_logotipo_sin_fondo.png";
 
 const Copyright = (props: any) => {
   return (
@@ -26,7 +26,7 @@ const Footer = () => {
     <footer>
       <Box
         px={{ xs: 3, sm: 10 }}
-        py={{ xs: 5, sm: 10 }}
+        py={{ xs: 5, sm: 5 }}
         bgcolor={(theme) =>
           theme.palette.mode === "light"
             ? theme.palette.grey[200]
@@ -37,16 +37,19 @@ const Footer = () => {
         width="100%"
       >
         <Container maxWidth="lg">
-          <Grid container spacing={5} flexWrap="nowrap">
-            <Grid item xs={12} sm={4}>
-              <Typography component="h1" variant="h5" fontWeight="bold">
-                ClothStore{" "}
-                {/* <img
-                  src={Logo}
-                  alt="ClothStore Logo"
-                  style={{ width: "175px", maxHeight: "auto" }}
-                /> */}
-              </Typography>
+          <Grid container spacing={0} flexWrap="nowrap">
+            <Grid item xs={12} sm={4} sx={{ position: "relative" }}>
+              <Box
+                component="img"
+                src={Logo}
+                alt="Logo"
+                sx={{
+                  position: "absolute",
+                  width: "75%",
+                  left: 0,
+                  top: "-90%",
+                }}
+              />
             </Grid>
             <Grid item xs={12} sm={4}>
               <Typography component="h1" variant="h6" fontWeight="500">

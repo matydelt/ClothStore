@@ -13,6 +13,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useAuth } from "../hooks/useAuth";
 import { useDispatch } from "react-redux";
 import { signinUser } from "../redux/actions/userActions";
+import { useNavigate, useLocation } from "react-router-dom";
 
 type FormState = { email: string; password: string };
 
@@ -20,16 +21,19 @@ const theme = createTheme();
 
 const LoginForm = () => {
   const [input, setInput] = useState<FormState>({ email: "", password: "" });
-
   const dispatch = useDispatch();
-
   const { signin } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || "/";
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     signin(input);
     dispatch(signinUser(input));
     setInput({ email: "", password: "" });
+    navigate(from, { replace: true });
   };
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
