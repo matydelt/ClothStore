@@ -117,11 +117,11 @@ const Header = () => {
                                 position: 'absolute',
                                 right: '18%',
                                 width: { lg: '450px', xl: '450px' },
-                                fontSize: '70px',
+                                fontSize: { lg: '70px', xl: '98px' },
                                 fontWeight: '500',
                                 textAlign: 'right',
                                 letterSpacing: '2px',
-                                lineHeight: '89px'
+                                lineHeight: '120px'
                             }}
                         /* color="initial" */
                         >
@@ -181,13 +181,13 @@ const Header = () => {
                             sx={{
                                 textTransform: 'capitalize',
                                 position: 'absolute',
-                                left: '10%',
+                                left: { lg: '10%', xl: '15%' },
                                 width: { lg: '450px', xl: '450px' },
-                                fontSize: '70px',
+                                fontSize: { lg: '70px', xl: '98px' },
                                 fontWeight: '500',
                                 textAlign: 'center',
                                 letterSpacing: '4px',
-                                // lineHeight: '89px'
+                                lineHeight: {lg: '78px', xl: '94px'}
                             }}
                             variant='h2'>
                             También para tus pequeños.
@@ -197,10 +197,10 @@ const Header = () => {
                             sx={{
                                 textTransform: 'uppercase',
                                 position: 'absolute',
-                                left: '10%',
-                                bottom: '15%',
+                                left: { lg: '10%', xl: '13%' },
+                                bottom: { lg: '15%', xl: '17%' },
                                 width: { lg: '350px', xl: '450px' },
-                                fontSize: '17px',
+                                fontSize: { lg: '17px', xl: '25px' },
                                 fontWeight: 'lighter',
                                 textAlign: 'center',
                                 letterSpacing: '4px',
@@ -231,7 +231,7 @@ const Header = () => {
                                 position: 'absolute',
                                 left: '27%',
                                 bottom: '-10%',
-                                width: { lg: '53%' },
+                                width: { lg: '53%', xl: '59%' },
                                 height: { lg: '110%' },
                                 backgroundColor: '#00c2cb',
                                 borderRadius: '50%',
@@ -244,8 +244,8 @@ const Header = () => {
                             sx={{
                                 display: 'block',
                                 position: 'absolute',
-                                left: '14%',
-                                bottom: '14%',
+                                left: { lg: '14%', xl: '16%' },
+                                bottom: { lg: '14%', xl: '16%' },
                                 width: { lg: '8%' },
                                 height: { lg: '10%' },
                                 backgroundColor: '#00c2cb',
