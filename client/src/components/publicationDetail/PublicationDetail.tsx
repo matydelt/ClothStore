@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Avatar, Button, Container, Badge, FormControl, Grid, Input, InputAdornment, InputLabel, MenuItem, Select, TextField, Typography, Divider } from '@mui/material';
+import { Avatar, Button, Container, Badge, FormControl, Grid, Input, InputAdornment, InputLabel, MenuItem, Select, TextField, Typography, Divider, Rating } from '@mui/material';
 import { Box, shadows } from '@mui/system';
 import Home from '../home/Home';
 import axios from 'axios';
 import FileUpload from '../fileUpload/FileUpload';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useParams } from 'react-router';
-import { ImageNotSupportedOutlined } from '@mui/icons-material';
+import { FavoriteBorderOutlined, ImageNotSupportedOutlined } from '@mui/icons-material';
+import Reviews from './reviews/Reviews';
 // import { Publication } from '../../redux/reducer/stateTypes';
 
 
@@ -118,91 +119,106 @@ export default function PublicationDetail(): JSX.Element {
 
                         <Grid item xs={4}
                             sx={{
-                                mt: 5, boxShadow: 2, p: 3, minHeight: 'max-content', height: 'max-content'
+                                mt: 5, boxShadow: 2, px: 3, pt: 2, pb: 3, minHeight: 'max-content', height: 'max-content'
                                 // '& > :not(style)': { mt: 5 },
                             }}>
 
-                            <Typography>
-                                <p>
-                                    Marca: {publication && publication?.mark}
-                                </p>
+                            <Typography variant="h5" component="p" sx={{}}>
+                                {publication && publication?.mark}
                             </Typography>
 
-                            <Typography>
-                                <p>
-                                    Categoría: {publication && publication?.categorie}
-                                </p>
+                            <Typography component="p" sx={{ mt: 1 }}>
+                                {publication && publication?.categorie}
                             </Typography>
 
-                            <Typography variant="h5" component="h5">
-                                {publication?.name}
+                            <Grid container sx={{ mt: 2 }}>
+                                <Grid item xs={10}>
+                                    <Typography variant="h6" component="h6">
+                                        {publication?.name}
+                                    </Typography>
+                                </Grid>
+
+                                <Grid item xs={2} sx={{ justifyContent: 'right', display: 'flex', cursor: 'pointer' }}>
+                                    <FavoriteBorderOutlined></FavoriteBorderOutlined>
+                                </Grid>
+                            </Grid>
+
+                            <Box component="div" sx={{ alignItems: 'center', display: 'flex', mt: 0.2 }}>
+                            <Reviews>
+                                <Rating name="read-only" defaultValue={1} value={1} readOnly />
+                            </Reviews>
+                                <Typography component="span" sx={{ fontSize: '10px', color: 'gray', ml: 1 }}>
+                                    3 opiniones
+                                </Typography>
+                            </Box>
+
+                            <Typography component="p" sx={{ mt: 2 }}>
+                                {publication && publication?.detail}
                             </Typography>
 
-                            <Typography>
-                                <p>
-                                    {publication && publication?.detail}
-                                </p>
-                            </Typography>
-
-                            <Typography variant="h5" component="h5" sx={{ py: 3 }}>
+                            <Typography variant="h5" component="h5" sx={{ py: 3, color: 'gray' }}>
                                 $ {publication?.price}
                             </Typography>
 
-                            <Grid item container component="div"
-                                sx={{
-
-                                    // '& > :not(style)': { mt: 5 },
-                                }}>
-
-                                <Grid item xs={6}
+                            {publication && publication?.stock > 0 ?
+                                <Grid item container component="div"
                                     sx={{
-
+                                        alignItems: 'center'
                                         // '& > :not(style)': { mt: 5 },
                                     }}>
 
+                                    <Grid item xs={6}
+                                        sx={{
+
+                                            // '& > :not(style)': { mt: 5 },
+                                        }}>
+
+                                        <Typography component="p" >
+                                            Stock disponible
+                                        </Typography>
+
+                                    </Grid>
+
+
+                                    <Grid item xs={6}
+                                        sx={{
+                                            justifyContent: 'right', display: 'flex'
+                                            // '& > :not(style)': { mt: 5 },
+                                        }}>
+
+                                        <FormControl variant="standard">
+                                            {/* <InputLabel id="demo-simple-select-standard-label">Cantidad</InputLabel> */}
+                                            <Select defaultValue={1}
+                                                // onChange={handleForm}
+                                                // value={gender}
+                                                // name="gender"
+                                                labelId="demo-simple-select-standard-label"
+                                                id="demo-simple-select-standard"
+                                                label="Categoría"
+                                            >
+                                                {
+                                                    Array.from(Array(publication?.stock).keys()).map((s) => {
+                                                        return <MenuItem value={s + 1}>{s + 1}</MenuItem>
+                                                    })
+                                                }
+
+                                            </Select>
+                                        </FormControl>
+
+                                    </Grid>
+                                    <Button variant="outlined" fullWidth sx={{ mt: 4 }}>
+                                        Añadir al carrito
+                                    </Button>
+                                </Grid>
+                                :
+
+                                <Grid item xs={12}>
                                     <Typography variant="h6" component="h6">
-                                        {publication && publication?.stock > 0 ? 'Stock disponible' : 'Sin stock'}
+                                        Sin stock
                                     </Typography>
-
                                 </Grid>
 
-                                <Grid item xs={6}
-                                    sx={{
-                                        justifyContent: 'right', display: 'flex'
-                                        // '& > :not(style)': { mt: 5 },
-                                    }}>
-
-                                    <FormControl variant="standard">
-                                        {/* <InputLabel id="demo-simple-select-standard-label">Cantidad</InputLabel> */}
-                                        <Select defaultValue={1}
-                                            // onChange={handleForm}
-                                            // value={gender}
-                                            // name="gender"
-                                            labelId="demo-simple-select-standard-label"
-                                            id="demo-simple-select-standard"
-                                            label="Categoría"
-                                        >
-                                            {
-                                                Array.from(Array(publication?.stock).keys()).map((s, i) => {
-                                                    return <MenuItem value={i+1}>{i+1}</MenuItem>
-                                                })
-                                            }
-                                            {/* <MenuItem value="">
-                                                <em>Seleccionar cantidad</em>
-                                            </MenuItem>
-                                            <MenuItem value={1}>1</MenuItem>
-                                            <MenuItem value={2}>2</MenuItem>
-                                            <MenuItem value={3}>3</MenuItem> */}
-                                        </Select>
-                                    </FormControl>
-
-                                </Grid>
-
-                            </Grid>
-
-                            <Button variant="outlined" fullWidth sx={{ mt: 2 }}>
-                                Añadir al carrito
-                            </Button>
+                            }
 
 
                         </Grid>
@@ -245,8 +261,15 @@ export default function PublicationDetail(): JSX.Element {
                             </Typography>
 
                         </Grid> */}
-                    </Grid>
+                        {/* <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
+                            <Button variant="outlined" sx={{ borderRadius: 5 }}>Ver opiniones</Button>
+                        </Grid> */}
 
+                
+
+                        
+
+                    </Grid>
 
                 </Container>
 
