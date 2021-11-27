@@ -1,20 +1,21 @@
-import  Badge  from "@mui/material/Badge";
+import Badge from "@mui/material/Badge";
 import React from "react";
 import { useSelector } from "react-redux";
-import { DefaultRootState, Publication } from "../../../redux/types";
+import { Publication } from "../../../redux/types";
 import CardPublicacion from "./cardPublicaciones/cardPublicaciones";
+import { PublicationState } from "../../../redux/reducer/publicationReducer"
 
 
 export default function Publicaciones() {
- const {publications} = useSelector((state: DefaultRootState)=> state)
-
-    return (      
+    const state = useSelector((state: PublicationState) => state)
+    console.log(state.publicationList.publications)
+    return (
         <Badge className="publicationBox">
             {
-                publications.map((e:Publication)=>{                    
-                    return(<CardPublicacion  name={e.name} author={e.author} images={e.images} mark={e.mark} stock={e.stock} price={e.price} categorie={e.categorie} detail={e.detail} gender={e.gender} key={e._id} id={e._id}/>)
+                state.publicationList.publications.map((e: Publication) => {
+                    return (<CardPublicacion name={e.name} author={e.author} images={e.images} mark={e.mark} stock={e.stock} price={e.price} categorie={e.categorie} detail={e.detail} gender={e.gender} key={e._id} id={e._id} />)
                 })
             }
-        </Badge>       
+        </Badge>
     )
 }

@@ -252,7 +252,8 @@ export default function PrimarySearchAppBar() {
         {renderMobileMenu}
         {renderMenu}
       </Box>
-      <Box>
+      <Box style={{ marginTop: "5px" }}>
+
         <Publicaciones />
       </Box>
     </Box>
