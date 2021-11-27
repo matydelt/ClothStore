@@ -5,21 +5,22 @@ import 'swiper/swiper.min.css'
 import 'swiper/components/navigation/navigation.min.css';
 import 'swiper/components/pagination/pagination.min.css';
 import 'swiper/components/scrollbar/scrollbar.min.css';
+import 'swiper/components/autoplay';
 import './Header.css'
 import SwiperCore, {
-    EffectFade, Navigation, Pagination
+    Autoplay, EffectFade, Navigation, Pagination
 } from 'swiper';
 import NavBar from './NavBar/NavBar';
 import Woman from '../../assets/img/woman.png'
 import Box from '@mui/material/Box';
-import { TypographyWomanHeaderH2, TypographyWomanHeaderH4 } from './HeaderStyles';
+import { TypographyWomanHeaderH4 } from './HeaderStyles';
 import Typography from '@mui/material/Typography'
 import Man from '../../assets/img/man.png'
 import Kids from '../../assets/img/kids.png'
 
 
 // install Swiper modules
-SwiperCore.use([EffectFade, Navigation, Pagination]);
+SwiperCore.use([Autoplay, EffectFade, Navigation, Pagination]);
 
 
 
@@ -36,6 +37,9 @@ const Header = () => {
                     effect={'fade'}
                     loop={true}
                     pagination={{ clickable: true }}
+                    autoplay={{
+                        "delay": 3000
+                      }}
                 >
 
                     {/*********** SLIDE 1 ************/}
@@ -49,15 +53,17 @@ const Header = () => {
                         >
                             SIEMPRE PARA TI
                         </TypographyWomanHeaderH4>
-                        <TypographyWomanHeaderH2
+                        <Typography
                             sx={{
-                                fontSize: { xl: '98px' },
+                                fontSize: { lg: '70px', xl: '98px' },
                                 width: { lg: '400px', xl: '400px' },
-                                transform: { lg: 'translate(-120%, 0%)', xl: 'translate(-150%, 0%)' }
+                                transform: { lg: 'translate(-100%, 0%)', xl: 'translate(-150%, 0%)' },
+                                textAlign: 'center',
+                                fontWeight: '500',
                             }}
                             variant='h2'>
                             Simplifica Todo.
-                        </TypographyWomanHeaderH2>
+                        </Typography>
                         <Box
                             component='img'
                             src={Woman}
@@ -100,7 +106,7 @@ const Header = () => {
                                 fontWeight: '500',
                                 textAlign: 'right',
                                 letterSpacing: '2px',
-                                lineHeight: {lg: '98px', xl: '120px'}
+                                lineHeight: { lg: '98px', xl: '120px' }
                             }}
                         >
                             lo mejor para ti.
@@ -165,7 +171,7 @@ const Header = () => {
                                 fontWeight: '500',
                                 textAlign: 'center',
                                 letterSpacing: '4px',
-                                lineHeight: {lg: '78px', xl: '94px'}
+                                lineHeight: { lg: '78px', xl: '94px' }
                             }}
                             variant='h2'>
                             También para tus pequeños.
