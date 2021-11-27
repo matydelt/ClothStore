@@ -8,7 +8,10 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { useNavigate, useParams } from 'react-router';
 import { ImageNotSupportedOutlined } from '@mui/icons-material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store/store';
+import { User } from '../../redux/reducer/stateTypes';
+// import { useAuth } from '../../hooks/useAuth';
 
 interface CreatePublicationForm {
     name: string,
@@ -18,10 +21,13 @@ interface CreatePublicationForm {
     gender: string,
     stock: 0,
     price: 0,
-    images: { public_id: string, url: string }[]
+    images: { public_id: string, url: string }[],
+    id: string | undefined
 }
 
 export default function CreatePublication(): JSX.Element {
+
+    const user = useSelector((state: RootState): User | undefined => state?.userSignin?.userInfo );
 
     const [form, setForm] = useState<CreatePublicationForm>({
         name: '',
@@ -31,13 +37,15 @@ export default function CreatePublication(): JSX.Element {
         gender: '',
         stock: 0,
         price: 0,
-        images: []
+        images: [],
+        id: user?._id || ''
     });
 
     const [loadingImage, setLoadingImage] = useState<boolean>(false);
 
     const { name, detail, mark, stock, price, categorie, gender, images } = form;
 
+    // const auth = useAuth();
 
     const { publicationId } = useParams();
 
@@ -45,6 +53,9 @@ export default function CreatePublication(): JSX.Element {
 
 
     useEffect(() => {
+
+        console.log(user?._id)
+        
         if (publicationId && publicationId.length > 0) {
             axios.get('http://localhost:3001/publication', {
                 params: { publicationId: publicationId }
@@ -65,16 +76,17 @@ export default function CreatePublication(): JSX.Element {
         axios.post('http://localhost:3001/publications/new', form, { params: { publicationId } }).then(({ data }) => {
             console.log(data);
             navigate(`/${data}`)
-            setForm({
-                name: '',
-                detail: '',
-                mark: '',
-                categorie: '',
-                gender: '',
-                stock: 0,
-                price: 0,
-                images: []
-            });
+            // setForm({
+            //     name: '',
+            //     detail: '',
+            //     mark: '',
+            //     categorie: '',
+            //     gender: '',
+            //     stock: 0,
+            //     price: 0,
+            //     images: [],
+
+            // });
         });
     }
 
@@ -107,9 +119,6 @@ export default function CreatePublication(): JSX.Element {
                 </Box>
             </Box>
 
-            {/* <Box sx={{ backgroundColor: '#eeeeee', minHeight: 'calc(100vh - 400px)' }}> */}
-
-
 
             <Box sx={{ mt: 0, display: 'flex', justifyContent: 'center' }}>
 
@@ -129,9 +138,7 @@ export default function CreatePublication(): JSX.Element {
                                 '& > :not(style)': { my: 3, width: '45ch' },
                                 // '& > :not(style)': { m: 5, width: '25ch', display: 'flex', flexWrap: 'wrap' },
                             }}
-
                         >
-
 
                             <TextField
                                 onChange={handleForm}
@@ -156,7 +163,6 @@ export default function CreatePublication(): JSX.Element {
                                 name="detail"
                                 id="standard-textarea"
                                 label="Descripción"
-                                // placeholder="Placeholder"
                                 multiline
                                 variant="standard"
                             />
@@ -169,8 +175,6 @@ export default function CreatePublication(): JSX.Element {
                                     name="price"
                                     id="standard-adornment-amount"
                                     type="number"
-                                    // value={values.amount}
-                                    // onChange={handleChange('amount')}
                                     startAdornment={<InputAdornment position="start">$</InputAdornment>}
                                 />
                             </FormControl>
@@ -183,12 +187,9 @@ export default function CreatePublication(): JSX.Element {
                                     name="stock"
                                     id="standard-adornment-amount"
                                     type="number"
-                                // value={values.amount}
-                                // onChange={handleChange('amount')}
                                 />
                             </FormControl>
 
-                            {/* <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}> */}
                             <FormControl variant="standard">
                                 <InputLabel id="demo-simple-select-standard-label">Categoría</InputLabel>
                                 <Select

@@ -89,7 +89,7 @@ export default function PublicationDetail(): JSX.Element {
 
                             >
                                 {publication && publication?.images?.map(img => {
-                                    return <span onMouseEnter={() => imageToShow(img.url)}>
+                                    return <span key={img.public_id} onMouseEnter={() => imageToShow(img.url)}>
                                         <Avatar sx={{ mt: 2, width: 50, height: 50, '&:hover': { boxShadow: 5 } }} src={img.url} variant="square">
 
                                         </Avatar>
@@ -200,7 +200,7 @@ export default function PublicationDetail(): JSX.Element {
                                                 >
                                                     {
                                                         Array.from(Array(publication?.stock).keys()).map((s) => {
-                                                            return <MenuItem value={s + 1}>{s + 1}</MenuItem>
+                                                            return <MenuItem key={s} value={s + 1}>{s + 1}</MenuItem>
                                                         })
                                                     }
 

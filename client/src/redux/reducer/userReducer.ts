@@ -1,7 +1,7 @@
 import { Action } from "../actions/userActions";
 import { User } from "./stateTypes";
 
-interface UserState {
+export interface UserState {
   loading?: boolean;
   userInfo?: User;
   error?: string;

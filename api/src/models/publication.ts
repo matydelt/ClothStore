@@ -23,7 +23,8 @@ const PublicationSchema = new Schema({
             public_id: String,
             url: String,
             _id: false 
-        }]
+        }],
+        required: true
     },
     stock: {
         type: Number,
@@ -47,7 +48,7 @@ const PublicationSchema = new Schema({
     },
     author: {
         type: Schema.Types.ObjectId,
-        // require: [true, "necesita id de author"]
+        require: [true, "necesita id de author"]
     },
     gender: {
         type: String,

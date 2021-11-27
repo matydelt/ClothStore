@@ -9,10 +9,15 @@ export type Action = {
 };
 
 export const registerUser =
-  (user: any) => async (dispatch: Dispatch<Action>) => {
+(user: { email: string; password: string }) =>
+async (dispatch: Dispatch<Action>) => {
+  
     dispatch({ type: "USER_REGISTER_REQUEST" });
     try {
-      const response = await axios.get("http://localhost:3001/auth", user);
+      
+      const response = await axios.post("http://localhost:3001/auth/new", user);
+      console.log(response);
+      
       dispatch({
         type: "USER_REGISTER_SUCCESS",
         payload: { success: response.data },
@@ -25,21 +30,25 @@ export const registerUser =
     }
   };
 
-export const signinUser = () => async (dispatch: Dispatch<Action>) => {
-  dispatch({ type: "USER_SIGNIN_REQUEST" });
-  try {
-    const response = await axios.post("http://localhost:3001/auth/new");
-    dispatch({
-      type: "USER_SIGNIN_SUCCESS",
-      payload: { success: response.data },
-    });
-  } catch (error) {
-    dispatch({
-      type: "USER_SIGNIN_FAIL",
-      payload: { error: (error as Error).message },
-    });
-  }
-};
+export const signinUser =
+  
+(user: any) => async (dispatch: Dispatch<Action>) => {
+    dispatch({ type: "USER_SIGNIN_REQUEST" });
+    try {
+      const response = await axios.get("http://localhost:3001/auth",{ params: { email: user.email, password: user.password} });
+      console.log(response);
+      
+      dispatch({
+        type: "USER_SIGNIN_SUCCESS",
+        payload: { success: response.data },
+      });
+    } catch (error) {
+      dispatch({
+        type: "USER_SIGNIN_FAIL",
+        payload: { error: (error as Error).message },
+      });
+    }
+  };
 
 export const logoutUser = () => (dispatch: Dispatch<Action>) => {
   dispatch({ type: "USER_LOGOUT" });
