@@ -6,7 +6,6 @@ import { Navigate } from "react-router-dom";
 
 const LoginScreen = () => {
   const auth = useAuth();
-
   // if (auth.user) {
   //   return <Navigate to="/" />;
   // }

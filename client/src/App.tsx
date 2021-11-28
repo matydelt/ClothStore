@@ -11,7 +11,6 @@ import CreatePublication from "./components/createPublication/CreatePublication"
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./components/controllers/themeConfig";
 import Homepage from "./components/HomePage/Homepage";
-import { DataProvider } from "./context/DataProvider";
 import PublicationDetail from "./components/publicationDetail/PublicationDetail";
 
 const App = (): JSX.Element => {
@@ -26,25 +25,23 @@ const App = (): JSX.Element => {
   }, [dispatch])
   return (
     <ProvideAuth>
-      <DataProvider>
-        <ThemeProvider theme={theme}>
-          <Routes>
-            <Route path="/" element={<Homepage />} />
-            <Route path="nueva-publicacion" element={<CreatePublication />} />
-            <Route
-              path="actualizar-publicacion/:publicationId"
-              element={<CreatePublication />}
-            />
-            <Route
-              path="/publication/:publicationId"
-              element={<PublicationDetail />}
-            />
-            <Route path="/register" element={<RegisterScreen />}></Route>
-            <Route path="/login" element={<LoginScreen />}></Route>
-            <Route path="/cart" element={<CartScreen />}></Route>
-          </Routes>
-        </ThemeProvider>
-      </DataProvider>
+      <ThemeProvider theme={theme}>
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path="nueva-publicacion" element={<CreatePublication />} />
+          <Route
+            path="actualizar-publicacion/:publicationId"
+            element={<CreatePublication />}
+          />
+          <Route
+            path="/publication/:publicationId"
+            element={<PublicationDetail />}
+          />
+          <Route path="/register" element={<RegisterScreen />}></Route>
+          <Route path="/login" element={<LoginScreen />}></Route>
+          <Route path="/cart" element={<CartScreen />}></Route>
+        </Routes>
+      </ThemeProvider>
     </ProvideAuth>
   );
 };

@@ -11,16 +11,14 @@ const Homepage = () => {
             <Box
                 component='main'
                 sx={{
-                    height: '700px',
                     width: '100%',
                     display: 'flex',
-                    flexDirection: "column",
                 }}
             >
                 <SideBarHomePage />
                 <Publicaciones />
             </Box>
-            <Footer></Footer>
+            {/* <Footer></Footer> */}
         </>
     )
 }
