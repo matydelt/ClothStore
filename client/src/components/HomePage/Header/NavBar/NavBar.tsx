@@ -67,7 +67,7 @@ const NavBar = () => {
 
                     <Box sx={{ transform: 'translateX(-50%)', display: 'flex', alignItems: 'center' }}>
                         <Link to="#">
-                            <IconButton size='large' color="secondary">
+                            <IconButton size='large' color="primary">
                                 <Badge badgeContent={5} color="primary">
                                     <ShoppingCartIcon />
                                 </Badge>

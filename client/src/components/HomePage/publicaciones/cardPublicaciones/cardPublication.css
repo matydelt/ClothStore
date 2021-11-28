@@ -1,33 +1,21 @@
-.namePublication{
-    display: flex;
-    justify-content: center;
-}
-.publication{
-    background-color: rgb(245, 245, 245);
-    border-radius: 10px;
+.cardMain {
+    box-shadow: 1px 1px 3px #00c1cb6c !important;
+    transition: all .4s ease-in-out !important;
 }
 
-.bottonPublication{
-    background-color: rgb(146, 187, 146) ;
-    transition: 10ms;
-    /* margin: 10px; */
-    border: rgb(146, 187, 146) solid 1px;
-    border-radius: 5px;
-    cursor: pointer;
+.cardMain:hover {
+    transform: translateY(-3%);
+    box-shadow: 0px 1px 5px #00c2cb;
 }
-.bottonPublication:hover{
-    background-color: #2e7d32;
+.cardMain:hover .noshowButton_Cart_Info {
+    transform: translateY(0);
+}
+.noshowButton_Cart_Info {
+    transform: translateY(118%);
+    transition: all .4s ease-in-out ;
+}
 
+.showButton_Cart_Inf {
+    transition: all .5s ease-in-out;
 }
 
-.buttonsPublication{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-}
-.buttonBox{
-    display: flex;
-    justify-content: center;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}

@@ -17,6 +17,7 @@ import Homepage from "./components/HomePage/Homepage";
 const App = (): JSX.Element => {
   const dispatch = useDispatch();
 
+
   useEffect(() => {
     dispatch(getPublications())
   }, [dispatch])
@@ -24,15 +25,15 @@ const App = (): JSX.Element => {
   return (
     <ProvideAuth>
       <DataProvider>
-      <ThemeProvider theme={theme}>
-        <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="nueva-publicacion" element={<CreatePublication />} />
-          <Route path="actualizar-publicacion/:publicationId" element={<CreatePublication />} />
-          <Route path="/publication/:publicationId" element={<PublicationDetail />} />
-          <Route path="/cart" element={<Carrito />} />
-        </Routes>
-      </ThemeProvider>
+        <ThemeProvider theme={theme}>
+          <Routes>
+            <Route path="/" element={<Homepage />} />
+            <Route path="nueva-publicacion" element={<CreatePublication />} />
+            <Route path="actualizar-publicacion/:publicationId" element={<CreatePublication />} />
+            <Route path="/publication/:publicationId" element={<PublicationDetail />} />
+            <Route path="/cart" element={<Carrito />} />
+          </Routes>
+        </ThemeProvider>
       </DataProvider>
     </ProvideAuth >
   );

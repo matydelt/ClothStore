@@ -12,7 +12,7 @@ interface CreatePublicationForm {
     name: string,
     detail: string,
     mark: string,
-    categorie: string,
+    category: string,
     gender: string,
     stock: 0,
     price: 0,
@@ -25,14 +25,14 @@ export default function CreatePublication(): JSX.Element {
         name: '',
         detail: '',
         mark: '',
-        categorie: '',
+        category: '',
         gender: '',
         stock: 0,
         price: 0,
         images: []
     });
 
-    const { name, detail, mark, stock, price, categorie, gender, images } = form;
+    const { name, detail, mark, stock, price, category, gender, images } = form;
 
 
     const { publicationId } = useParams();
@@ -69,7 +69,7 @@ export default function CreatePublication(): JSX.Element {
                 name: '',
                 detail: '',
                 mark: '',
-                categorie: '',
+                category: '',
                 gender: '',
                 stock: 0,
                 price: 0,
@@ -188,8 +188,8 @@ export default function CreatePublication(): JSX.Element {
                                 <InputLabel id="demo-simple-select-standard-label">Categoría</InputLabel>
                                 <Select
                                     onChange={handleForm}
-                                    value={categorie}
-                                    name="categorie"
+                                    value={category}
+                                    name="category"
                                     labelId="demo-simple-select-standard-label"
                                     id="demo-simple-select-standard"
                                     label="Categoría"

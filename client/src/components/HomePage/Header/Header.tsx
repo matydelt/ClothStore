@@ -57,7 +57,7 @@ const Header = () => {
                             sx={{
                                 fontSize: { lg: '70px', xl: '98px' },
                                 width: { lg: '400px', xl: '400px' },
-                                transform: { lg: 'translate(-100%, 0%)', xl: 'translate(-150%, 0%)' },
+                                transform: { lg: 'translate(-100%, 0%)', xl: 'translate(-100%, 0%)' },
                                 textAlign: 'center',
                                 fontWeight: '500',
                             }}
