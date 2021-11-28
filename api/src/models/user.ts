@@ -50,6 +50,10 @@ const UserSchema = new Schema({
         type: ["Shopping"],
         ref: "Shopping"
     },
+    active:{
+        type:Boolean,
+        default:true
+    },
     photo: {
         type: String
     },

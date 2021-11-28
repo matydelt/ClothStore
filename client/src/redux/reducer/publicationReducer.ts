@@ -1,14 +1,20 @@
 import { Action } from "../actions/publicationActions";
 import { Publication } from "./stateTypes";
 
-interface PublicationState {
+export interface PublicationState {
+  publicationList: any;
   loading?: boolean;
-  publications?: Publication[];
+  publications?: Publication[] | string | any;
   error?: string;
 }
 
 const publicationListReducer = (
-  state: PublicationState = {},
+  state: PublicationState = {
+    publicationList: {},
+    loading: true,
+    publications: [],
+    error: ""
+  },
   action: Action
 ): PublicationState => {
   switch (action.type) {
@@ -22,13 +28,20 @@ const publicationListReducer = (
       };
     case "PUBLICATION_LIST_FAIL":
       return { ...state, loading: false, error: action.payload?.error };
+    case "GET_PUBLICATIONS":
+      return { ...state, loading: false, publications: action.payload }
     default:
       return state;
   }
 };
 
 const publicationSaveReducer = (
-  state: PublicationState = {},
+  state: PublicationState = {
+    publicationList: {},
+    loading: true,
+    publications: [],
+    error: ""
+  },
   action: Action
 ): PublicationState => {
   switch (action.type) {

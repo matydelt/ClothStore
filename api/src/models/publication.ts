@@ -1,16 +1,18 @@
 import mongoose, { Schema, model } from "mongoose";
 
 export interface Publication extends mongoose.Document {
-    name: object;
-    images: [];
+    name: string;
+    images: object[];
     stock: number;
     mark: string;
     detail: string;
     price: number;
-    categorie: string;
+    category: string;
     author: Schema.Types.ObjectId;
     gender: string;
+    order: string;
 }
+
 
 const PublicationSchema = new Schema({
     name: {
@@ -18,7 +20,11 @@ const PublicationSchema = new Schema({
         required: [true, "falta product name"]
     },
     images: {
-        type: [String],
+        type: [{
+            public_id: String,
+            url: String,
+            _id: false 
+        }]
     },
     stock: {
         type: Number,
@@ -35,7 +41,7 @@ const PublicationSchema = new Schema({
         type: Number,
         required: [true, "necesita precio"]
     },
-    categorie: {
+    category: {
         type: String,
         required: [true, "se require categoria valida"],
         enum: ["Remera", "Patanlon", "Zapatillas", "Zapatos"]
@@ -48,6 +54,9 @@ const PublicationSchema = new Schema({
         type: String,
         required: [true, "necesita un gender"],
         enum: ["Hombre", "Mujer", "Niños"]
+    },
+    order: {
+        type: String,
     }
 })
 

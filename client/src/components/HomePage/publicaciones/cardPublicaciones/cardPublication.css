@@ -1,0 +1,21 @@
+.cardMain {
+    box-shadow: 1px 1px 3px #00c1cb6c !important;
+    transition: all .4s ease-in-out !important;
+}
+
+.cardMain:hover {
+    transform: translateY(-3%);
+    box-shadow: 0px 1px 5px #00c2cb;
+}
+.cardMain:hover .noshowButton_Cart_Info {
+    transform: translateY(0);
+}
+.noshowButton_Cart_Info {
+    transform: translateY(118%);
+    transition: all .4s ease-in-out ;
+}
+
+.showButton_Cart_Inf {
+    transition: all .5s ease-in-out;
+}
+

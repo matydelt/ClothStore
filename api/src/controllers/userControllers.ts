@@ -28,14 +28,14 @@ export default class UserController {
             res.sendStatus(500)
         }
     }
-    static async putUser(req: Request, res: Response) {
-        try {
-            const { id, publications, shopping } = req.body
-            const user = await UserSchema.findById(id)
-            console.log(user)
 
-        } catch (e) {
-            console.log(e)
+    static async banUser(req: Request, res: Response) {
+        try {
+            const { id } = req.body
+            await UserSchema.updateOne({ _id: id }, { $set: { active: false } })
+            res.json("El usuario se marco como inactivo")
+        } catch (error) {
+            console.log("error en banUser")
             res.sendStatus(500)
         }
     }

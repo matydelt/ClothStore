@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.post("/auth/new", UserController.setUser)
 router.get("/auth", UserController.getUser)
-
+router.put("/auth/ban",UserController.banUser)
 
 module.exports = router;
