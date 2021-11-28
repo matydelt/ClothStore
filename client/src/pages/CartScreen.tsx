@@ -2,7 +2,7 @@ import * as React from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 import CartItem from "../components/CartItem";
 
-type CartItemType = {
+export type CartItemType = {
   id: string;
   amount: number;
   price: number;
@@ -11,7 +11,7 @@ type CartItemType = {
   category: string;
 };
 
-type CartType = CartItemType[];
+export type CartType = CartItemType[];
 
 const CartScreen = () => {
   const [cart, setCart] = useLocalStorage<CartType>("cart", []);
@@ -60,9 +60,11 @@ const CartScreen = () => {
           removeFromCart={handleRemoveFromCart}
         />
       ))}
-      <h2>Total: ${calculateTotal().toFixed(2)}</h2>
+      <h2>Total: $ {calculateTotal().toFixed(2)}</h2>
     </div>
   );
 };
+
+
 
 export default CartScreen;

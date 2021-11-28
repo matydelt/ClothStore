@@ -6,12 +6,13 @@ import RegisterScreen from "./pages/RegisterScreen";
 import LoginScreen from "./pages/LoginScreen";
 import CartScreen from "./pages/CartScreen";
 import { useDispatch } from "react-redux";
-import { getPublications } from "./redux/actions/publicationActions";
+import { cartLength, getPublications } from "./redux/actions/publicationActions";
 import CreatePublication from "./components/createPublication/CreatePublication";
 import PublicationDetail from "./components/publicationDetail/PublicationDetail";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./components/controllers/themeConfig";
 import Homepage from "./components/HomePage/Homepage";
+import { DataProvider } from "./context/DataProvider";
 
 const App = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -20,23 +21,30 @@ const App = (): JSX.Element => {
     dispatch(getPublications());
   }, [dispatch]);
 
+  useEffect(() => {
+    dispatch(cartLength())
+  }, [dispatch])
   return (
     <ProvideAuth>
-      <Routes>
-        <Route path="/" element={<Homepage />} />
-        <Route path="nueva-publicacion" element={<CreatePublication />} />
-        <Route
-          path="actualizar-publicacion/:publicationId"
-          element={<CreatePublication />}
-        />
-        <Route
-          path="/publication/:publicationId"
-          element={<PublicationDetail />}
-        />
-        <Route path="/register" element={<RegisterScreen />}></Route>
-        <Route path="/login" element={<LoginScreen />}></Route>
-        <Route path="/cart" element={<CartScreen />}></Route>
-      </Routes>
+      <DataProvider>
+        <ThemeProvider theme={theme}>
+          <Routes>
+            <Route path="/" element={<Homepage />} />
+            <Route path="nueva-publicacion" element={<CreatePublication />} />
+            <Route
+              path="actualizar-publicacion/:publicationId"
+              element={<CreatePublication />}
+            />
+            <Route
+              path="/publication/:publicationId"
+              element={<PublicationDetail />}
+            />
+            <Route path="/register" element={<RegisterScreen />}></Route>
+            <Route path="/login" element={<LoginScreen />}></Route>
+            <Route path="/cart" element={<CartScreen />}></Route>
+          </Routes>
+        </ThemeProvider>
+      </DataProvider>
     </ProvideAuth>
   );
 };

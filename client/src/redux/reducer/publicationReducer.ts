@@ -6,6 +6,7 @@ export interface PublicationState {
   loading?: boolean;
   publications?: Publication[] | string | any;
   error?: string;
+  cartLength: number;
 }
 
 const publicationListReducer = (
@@ -14,6 +15,7 @@ const publicationListReducer = (
     loading: true,
     publications: [],
     error: "",
+    cartLength: 0
   },
   action: Action
 ): PublicationState => {
@@ -39,10 +41,15 @@ const publicationSaveReducer = (
     loading: true,
     publications: [],
     error: "",
+    cartLength: 0
   },
   action: Action
 ): PublicationState => {
   switch (action.type) {
+    case "CART_LENGTH":
+
+      return { ...state, cartLength: action.cartPayload }
+
     case "PUBLICATION_SAVE_REQUEST":
       return { ...state, loading: true };
     case "PUBLICATION_SAVE_SUCCESS":

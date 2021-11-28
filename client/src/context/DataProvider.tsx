@@ -1,8 +1,9 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { RootState } from "../redux/store/store";
 import { DefaultRootState, Publication, Publications } from "../redux/types";
 
-type Value = {
+export type Value = {
 	productos: Publications,
 	cart: any[],
 	addCarrito: any,
@@ -24,7 +25,8 @@ export const DataProvider = (props: any): any => {
 	const [productos, setProductos] = useState<Publications>([]);
 	const [carrito, setCarrito] = useState<Publications>([]);
 	const [total, setTotal] = useState(0)
-	const { publications } = useSelector((state: DefaultRootState) => state)
+	const { publicationList } = useSelector((state: RootState) => state)
+	const { publications } = publicationList
 
 	useEffect(() => {
 		if (publications) {
@@ -34,6 +36,7 @@ export const DataProvider = (props: any): any => {
 
 
 	const addCarrito = (id: string) => {
+		console.log(publications)
 		const check = carrito?.every((item: Publication) => {
 			return item._id !== id
 
@@ -50,14 +53,14 @@ export const DataProvider = (props: any): any => {
 	}
 
 	useEffect(() => {
-		const dataCarrito: any = JSON.parse(JSON.stringify(localStorage.getItem("dataCarrito")))
+		const dataCarrito: any = JSON.parse(JSON.stringify(localStorage.getItem("cart")))
 		if (dataCarrito) {
 			setCarrito(JSON.parse(dataCarrito))
 		}
 	}, [])
 
 	useEffect(() => {
-		localStorage.setItem('dataCarrito', JSON.stringify(carrito))
+		localStorage.setItem('cart', JSON.stringify(carrito))
 	}, [carrito])
 
 	useEffect(() => {

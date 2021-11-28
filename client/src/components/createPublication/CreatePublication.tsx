@@ -16,8 +16,7 @@ import {
   Divider,
   SelectChangeEvent,
 } from "@mui/material";
-import { Box, shadows } from "@mui/system";
-import Home from "../home/Home";
+import { Box } from "@mui/system";
 import axios from "axios";
 import FileUpload from "../fileUpload/FileUpload";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -117,7 +116,6 @@ export default function CreatePublication(): JSX.Element {
 
   return (
     <>
-      <Home></Home>
       <Box
         sx={{
           backgroundColor: "#eeeeee",
@@ -217,8 +215,8 @@ export default function CreatePublication(): JSX.Element {
                     name="stock"
                     id="standard-adornment-amount"
                     type="number"
-                    // value={values.amount}
-                    // onChange={handleChange('amount')}
+                  // value={values.amount}
+                  // onChange={handleChange('amount')}
                   />
                 </FormControl>
 

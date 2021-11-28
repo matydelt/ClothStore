@@ -1,5 +1,4 @@
 import React from "react";
-import { Box } from "@mui/system";
 import { useSelector } from "react-redux";
 import { Publication } from "../../../redux/types";
 import CardPublicacion from "./cardPublicaciones/cardPublicaciones";
@@ -9,7 +8,6 @@ import Grid from '@mui/material/Grid'
 
 export default function Publicaciones() {
     const state = useSelector((state: PublicationState) => state)
-    console.log(state.publicationList.publications)
     return (
         <Grid container spacing={4}
             sx={{

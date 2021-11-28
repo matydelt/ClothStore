@@ -6,6 +6,7 @@ import { Publication } from "../reducer/stateTypes";
 export type Action = {
   type: ActionTypes;
   payload?: { success?: Publication[]; error?: string };
+  cartPayload?: any
 };
 
 export const getPublications = () => async (dispatch: Dispatch<Action>) => {
@@ -37,3 +38,14 @@ export const postPublications =
       });
     }
   };
+
+export const cartLength =
+  () => async (dispatch: Dispatch<Action>) => {
+    let cart = localStorage.getItem("cart")
+    if (typeof cart === "string") cart = JSON.parse(cart)
+    const length = cart?.length
+    dispatch({
+      type: "CART_LENGTH",
+      cartPayload: length
+    });
+  }
