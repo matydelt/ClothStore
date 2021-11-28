@@ -12,6 +12,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "./components/controllers/themeConfig";
 import Homepage from "./components/HomePage/Homepage";
 import PublicationDetail from "./components/publicationDetail/PublicationDetail";
+import HomeUsuarios from "./components/HomeUsuarios/HomeUsuarios";
 
 const App = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ const App = (): JSX.Element => {
           <Route path="/register" element={<RegisterScreen />}></Route>
           <Route path="/login" element={<LoginScreen />}></Route>
           <Route path="/cart" element={<CartScreen />}></Route>
+          <Route path="/perfil" element={<HomeUsuarios />} />
         </Routes>
       </ThemeProvider>
     </ProvideAuth>
