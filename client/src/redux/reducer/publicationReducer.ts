@@ -13,7 +13,7 @@ const publicationListReducer = (
     publicationList: {},
     loading: true,
     publications: [],
-    error: ""
+    error: "",
   },
   action: Action
 ): PublicationState => {
@@ -28,8 +28,6 @@ const publicationListReducer = (
       };
     case "PUBLICATION_LIST_FAIL":
       return { ...state, loading: false, error: action.payload?.error };
-    case "GET_PUBLICATIONS":
-      return { ...state, loading: false, publications: action.payload }
     default:
       return state;
   }
@@ -40,7 +38,7 @@ const publicationSaveReducer = (
     publicationList: {},
     loading: true,
     publications: [],
-    error: ""
+    error: "",
   },
   action: Action
 ): PublicationState => {
