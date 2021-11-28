@@ -8,11 +8,11 @@ import CartScreen from "./pages/CartScreen";
 import { useDispatch } from "react-redux";
 import { cartLength, getPublications } from "./redux/actions/publicationActions";
 import CreatePublication from "./components/createPublication/CreatePublication";
-import PublicationDetail from "./components/publicationDetail/PublicationDetail";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./components/controllers/themeConfig";
 import Homepage from "./components/HomePage/Homepage";
 import { DataProvider } from "./context/DataProvider";
+import PublicationDetail from "./components/publicationDetail/PublicationDetail";
 
 const App = (): JSX.Element => {
   const dispatch = useDispatch();

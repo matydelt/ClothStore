@@ -79,7 +79,7 @@ const NavBar = () => {
 
                         <Box sx={{ fontSize: { xl: '25px' }, marginLeft: '16px' }}>
                             <ButtonsNav
-                                link="/signin"
+                                link="/login"
                                 text="INICIAR SESION"
                                 nameClass='textDecoration colorPrimary buttonLink'
                             />

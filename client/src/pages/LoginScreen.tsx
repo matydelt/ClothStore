@@ -7,9 +7,9 @@ import { Navigate } from "react-router-dom";
 const LoginScreen = () => {
   const auth = useAuth();
 
-  if (auth.user) {
-    return <Navigate to="/" />;
-  }
+  // if (auth.user) {
+  //   return <Navigate to="/" />;
+  // }
 
   return (
     <React.Fragment>

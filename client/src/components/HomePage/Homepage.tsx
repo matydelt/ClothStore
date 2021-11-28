@@ -3,6 +3,7 @@ import Header from './Header/Header'
 import Publicaciones from './publicaciones/publicaciones'
 import { Box } from '@mui/system'
 import SideBarHomePage from './SideBarHomePage/SideBarHomePage'
+import Footer from '../Footer'
 const Homepage = () => {
     return (
         <>
@@ -12,12 +13,14 @@ const Homepage = () => {
                 sx={{
                     height: '700px',
                     width: '100%',
-                    display: 'flex'
+                    display: 'flex',
+                    flexDirection: "column",
                 }}
             >
                 <SideBarHomePage />
                 <Publicaciones />
             </Box>
+            <Footer></Footer>
         </>
     )
 }

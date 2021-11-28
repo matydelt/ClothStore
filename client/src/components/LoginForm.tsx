@@ -22,8 +22,9 @@ const theme = createTheme();
 const LoginForm = () => {
   const [input, setInput] = useState<FormState>({ email: "", password: "" });
   const dispatch = useDispatch();
-  const { signin } = useAuth();
   const navigate = useNavigate();
+
+  const { signin } = useAuth();
   const location = useLocation();
 
   const from = location.state?.from?.pathname || "/";
@@ -81,6 +82,7 @@ const LoginForm = () => {
               required
               fullWidth
               id="password"
+              name="password"
               label="Contraseña"
               type="password"
               autoComplete="current-password"
