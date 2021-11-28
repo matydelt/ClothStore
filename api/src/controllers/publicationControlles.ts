@@ -14,12 +14,12 @@ export default class PublicationController {
                 const value: string = (Math.random() *0xffffff *1000000).toString(16);
                 return `${value.slice(0,6)}`
             }
-            const order: String = numOrder();
+            const order: string = numOrder();
 
             if (publicationId) {
-                await PublicationSchema.findByIdAndUpdate(publicationId, { name, images, stock, mark, detail, price, categorie, gender, order }, {new: true});
+                await PublicationSchema.findByIdAndUpdate(publicationId, { name, images, stock, mark, detail, price, category, gender, order }, {new: true});
             } else {
-                const publication: Publication = new PublicationSchema({ name, images, stock, mark, detail, price, categorie, gender, order, author: id });
+                const publication: Publication = new PublicationSchema({ name, images, stock, mark, detail, price, category, gender, order, author: id });
                 await publication.save();
                 const user = await UserSchema.findById(id)
 
