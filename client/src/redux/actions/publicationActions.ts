@@ -11,7 +11,7 @@ export type Action = {
 export const getPublications = () => async (dispatch: Dispatch<Action>) => {
   dispatch({ type: "PUBLICATION_LIST_REQUEST" });
   try {
-    const response = await axios.get("http://localhost:3001/publications");
+    const response = await axios.get("/publications");
     dispatch({
       type: "PUBLICATION_LIST_SUCCESS",
       payload: { success: response.data },
@@ -28,7 +28,7 @@ export const postPublications =
   (publication: any) => async (dispatch: Dispatch<Action>) => {
     dispatch({ type: "PUBLICATION_SAVE_REQUEST" });
     try {
-      await axios.post("http://localhost:3001/publications/new", publication);
+      await axios.post("/publications/new", publication);
       dispatch({ type: "PUBLICATION_SAVE_SUCCESS" });
     } catch (error) {
       dispatch({

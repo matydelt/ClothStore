@@ -10,5 +10,6 @@ declare namespace NodeJS {
     REACT_APP_FIREBASE_STORAGEBUCKET: string;
     REACT_APP_FIREBASE_MESSAGINGSENDERID: string;
     REACT_APP_FIREBASE_APPID: string;
+    REACT_APP_API: string;
   }
 }

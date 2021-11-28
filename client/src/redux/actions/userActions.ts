@@ -12,7 +12,7 @@ export const registerUser =
   (user: any) => async (dispatch: Dispatch<Action>) => {
     dispatch({ type: "USER_REGISTER_REQUEST" });
     try {
-      const response = await axios.get("http://localhost:3001/auth", user);
+      const response = await axios.get("/auth", user);
       dispatch({
         type: "USER_REGISTER_SUCCESS",
         payload: { success: response.data },
@@ -30,7 +30,7 @@ export const signinUser =
   async (dispatch: Dispatch<Action>) => {
     dispatch({ type: "USER_SIGNIN_REQUEST" });
     try {
-      const response = await axios.post("http://localhost:3001/auth/new", user);
+      const response = await axios.post("/auth/new", user);
       dispatch({
         type: "USER_SIGNIN_SUCCESS",
         payload: { success: response.data },
