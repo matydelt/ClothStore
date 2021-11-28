@@ -1,64 +1,87 @@
 import * as React from 'react'
 import { Avatar,Box} from '@material-ui/core'
 import "./HomeUsuarios.css"
-import { FormControl, FormHelperText, InputLabel, Input, TextField } from '@mui/material'
+import { TextField } from '@mui/material'
 import axios from 'axios'
 import { useEffect } from 'react'
+import CardPublicacion from '../home/publicaciones/cardPublicaciones/cardPublicaciones'
+
 
 interface FormUserInterface {
-    userName: string;
+    photo:string;
+    phone: string;
     email: string;
-    nombre: string;
-    apellido: string;
+    name:{firstName: string,
+        lastName: string};
     dni: string;
     calle: string;
     numero: string;
     ciudad: string;
     cp: string;
-    
+    publications: any[];
+    shopping:any[];
   }
-
+  interface Props{
+    name: string;
+    images: any[];
+    stock: number;
+    mark: string;
+    detail: string;
+    price: number;
+    categorie: string;
+    author: string;
+    gender: string;
+    key:string;
+}
 export default function HomeUsuarios() {
     
+    
     const [input, setInput] = React.useState<FormUserInterface>({
-        userName: "",
+        photo:"",
+        phone: "",
         email: "",
-        nombre: "",
-        apellido: "",
+        name:{firstName: "",
+        lastName: "",},
         dni: "",
         calle:"",
         numero:"",
         ciudad:"",
-        cp:""
+        cp:"",
+        publications:[],
+        shopping:[]
         });
-
+useEffect(() => {
+    async function getOneUser(){
+        await axios.get("http://localhost:3001/auth/619e9d1adcffb9b31ee1fca8").then(({data})=>setInput(data))
+    }
+    getOneUser()
+}, [])
 
 
 const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 function handleClickEdit(e:React.SyntheticEvent){
-    e.preventDefault()
-    
+    e.preventDefault() 
+    console.log(input)
 }
 
     return (
         <Box component="form" className="form-home-usuario">
 
         <label>Mis Datos</label>
-
-            <Avatar alt="❓" className="avatar-usuario">❓</Avatar>
+            <Avatar alt={input.photo ? input.photo : input.name.firstName[0]} className="avatar-usuario">{input.name.firstName[0]} </Avatar>
 
         <legend>Datos de la Cuenta</legend>
-            <TextField
-            
-            label="Nombre de usuario:"
-            value={input.userName}
-            onChange={handleChange}
-            />
         <div className="div-field">
             <TextField
-            
+            disabled={true}
+            label="Teléfono:"
+            value={input.phone}
+            onChange={handleChange}
+            />
+            <TextField
+            disabled
             label="E-mail:"
             value={input.email}
             onChange={handleChange}
@@ -69,23 +92,22 @@ function handleClickEdit(e:React.SyntheticEvent){
         <legend>Datos personales</legend>
         <div className="div-field">
             <TextField
-            
+            disabled
             label="Nombre:"
-            value={input.nombre}
+            value={input.name.firstName}
             onChange={handleChange}
             />
-        </div>
-        <div className="div-field">
+        
             <TextField
-            
+            disabled
             label="Apellido:"
-            value={input.apellido}
+            value={input.name.lastName}
             onChange={handleChange}
             />
         </div>
         <div className="div-field">
             <TextField
-            
+            disabled
             label="DNI:"
             value={input.dni}
             onChange={handleChange}
@@ -95,15 +117,14 @@ function handleClickEdit(e:React.SyntheticEvent){
         <legend>Domicilio</legend>
         <div className="div-field">
             <TextField
-            
+            disabled
             label="Calle:"
             value={input.calle}
             onChange={handleChange}
             />
-        </div>
-        <div className="div-field">
+        
             <TextField
-            
+            disabled
             label="Número:"
             value={input.numero}
             onChange={handleChange}
@@ -111,23 +132,34 @@ function handleClickEdit(e:React.SyntheticEvent){
         </div>
         <div className="div-field">
             <TextField
-            
+            disabled
             label="Ciudad:"
             value={input.ciudad}
             onChange={handleChange}
             />
-        </div>
-        <div className="div-field">
+        
             <TextField
-            
+            disabled
             label="Código postal:"
             value={input.cp}
             onChange={handleChange}
             />
         </div>
         <div>
-           <button >guardar</button>
+           <button onClick={handleClickEdit}>guardar</button>
            <button onClick={handleClickEdit}>editar</button>
+        </div>
+        <div>
+            <h3>Publicaciones</h3>
+        {input.publications.length > 0 ? 
+        input.publications.map((e)=>{return(<CardPublicacion  name={e.name} author={e.author} images={e.images} mark={e.mark} stock={e.stock} price={e.price} categorie={e.categorie} detail={e.detail} gender={e.gender} key={e._id}/>)}) : 
+        <h4>No se han realizado publicaciones</h4>}
+        </div>
+        <div>
+            <h3>Compras</h3>
+        {input.shopping.length > 0 ? 
+        input.shopping.map((e)=>{return(<CardPublicacion  name={e.name} author={e.author} images={e.images} mark={e.mark} stock={e.stock} price={e.price} categorie={e.categorie} detail={e.detail} gender={e.gender} key={e._id}/>)}) : 
+        <h4>No se han realizado Compras</h4>}
         </div>
     </Box>)
 }

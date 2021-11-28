@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 
-dotenv.config()
-const conn = mongoose.connect(`mongo://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`)
-export default conn
+dotenv.config();
+const conn = mongoose.connect(
+  `mongodb://localhost:${process.env.DB_PORT}/${process.env.DB_NAME}`
+);
+export default conn;
