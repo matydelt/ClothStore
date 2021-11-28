@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Avatar, Button, Container, Badge, FormControl, Grid, Input, InputAdornment, InputLabel, MenuItem, Select, TextField, Typography, Divider } from '@mui/material';
 import { Box, shadows } from '@mui/system';
-import Home from '../home/Home';
 import axios from 'axios';
 import FileUpload from '../fileUpload/FileUpload';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -90,7 +89,7 @@ export default function CreatePublication(): JSX.Element {
 
     return (<>
 
-        <Home></Home>
+        {/* <Home></Home> */}
         <Box sx={{ backgroundColor: '#eeeeee', minHeight: '105vh', height: 'max-content' }}>
 
             <Box sx={{ backgroundColor: '#f5f5f5', minHeight: '30vh' }}>

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Avatar, Button, Container, FormControl, Grid, MenuItem, Select, Typography } from '@mui/material';
 import { Box, } from '@mui/system';
-import Home from '../home/Home';
 import axios from 'axios';
 import { useParams } from 'react-router';
 // import { Publication } from '../../redux/reducer/stateTypes';
@@ -54,7 +53,7 @@ export default function PublicationDetail(): JSX.Element {
 
     return (<>
 
-        <Home></Home>
+        {/* <Home></Home> */}
         <Box sx={{ backgroundColor: '#eeeeee', minHeight: '93.3vh', height: 'max-content' }}>
 
             <Box sx={{ backgroundColor: '#f5f5f5', minHeight: '30vh' }}>

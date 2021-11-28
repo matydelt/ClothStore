@@ -12,9 +12,9 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <Provider store={store}>
+        {/* <Provider store={store}> */}
           <App />
-        </Provider>
+        {/* </Provider> */}
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,

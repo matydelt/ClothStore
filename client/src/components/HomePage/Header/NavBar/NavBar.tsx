@@ -66,7 +66,7 @@ const NavBar = () => {
                     <Box sx={{ flexGrow: 1, transform: 'translateX(50%)' }} />
 
                     <Box sx={{ transform: 'translateX(-50%)', display: 'flex', alignItems: 'center' }}>
-                        <Link to="#">
+                        <Link to="/cart">
                             <IconButton size='large' color="primary">
                                 <Badge badgeContent={5} color="primary">
                                     <ShoppingCartIcon />
