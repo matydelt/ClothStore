@@ -12,4 +12,5 @@ export type ActionTypes =
   | "USER_SIGNIN_SUCCESS"
   | "USER_SIGNIN_FAIL"
   | "USER_LOGOUT"
-  | "GET_PUBLICATIONS";
+  | "GET_PUBLICATIONS"
+  | "CART_LENGTH";

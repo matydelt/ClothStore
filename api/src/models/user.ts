@@ -3,62 +3,76 @@ import { Publication } from "./publication";
 import { Shopping } from "./shopping";
 
 export interface User extends mongoose.Document {
-    name: object;
-    email: string;
-    password: string;
-    phone: string;
-    publications: [Publication];
-    shopping: [Shopping];
-    photo: string;
+  name: object;
+  email: string;
+  password: string;
+  phone: string;
+  publications: [Publication];
+  shopping: [Shopping];
+  photo: string;
+  dni: string;
+  userName: string;
+  domicilio: object;
 }
 
 const UserSchema = new Schema({
-    name: {
-        firstName: {
-            type: String,
-            required: [true, "falta first name"]
-        },
-        lastName: {
-            type: String,
-            required: [true, "falta first name"]
-        }
+  name: {
+    firstName: {
+      type: String,
+      required: [true, "falta first name"],
     },
-    email: {
-        type: String,
-        required: [true, "falta email"],
-        _id: [true, "violacion de unicidad"]
+    lastName: {
+      type: String,
+      required: [true, "falta first name"],
     },
-    password: {
-        type: String,
-        required: [true, "falta password"],
-        min: [5, "password demaciado corta"],
+  },
+  email: {
+    type: String,
+    required: [true, "falta email"],
+    _id: [true, "violacion de unicidad"],
+  },
+  password: {
+    type: String,
+    required: [true, "falta password"],
+    min: [5, "password demaciado corta"],
+  },
+  phone: {
+    type: String,
+    validate: {
+      validator: function (v: string) {
+        return /\d{2}-\d{2}-\d{4}-\d{4}/.test(v);
+      },
+      message: (props: any) => `${props.value} is not a valid phone number!`,
     },
-    phone: {
-        type: String,
-        validate: {
-            validator: function (v: string) {
-                return /\d{2}-\d{2}-\d{4}-\d{4}/.test(v);
-            },
-            message: (props: any) => `${props.value} is not a valid phone number!`
-        },
-    },
-    publications: {
-        type: ["Publication"],
-        ref: "Publication"
-    },
-    shopping: {
-        type: ["Shopping"],
-        ref: "Shopping"
-    },
-    active:{
-        type:Boolean,
-        default:true
-    },
-    photo: {
-        type: String
-    },
-
-
-})
+  },
+  publications: {
+    type: ["Publication"],
+    ref: "Publication",
+  },
+  shopping: {
+    type: ["Shopping"],
+    ref: "Shopping",
+  },
+  active: {
+    type: Boolean,
+    default: true,
+  },
+  photo: {
+    type: String,
+  },
+  //cambios en modelo
+  dni: {
+    type: String,
+  },
+  userName: {
+    type: String,
+  },
+  domicilio: {
+    calle: { type: String },
+    numero: { type: String },
+    ciudad: { type: String },
+    cp: { type: String },
+  },
+});
 
 export default model<User>("User", UserSchema);

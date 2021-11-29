@@ -10,9 +10,12 @@ import {
 } from '../NavBar/NavBarStyles'
 import Box from '@mui/material/Box';
 import Badge from '@mui/material/Badge';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../redux/store/store';
 
 const NavBar = () => {
 
+    const cartLength = useSelector((state: RootState) => state.publicationSave.cartLength)
     return (
         <>
             <MyNavBarHeader position="static">
@@ -68,7 +71,7 @@ const NavBar = () => {
                     <Box sx={{ transform: 'translateX(-50%)', display: 'flex', alignItems: 'center' }}>
                         <Link to="/cart">
                             <IconButton size='large' color="primary">
-                                <Badge badgeContent={5} color="primary">
+                                <Badge badgeContent={cartLength} color="primary">
                                     <ShoppingCartIcon />
                                 </Badge>
                             </IconButton>
@@ -76,7 +79,7 @@ const NavBar = () => {
 
                         <Box sx={{ fontSize: { xl: '25px' }, marginLeft: '16px' }}>
                             <ButtonsNav
-                                link="/signin"
+                                link="/login"
                                 text="INICIAR SESION"
                                 nameClass='textDecoration colorPrimary buttonLink'
                             />
