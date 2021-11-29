@@ -39,7 +39,7 @@ export default function CardPublicacion(props: Props) {
         id,
         amount: stock,
         price,
-        image: images[0].url,
+        image: images[0]?.url,
         title: name,
         category: categorie,
 
@@ -61,20 +61,18 @@ export default function CardPublicacion(props: Props) {
         });
     };
     return (
-        <Grid container spacing={4}
-            sx={{
-                width: '80%',
-                marginTop: '50px'
-            }}>
-            <Card className='cardMain' sx={{ maxWidth: 200, borderBottom: '2px solid #00c2cb' }} >
-                <CardMedia className='showButton_Cart_Info' sx={{ overflow: 'hidden' }}>
-                    <Carousel autoPlay={false}
+        <Grid item xs={12} sm={6} md={4} lg={3} xl={3}>
+            <Card className='cardMain' sx={{ height: { lg: '400px', xl: '400px' }, width: { lg: 195, xl: 265 }, borderBottom: '2px solid #00c2cb' }} >
+                <CardMedia className='showButton_Cart_Info' sx={{ overflow: 'hidden', height: '75%' }}>
+                    <Carousel
+                        className='Carousel-root-1 CarouselItem'
+                        autoPlay={false}
                         navButtonsProps={{ style: { backgroundColor: 'transparent', borderRadius: '0', color: '#000' } }}
                     >
                         {images.length === 0 ? <Item item={"https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227725184-stock-illustration-no-image-available-icon-flat.jpg"} /> : images.map((item, i) => <Item key={i} item={item} />)}
                     </Carousel>
 
-                    <Box className='noshowButton_Cart_Info' sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <Box className='noshowButton_Cart_Info' sx={{ display: 'flex', justifyContent: 'center', paddingTop: "-15px" }}>
                         <IconButton aria-label='Add to Cart' sx={{ backgroundColor: '#00c2cb', borderRadius: '50%' }} size='large' color="primary" onClick={() => handleAddToCart(item)}>
                             <ShoppingCartIcon />
                         </IconButton>
@@ -98,15 +96,16 @@ export default function CardPublicacion(props: Props) {
 function Item(props: any) {
     return (
         <Box>
-            <Box style={{ height: "150px", width: "200px", padding: "4px", justifyContent: "center", display: "flex", alignItems: 'center' }}>
+            <Box sx={{ height: { lg: '100%', xl: "100%" }, width: { lg: '93%', xl: "93%" }, padding: "4px", justifyContent: "center", display: "flex", alignItems: 'center' }}>
                 <Box
                     component='img'
                     src={props.item.url || "https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227725184-stock-illustration-no-image-available-icon-flat.jpg"}
                     alt='productoImage'
                     sx={{
-                        maxHeight: "150px",
-                        maxWidth: "200px",
-                        borderRadius: "3px"
+                        height: { xs: '100%', sm: '100%', md: '100%', lg: '280px', xl: "280px" },
+                        width: { xs: '100%', sm: '100%', md: '100%', lg: '230px', xl: "230px" },
+                        borderRadius: "3px",
+                        objectFit: 'cover'
                     }}
                 />
             </Box>

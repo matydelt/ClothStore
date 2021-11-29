@@ -53,6 +53,10 @@
 }
 
 @media (min-width: 1592px) and (max-width: 1920px) {
+    .swiper-container {
+        height: 94%;
+    }
+    
     .swiper-button-next::after, .swiper-button-prev::after {
         font-size: 39px;
     }

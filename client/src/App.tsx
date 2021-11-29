@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ProvideAuth } from "./hooks/useAuth";
 import "./App.css";
 import { Route, Routes } from "react-router";
@@ -35,7 +35,7 @@ const App = (): JSX.Element => {
             element={<CreatePublication />}
           />
           <Route
-            path="/publication/:publicationId"
+            path="/:publicationId"
             element={<PublicationDetail />}
           />
           <Route path="/register" element={<RegisterScreen />}></Route>
