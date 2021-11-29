@@ -60,7 +60,11 @@ export default function CardPublicacion(props: Props) {
         });
     };
     return (
-        <Grid item xs={12} sm={6} md={4} lg={3} xl={3}>
+        <Grid container spacing={4}
+            sx={{
+                width: '80%',
+                marginTop: '50px'
+            }}>
             <Card className='cardMain' sx={{ maxWidth: 200, borderBottom: '2px solid #00c2cb' }} >
                 <CardMedia className='showButton_Cart_Info' sx={{ overflow: 'hidden' }}>
                     <Carousel autoPlay={false}
