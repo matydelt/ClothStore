@@ -4,7 +4,7 @@ import "./HomeUsuarios.css"
 import { TextField } from '@mui/material'
 import axios from 'axios'
 import { useEffect } from 'react'
-import CardPublicacion from '../home/publicaciones/cardPublicaciones/cardPublicaciones'
+import CardPublicacion from '../HomePage/publicaciones/cardPublicaciones/cardPublicaciones'
 
 
 interface FormUserInterface {
@@ -152,13 +152,13 @@ function handleClickEdit(e:React.SyntheticEvent){
         <div>
             <h3>Publicaciones</h3>
         {input.publications.length > 0 ? 
-        input.publications.map((e)=>{return(<CardPublicacion  name={e.name} author={e.author} images={e.images} mark={e.mark} stock={e.stock} price={e.price} categorie={e.categorie} detail={e.detail} gender={e.gender} key={e._id}/>)}) : 
+        input.publications.map((e)=>{return(<CardPublicacion  name={e.name} author={e.author} images={e.images} mark={e.mark} stock={e.stock} price={e.price} categorie={e.categorie} detail={e.detail} gender={e.gender} key={e._id} id={e._id}/>)}) : 
         <h4>No se han realizado publicaciones</h4>}
         </div>
         <div>
             <h3>Compras</h3>
         {input.shopping.length > 0 ? 
-        input.shopping.map((e)=>{return(<CardPublicacion  name={e.name} author={e.author} images={e.images} mark={e.mark} stock={e.stock} price={e.price} categorie={e.categorie} detail={e.detail} gender={e.gender} key={e._id}/>)}) : 
+        input.shopping.map((e)=>{return(<CardPublicacion  name={e.name} author={e.author} images={e.images} mark={e.mark} stock={e.stock} price={e.price} categorie={e.categorie} detail={e.detail} gender={e.gender} key={e._id} id={e._id}/>)}) : 
         <h4>No se han realizado Compras</h4>}
         </div>
     </Box>)

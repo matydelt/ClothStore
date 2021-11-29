@@ -23,18 +23,21 @@ const Copyright = (props: any) => {
 
 const Footer = () => {
   return (
-    <footer>
+    <Box
+      component='footer'
+      sx={{ height: '250px' }}
+      bgcolor={(theme) =>
+        theme.palette.mode === "light"
+          ? theme.palette.grey[200]
+          : theme.palette.grey[800]
+      }
+    >
       <Box
         px={{ xs: 3, sm: 10 }}
         py={{ xs: 5, sm: 5 }}
-        bgcolor={(theme) =>
-          theme.palette.mode === "light"
-            ? theme.palette.grey[200]
-            : theme.palette.grey[800]
-        }
-        position="absolute"
-        bottom={0}
-        width="100%"
+      // position="absolute"
+      // bottom={0}
+      // width="100%"
       >
         <Container maxWidth="lg">
           <Grid container spacing={0} flexWrap="nowrap">
@@ -83,7 +86,7 @@ const Footer = () => {
           <Copyright sx={{ mt: 5 }} />
         </Container>
       </Box>
-    </footer>
+    </Box>
   );
 };
 

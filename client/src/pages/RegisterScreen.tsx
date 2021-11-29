@@ -3,6 +3,7 @@ import RegisterForm from "../components/RegisterForm";
 import Footer from "../components/Footer";
 import { useAuth } from "../hooks/useAuth";
 import { Navigate } from "react-router-dom";
+import { Box } from "@mui/system";
 
 const RegisterScreen = () => {
   const auth = useAuth();
@@ -14,6 +15,7 @@ const RegisterScreen = () => {
   return (
     <React.Fragment>
       <RegisterForm />
+      <Box sx={{ display: 'flex', height: '25%' }}/>
       <Footer />
     </React.Fragment>
   );
