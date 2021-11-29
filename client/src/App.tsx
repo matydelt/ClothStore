@@ -47,7 +47,7 @@ const App = (): JSX.Element => {
             element={<CreatePublication />}
           />
           <Route
-            path="/:publicationId"
+            path="/publication/:publicationId"
             element={<PublicationDetail />}
           />
           <Route path="/register" element={<RegisterScreen />}></Route>

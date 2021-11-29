@@ -76,7 +76,7 @@ export default function CreatePublication(): JSX.Element {
 
     axios.post('http://localhost:3001/publications/new', form, { params: { publicationId } }).then(({ data }) => {
       console.log(data);
-      navigate(`/${data}`)
+      navigate(`/publication/${data}`)
       // setForm({
       //     name: '',
       //     detail: '',
