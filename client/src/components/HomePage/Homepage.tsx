@@ -10,7 +10,7 @@ const Homepage = () => {
             <Box
                 component='main'
                 sx={{
-                    height: '700px',
+                    // height: '700px',
                     width: '100%',
                     display: 'flex'
                 }}

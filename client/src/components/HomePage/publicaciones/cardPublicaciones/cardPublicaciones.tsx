@@ -43,7 +43,7 @@ export default function CardPublicacion(props: Props) {
                     </Carousel>
 
                     <Box className='noshowButton_Cart_Info' sx={{ display: 'flex', justifyContent: 'center' }}>
-                        <IconButton aria-label='Add to Cart' sx={{ backgroundColor: '#00c2cb', borderRadius: '50%' }} size='large' color="primary">
+                        <IconButton onClick={() => { value.addCarrito(id) }} aria-label='Add to Cart' sx={{ backgroundColor: '#00c2cb', borderRadius: '50%' }} size='large' color="primary">
                             <ShoppingCartIcon />
                         </IconButton>
                         <Link to={`/publication/${id}`}>

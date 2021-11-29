@@ -196,7 +196,7 @@ export default function PublicationDetail(): JSX.Element {
 
                             </Grid>
 
-                            <Button variant="outlined" fullWidth sx={{ mt: 2 }}>
+                            <Button variant="outlined" fullWidth sx={{ marginTop: '10px' }}>
                                 Añadir al carrito
                             </Button>
 

@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ProvideAuth } from "./hooks/useAuth";
 import "./App.css";
 import { Route, Routes } from "react-router";
-import Home from "./components/home/Home";
 import { DataProvider } from "./context/DataProvider";
 import { useDispatch } from "react-redux";
 import { getPublications } from "./redux/actions/publicationActions";
@@ -16,7 +15,6 @@ import Homepage from "./components/HomePage/Homepage";
 
 const App = (): JSX.Element => {
   const dispatch = useDispatch();
-
 
   useEffect(() => {
     dispatch(getPublications())
