@@ -7,10 +7,16 @@ import { useEffect } from 'react'
 import CardPublicacion from '../HomePage/publicaciones/cardPublicaciones/cardPublicaciones'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store/store'
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 import { Link } from 'react-router-dom'
-import NavBar from '../HomePage/Header/NavBar/NavBar'
-import Footer from '../Footer'
-
+import NavBar from "../HomePage/Header/NavBar/NavBar"
+import TableRowColumn from 'material-ui/Table/TableRowColumn'
 
 interface FormUserInterface {
     photo: string;
@@ -41,6 +47,7 @@ interface FormUserInterface {
 //     key: string;
 // }
 export default function HomeUsuarios() {
+    const [flag, setFlag] = React.useState(true)
     const user = useSelector((state: RootState) => state.userSignin.userInfo)
     const [input, setInput] = React.useState<FormUserInterface>({
         photo: "",
@@ -86,7 +93,7 @@ export default function HomeUsuarios() {
                     <legend>Datos de la Cuenta</legend>
                     <div className="div-field">
                         <TextField
-                            disabled
+                            disabled={flag}
                             label="Teléfono:"
                             value={input.phone}
                             onChange={handleChange}
@@ -103,14 +110,14 @@ export default function HomeUsuarios() {
                     <legend>Datos personales</legend>
                     <div className="div-field">
                         <TextField
-                            disabled
+                            disabled={flag}
                             label="Nombre:"
                             value={input.name.firstName}
                             onChange={handleChange}
                         />
 
                         <TextField
-                            disabled={true}
+                            disabled={flag}
                             label="Apellido:"
                             value={input.name.lastName}
                             onChange={handleChange}
@@ -118,7 +125,7 @@ export default function HomeUsuarios() {
                     </div>
                     <div className="div-field">
                         <TextField
-                            disabled
+                            disabled={flag}
                             label="DNI:"
                             value={input.dni}
                             onChange={handleChange}
@@ -128,14 +135,14 @@ export default function HomeUsuarios() {
                     <legend>Domicilio</legend>
                     <div className="div-field">
                         <TextField
-                            disabled
+                            disabled={flag}
                             label="Calle:"
                             value={input.calle}
                             onChange={handleChange}
                         />
 
                         <TextField
-                            disabled
+                            disabled={flag}
                             label="Número:"
                             value={input.numero}
                             onChange={handleChange}
@@ -143,14 +150,14 @@ export default function HomeUsuarios() {
                     </div>
                     <div className="div-field">
                         <TextField
-                            disabled
+                            disabled={flag}
                             label="Ciudad:"
                             value={input.ciudad}
                             onChange={handleChange}
                         />
 
                         <TextField
-                            disabled
+                            disabled={flag}
                             label="Código postal:"
                             value={input.cp}
                             onChange={handleChange}
@@ -158,7 +165,7 @@ export default function HomeUsuarios() {
                     </div>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                         <button onClick={handleClickEdit}>guardar</button>
-                        <button onClick={handleClickEdit}>editar</button>
+                        <button onClick={(e) => { e.preventDefault(); setFlag(!flag) }}>editar</button>
                     </div>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                         <Link to="/nueva-publicacion">
@@ -168,20 +175,59 @@ export default function HomeUsuarios() {
                     </div>
                 </Box>
                 <div>
-                    <h3>Publicaciones</h3>
+                    <div style={{ display: "flex", justifyContent: "center" }}>
+
+                        <h3>Publicaciones</h3>
+                    </div>
                     {input.publications.length > 0 ?
-                        input.publications.map((e) => {
-                            return (<div><CardPublicacion id={e._id} name={e.name} author={e.author} images={e.images} mark={e.mark} stock={e.stock} price={e.price} categorie={e.categorie} detail={e.detail} gender={e.gender} key={e._id} />
-                                <Link to={`/actualizar-publicacion/${e._id}`}><button>Actualizar</button></Link>
-                            </div>)
-                        }) :
-                        <h4>No se han realizado publicaciones</h4>}
+                        <TableContainer component={Paper}>
+                            <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Nombre de articulo</TableCell>
+                                        <TableCell align="right">Marca</TableCell>
+                                        <TableCell align="right">Categoria</TableCell>
+                                        <TableCell align="right">Genero</TableCell>
+                                        <TableCell align="right">Precio</TableCell>
+                                        <TableCell align="right">#</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {input.publications.map((e) => (
+
+                                        <TableRow
+                                            key={e.name}
+                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                        >
+                                            <TableCell component="th" scope="row">
+                                                {e.name}
+                                            </TableCell>
+                                            <TableCell align="right">{e.mark}</TableCell>
+                                            <TableCell align="right">{e.category}</TableCell>
+                                            <TableCell align="right">{e.gender}</TableCell>
+                                            <TableCell align="right">{e.price}</TableCell>
+                                            <TableCell align="right"> <Link to={`/actualizar-publicacion/${e._id}`}><button>Actualizar</button></Link></TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                        :
+                        <div style={{ display: "flex", justifyContent: "center" }}>
+                            <h4>No se han realizado publicaciones</h4>
+                        </div>
+                    }
                 </div>
                 <div>
-                    <h3>Compras</h3>
+                    <div style={{ display: "flex", justifyContent: "center" }}>
+                        <h3>Compras</h3>
+                    </div>
                     {input.shopping.length > 0 ?
                         input.shopping.map((e) => { return (<CardPublicacion id={e._id} name={e.name} author={e.author} images={e.images} mark={e.mark} stock={e.stock} price={e.price} categorie={e.categorie} detail={e.detail} gender={e.gender} key={e._id} />) }) :
-                        <h4>No se han realizado Compras</h4>}
+                        <div style={{ display: "flex", justifyContent: "center" }}>
+                            <h4>No se han realizado Compras</h4>
+                        </div>
+                    }
                 </div>
             </Box>
         </Box>)
