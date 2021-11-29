@@ -49,14 +49,15 @@ export default function CardPublicacion(props: Props) {
     }, [cart, dispatch])
     const handleAddToCart = (clickedItem: CartItemType) => {
         setCart(() => {
-            const isItemInCart = cart.find((item) => item.id === clickedItem.id);
+            let aux: any = localStorage.getItem("cart")
+            if (typeof aux === "string") aux = JSON.parse(aux)
+            const isItemInCart = aux.find((item: any) => item.id === clickedItem.id);
             if (isItemInCart) {
-                console.log(cart)
                 isItemInCart.amount += 1;
-                return cart;
+                return aux;
             }
             console.log(clickedItem)
-            return [...cart, { ...clickedItem, amount: 1 }];
+            return [...aux, { ...clickedItem, amount: 1 }];
         });
     };
     return (

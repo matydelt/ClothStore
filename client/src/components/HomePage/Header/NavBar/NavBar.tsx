@@ -21,6 +21,7 @@ const NavBar = () => {
         <>
             <MyNavBarHeader position="static">
                 <Toolbar>
+
                     <Box
                         component='img'
                         src={Logo}
@@ -32,6 +33,7 @@ const NavBar = () => {
                             left: '0',
                             bottom: { xl: '-245%;' }
                         }}
+
                     />
                     <Box sx={{
                         display: 'flex',

@@ -29,9 +29,9 @@ const App = (): JSX.Element => {
       <ThemeProvider theme={theme}>
         <Routes>
           <Route path="/" element={<Homepage />} />
-          <Route path="nueva-publicacion" element={<CreatePublication />} />
+          <Route path="/nueva-publicacion" element={<CreatePublication />} />
           <Route
-            path="actualizar-publicacion/:publicationId"
+            path="/actualizar-publicacion/:publicationId"
             element={<CreatePublication />}
           />
           <Route

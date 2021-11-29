@@ -1,12 +1,15 @@
 import * as React from 'react'
 import { Avatar, Box } from '@material-ui/core'
 import "./HomeUsuarios.css"
-import { Badge, Card, TextField } from '@mui/material'
+import { TextField } from '@mui/material'
 import axios from 'axios'
 import { useEffect } from 'react'
 import CardPublicacion from '../HomePage/publicaciones/cardPublicaciones/cardPublicaciones'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store/store'
+import { Link } from 'react-router-dom'
+import NavBar from '../HomePage/Header/NavBar/NavBar'
+import Footer from '../Footer'
 
 
 interface FormUserInterface {
@@ -71,101 +74,115 @@ export default function HomeUsuarios() {
         console.log(input)
     }
     return (
-        <Box>
-            <Box component="form" className="form-home-usuario">
+        <Box style={{ display: "flex", flexDirection: "column" }}>
 
-                <label>Mis Datos</label>
-                <Avatar alt={input?.photo ? input.photo : input?.name.firstName[0]} className="avatar-usuario">{input.name.firstName[0]} </Avatar>
+            <Box>
+                <NavBar></NavBar>
+                <Box component="form" className="form-home-usuario">
 
-                <legend>Datos de la Cuenta</legend>
-                <div className="div-field">
-                    <TextField
-                        disabled
-                        label="Teléfono:"
-                        value={input.phone}
-                        onChange={handleChange}
-                    />
-                    <TextField
-                        disabled
-                        label="E-mail:"
-                        value={input.email}
-                        onChange={handleChange}
-                    />
-                </div>
+                    <label>Mis Datos</label>
+                    <Avatar alt={input?.photo ? input.photo : input?.name.firstName[0]} className="avatar-usuario">{input.name.firstName[0]} </Avatar>
+
+                    <legend>Datos de la Cuenta</legend>
+                    <div className="div-field">
+                        <TextField
+                            disabled
+                            label="Teléfono:"
+                            value={input.phone}
+                            onChange={handleChange}
+                        />
+                        <TextField
+                            disabled
+                            label="E-mail:"
+                            value={input.email}
+                            onChange={handleChange}
+                        />
+                    </div>
 
 
-                <legend>Datos personales</legend>
-                <div className="div-field">
-                    <TextField
-                        disabled
-                        label="Nombre:"
-                        value={input.name.firstName}
-                        onChange={handleChange}
-                    />
+                    <legend>Datos personales</legend>
+                    <div className="div-field">
+                        <TextField
+                            disabled
+                            label="Nombre:"
+                            value={input.name.firstName}
+                            onChange={handleChange}
+                        />
 
-                    <TextField
-                        disabled={true}
-                        label="Apellido:"
-                        value={input.name.lastName}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="div-field">
-                    <TextField
-                        disabled
-                        label="DNI:"
-                        value={input.dni}
-                        onChange={handleChange}
-                    />
-                </div>
+                        <TextField
+                            disabled={true}
+                            label="Apellido:"
+                            value={input.name.lastName}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="div-field">
+                        <TextField
+                            disabled
+                            label="DNI:"
+                            value={input.dni}
+                            onChange={handleChange}
+                        />
+                    </div>
 
-                <legend>Domicilio</legend>
-                <div className="div-field">
-                    <TextField
-                        disabled
-                        label="Calle:"
-                        value={input.calle}
-                        onChange={handleChange}
-                    />
+                    <legend>Domicilio</legend>
+                    <div className="div-field">
+                        <TextField
+                            disabled
+                            label="Calle:"
+                            value={input.calle}
+                            onChange={handleChange}
+                        />
 
-                    <TextField
-                        disabled
-                        label="Número:"
-                        value={input.numero}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="div-field">
-                    <TextField
-                        disabled
-                        label="Ciudad:"
-                        value={input.ciudad}
-                        onChange={handleChange}
-                    />
+                        <TextField
+                            disabled
+                            label="Número:"
+                            value={input.numero}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="div-field">
+                        <TextField
+                            disabled
+                            label="Ciudad:"
+                            value={input.ciudad}
+                            onChange={handleChange}
+                        />
 
-                    <TextField
-                        disabled
-                        label="Código postal:"
-                        value={input.cp}
-                        onChange={handleChange}
-                    />
+                        <TextField
+                            disabled
+                            label="Código postal:"
+                            value={input.cp}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <button onClick={handleClickEdit}>guardar</button>
+                        <button onClick={handleClickEdit}>editar</button>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <Link to="/nueva-publicacion">
+
+                            <button>Publica!</button>
+                        </Link>
+                    </div>
+                </Box>
+                <div>
+                    <h3>Publicaciones</h3>
+                    {input.publications.length > 0 ?
+                        input.publications.map((e) => {
+                            return (<div><CardPublicacion id={e._id} name={e.name} author={e.author} images={e.images} mark={e.mark} stock={e.stock} price={e.price} categorie={e.categorie} detail={e.detail} gender={e.gender} key={e._id} />
+                                <Link to={`/actualizar-publicacion/${e._id}`}><button>Actualizar</button></Link>
+                            </div>)
+                        }) :
+                        <h4>No se han realizado publicaciones</h4>}
                 </div>
                 <div>
-                    <button onClick={handleClickEdit}>guardar</button>
-                    <button onClick={handleClickEdit}>editar</button>
+                    <h3>Compras</h3>
+                    {input.shopping.length > 0 ?
+                        input.shopping.map((e) => { return (<CardPublicacion id={e._id} name={e.name} author={e.author} images={e.images} mark={e.mark} stock={e.stock} price={e.price} categorie={e.categorie} detail={e.detail} gender={e.gender} key={e._id} />) }) :
+                        <h4>No se han realizado Compras</h4>}
                 </div>
             </Box>
-            <div>
-                <h3>Publicaciones</h3>
-                {input.publications.length > 0 ?
-                    input.publications.map((e) => { return (<CardPublicacion id={e._id} name={e.name} author={e.author} images={e.images} mark={e.mark} stock={e.stock} price={e.price} categorie={e.categorie} detail={e.detail} gender={e.gender} key={e._id} />) }) :
-                    <h4>No se han realizado publicaciones</h4>}
-            </div>
-            <div>
-                <h3>Compras</h3>
-                {input.shopping.length > 0 ?
-                    input.shopping.map((e) => { return (<CardPublicacion id={e._id} name={e.name} author={e.author} images={e.images} mark={e.mark} stock={e.stock} price={e.price} categorie={e.categorie} detail={e.detail} gender={e.gender} key={e._id} />) }) :
-                    <h4>No se han realizado Compras</h4>}
-            </div>
         </Box>)
 }
