@@ -1,0 +1,12 @@
+.form-home-usuario {
+  display: grid;
+  justify-content: center;
+  margin-top: 20px;
+}
+.div-field {
+  margin-top: 8px;
+}
+.avatar-usuario {
+  width: 200px !important;
+  height: 200px !important;
+}
