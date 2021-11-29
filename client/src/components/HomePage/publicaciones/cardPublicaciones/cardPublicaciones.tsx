@@ -31,7 +31,7 @@ type Props = {
     id: string;
 }
 export default function CardPublicacion(props: Props) {
-    const [cart, setCart] = useLocalStorage<CartType>("cart", []);
+    const [cart, setCart] = useLocalStorage<CartType | undefined>("cart", []);
     const { name, images, price, categorie, id, stock } = props
     const dispatch = useDispatch()
 
@@ -50,6 +50,7 @@ export default function CardPublicacion(props: Props) {
     const handleAddToCart = (clickedItem: CartItemType) => {
         setCart(() => {
             let aux: any = localStorage.getItem("cart")
+            console.log(typeof aux)
             if (typeof aux === "string") aux = JSON.parse(aux)
             const isItemInCart = aux.find((item: any) => item.id === clickedItem.id);
             if (isItemInCart) {

@@ -10,6 +10,7 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store/store';
 import { User } from '../../redux/reducer/stateTypes';
+import NavBar from '../HomePage/Header/NavBar/NavBar';
 // import { useAuth } from '../../hooks/useAuth';
 
 interface CreatePublicationForm {
@@ -102,7 +103,7 @@ export default function CreatePublication(): JSX.Element {
   return (<>
 
     <Box sx={{ backgroundColor: '#eeeeee', minHeight: '105vh', height: 'max-content' }}>
-
+      <NavBar></NavBar>
       <Box sx={{ backgroundColor: '#f5f5f5', minHeight: '30vh' }}>
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
 
