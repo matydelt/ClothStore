@@ -1,4 +1,5 @@
 import mongoose, { Schema, model } from "mongoose";
+import { Review } from "./review";
 
 export interface Publication extends mongoose.Document {
     name: string;
@@ -11,6 +12,7 @@ export interface Publication extends mongoose.Document {
     author: Schema.Types.ObjectId;
     gender: string;
     order: string;
+    reviews: [Review];
 }
 
 
@@ -58,7 +60,11 @@ const PublicationSchema = new Schema({
     },
     order: {
         type: String,
-    }
+    },
+    reviews: {
+        type: ["Review"],
+        ref: "Review",
+      },
 })
 
 export default model<Publication>("Publication", PublicationSchema);

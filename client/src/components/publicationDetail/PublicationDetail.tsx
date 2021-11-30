@@ -20,6 +20,7 @@ export interface Publication {
   categorie: string;
   author: string;
   gender: "Hombre" | "Mujer" | "Niños";
+  reviews: any[];
   __v: number;
 }
 
@@ -53,6 +54,12 @@ export default function PublicationDetail(): JSX.Element {
     setImageShow(img)
   }
 
+  const scoreAverage = (): number | undefined => {
+    if (publication) {
+      const sum = publication?.reviews.reduce((partial_sum, r) => partial_sum + r.score, 0);
+      return Math.round(sum / publication?.reviews?.length);
+    }
+};
 
 
   return (<>
@@ -146,10 +153,10 @@ export default function PublicationDetail(): JSX.Element {
 
                 <Box component="div" sx={{ alignItems: 'center', display: 'flex', mt: 0.2 }}>
                   <Reviews>
-                    <Rating name="read-only" defaultValue={1} value={1} readOnly />
+                    <Rating name="read-only" value={scoreAverage()} readOnly />
                   </Reviews>
                   <Typography component="span" sx={{ fontSize: '10px', color: 'gray', ml: 1 }}>
-                    3 opiniones
+                    {publication?.reviews.length} opiniones
                   </Typography>
                 </Box>
 
