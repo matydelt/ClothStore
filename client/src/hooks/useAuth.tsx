@@ -16,10 +16,6 @@ interface signProps {
   password: string;
 }
 
-interface ProvideAuthProps {
-  children: React.ReactNode;
-}
-
 interface ContextInterface {
   user: User | undefined;
   signin: ({ email, password }: signProps) => Promise<User | undefined>;
@@ -28,16 +24,20 @@ interface ContextInterface {
   googleSignin: () => Promise<User | undefined>;
 }
 
-const authContext: React.Context<any> = createContext(null);
+const authContext = createContext<ContextInterface>(null!);
 
 const provider = new GoogleAuthProvider();
 
-export function ProvideAuth({ children }: ProvideAuthProps): JSX.Element {
+export function ProvideAuth({
+  children,
+}: {
+  children: React.ReactNode;
+}): JSX.Element {
   const auth = useProvideAuth();
   return <authContext.Provider value={auth}>{children}</authContext.Provider>;
 }
 
-export const useAuth = (): ContextInterface => {
+export const useAuth = () => {
   return useContext(authContext);
 };
 

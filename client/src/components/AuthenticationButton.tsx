@@ -1,21 +1,15 @@
-import React from "react";
-import LoginButton from "./LoginButton";
-import LogoutButton from "./LogoutButton";
 import { useAuth } from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
-// ejemplo
-const user = {
-  email: "lautaro@gmail.com",
-  password: "123456",
-};
-
-const AuthenticationButton = (): JSX.Element => {
+const AuthenticationButton = () => {
   const auth = useAuth();
-  return auth.user ? (
-    <LogoutButton />
-  ) : (
-    <LoginButton email={user.email} password={user.password} />
-  );
+  const navigate = useNavigate();
+
+  if (auth.user) {
+    return <button onClick={auth.signout}>Cerrar Sesión</button>;
+  } else {
+    return <button onClick={() => navigate("/login")}>Iniciar Sesión</button>;
+  }
 };
 
 export default AuthenticationButton;
