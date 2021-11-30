@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { Avatar, Button, Container, FormControl, Grid, MenuItem, Select, Typography, Rating, CircularProgress } from '@mui/material';
+import { Avatar, Container, Grid, Typography, Rating, CircularProgress } from '@mui/material';
+import { FormControl, Select, Button, MenuItem } from '@material-ui/core'
 import { Box } from '@mui/system';
 import axios from 'axios';
 import { useParams } from 'react-router';
 import { FavoriteBorderOutlined } from '@mui/icons-material';
 import Reviews from './reviews/Reviews';
+import { makeStyles } from '@material-ui/styles';
 // import { Publication } from '../../redux/reducer/stateTypes';
 
-
+const useStyles = makeStyles({
+  root: {
+    marginTop: '15px'
+  }
+})
 export interface Publication {
   _id: string;
   name: string;
@@ -32,6 +38,7 @@ export default function PublicationDetail(): JSX.Element {
 
   const { publicationId } = useParams();
 
+  const classes = useStyles()
 
   useEffect(() => {
     if (publicationId && publicationId.length > 0) {
@@ -45,7 +52,7 @@ export default function PublicationDetail(): JSX.Element {
         setLoading(false);
       });
     }
-  }, []);
+  }, [publicationId]);
 
 
   function imageToShow(img: string): void {
@@ -206,7 +213,7 @@ export default function PublicationDetail(): JSX.Element {
                       </FormControl>
 
                     </Grid>
-                    <Button variant="outlined" fullWidth sx={{ mt: 4 }}>
+                    <Button variant="outlined" fullWidth color='primary' classes={{root: classes.root}}>
                       Añadir al carrito
                     </Button>
                   </Grid>

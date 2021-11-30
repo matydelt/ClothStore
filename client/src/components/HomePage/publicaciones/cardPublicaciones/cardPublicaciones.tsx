@@ -6,8 +6,10 @@ import { Link } from "react-router-dom";
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia'
 import CardContent from '@mui/material/CardContent'
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import IconButton from '@mui/material/IconButton'
+// import IconButton from '@mui/material/IconButton'
+import IconButton from '@material-ui/core/IconButton';
+// import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import InfoIcon from '@mui/icons-material/Info';
 import Grid from '@mui/material/Grid'
 import { CartItemType, CartType } from "../../../../pages/CartScreen";
@@ -60,8 +62,8 @@ export default function CardPublicacion(props: Props) {
         });
     };
     return (
-        <Grid item xs={12} sm={6} md={4} lg={3} xl={3}>
-            <Card className='cardMain' sx={{ height: {lg: '400px', xl: '400px'}, width: {lg: 195, xl: 265}, borderBottom: '2px solid #00c2cb' }} >
+        <Grid item xs={12} sm={6} md={4} lg={3} xl={4}>
+            <Card className='cardMain' sx={{ height: {lg: '400px', xl: '400px'}, width: {lg: 195, xl: '260px'}, borderBottom: '2px solid #00c2cb' }} >
                 <CardMedia className='showButton_Cart_Info' sx={{ overflow: 'hidden', height: '75%' }}>
                     <Carousel
                         className='Carousel-root-1 CarouselItem'
@@ -72,11 +74,11 @@ export default function CardPublicacion(props: Props) {
                     </Carousel>
 
                     <Box className='noshowButton_Cart_Info' sx={{ display: 'flex', justifyContent: 'center' }}>
-                        <IconButton aria-label='Add to Cart' sx={{ backgroundColor: '#00c2cb', borderRadius: '50%' }} size='large' color="primary" onClick={() => handleAddToCart(item)}>
+                        <IconButton aria-label='Add to Cart' size='medium' color="primary" onClick={() => handleAddToCart(item)}>
                             <ShoppingCartIcon />
                         </IconButton>
                         <Link to={`/publication/${id}`}>
-                            <IconButton sx={{ backgroundColor: '#00c2cb' }} size='large' color="primary">
+                            <IconButton color='primary' size='medium'>
                                 <InfoIcon />
                             </IconButton>
                         </Link>
@@ -104,7 +106,7 @@ function Item(props: any) {
                         height: {xs: '100%', sm: '100%', md: '100%', lg: '280px', xl: "280px"},
                         width: {xs: '100%', sm: '100%', md: '100%', lg: '230px', xl: "230px"},
                         borderRadius: "3px",
-                        objectFit: 'cover'
+                        objectFit: 'contain'
                     }}
                 />
             </Box>

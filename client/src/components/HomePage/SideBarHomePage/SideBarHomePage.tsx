@@ -7,7 +7,7 @@ const SideBarHomePage = () => {
         component='aside'
         sx={{
             width: '40%',
-            marginTop: '20px'
+            marginTop: '20px',
         }}
         >
             

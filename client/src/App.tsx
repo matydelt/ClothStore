@@ -8,7 +8,8 @@ import CartScreen from "./pages/CartScreen";
 import { useDispatch } from "react-redux";
 import { cartLength, getPublications } from "./redux/actions/publicationActions";
 import CreatePublication from "./components/createPublication/CreatePublication";
-import { ThemeProvider } from "@mui/material/styles";
+// import { ThemeProvider } from "@mui/material/styles";
+import { MuiThemeProvider } from '@material-ui/core/styles';
 import theme from "./components/controllers/themeConfig";
 import Homepage from "./components/HomePage/Homepage";
 import PublicationDetail from "./components/publicationDetail/PublicationDetail";
@@ -26,7 +27,7 @@ const App = (): JSX.Element => {
   }, [dispatch])
   return (
     <ProvideAuth>
-      <ThemeProvider theme={theme}>
+      <MuiThemeProvider theme={theme}>
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="nueva-publicacion" element={<CreatePublication />} />
@@ -43,7 +44,7 @@ const App = (): JSX.Element => {
           <Route path="/cart" element={<CartScreen />}></Route>
           <Route path="/perfil" element={<HomeUsuarios />} />
         </Routes>
-      </ThemeProvider>
+      </MuiThemeProvider>
     </ProvideAuth>
   );
 };
