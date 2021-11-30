@@ -10,13 +10,14 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store/store';
 import { User } from '../../redux/reducer/stateTypes';
+import NavBar from '../HomePage/Header/NavBar/NavBar';
 // import { useAuth } from '../../hooks/useAuth';
 
 interface CreatePublicationForm {
   name: string,
   detail: string,
   mark: string,
-  categorie: string,
+  category: string,
   gender: string,
   stock: 0,
   price: 0,
@@ -32,7 +33,7 @@ export default function CreatePublication(): JSX.Element {
     name: '',
     detail: '',
     mark: '',
-    categorie: '',
+    category: '',
     gender: '',
     stock: 0,
     price: 0,
@@ -42,7 +43,7 @@ export default function CreatePublication(): JSX.Element {
 
   const [loadingImage, setLoadingImage] = useState<boolean>(false);
 
-  const { name, detail, mark, stock, price, categorie, gender, images } = form;
+  const { name, detail, mark, stock, price, category, gender, images } = form;
 
   // const auth = useAuth();
 
@@ -75,7 +76,7 @@ export default function CreatePublication(): JSX.Element {
 
     axios.post('http://localhost:3001/publications/new', form, { params: { publicationId } }).then(({ data }) => {
       console.log(data);
-      navigate(`/${data}`)
+      navigate(`/publication/${data}`)
       // setForm({
       //     name: '',
       //     detail: '',
@@ -98,11 +99,11 @@ export default function CreatePublication(): JSX.Element {
   }
 
 
-
+  console.log(form)
   return (<>
 
     <Box sx={{ backgroundColor: '#eeeeee', minHeight: '105vh', height: 'max-content' }}>
-
+      <NavBar></NavBar>
       <Box sx={{ backgroundColor: '#f5f5f5', minHeight: '30vh' }}>
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
 
@@ -194,8 +195,8 @@ export default function CreatePublication(): JSX.Element {
                 <InputLabel id="demo-simple-select-standard-label">Categoría</InputLabel>
                 <Select
                   onChange={handleForm}
-                  value={categorie}
-                  name="categorie"
+                  value={category}
+                  name="category"
                   labelId="demo-simple-select-standard-label"
                   id="demo-simple-select-standard"
                   label="Categoría"
@@ -281,7 +282,7 @@ export default function CreatePublication(): JSX.Element {
             <Grid item xs={12} sx={{ justifyContent: 'center', display: 'flex' }}>
 
               <Button
-                disabled={!name || !mark || !detail || price < 1 || images.length < 1 || !gender || !categorie}
+                disabled={!name || !mark || !detail || price < 1 || images.length < 1 || !gender || !category}
                 type="submit"
                 sx={{ backgroundColor: "primary", my: 7 }}
               >

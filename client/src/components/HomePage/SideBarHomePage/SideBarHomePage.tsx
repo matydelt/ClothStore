@@ -6,7 +6,7 @@ const SideBarHomePage = () => {
         <Box
         component='aside'
         sx={{
-            width: '20%',
+            width: '40%',
             marginTop: '20px'
         }}
         >
