@@ -24,6 +24,18 @@ const App = (): JSX.Element => {
   useEffect(() => {
     dispatch(cartLength())
   }, [dispatch])
+  useEffect(() => {
+    let cart = localStorage.getItem("cart")
+    if (cart) {
+      cart = JSON.parse(cart)
+      if (!Array.isArray(cart)) {
+        localStorage.setItem("cart", "[]")
+      }
+    } else {
+      localStorage.setItem("cart", "[]")
+    }
+
+  }, [dispatch])
   return (
     <ProvideAuth>
       <ThemeProvider theme={theme}>
@@ -35,7 +47,7 @@ const App = (): JSX.Element => {
             element={<CreatePublication />}
           />
           <Route
-            path="/:publicationId"
+            path="/publication/:publicationId"
             element={<PublicationDetail />}
           />
           <Route path="/register" element={<RegisterScreen />}></Route>

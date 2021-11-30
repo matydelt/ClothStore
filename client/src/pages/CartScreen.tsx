@@ -1,6 +1,8 @@
 import * as React from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 import CartItem from "../components/CartItem";
+import { Button } from "@mui/material";
+import NavBar from "../components/HomePage/Header/NavBar/NavBar";
 
 export type CartItemType = {
   id: string;
@@ -50,6 +52,7 @@ const CartScreen = () => {
 
   return (
     <div>
+      <NavBar></NavBar>
       <h2>Shopping Cart</h2>
       {cart.length === 0 ? <p>No items</p> : null}
       {cart.map((item) => (
@@ -60,7 +63,11 @@ const CartScreen = () => {
           removeFromCart={handleRemoveFromCart}
         />
       ))}
-      <h2>Total: $ {calculateTotal().toFixed(2)}</h2>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+
+        <h2 style={{ marginRight: "30px" }}>Total: $ {calculateTotal().toFixed(2)}</h2>
+        <Button>pagar</Button>
+      </div>
     </div>
   );
 };

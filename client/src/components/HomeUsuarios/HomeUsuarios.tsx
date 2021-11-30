@@ -48,6 +48,11 @@ interface FormUserInterface {
 export default function HomeUsuarios() {
     const [flag, setFlag] = React.useState(true)
     const user = useSelector((state: RootState) => state.userSignin.userInfo)
+    const [name, setName] = React.useState<Name>({
+        firstName: "",
+        lastName: ""
+    })
+    type Name = { firstName: string, lastName: string }
     const [input, setInput] = React.useState<FormUserInterface>({
         photo: "",
         phone: "",
@@ -66,14 +71,24 @@ export default function HomeUsuarios() {
     });
     useEffect(() => {
         async function getOneUser() {
-            await axios.get(`http://localhost:3001/auth/${user?._id}`).then(({ data }) => setInput({ ...input, ...data }))
+            await axios.get(`http://localhost:3001/auth/${user?._id}`).then(({ data }) => {
+                setInput({ ...input, ...data })
+                setName(data.name)
+            })
         }
         getOneUser()
     }, [])
 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setInput({ ...input, [e.target.name]: e.target.value });
+        if (e.target.name === "firstName") {
+
+            setName({ ...name, [e.target.name]: e.target.value });
+        } else if (e.target.name === "lastName") {
+            setName({ ...name, ["lastName"]: e.target.value });
+        } else {
+            setInput({ ...input, [e.target.name]: e.target.value });
+        }
     };
     function handleClickEdit(e: React.SyntheticEvent) {
         e.preventDefault()
@@ -92,7 +107,7 @@ export default function HomeUsuarios() {
                     <legend>Datos de la Cuenta</legend>
                     <div className="div-field">
                         <TextField
-                        type="text"
+                            name='phone'
                             disabled={flag}
                             label="Teléfono:"
                             value={input.phone}
@@ -110,21 +125,24 @@ export default function HomeUsuarios() {
                     <legend>Datos personales</legend>
                     <div className="div-field">
                         <TextField
+                            name='firstName'
                             disabled={flag}
                             label="Nombre:"
-                            value={input.name.firstName}
+                            value={name.firstName}
                             onChange={handleChange}
                         />
 
                         <TextField
+                            name='lastName'
                             disabled={flag}
                             label="Apellido:"
-                            value={input.name.lastName}
+                            value={name.lastName}
                             onChange={handleChange}
                         />
                     </div>
                     <div className="div-field">
                         <TextField
+                            name='dni'
                             disabled={flag}
                             label="DNI:"
                             value={input.dni}
@@ -135,6 +153,7 @@ export default function HomeUsuarios() {
                     <legend>Domicilio</legend>
                     <div className="div-field">
                         <TextField
+                            name='calle'
                             disabled={flag}
                             label="Calle:"
                             value={input.calle}
@@ -142,6 +161,8 @@ export default function HomeUsuarios() {
                         />
 
                         <TextField
+                            name='numero'
+
                             disabled={flag}
                             label="Número:"
                             value={input.numero}
@@ -150,6 +171,7 @@ export default function HomeUsuarios() {
                     </div>
                     <div className="div-field">
                         <TextField
+                            name='ciudad'
                             disabled={flag}
                             label="Ciudad:"
                             value={input.ciudad}
@@ -157,6 +179,7 @@ export default function HomeUsuarios() {
                         />
 
                         <TextField
+                            name='cp'
                             disabled={flag}
                             label="Código postal:"
                             value={input.cp}
