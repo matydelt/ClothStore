@@ -92,6 +92,7 @@ export default function HomeUsuarios() {
                     <legend>Datos de la Cuenta</legend>
                     <div className="div-field">
                         <TextField
+                        type="text"
                             disabled={flag}
                             label="Teléfono:"
                             value={input.phone}
