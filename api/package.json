@@ -24,6 +24,7 @@
     "mongoose": "^6.0.13",
     "morgan": "~1.9.1",
     "nodemon": "^2.0.15",
+    "stripe": "^8.191.0",
     "ts-node-dev": "^1.1.8"
   },
   "devDependencies": {
