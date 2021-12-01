@@ -9,13 +9,19 @@ export type Action = {
   cartPayload?: any
 };
 
-export const getPublications = () => async (dispatch: Dispatch<Action>) => {
+export const getPublications = (
+  { name, order, page,}:{ name: string; order: string; page: string;},
+  { mark, category, gender, price, author }:{ mark: string; category: string; gender: string; price: string; author: string; }
+) => async (dispatch: Dispatch<Action>) => {
   dispatch({ type: "PUBLICATION_LIST_REQUEST" });
   try {
-    const response = await axios.get("/publications");
+    let filter :object;
+    filter = { mark, category, gender, price, author };
+    const response = await axios.get(`/publications?order=${order?order:""}&name=${name?name:""}&page=${page?page:1}`, filter);
     dispatch({
       type: "PUBLICATION_LIST_SUCCESS",
       payload: { success: response.data },
+      cartPayload: filter,
     });
   } catch (error) {
     dispatch({

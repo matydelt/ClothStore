@@ -5,14 +5,14 @@ import { Route, Routes } from "react-router";
 import RegisterScreen from "./pages/RegisterScreen";
 import LoginScreen from "./pages/LoginScreen";
 import CartScreen from "./pages/CartScreen";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   cartLength,
   getPublications,
 } from "./redux/actions/publicationActions";
 import CreatePublication from "./components/createPublication/CreatePublication";
 // import { ThemeProvider } from "@mui/material/styles";
-import { MuiThemeProvider } from '@material-ui/core/styles';
+import { MuiThemeProvider } from "@material-ui/core/styles";
 import theme from "./components/controllers/themeConfig";
 import Homepage from "./components/HomePage/Homepage";
 import PublicationDetail from "./components/publicationDetail/PublicationDetail";
@@ -21,9 +21,15 @@ import RequireAuth from "./components/RequireAuth";
 
 const App = (): JSX.Element => {
   const dispatch = useDispatch();
+  const {} = useSelector((state) => state);
 
   useEffect(() => {
-    dispatch(getPublications());
+    dispatch(
+      getPublications(
+        { name: "", order: "", page: "1" },
+        { mark: "", category: "", gender: "", price: "", author: "" }
+      )
+    );
   }, [dispatch]);
 
   useEffect(() => {
