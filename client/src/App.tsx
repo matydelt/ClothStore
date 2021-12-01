@@ -21,15 +21,9 @@ import RequireAuth from "./components/RequireAuth";
 
 const App = (): JSX.Element => {
   const dispatch = useDispatch();
-  const {} = useSelector((state) => state);
 
   useEffect(() => {
-    dispatch(
-      getPublications(
-        { name: "", order: "", page: "1" },
-        { mark: "", category: "", gender: "", price: "", author: "" }
-      )
-    );
+    dispatch(getPublications({}, {}));
   }, [dispatch]);
 
   useEffect(() => {
