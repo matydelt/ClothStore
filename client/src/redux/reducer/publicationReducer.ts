@@ -1,14 +1,22 @@
 import { Action } from "../actions/publicationActions";
 import { Publication } from "./stateTypes";
 
-interface PublicationState {
+export interface PublicationState {
+  publicationList: any;
   loading?: boolean;
-  publications?: Publication[];
+  publications?: Publication[] | string | any;
   error?: string;
+  cartLength: number;
 }
 
 const publicationListReducer = (
-  state: PublicationState = {},
+  state: PublicationState = {
+    publicationList: {},
+    loading: true,
+    publications: [],
+    error: "",
+    cartLength: 0
+  },
   action: Action
 ): PublicationState => {
   switch (action.type) {
@@ -28,10 +36,20 @@ const publicationListReducer = (
 };
 
 const publicationSaveReducer = (
-  state: PublicationState = {},
+  state: PublicationState = {
+    publicationList: {},
+    loading: true,
+    publications: [],
+    error: "",
+    cartLength: 0
+  },
   action: Action
 ): PublicationState => {
   switch (action.type) {
+    case "CART_LENGTH":
+
+      return { ...state, cartLength: action.cartPayload }
+
     case "PUBLICATION_SAVE_REQUEST":
       return { ...state, loading: true };
     case "PUBLICATION_SAVE_SUCCESS":
