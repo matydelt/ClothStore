@@ -29,6 +29,7 @@ interface FormUserInterface {
     calle: string;
     numero: string;
     ciudad: string;
+    country:string;
     cp: string;
     publications: any[];
     shopping: any[];
@@ -66,6 +67,7 @@ export default function HomeUsuarios() {
         numero: "",
         ciudad: "",
         cp: "",
+        country:"",
         publications: [],
         shopping: []
     });
@@ -174,6 +176,13 @@ export default function HomeUsuarios() {
                             disabled={flag}
                             label="Ciudad:"
                             value={input.ciudad}
+                            onChange={handleChange}
+                        />
+                        <TextField
+                            name='country'
+                            disabled={flag}
+                            label="Pais:"
+                            value={input.country}
                             onChange={handleChange}
                         />
 
