@@ -6,12 +6,24 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { IconButton, Rating, Typography } from '@mui/material';
+import { Rating, Typography } from '@mui/material';
+import { IconButton, makeStyles } from '@material-ui/core';
 import CloseIcon from '@mui/icons-material/Close';
 import { Box } from '@mui/system';
 
+const useStyles = makeStyles({
+    root: {
+        position: 'absolute',
+        right: '0',
+        top: '0'
+    }
+})
+
+
 export default function Reviews({ children }: any) {
     const [open, setOpen] = React.useState(false);
+    const classes = useStyles()
+
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -32,12 +44,7 @@ export default function Reviews({ children }: any) {
                 <IconButton
                     aria-label="close"
                     onClick={handleClose}
-                    sx={{
-                        position: 'absolute',
-                        right: 8,
-                        top: 8,
-                        // color: (theme) => theme.palette.grey[500],
-                    }}
+                    classes={{root: classes.root}}
                 >
                     <CloseIcon />
                 </IconButton>
@@ -56,10 +63,10 @@ export default function Reviews({ children }: any) {
                         <Button onClick={handleClose}>Subscribe</Button>
                     </DialogActions> */}
 
-                    <Box component="div" sx={{mb: 4, textAlign: 'center'}}>
+                    <Box component="div" sx={{ mb: 4, textAlign: 'center' }}>
                         <Typography variant="h3" sx={{}}>1</Typography>
                         <Rating name="read-only" defaultValue={1} value={1} readOnly size="large" />
-                        <Typography component="p" sx={{fontSize: '10px', color: 'gray'}}>Promedio entre 3 opiniones</Typography>
+                        <Typography component="p" sx={{ fontSize: '10px', color: 'gray' }}>Promedio entre 3 opiniones</Typography>
                     </Box>
 
 

@@ -2,19 +2,21 @@ import React, { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { registerUser } from "../redux/actions/userActions";
 import { useDispatch } from "react-redux";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
+import Avatar from "@material-ui/core/Avatar";
+import { Button } from "@material-ui/core";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 // import FormControlLabel from "@mui/material/FormControlLabel";
 // import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
+// import Link from "@mui/material/Link";
+import { Link } from "@material-ui/core"
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { makeStyles } from '@material-ui/core/styles';
 
 type FormState = {
   firstName: string;
@@ -23,6 +25,17 @@ type FormState = {
   password: string;
   confirmPassword: string;
 };
+
+const useStyles = makeStyles({
+  root: {
+    marginTop: '10px',
+    marginBottom: '10px'
+  },
+  avatarLock: {
+    backgroundColor: '#f1f1f1'
+  }
+})
+
 
 const theme = createTheme();
 
@@ -34,6 +47,8 @@ const RegisterForm = () => {
     password: "",
     confirmPassword: "",
   });
+
+  const classes = useStyles();
 
   const dispatch = useDispatch();
 
@@ -72,8 +87,8 @@ const RegisterForm = () => {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
+          <Avatar classes={{root: classes.avatarLock}}>
+            <LockOutlinedIcon color='primary'/>
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign up
@@ -165,7 +180,9 @@ const RegisterForm = () => {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              classes={{
+                root: classes.root
+              }}
               disabled={
                 input.confirmPassword !== input.password ||
                 input.password.length < 6

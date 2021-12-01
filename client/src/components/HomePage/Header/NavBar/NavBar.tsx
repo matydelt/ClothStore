@@ -3,13 +3,13 @@ import ButtonsNav from '../../../GeneralComponents/ButtonsNav'
 import { Link } from 'react-router-dom'
 import Logo from '../../../assets/logo/ClothStore_logotipo_sin_fondo.png';
 import Toolbar from '@mui/material/Toolbar'
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import IconButton from '@mui/material/IconButton'
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import IconButton from '@material-ui/core/IconButton';
 import {
     MyNavBarHeader,
 } from '../NavBar/NavBarStyles'
-import Box from '@mui/material/Box';
-import Badge from '@mui/material/Badge';
+import { Box } from '@mui/system';
+import Badge from '@material-ui/core/Badge';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/store/store';
 
@@ -24,6 +24,7 @@ const NavBar = () => {
 
                     <Box
                         component='img'
+                        
                         src={Logo}
                         alt='ClothStore'
                         sx={{
@@ -53,7 +54,7 @@ const NavBar = () => {
                         <Box sx={{ marginRight: { lg: '16px', xl: '25px' } }}>
                             <Box
                                 component='a'
-                                href="#"
+                                href="#tienda"
                                 className='buttonLink colorPrimary textDecoration'
                                 sx={{ fontSize: { xl: '25px' } }}
                             >
@@ -73,9 +74,9 @@ const NavBar = () => {
 
                     <Box sx={{ transform: 'translateX(-50%)', display: 'flex', alignItems: 'center' }}>
                         <Link to="/cart">
-                            <IconButton size='large' color="primary">
-                                <Badge badgeContent={cartLength} color="primary">
-                                    <ShoppingCartIcon />
+                            <IconButton size='medium' color='secondary'>
+                                <Badge badgeContent={cartLength} color='primary'>
+                                    <ShoppingCartIcon  />
                                 </Badge>
                             </IconButton>
                         </Link>

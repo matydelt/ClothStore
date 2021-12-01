@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  text-align      : center;
 }
 
 .textDecoration {
@@ -11,7 +11,7 @@
 }
 
 .buttonLink {
-  transition: all .4s ease-in-out;
+  transition   : all .4s ease-in-out;
   border-bottom: 1px solid transparent;
 }
 
@@ -19,10 +19,16 @@
   border-bottom: 1px solid #7ed957;
 }
 
-#root { 
+#root {
   height: 100%;
 }
-html, body {
+
+html,
+body {
   position: relative;
-  height: 100%;
+  height  : 100%;
+}
+
+html {
+  scroll-behavior: smooth;
 }
