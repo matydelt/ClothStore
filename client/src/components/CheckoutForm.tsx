@@ -55,6 +55,8 @@ export default function CheckoutForm() {
     } else {
       setMessage("An unexpected error ocurred.");
     }
+
+    setIsLoading(false);
   };
 
   return (

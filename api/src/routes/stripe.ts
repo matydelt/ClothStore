@@ -21,3 +21,5 @@ router.post("/create-payment-intent", async (req: Request, res: Response) => {
 
   res.send({ clientSecret: paymentIntent.client_secret });
 });
+
+module.exports = router;
