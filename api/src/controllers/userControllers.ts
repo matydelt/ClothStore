@@ -52,4 +52,42 @@ export default class UserController {
       res.sendStatus(500);
     }
   }
+  static async updateUser(req: Request, res: Response) {
+    try {
+      const {
+        id,
+        phone,
+        firstName,
+        lastName,
+        dni,
+        street,
+        cp,
+        city,
+        country,
+        suite,
+      } = req.body;
+      const user = await UserSchema.updateOne(
+        { _id: id },
+        {
+          $set: {
+            phone: phone,
+            firstName: firstName,
+            lastName: lastName,
+            dni: dni,
+            domicilio: {
+              street: street,
+              suite: suite,
+              city: city,
+              country: country,
+              cp: cp,
+            },
+          },
+        }
+      );
+      res.json("usuario modificado");
+    } catch (error) {
+      console.log("error en updateUser");
+      res.sendStatus(500);
+    }
+  }
 }

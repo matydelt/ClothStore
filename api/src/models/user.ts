@@ -1,6 +1,7 @@
 import mongoose, { Schema, model } from "mongoose";
 import { Publication } from "./publication";
 import { Shopping } from "./shopping";
+import { Address } from "./address";
 
 export interface User extends mongoose.Document {
   name: object;
@@ -12,7 +13,7 @@ export interface User extends mongoose.Document {
   photo: string;
   dni: string;
   userName: string;
-  domicilio: object;
+  address: [Address];
 }
 
 const UserSchema = new Schema({
@@ -68,10 +69,8 @@ const UserSchema = new Schema({
     type: String,
   },
   domicilio: {
-    calle: { type: String },
-    numero: { type: String },
-    ciudad: { type: String },
-    cp: { type: String },
+    type: ["Address"],
+    ref: "Address",
   },
 });
 
