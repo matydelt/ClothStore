@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../redux/store/store";
-import { getPublications } from "../../../redux/actions/publicationActions";
+import { putPublications } from "../../../redux/actions/publicationActions";
 import { Box } from "@mui/system";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -39,11 +39,11 @@ const SideBarHomePage = () => {
 
   const handleReset = () => {
     setSelectedValue("");
-    dispatch(getPublications({}, {}));
+    dispatch(putPublications({}, {}));
   };
 
   const handleSubmit = () => {
-    dispatch(getPublications({}, { gender: selectedValue }));
+    dispatch(putPublications({}, { gender: selectedValue }));
   };
 
   return (

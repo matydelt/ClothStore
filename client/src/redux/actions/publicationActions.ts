@@ -9,7 +9,7 @@ export type Action = {
   cartPayload?: any;
 };
 
-export const getPublications =
+export const putPublications =
   (
     {
       name = "",
@@ -33,8 +33,8 @@ export const getPublications =
   async (dispatch: Dispatch<Action>) => {
     dispatch({ type: "PUBLICATION_LIST_REQUEST" });
     try {
-      let filter: object = { mark, category, gender, price, author };
-      const response = await axios.get(
+      let filter = { mark, category, gender, price, author };
+      const response = await axios.put(
         `/publications?order=${order}&name=${name}&page=${page}`,
         filter
       );

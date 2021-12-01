@@ -5,10 +5,10 @@ import { Route, Routes } from "react-router";
 import RegisterScreen from "./pages/RegisterScreen";
 import LoginScreen from "./pages/LoginScreen";
 import CartScreen from "./pages/CartScreen";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   cartLength,
-  getPublications,
+  putPublications,
 } from "./redux/actions/publicationActions";
 import CreatePublication from "./components/createPublication/CreatePublication";
 // import { ThemeProvider } from "@mui/material/styles";
@@ -23,7 +23,7 @@ const App = (): JSX.Element => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getPublications({}, {}));
+    dispatch(putPublications({}, {}));
   }, [dispatch]);
 
   useEffect(() => {
