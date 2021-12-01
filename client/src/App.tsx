@@ -13,6 +13,7 @@ import theme from "./components/controllers/themeConfig";
 import Homepage from "./components/HomePage/Homepage";
 import PublicationDetail from "./components/publicationDetail/PublicationDetail";
 import HomeUsuarios from "./components/HomeUsuarios/HomeUsuarios";
+import { StylesProvider } from "@material-ui/styles";
 
 const App = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ const App = (): JSX.Element => {
   }, [dispatch])
   return (
     <ProvideAuth>
+      <StylesProvider injectFirst>
       <ThemeProvider theme={theme}>
         <Routes>
           <Route path="/" element={<Homepage />} />
@@ -56,6 +58,7 @@ const App = (): JSX.Element => {
           <Route path="/perfil" element={<HomeUsuarios />} />
         </Routes>
       </ThemeProvider>
+      </StylesProvider>
     </ProvideAuth>
   );
 };

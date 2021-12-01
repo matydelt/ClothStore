@@ -11,6 +11,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Box } from '@mui/system';
 import axios from 'axios';
 import { useParams } from 'react-router';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../redux/store/store';
+import { User } from '../../../redux/reducer/stateTypes';
 
 interface ReviewForm {
     score: number,
@@ -22,17 +25,19 @@ interface ReviewForm {
 
 export default function Reviews({ children }: any) {
 
+    const user = useSelector((state: RootState): User | undefined => state?.userSignin?.userInfo);
+
     const { publicationId } = useParams();
 
     const [open, setOpen] = React.useState(false);
 
     const [reviews, setReviews] = React.useState<ReviewForm[]>([]);
-
+    
     const [reviewForm, setReviewForm] = React.useState<ReviewForm>({
         score: 1,
         title: '',
         message: '',
-        authorId: '61a52f671f5dad4f32215efe',
+        authorId: user?._id || '',
         publicationId: publicationId || '',
     });
 
@@ -56,10 +61,6 @@ export default function Reviews({ children }: any) {
     };
 
     const handleReviewForm = (e: any) => {
-        console.log(e.target.value);
-        if (e.target.name === 'score') {
-            setReviewForm({ ...reviewForm, [e.target.name]: parseInt(e.target.value) });
-        }
         setReviewForm({ ...reviewForm, [e.target.name]: e.target.value });
     };
 
@@ -77,7 +78,7 @@ export default function Reviews({ children }: any) {
     };
 
     return (
-        <div>
+        <>
             <Button onClick={handleClickOpen}>
                 {children}
             </Button>
@@ -104,7 +105,7 @@ export default function Reviews({ children }: any) {
 
                         <Rating
                             name="score"
-                            value={score}
+                            value={Number(score)}
                             onChange={(e) => handleReviewForm(e)}
                         />
 
@@ -157,8 +158,8 @@ export default function Reviews({ children }: any) {
                             </Box>
 
                             {
-                                reviews?.map((review) => {
-                                    return <Box component="div" sx={{ my: 2 }}>
+                                reviews?.map((review, i) => {
+                                    return <Box component="div" key={i} sx={{ my: 2 }}>
                                         <Rating name="read-only" value={review.score} readOnly size="small" />
                                         <Typography variant="h6">{review.title}</Typography>
                                         <DialogContentText sx={{ mb: 2 }}>
@@ -172,6 +173,6 @@ export default function Reviews({ children }: any) {
 
                 </DialogContent>
             </Dialog>
-        </div >
+        </ >
     );
 }

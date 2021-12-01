@@ -1,4 +1,5 @@
 import mongoose, { Schema, model } from "mongoose";
+import { QAndA } from "./QAndA";
 import { Review } from "./review";
 
 export interface Publication extends mongoose.Document {
@@ -13,6 +14,7 @@ export interface Publication extends mongoose.Document {
     gender: string;
     order: string;
     reviews: [Review];
+    // qAndAs: any[];
 }
 
 
@@ -25,7 +27,7 @@ const PublicationSchema = new Schema({
         type: [{
             public_id: String,
             url: String,
-            _id: false 
+            _id: false
         }],
         required: true
     },
@@ -64,7 +66,11 @@ const PublicationSchema = new Schema({
     reviews: {
         type: ["Review"],
         ref: "Review",
-      },
+    },
+    // qAndAs: {
+    //     type: ["QAndA"],
+    //     ref: "QAndA",
+    // },
 })
 
 export default model<Publication>("Publication", PublicationSchema);

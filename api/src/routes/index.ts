@@ -4,6 +4,7 @@ const users = require("./users.ts")
 const publications = require("./publications")
 const cloudinary = require("./cloudinary")
 const reviews = require("./review");
+const qAndAs = require("./QAndA");
 
 
 module.exports = {
@@ -11,5 +12,6 @@ module.exports = {
     users,
     publications,
     cloudinary,
-    reviews
+    reviews,
+    qAndAs
 };
