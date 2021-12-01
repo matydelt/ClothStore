@@ -47,7 +47,7 @@ export default function PublicationDetail(): JSX.Element {
         setLoading(false);
       });
     }
-  }, []);
+  }, [publicationId]);
 
 
   function imageToShow(img: string): void {
@@ -66,7 +66,7 @@ export default function PublicationDetail(): JSX.Element {
 
     <Box sx={{ backgroundColor: '#eeeeee', minHeight: '140vh', height: 'max-content' }}>
       <NavBar></NavBar>
-      <Box sx={{ backgroundColor: '#f5f5f5', minHeight: '30vh' }}>
+      <Box sx={{ backgroundColor: '#f5f5f5', minHeight: '15vh' }}>
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
 
         </Box>
@@ -74,7 +74,7 @@ export default function PublicationDetail(): JSX.Element {
 
       <Box sx={{ mt: 0, display: 'flex', justifyContent: 'center' }}>
 
-        <Container sx={{ mt: -18, position: 'absolute' }}>
+        <Container sx={{ mt: -10, position: 'absolute' }}>
 
 
 
@@ -231,11 +231,11 @@ export default function PublicationDetail(): JSX.Element {
 
               </Grid>
 
-
-            </>}
                 <Divider sx={{ width: '100%', my: 4 }}></Divider>
 
                 <QAndA></QAndA>
+
+            </>}
 
           </Grid>
         </Container>

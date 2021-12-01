@@ -1,5 +1,5 @@
 import mongoose, { Schema, model } from "mongoose";
-import { QAndA } from "./QAndA";
+// import { QAndA } from "./QAndA";
 import { Review } from "./review";
 
 export interface Publication extends mongoose.Document {

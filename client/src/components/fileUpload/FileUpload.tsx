@@ -1,5 +1,4 @@
 import { Button } from '@mui/material';
-import React from 'react';
 import axios from 'axios';
 import Resizer from "react-image-file-resizer";
 

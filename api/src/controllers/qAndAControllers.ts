@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { FilterQuery } from "mongoose";
 import PublicationSchema, { Publication } from "../models/publication";
-import QAndASchema, { QAndA } from "../models/QAndA";
+import QAndASchema, { QAndA } from "../models/qAndA";
 
 export default class QAndAControllers {
 

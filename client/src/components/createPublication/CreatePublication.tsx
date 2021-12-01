@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Avatar, Button, Container, Badge, FormControl, Grid, Input, InputAdornment, InputLabel, MenuItem, Select, TextField, Typography, Divider, Tooltip, CircularProgress } from '@mui/material';
+import React, { BaseSyntheticEvent, useEffect, useState } from 'react';
+import { Avatar, Button, Container, Badge, FormControl, Grid, Input, InputAdornment, InputLabel, MenuItem, Select, TextField, Typography, Divider, Tooltip, CircularProgress, SelectChangeEvent } from '@mui/material';
 import { Box } from '@mui/system';
 import axios from 'axios';
 import FileUpload from '../fileUpload/FileUpload';
@@ -52,17 +52,14 @@ export default function CreatePublication(): JSX.Element {
   const navigate = useNavigate()
 
 
-  useEffect(() => {
-    setForm({...form, id: user?._id});
-    console.log(form);
+  // useEffect(() => {
+  //   setForm({...form, id: user?._id});
+  //   console.log(form);
     
-  }, []);
+  // }, [form, user?._id]);
 
 
   useEffect(() => {
-
-    console.log(user?._id)
-
     if (publicationId && publicationId.length > 0) {
       axios.get('http://localhost:3001/publication', {
         params: { publicationId: publicationId }
@@ -70,15 +67,15 @@ export default function CreatePublication(): JSX.Element {
         setForm({ ...data })
       });
     }
-  }, []);
+  }, [publicationId]);
 
 
-  function handleForm(e: any): void {
+  function handleForm(e: BaseSyntheticEvent | SelectChangeEvent<string>): void {
     if (e.target.value < 0) return;
     setForm({ ...form, [e.target.name]: e.target.value })
   }
 
-  function submitForm(e: any): void {
+  function submitForm(e: BaseSyntheticEvent): void {
     e.preventDefault();
 
     axios.post('http://localhost:3001/publications/new', form, { params: { publicationId } }).then(({ data }) => {
@@ -261,7 +258,7 @@ export default function CreatePublication(): JSX.Element {
                     }
 
                   >
-                    <a href={image.url} target="_blank">
+                    <a href={image.url} target="_blank" rel="noopener noreferrer">
                       <Avatar
                         alt="image"
                         src={image.url}

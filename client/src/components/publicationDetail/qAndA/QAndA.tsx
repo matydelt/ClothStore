@@ -57,7 +57,7 @@ export default function QAndA(): JSX.Element {
 
             { user && !(user?.publications?.find(p => p._id === publicationId)) &&
 
-                <Grid onSubmit={submitForm} component="form" container spacing={2} xs={12} sx={{ my: 3 }}>
+                <Grid onSubmit={submitForm} component="form" container spacing={2} sx={{ my: 3 }}>
                     <Grid item xs={5}>
                         <TextField
                             onChange={handleForm}
