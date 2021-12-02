@@ -12,6 +12,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import axios from "axios";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -61,7 +62,16 @@ const SideBarHomePage = () => {
 
   const handleReset = () => {
     setSelectedValueGender("");
-    dispatch(putPublications({"name": "", "order":"", "page":"","mark":"", "category":"", "gender":"", "price":"", "author":""} ));
+    dispatch(putPublications({
+      "name": "",
+      "order":"", 
+      "page":"",
+      "mark":"", 
+      "category":"",
+      "gender":"", 
+      "price":"", 
+      "author":""
+    } ));
   };
 
   const handleSubmit = () => {
@@ -73,9 +83,20 @@ const SideBarHomePage = () => {
       "category": selectedValueCategory,
       "gender": selectedValueGender,
       "price": price,
-      "author": selectedValueAuthor}));
+      "author": selectedValueAuthor
+    }));
   };
-
+  const usuarios: Array<any> = []
+  const users = async() => {
+    const response = await axios.get(`/users`)
+    let usr: Array<any>
+    usr = response.data
+    usr.forEach(e=>{
+      console.log(usuarios)
+      usuarios.push(e)
+    })
+  }
+  users();
   return (
     <Box
       component="aside"
@@ -134,6 +155,35 @@ const SideBarHomePage = () => {
               <Checkbox
                 edge="start"
                 checked={selectedValueCategory === value}
+                tabIndex={-1}
+                disableRipple
+                inputProps={{ "aria-labelledby": labelId }}
+              />
+            </ListItemIcon>
+            <ListItemText id={labelId} primary={value} />
+          </ListItem>
+        );
+      })}</List>
+      <List
+        className={classes.list}
+        subheader={<ListSubheader>Vendedor</ListSubheader>}
+      >
+      {usuarios.map((value) => {
+        const labelId = `checkbox-list-label-${value}`;
+
+        return (
+          <ListItem
+            key={value}
+            dense
+            role={undefined}
+            button
+            onClick={(event) => handleListItemClickAuthor(event, value)}
+            disabled={loading}
+          >
+            <ListItemIcon>
+              <Checkbox
+                edge="start"
+                checked={selectedValueAuthor === value}
                 tabIndex={-1}
                 disableRipple
                 inputProps={{ "aria-labelledby": labelId }}
