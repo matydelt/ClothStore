@@ -12,6 +12,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import axios from "axios";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -25,27 +26,77 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const SideBarHomePage = () => {
   const classes = useStyles();
-  const [selectedValue, setSelectedValue] = React.useState("");
-  const { loading } = useSelector((state: RootState) => state.publicationList);
+  const { loading, mark, gender, category, price, author } = useSelector((state: RootState) => state.publicationList);
+
+  const [selectedValueGender, setSelectedValueGender] = React.useState(gender);
+  const [selectedValueMark, setSelectedValueMark] = React.useState(mark);
+  const [selectedValueCategory, setSelectedValueCategory] = React.useState(category);
+  const [selectedValueAuthor, setSelectedValueAuthor] = React.useState(author);
 
   const dispatch = useDispatch();
 
-  const handleListItemClick = (
+  const handleListItemClickGender = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     value: string
   ) => {
-    setSelectedValue(value);
+    setSelectedValueGender(value);
   };
+  const handleListItemClickCategory = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    value: string
+  ) => {
+    setSelectedValueCategory(value);
+  };
+  const handleListItemClickMark = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    value: string
+  ) => {
+    setSelectedValueMark(value);
+  };
+  const handleListItemClickAuthor = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    value: string
+  ) => {
+    setSelectedValueAuthor(value);
+  };//
 
   const handleReset = () => {
-    setSelectedValue("");
-    dispatch(putPublications({}, {}));
+    setSelectedValueGender("");
+    dispatch(putPublications({
+      "name": "",
+      "order":"", 
+      "page":"",
+      "mark":"", 
+      "category":"",
+      "gender":"", 
+      "price":"", 
+      "author":""
+    } ));
   };
 
   const handleSubmit = () => {
-    dispatch(putPublications({}, { gender: selectedValue }));
+    dispatch(putPublications({
+      "name": "",
+      "order":"",
+      "page":"",
+      "mark": selectedValueMark,
+      "category": selectedValueCategory,
+      "gender": selectedValueGender,
+      "price": price,
+      "author": selectedValueAuthor
+    }));
   };
-
+  const usuarios: Array<any> = []
+  const users = async() => {
+    const response = await axios.get(`/users`)
+    let usr: Array<any>
+    usr = response.data
+    usr.forEach(e=>{
+      console.log(usuarios)
+      usuarios.push(e)
+    })
+  }
+  users();
   return (
     <Box
       component="aside"
@@ -67,13 +118,13 @@ const SideBarHomePage = () => {
               dense
               role={undefined}
               button
-              onClick={(event) => handleListItemClick(event, value)}
+              onClick={(event) => handleListItemClickGender(event, value)}
               disabled={loading}
             >
               <ListItemIcon>
                 <Checkbox
                   edge="start"
-                  checked={selectedValue === value}
+                  checked={selectedValueGender === value}
                   tabIndex={-1}
                   disableRipple
                   inputProps={{ "aria-labelledby": labelId }}
@@ -87,7 +138,61 @@ const SideBarHomePage = () => {
       <List
         className={classes.list}
         subheader={<ListSubheader>Categorias</ListSubheader>}
-      ></List>
+      >
+      {["Remera", "Patanlon", "Zapatillas", "Zapatos"].map((value) => {
+        const labelId = `checkbox-list-label-${value}`;
+
+        return (
+          <ListItem
+            key={value}
+            dense
+            role={undefined}
+            button
+            onClick={(event) => handleListItemClickCategory(event, value)}
+            disabled={loading}
+          >
+            <ListItemIcon>
+              <Checkbox
+                edge="start"
+                checked={selectedValueCategory === value}
+                tabIndex={-1}
+                disableRipple
+                inputProps={{ "aria-labelledby": labelId }}
+              />
+            </ListItemIcon>
+            <ListItemText id={labelId} primary={value} />
+          </ListItem>
+        );
+      })}</List>
+      <List
+        className={classes.list}
+        subheader={<ListSubheader>Vendedor</ListSubheader>}
+      >
+      {usuarios.map((value) => {
+        const labelId = `checkbox-list-label-${value}`;
+
+        return (
+          <ListItem
+            key={value}
+            dense
+            role={undefined}
+            button
+            onClick={(event) => handleListItemClickAuthor(event, value)}
+            disabled={loading}
+          >
+            <ListItemIcon>
+              <Checkbox
+                edge="start"
+                checked={selectedValueAuthor === value}
+                tabIndex={-1}
+                disableRipple
+                inputProps={{ "aria-labelledby": labelId }}
+              />
+            </ListItemIcon>
+            <ListItemText id={labelId} primary={value} />
+          </ListItem>
+        );
+      })}</List>
       <ButtonGroup
         variant="contained"
         aria-label="outlined primary button group"

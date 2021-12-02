@@ -7,7 +7,11 @@ export interface PublicationState {
   publications?: Publication[] | string | any;
   error?: string;
   cartLength: number;
-  filter: object;
+  mark: string;
+  category: string;
+  gender: string;
+  price: string;
+  author: string;
   name: string;
   order: string;
   page: string;
@@ -20,7 +24,11 @@ const publicationListReducer = (
     publications: [],
     error: "",
     cartLength: 0,
-    filter: { mark:'', category:'', gender:'', price:'', author:'' },
+    mark:'',
+    category:'',
+    gender:'',
+    price:'',
+    author:'',
     name: '',
     order: '',
     page: "1"
@@ -35,7 +43,11 @@ const publicationListReducer = (
         ...state,
         loading: false,
         publications: action.payload?.success,
-        filter: action.cartPayload
+        mark: action.cartPayload?.mark,
+        category: action.cartPayload?.category,
+        gender: action.cartPayload?.gender,
+        price: action.cartPayload?.price,
+        author: action.cartPayload?.author,
       };
     case "PUBLICATION_LIST_FAIL":
       return { ...state, loading: false, error: action.payload?.error };
@@ -51,7 +63,11 @@ const publicationSaveReducer = (
     publications: [],
     error: "",
     cartLength: 0,
-    filter: { mark:'', category:'', gender:'', price:'', author:'' },
+    mark:'',
+    category:'',
+    gender:'',
+    price:'',
+    author:'',
     name: '',
     order: '',
     page: "1"

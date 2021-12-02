@@ -9,47 +9,29 @@ export type Action = {
   cartPayload?: any;
 };
 
-export const putPublications =
-  (
-    {
-      name = "",
-      order = "",
-      page = "1",
-    }: { name?: string; order?: string; page?: string },
-    {
-      mark = "",
-      category = "",
-      gender = "",
-      price = "",
-      author = "",
-    }: {
-      mark?: string;
-      category?: string;
-      gender?: string;
-      price?: string;
-      author?: string;
-    }
-  ) =>
-  async (dispatch: Dispatch<Action>) => {
-    dispatch({ type: "PUBLICATION_LIST_REQUEST" });
-    try {
-      let filter = { mark, category, gender, price, author };
-      const response = await axios.put(
-        `/publications?order=${order}&name=${name}&page=${page}`,
-        filter
-      );
-      dispatch({
-        type: "PUBLICATION_LIST_SUCCESS",
-        payload: { success: response.data },
-        cartPayload: filter,
-      });
-    } catch (error) {
-      dispatch({
-        type: "PUBLICATION_LIST_FAIL",
-        payload: { error: (error as Error).message },
-      });
-    }
-  };
+export const putPublications = (
+  { name, order, page, mark, category, gender, price, author }:{ name: string; order: string; page: string;  mark: string; category: string; gender: string; price: string; author: string;}
+) => async (dispatch: Dispatch<Action>) => {
+  dispatch({ type: "PUBLICATION_LIST_REQUEST" });
+  try {
+    console.log(gender)
+
+    let filter :object;
+    filter = { mark, category, gender, price, author };
+    console.log(filter)
+    const response = await axios.put(`/publications?order=${order?order:""}&name=${name?name:""}&page=${page?page:1}`, { mark, category, gender, price, author });
+    dispatch({
+      type: "PUBLICATION_LIST_SUCCESS",
+      payload: { success: response.data },
+      cartPayload: filter,
+    });
+  } catch (error) {
+    dispatch({
+      type: "PUBLICATION_LIST_FAIL",
+      payload: { error: (error as Error).message },
+    });
+  }
+};
 
 export const postPublications =
   (publication: any) => async (dispatch: Dispatch<Action>) => {

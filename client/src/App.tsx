@@ -5,7 +5,7 @@ import { Route, Routes } from "react-router";
 import RegisterScreen from "./pages/RegisterScreen";
 import LoginScreen from "./pages/LoginScreen";
 import CartScreen from "./pages/CartScreen";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   cartLength,
   putPublications,
@@ -18,12 +18,14 @@ import Homepage from "./components/HomePage/Homepage";
 import PublicationDetail from "./components/publicationDetail/PublicationDetail";
 import HomeUsuarios from "./components/HomeUsuarios/HomeUsuarios";
 import RequireAuth from "./components/RequireAuth";
+import { RootState } from "./redux/store/store"
 
 const App = (): JSX.Element => {
   const dispatch = useDispatch();
+  const { name, order, page, mark, category, gender, price, author } = useSelector((state: RootState) => (state.publicationList))
 
   useEffect(() => {
-    dispatch(putPublications({}, {}));
+    dispatch(putPublications({"name":name, "order":order, "page":page, "mark": mark, "category": category, "gender": gender, "price": price, "author": author} ));
   }, [dispatch]);
 
   useEffect(() => {
