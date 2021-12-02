@@ -3,16 +3,17 @@ import { Request, Response } from "express"
 import cloudinary from 'cloudinary';
 
 
-// cloudinary.config({
-//     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-//     api_key: process.env.CLOUDINARY_API_KEY,
-//     api_secret: process.env.CLOUDINARY_API_SECRET
-// });
-cloudinary.config({
-    cloud_name: 'christiannordfors',
-    api_key: '456175174758593',
-    api_secret: 'AGIMGf3w7JcErube-sgqn6Tm-aw'
-});
+interface cloudinaryConfig{
+     cloud_name: string,
+     api_key: string,
+     api_secret: string
+};
+const cloudinaryConfig :cloudinaryConfig = {
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+};
+cloudinary.config(cloudinaryConfig);
 
 export default class CloudinaryController {
 
