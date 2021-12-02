@@ -56,7 +56,7 @@ export default class PublicationController {
       const { mark, category, gender, price, author } = req.body;
 
       let pag = page ? Number(page) : 1;
-      const charXPage: number = 9;
+      const charXPage: number = 12;
 
       let allPublications: Array<any>;
       allPublications = await PublicationSchema.find();
