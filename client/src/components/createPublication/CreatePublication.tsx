@@ -113,7 +113,7 @@ export default function CreatePublication(): JSX.Element {
           <Typography variant="h4" component="h4" sx={{ p: 6 }}>
             {publicationId ? 'Actualiza tu producto' : 'Publica tu producto'}
             <Tooltip title="Debes completar los campos y subir al menos una imagen para realizar la publicación">
-              <HelpOutlineIcon color="info" fontSize="large" sx={{ cursor: 'help', ml: 2 }}></HelpOutlineIcon>
+              <HelpOutlineIcon color="primary" fontSize="large" sx={{ cursor: 'help', ml: 2 }}></HelpOutlineIcon>
 
             </Tooltip>
           </Typography>

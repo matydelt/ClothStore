@@ -8,7 +8,7 @@ import Reviews from './reviews/Reviews';
 import NavBar from '../HomePage/Header/NavBar/NavBar';
 import QAndA from './qAndA/QAndA';
 // import { Publication } from '../../redux/reducer/stateTypes';
-
+import { SideBySideMagnifier } from "react-image-magnifiers";
 
 export interface Publication {
   _id: string;
@@ -59,7 +59,7 @@ export default function PublicationDetail(): JSX.Element {
       const sum = publication?.reviews.reduce((partial_sum, r) => partial_sum + r.score, 0);
       return Math.round(sum / publication?.reviews?.length);
     }
-};
+  };
 
 
   return (<>
@@ -108,22 +108,31 @@ export default function PublicationDetail(): JSX.Element {
               <Grid item
                 xs={7}
                 sx={{
-                  '& > :not(style)': { my: 5 },
+                  '& > :not(style)': { my: 3, mx: 'auto' },
                   // '& > :not(style)': { m: 5, width: '25ch', display: 'flex', flexWrap: 'wrap' },
                 }}
 
               >
-                {imageShow && <Avatar src={imageShow} variant="square" sx={{ width: 470, height: 470, borderRadius: 1 }} alt="" />
+                {imageShow && imageShow?.length > 0 &&
+                <Avatar variant="square" sx={{ width: 350, height: 500, borderRadius: 1, bgcolor: 'white' }} alt="" >
+                  <SideBySideMagnifier
+                  // fillAvailableSpace={true}
+                    // magnifierSize="40%"
+                    // square={true}
+                    alwaysInPlace
+                    imageSrc={imageShow}
+                  >
 
+                  </SideBySideMagnifier>
+                  </Avatar>
                 }
 
+                {/* {imageShow && <Avatar src={imageShow} variant="square" sx={{ width: 470, height: 470, borderRadius: 1 }} alt="" />
 
+                } */}
 
 
               </Grid>
-
-              {/* <Divider orientation="vertical" light flexItem sx={{ my: 3, mx: 5 }} /> */}
-
 
               <Grid item xs={4}
                 sx={{
@@ -231,9 +240,9 @@ export default function PublicationDetail(): JSX.Element {
 
               </Grid>
 
-                <Divider sx={{ width: '100%', my: 4 }}></Divider>
+              <Divider sx={{ width: '100%', my: 4 }}></Divider>
 
-                <QAndA></QAndA>
+              <QAndA></QAndA>
 
             </>}
 

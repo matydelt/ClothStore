@@ -12,7 +12,8 @@ export default function FileUpload({ form, setForm, setLoadingImage }: any): JSX
         if (files) {
             setLoadingImage(true);
             for (let index = 0; index < files.length; index++) {
-                Resizer.imageFileResizer(files[index], 720, 720, 'JPEG', 100, 0, (uri) => {
+                console.log(files[index])
+                Resizer.imageFileResizer(files[index], 3000, 3000, 'JPEG', 100, 0, (uri) => {
                     axios.post('http://localhost:3001/imageupload', { image: uri }).then((res) => {
                         allUploadedFiles.push(res.data);
                         setForm({ ...form, images: allUploadedFiles });

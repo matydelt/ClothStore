@@ -49,10 +49,7 @@ export default function Reviews({ children }: any) {
             axios.get('/reviews/' + publicationId).then(({ data }) => {
                 setReviews(data);
             });
-            console.log('repite abierto');
         }
-        console.log('repite cerrado');
-        
     }, [open, publicationId]);
 
     const handleClickOpen = () => {
