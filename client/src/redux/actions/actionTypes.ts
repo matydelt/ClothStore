@@ -13,4 +13,7 @@ export type ActionTypes =
   | "USER_SIGNIN_FAIL"
   | "USER_LOGOUT"
   | "GET_PUBLICATIONS"
-  | "CART_LENGTH";
+  | "CART_LENGTH"
+  | "ALL_USERS_REQUEST"
+  | "ALL_USERS_SUCCESS"
+  | "ALL_USERS_FAIL";

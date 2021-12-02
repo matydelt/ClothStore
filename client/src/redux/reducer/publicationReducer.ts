@@ -3,7 +3,7 @@ import { Publication } from "./stateTypes";
 
 export interface PublicationState {
   publicationList: any;
-  loading?: boolean;
+  loading: boolean;
   publications?: Publication[] | string | any;
   error?: string;
   cartLength: number;
@@ -20,18 +20,18 @@ export interface PublicationState {
 const publicationListReducer = (
   state: PublicationState = {
     publicationList: {},
-    loading: true,
+    loading: false,
     publications: [],
     error: "",
     cartLength: 0,
-    mark:'',
-    category:'',
-    gender:'',
-    price:'',
-    author:'',
-    name: '',
-    order: '',
-    page: "1"
+    mark: "",
+    category: "",
+    gender: "",
+    price: "",
+    author: "",
+    name: "",
+    order: "",
+    page: "1",
   },
   action: Action
 ): PublicationState => {
@@ -59,26 +59,24 @@ const publicationListReducer = (
 const publicationSaveReducer = (
   state: PublicationState = {
     publicationList: {},
-    loading: true,
+    loading: false,
     publications: [],
     error: "",
     cartLength: 0,
-    mark:'',
-    category:'',
-    gender:'',
-    price:'',
-    author:'',
-    name: '',
-    order: '',
-    page: "1"
+    mark: "",
+    category: "",
+    gender: "",
+    price: "",
+    author: "",
+    name: "",
+    order: "",
+    page: "1",
   },
   action: Action
 ): PublicationState => {
   switch (action.type) {
     case "CART_LENGTH":
-
-      return { ...state, cartLength: action.cartPayload }
-
+      return { ...state, cartLength: action.cartPayload };
     case "PUBLICATION_SAVE_REQUEST":
       return { ...state, loading: true };
     case "PUBLICATION_SAVE_SUCCESS":
