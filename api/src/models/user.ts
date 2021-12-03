@@ -15,6 +15,7 @@ export interface User extends mongoose.Document {
   userName: string;
   address: [Address];
   type: string;
+  active: boolean;
 }
 
 const UserSchema = new Schema({

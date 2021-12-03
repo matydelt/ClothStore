@@ -46,12 +46,26 @@ export default class UserController {
       res.sendStatus(500);
     }
   }
+  static async getUsers(req: Request, res: Response) {
+    try {
+      const user = await UserSchema.find();
+      res.json(user)
+    } catch (e) {
+      console.log(e);
+      res.sendStatus(500);
+    }
+  }
 
   static async banUser(req: Request, res: Response) {
     try {
-      const { id } = req.body;
-      await UserSchema.updateOne({ _id: id }, { $set: { active: false } });
-      res.json("El usuario se marco como inactivo");
+      const { id, flag } = req.body;
+      if (flag) {
+        await UserSchema.updateOne({ _id: id }, { $set: { active: true } });
+        res.json("El usuario se marco como activo");
+      } else {
+        await UserSchema.updateOne({ _id: id }, { $set: { active: false } });
+        res.json("El usuario se marco como inactivo");
+      }
     } catch (error) {
       console.log("error en banUser");
       res.sendStatus(500);
