@@ -1,6 +1,44 @@
 import * as React from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 import CartItem from "../components/CartItem";
+import Typography from '@material-ui/core/Typography';
+import Table from '@material-ui/core/Table';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/styles';
+import TableRow from '@material-ui/core/TableRow';
+import { Container, Box } from "@material-ui/core";
+
+
+const StyledTableCell = withStyles((theme: Theme) =>
+  createStyles({
+    head: {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.common.white,
+      width: '300px'
+    },
+    body: {
+      fontSize: 14,
+    },
+  }),
+)(TableCell);
+
+const useStyles = makeStyles({
+  root: {
+    width: '77%'
+  },
+  container: {
+    display: 'flex',
+    alignItems: 'center',
+    height: '600px'
+  },
+  containerTotal: {
+    width: '23%'
+  }
+})
+
+
 
 export type CartItemType = {
   id: string;
@@ -15,6 +53,8 @@ export type CartType = CartItemType[];
 
 const CartScreen = () => {
   const [cart, setCart] = useLocalStorage<CartType>("cart", []);
+
+  const classes = useStyles();
 
   const calculateTotal = () =>
     cart.reduce((acc, item) => acc + item.amount * item.price, 0);
@@ -48,20 +88,46 @@ const CartScreen = () => {
     );
   };
 
+
+  
+
+
+  console.log(cart)
+
   return (
-    <div>
-      <h2>Shopping Cart</h2>
+    <>
+      <Typography variant='h3' align='center'>
+        Mi Carro
+      </Typography>
       {cart.length === 0 ? <p>No items</p> : null}
-      {cart.map((item) => (
-        <CartItem
-          key={item.id}
-          item={item}
-          addToCart={handleAddToCart}
-          removeFromCart={handleRemoveFromCart}
-        />
-      ))}
-      <h2>Total: $ {calculateTotal().toFixed(2)}</h2>
-    </div>
+
+
+      <Container maxWidth='lg' classes={{ root: classes.container }}>
+        <TableContainer classes={{ root: classes.root }}>
+          <Table aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell >Producto</StyledTableCell>
+                <StyledTableCell align="right">Price $</StyledTableCell>
+                <StyledTableCell align="right">Cantidad</StyledTableCell>
+                <StyledTableCell align="right">Total</StyledTableCell>
+              </TableRow>
+            </TableHead>
+                {cart.map((item) => (
+                  <CartItem
+                    key={item.id}
+                    item={item}
+                    addToCart={handleAddToCart}
+                    removeFromCart={handleRemoveFromCart}
+                  />
+                ))}
+          </Table>
+        </TableContainer>
+        <Box component='div' className={classes.containerTotal}>
+          <Typography variant='h5'>Total: $ {calculateTotal().toFixed(2)}</Typography>
+        </Box>
+      </Container>
+    </>
   );
 };
 

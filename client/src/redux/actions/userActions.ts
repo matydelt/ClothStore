@@ -33,10 +33,17 @@ export const registerUser =
 export const signinUser =
 
   (user: any) => async (dispatch: Dispatch<Action>) => {
+    const cart = localStorage.getItem("cart")
     dispatch({ type: "USER_SIGNIN_REQUEST" });
     try {
       const response = await axios.get("http://localhost:3001/auth", { params: { email: user.email, password: user.password } });
-      console.log(response);
+    if (cart && cart.length > 0)  {
+      axios.post(`http://localhost:3001/carrito/${response.data._id}`, JSON.parse(cart))
+    }
+
+    // localStorage.setItem('cart', '[]');
+
+    console.log(response);
 
       dispatch({
         type: "USER_SIGNIN_SUCCESS",
@@ -53,3 +60,4 @@ export const signinUser =
 export const logoutUser = () => (dispatch: Dispatch<Action>) => {
   dispatch({ type: "USER_LOGOUT" });
 };
+

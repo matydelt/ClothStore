@@ -22,3 +22,11 @@ export interface User {
   __v: number;
   active: boolean;
 }
+
+export interface Carrito {
+  title: string;
+  amount: number;
+  price: number;
+  id: string;
+  image: string;
+}

@@ -4,7 +4,7 @@ import {
     publicationListReducer,
     publicationSaveReducer,
 } from "./publicationReducer";
-
+import { carritoReducer } from './carritoReducer'
 
 
 
@@ -14,4 +14,5 @@ export default combineReducers({
     userSignin: userSigninReducer,
     publicationList: publicationListReducer,
     publicationSave: publicationSaveReducer,
+    carrito: carritoReducer
 });

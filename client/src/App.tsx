@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { ProvideAuth } from "./hooks/useAuth";
+import { ProvideAuth, useAuth } from "./hooks/useAuth";
 import "./App.css";
 import { Route, Routes } from "react-router";
 import RegisterScreen from "./pages/RegisterScreen";
 import LoginScreen from "./pages/LoginScreen";
 import CartScreen from "./pages/CartScreen";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { cartLength, getPublications } from "./redux/actions/publicationActions";
 import CreatePublication from "./components/createPublication/CreatePublication";
 // import { ThemeProvider } from "@mui/material/styles";
@@ -14,10 +14,21 @@ import theme from "./components/controllers/themeConfig";
 import Homepage from "./components/HomePage/Homepage";
 import PublicationDetail from "./components/publicationDetail/PublicationDetail";
 import HomeUsuarios from "./components/HomeUsuarios/HomeUsuarios";
+import { getCarrito } from "./redux/actions/carritoAction";
+import { RootState } from "./redux/store/store";
 
 const App = (): JSX.Element => {
   const dispatch = useDispatch();
+  // const user = useSelector((state: RootState) => state.userSignin.userInfo)
 
+
+  const auth = useAuth()
+  useEffect(() => {
+    console.log('holaaaaaaaa auth', auth)
+    if (auth?.user && auth.user.email) {
+      dispatch(getCarrito(auth.user.email))
+    }
+  }, [dispatch, auth])
   useEffect(() => {
     dispatch(getPublications());
   }, [dispatch]);
