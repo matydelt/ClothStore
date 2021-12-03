@@ -1,4 +1,4 @@
-import express from "express"
+import express from "express";
 const router = express.Router();
 const users = require("./users.ts")
 const publications = require("./publications")

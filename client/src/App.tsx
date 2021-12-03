@@ -6,20 +6,26 @@ import RegisterScreen from "./pages/RegisterScreen";
 import LoginScreen from "./pages/LoginScreen";
 import CartScreen from "./pages/CartScreen";
 import { useDispatch, useSelector } from "react-redux";
-import { cartLength, getPublications } from "./redux/actions/publicationActions";
+import {
+  cartLength,
+  putPublications,
+} from "./redux/actions/publicationActions";
 import CreatePublication from "./components/createPublication/CreatePublication";
 // import { ThemeProvider } from "@mui/material/styles";
-import { MuiThemeProvider } from '@material-ui/core/styles';
+import { MuiThemeProvider } from "@material-ui/core/styles";
 import theme from "./components/controllers/themeConfig";
 import Homepage from "./components/HomePage/Homepage";
 import PublicationDetail from "./components/publicationDetail/PublicationDetail";
 import HomeUsuarios from "./components/HomeUsuarios/HomeUsuarios";
 import { getCarrito } from "./redux/actions/carritoAction";
 import { RootState } from "./redux/store/store";
+import RequireAuth from "./components/RequireAuth";
+
+  // const user = useSelector((state: RootState) => state.userSignin.userInfo)
 
 const App = (): JSX.Element => {
   const dispatch = useDispatch();
-  // const user = useSelector((state: RootState) => state.userSignin.userInfo)
+  const { name, order, page, mark, category, gender, price, author } = useSelector((state: RootState) => (state.publicationList))
 
 
   const auth = useAuth()
@@ -30,20 +36,33 @@ const App = (): JSX.Element => {
     }
   }, [dispatch, auth])
   useEffect(() => {
-    dispatch(getPublications());
+    dispatch(putPublications({"name":name, "order":order, "page":page, "mark": mark, "category": category, "gender": gender, "price": price, "author": author} ));
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(cartLength())
-  }, [dispatch])
+    dispatch(cartLength());
+  }, [dispatch]);
+
+  useEffect(() => {
+    let cart = localStorage.getItem("cart");
+    if (cart) {
+      cart = JSON.parse(cart);
+      if (!Array.isArray(cart)) {
+        localStorage.setItem("cart", "[]");
+      }
+    } else {
+      localStorage.setItem("cart", "[]");
+    }
+  }, [dispatch]);
+
   return (
     <ProvideAuth>
       <MuiThemeProvider theme={theme}>
         <Routes>
           <Route path="/" element={<Homepage />} />
-          <Route path="nueva-publicacion" element={<CreatePublication />} />
+          <Route path="/nueva-publicacion" element={<CreatePublication />} />
           <Route
-            path="actualizar-publicacion/:publicationId"
+            path="/actualizar-publicacion/:publicationId"
             element={<CreatePublication />}
           />
           <Route
@@ -53,7 +72,14 @@ const App = (): JSX.Element => {
           <Route path="/register" element={<RegisterScreen />}></Route>
           <Route path="/login" element={<LoginScreen />}></Route>
           <Route path="/cart" element={<CartScreen />}></Route>
-          <Route path="/perfil" element={<HomeUsuarios />} />
+          <Route
+            path="/perfil"
+            element={
+              <RequireAuth>
+                <HomeUsuarios />
+              </RequireAuth>
+            }
+          />
         </Routes>
       </MuiThemeProvider>
     </ProvideAuth>

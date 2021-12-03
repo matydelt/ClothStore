@@ -46,16 +46,18 @@ export const signinUser =
     console.log(response);
 
       dispatch({
-        type: "USER_SIGNIN_SUCCESS",
+        type: "USER_REGISTER_SUCCESS",
         payload: { success: response.data },
       });
     } catch (error) {
       dispatch({
-        type: "USER_SIGNIN_FAIL",
+        type: "USER_REGISTER_FAIL",
         payload: { error: (error as Error).message },
       });
     }
   };
+
+
 
 export const logoutUser = () => (dispatch: Dispatch<Action>) => {
   dispatch({ type: "USER_LOGOUT" });

@@ -16,10 +16,12 @@ import { RootState } from '../../../../redux/store/store';
 const NavBar = () => {
 
     const cartLength = useSelector((state: RootState) => state.publicationSave.cartLength)
+    const user = useSelector((state: RootState) => state.userSignin.userInfo)
     return (
         <>
             <MyNavBarHeader position="static">
                 <Toolbar>
+
                     <Box
                         component='img'
                         
@@ -32,6 +34,7 @@ const NavBar = () => {
                             left: '0',
                             bottom: { xl: '-245%;' }
                         }}
+
                     />
                     <Box sx={{
                         display: 'flex',
@@ -78,13 +81,21 @@ const NavBar = () => {
                             </IconButton>
                         </Link>
 
-                        <Box sx={{ fontSize: { xl: '25px' }, marginLeft: '16px' }}>
-                            <ButtonsNav
-                                link="/login"
-                                text="INICIAR SESION"
-                                nameClass='textDecoration colorPrimary buttonLink'
-                            />
-                        </Box>
+                        {user ?
+                            <Box sx={{ fontSize: { xl: '25px' }, marginLeft: '16px' }}>
+                                <ButtonsNav
+                                    link="/perfil"
+                                    text="PERFIL"
+                                    nameClass='textDecoration colorPrimary buttonLink'
+                                />
+                            </Box> :
+                            <Box sx={{ fontSize: { xl: '25px' }, marginLeft: '16px' }}>
+                                <ButtonsNav
+                                    link="/login"
+                                    text="INICIAR SESION"
+                                    nameClass='textDecoration colorPrimary buttonLink'
+                                />
+                            </Box>}
                     </Box>
                 </Toolbar>
             </MyNavBarHeader>
