@@ -14,6 +14,8 @@ import Homepage from "./components/HomePage/Homepage";
 import PublicationDetail from "./components/publicationDetail/PublicationDetail";
 import HomeUsuarios from "./components/HomeUsuarios/HomeUsuarios";
 import { StylesProvider } from "@material-ui/styles";
+import AdminPage from "./components/adminPage/adminPage";
+import UsuariosAdmPage from "./components/adminPage/components/usuarios/usuarios";
 
 const App = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -40,24 +42,25 @@ const App = (): JSX.Element => {
   return (
     <ProvideAuth>
       <StylesProvider injectFirst>
-      <ThemeProvider theme={theme}>
-        <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/nueva-publicacion" element={<CreatePublication />} />
-          <Route
-            path="/actualizar-publicacion/:publicationId"
-            element={<CreatePublication />}
-          />
-          <Route
-            path="/publication/:publicationId"
-            element={<PublicationDetail />}
-          />
-          <Route path="/register" element={<RegisterScreen />}></Route>
-          <Route path="/login" element={<LoginScreen />}></Route>
-          <Route path="/cart" element={<CartScreen />}></Route>
-          <Route path="/perfil" element={<HomeUsuarios />} />
-        </Routes>
-      </ThemeProvider>
+        <ThemeProvider theme={theme}>
+          <Routes>
+            <Route path="/admin" element={<AdminPage />} />
+            <Route path="/" element={<Homepage />} />
+            <Route path="/nueva-publicacion" element={<CreatePublication />} />
+            <Route
+              path="/actualizar-publicacion/:publicationId"
+              element={<CreatePublication />}
+            />
+            <Route
+              path="/publication/:publicationId"
+              element={<PublicationDetail />}
+            />
+            <Route path="/register" element={<RegisterScreen />}></Route>
+            <Route path="/login" element={<LoginScreen />}></Route>
+            <Route path="/cart" element={<CartScreen />}></Route>
+            <Route path="/perfil" element={<HomeUsuarios />} />
+          </Routes>
+        </ThemeProvider>
       </StylesProvider>
     </ProvideAuth>
   );

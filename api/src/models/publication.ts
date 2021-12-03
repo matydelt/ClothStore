@@ -13,6 +13,7 @@ export interface Publication extends mongoose.Document {
     author: Schema.Types.ObjectId;
     gender: string;
     order: string;
+    state: boolean;
     reviews: [Review];
     // qAndAs: any[];
 }
@@ -67,6 +68,10 @@ const PublicationSchema = new Schema({
         type: ["Review"],
         ref: "Review",
     },
+    state: {
+        type: Boolean,
+        default: false
+    }
     // qAndAs: {
     //     type: ["QAndA"],
     //     ref: "QAndA",

@@ -4,16 +4,32 @@ import UserSchema, { User } from "../models/user";
 export default class UserController {
   static async setUser(req: Request, res: Response) {
     try {
-      const { firstName, lastName, phone, email, password, photo } = req.body;
-      const user: User = new UserSchema({
-        phone,
-        email,
-        password,
-        name: { firstName, lastName },
-        photo,
-      });
-      await user.save();
-      res.sendStatus(200);
+      const users = await UserSchema.find()
+      if (users.length >= 1) {
+        const { firstName, lastName, phone, email, password, photo } = req.body;
+        const user: User = new UserSchema({
+          phone,
+          email,
+          password,
+          name: { firstName, lastName },
+          photo,
+          type: "normal"
+        });
+        await user.save();
+        res.sendStatus(200);
+      } else {
+        const { firstName, lastName, phone, email, password, photo } = req.body;
+        const user: User = new UserSchema({
+          phone,
+          email,
+          password,
+          name: { firstName, lastName },
+          photo,
+          type: "admin"
+        });
+        await user.save();
+        res.sendStatus(200);
+      }
     } catch (e) {
       console.log(e);
       res.sendStatus(500);
@@ -22,7 +38,7 @@ export default class UserController {
   static async getUser(req: Request, res: Response) {
     try {
       const { email, password } = req.query;
-      const user = await UserSchema.findOne({ "email" : `${email}` });
+      const user = await UserSchema.findOne({ "email": `${email}` });
       if (user && user.password === password) res.json(user);
       else res.send("usuario o contraseña erronea");
     } catch (e) {
@@ -47,6 +63,22 @@ export default class UserController {
       const { id } = req.params;
       const user = await UserSchema.findOne({ _id: id });
       res.json(user);
+    } catch (error) {
+      console.log("error en get one user");
+      res.sendStatus(500);
+    }
+  }
+  static async putStateUser(req: Request, res: Response) {
+    try {
+      const { id, flag } = req.params;
+      const user = await UserSchema.findOne({ _id: id });
+      if (user) {
+        if (flag) user.type = "employee"
+        else user.type = "normal"
+        await user?.save()
+        return res.json(user);
+      }
+      else return res.sendStatus(404);
     } catch (error) {
       console.log("error en get one user");
       res.sendStatus(500);

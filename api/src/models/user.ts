@@ -14,6 +14,7 @@ export interface User extends mongoose.Document {
   dni: string;
   userName: string;
   address: [Address];
+  type: string;
 }
 
 const UserSchema = new Schema({
@@ -68,10 +69,16 @@ const UserSchema = new Schema({
   userName: {
     type: String,
   },
-  domicilio: {
+  address: {
     type: ["Address"],
     ref: "Address",
   },
+  type: {
+    type: String,
+    required: [true, "necesita un type"],
+    enum: ["normal", "admin", "employee"]
+
+  }
 });
 
 export default model<User>("User", UserSchema);
