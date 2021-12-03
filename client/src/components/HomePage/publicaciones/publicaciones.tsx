@@ -11,7 +11,8 @@ export default function Publicaciones() {
     return (
         <Grid container spacing={3}
             sx={{
-                width: '62%',
+                maxWidth: '885px',
+                width: '100%',
                 marginTop: '50px',
                 marginRight: '30px'
             }}>
