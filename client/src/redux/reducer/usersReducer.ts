@@ -3,7 +3,7 @@ import { User } from "./stateTypes";
 
 export interface AllUsersState {
   loading: boolean;
-  users?: User[];
+  users?: Array<any>;
   error?: string;
 }
 

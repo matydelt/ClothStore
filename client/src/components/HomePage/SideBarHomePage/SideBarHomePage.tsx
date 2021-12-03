@@ -178,14 +178,14 @@ const SideBarHomePage = () => {
 
           return (
             <ListItem
-              key={value._id}
+              key={value}
               dense
               role={undefined}
               button
               onClick={(event) =>
                 handleListItemClickAuthor(
                   event,
-                  value.name.firstName + value.name.lastName
+                  value
                 )
               }
               disabled={loading}
@@ -195,7 +195,7 @@ const SideBarHomePage = () => {
                   edge="start"
                   checked={
                     selectedValueAuthor ===
-                    value.name.firstName + value.name.lastName
+                    value
                   }
                   tabIndex={-1}
                   disableRipple

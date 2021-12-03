@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import UserSchema, { User } from "../models/user";
 import PublicationSchema, { Publication } from "../models/publication";
+import { equal } from "assert/strict";
 
 export default class PublicationController {
   static async setPublication(req: Request, res: Response) {
@@ -63,7 +64,7 @@ export default class PublicationController {
 
       if (name && name !== "") {
         allPublications = allPublications.filter((e) => {
-          return e.name.search(name) > -1;
+          return e.name.search(name as string) > -1;
         });
       }
       switch (order) {
@@ -118,9 +119,11 @@ export default class PublicationController {
       }
 
       if (author && author !== "") {
-        allPublications = allPublications.filter((e) => {
-          return e.author == author;
-        });
+        const autor = await UserSchema.findOne({ userName: `${author}` })
+        console.log(autor?._id)
+        allPublications = allPublications.map(e =>{
+          if(e.author.equals(autor?._id)) return e
+        }).filter(e => e!=null);
       }
 
       if (price && price !== "") {
