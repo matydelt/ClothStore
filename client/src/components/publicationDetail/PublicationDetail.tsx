@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Avatar, Button, Container, FormControl, Grid, MenuItem, Select, Typography, Rating, CircularProgress } from '@mui/material';
+import { Avatar, Button, Container, FormControl, Grid, MenuItem, Select, Typography, Rating, CircularProgress, Divider } from '@mui/material';
 import { Box } from '@mui/system';
 import axios from 'axios';
 import { useParams } from 'react-router';
 import { FavoriteBorderOutlined } from '@mui/icons-material';
 import Reviews from './reviews/Reviews';
 import NavBar from '../HomePage/Header/NavBar/NavBar';
+import QAndA from './qAndA/QAndA';
 // import { Publication } from '../../redux/reducer/stateTypes';
 
 
@@ -20,6 +21,8 @@ export interface Publication {
   categorie: string;
   author: string;
   gender: "Hombre" | "Mujer" | "Niños";
+  reviews: any[];
+  qAndAs: any[];
   __v: number;
 }
 
@@ -36,11 +39,9 @@ export default function PublicationDetail(): JSX.Element {
 
   useEffect(() => {
     if (publicationId && publicationId.length > 0) {
-      console.log(publicationId)
       axios.get('http://localhost:3001/publication', {
         params: { publicationId: publicationId }
       }).then(({ data }) => {
-        console.log(data, 'publicacion');
         setPublication(data);
         setImageShow(data.images[0].url)
         setLoading(false);
@@ -53,11 +54,17 @@ export default function PublicationDetail(): JSX.Element {
     setImageShow(img)
   }
 
+  const scoreAverage = (): number | undefined => {
+    if (publication) {
+      const sum = publication?.reviews.reduce((partial_sum, r) => partial_sum + r.score, 0);
+      return Math.round(sum / publication?.reviews?.length);
+    }
+};
 
 
   return (<>
 
-    <Box sx={{ backgroundColor: '#eeeeee', minHeight: '93.3vh', height: 'max-content' }}>
+    <Box sx={{ backgroundColor: '#eeeeee', minHeight: '140vh', height: 'max-content' }}>
       <NavBar></NavBar>
       <Box sx={{ backgroundColor: '#f5f5f5', minHeight: '30vh' }}>
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -146,10 +153,10 @@ export default function PublicationDetail(): JSX.Element {
 
                 <Box component="div" sx={{ alignItems: 'center', display: 'flex', mt: 0.2 }}>
                   <Reviews>
-                    <Rating name="read-only" defaultValue={1} value={1} readOnly />
+                    <Rating name="read-only" value={scoreAverage()} readOnly />
                   </Reviews>
                   <Typography component="span" sx={{ fontSize: '10px', color: 'gray', ml: 1 }}>
-                    3 opiniones
+                    {publication?.reviews.length} opiniones
                   </Typography>
                 </Box>
 
@@ -226,7 +233,9 @@ export default function PublicationDetail(): JSX.Element {
 
 
             </>}
+                <Divider sx={{ width: '100%', my: 4 }}></Divider>
 
+                <QAndA></QAndA>
 
           </Grid>
         </Container>

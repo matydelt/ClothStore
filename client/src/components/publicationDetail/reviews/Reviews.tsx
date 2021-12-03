@@ -9,9 +9,48 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { IconButton, Rating, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { Box } from '@mui/system';
+import axios from 'axios';
+import { useParams } from 'react-router';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../redux/store/store';
+import { User } from '../../../redux/reducer/stateTypes';
+
+interface ReviewForm {
+    score: number,
+    title: string,
+    message: string,
+    authorId: string,
+    publicationId: string,
+}
 
 export default function Reviews({ children }: any) {
+
+    const user = useSelector((state: RootState): User | undefined => state?.userSignin?.userInfo);
+
+    const { publicationId } = useParams();
+
     const [open, setOpen] = React.useState(false);
+
+    const [reviews, setReviews] = React.useState<ReviewForm[]>([]);
+    
+    const [reviewForm, setReviewForm] = React.useState<ReviewForm>({
+        score: 1,
+        title: '',
+        message: '',
+        authorId: user?._id || '',
+        publicationId: publicationId || '',
+    });
+
+    const { title, score, message } = reviewForm;
+
+
+    React.useEffect(() => {
+        if (open) {
+            axios.get('/reviews/' + publicationId).then(({ data }) => {
+                setReviews(data);
+            });
+        }
+    }, [open]);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -21,8 +60,25 @@ export default function Reviews({ children }: any) {
         setOpen(false);
     };
 
+    const handleReviewForm = (e: any) => {
+        setReviewForm({ ...reviewForm, [e.target.name]: e.target.value });
+    };
+
+    const submitReviewForm = (e: any) => {
+        e.preventDefault();
+
+        axios.post('/review', reviewForm).then(() => {
+            handleClose();
+        });
+    };
+
+    const scoreAverage = (): number => {
+        const sum = reviews.reduce((partial_sum, r) => partial_sum + r.score, 0);
+        return Math.round(sum / reviews.length);
+    };
+
     return (
-        <div>
+        <>
             <Button onClick={handleClickOpen}>
                 {children}
             </Button>
@@ -41,46 +97,82 @@ export default function Reviews({ children }: any) {
                 >
                     <CloseIcon />
                 </IconButton>
-                <DialogContent>
-                    {/* <TextField
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Email Address"
-                        type="email"
-                        fullWidth
-                        variant="standard"
-                    />
-                    <DialogActions>
-                        <Button onClick={handleClose}>Cancel</Button>
-                        <Button onClick={handleClose}>Subscribe</Button>
-                    </DialogActions> */}
 
-                    <Box component="div" sx={{mb: 4, textAlign: 'center'}}>
-                        <Typography variant="h3" sx={{}}>1</Typography>
-                        <Rating name="read-only" defaultValue={1} value={1} readOnly size="large" />
-                        <Typography component="p" sx={{fontSize: '10px', color: 'gray'}}>Promedio entre 3 opiniones</Typography>
+                <DialogContent>
+                    <Box component="form"
+                        onSubmit={(e: any) => submitReviewForm(e)}
+                    >
+
+                        <Rating
+                            name="score"
+                            value={Number(score)}
+                            onChange={(e) => handleReviewForm(e)}
+                        />
+
+                        <TextField
+                            margin="dense"
+                            id="title"
+                            label="Título de la reseña"
+                            type="title"
+                            name="title"
+                            fullWidth
+                            variant="standard"
+                            value={title}
+                            onChange={(e) => handleReviewForm(e)}
+                        />
+                        <TextField
+                            margin="dense"
+                            id="message"
+                            label="Escribe un comentario sobre el producto..."
+                            type="message"
+                            name="message"
+                            multiline
+                            fullWidth
+                            variant="standard"
+                            value={message}
+                            onChange={(e) => handleReviewForm(e)}
+                        />
+                        <DialogActions>
+                            <Button type="button" onClick={handleClose}>Cancelar</Button>
+                            <Button type="submit" >Publicar reseña</Button>
+                        </DialogActions>
+
                     </Box>
 
+                    {reviews?.length < 1 ?
 
+                        <Box component="div" sx={{ display: 'flex', justifyContent: 'center', my: 5 }}>
 
-                    <Rating name="read-only" defaultValue={1} value={1} readOnly size="small" />
-                    <Typography variant="h6">Tiene un hilito para afuera</Typography>
-                    <DialogContentText sx={{ mb: 2 }}>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi sed laborum ratione dolorum autem tempore maiores quae, molestias culpa fugiat earum eligendi ducimus veniam cupiditate incidunt a dolorem iusto quaerat?
-                    </DialogContentText>
-                    <Rating name="read-only" defaultValue={2} value={2} readOnly size="small" />
-                    <Typography variant="h6">Yo lo quería en azul pero no hay opción para el color</Typography>
-                    <DialogContentText sx={{ mb: 2 }}>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi sed laborum ratione dolorum autem tempore maiores quae, molestias culpa fugiat earum eligendi ducimus veniam cupiditate incidunt a dolorem iusto quaerat?
-                    </DialogContentText>
-                    <Rating name="read-only" defaultValue={0} value={0} readOnly size="small" />
-                    <Typography variant="h6">No hay remeras para no binarios??</Typography>
-                    <DialogContentText sx={{ mb: 2 }}>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi sed laborum ratione dolorum autem tempore maiores quae, molestias culpa fugiat earum eligendi ducimus veniam cupiditate incidunt a dolorem iusto quaerat?
-                    </DialogContentText>
+                            <Typography variant="h6" sx={{color: 'gray'}}>
+                                No hay reseñas sobre este producto
+                            </Typography>
+
+                        </Box>
+
+                        : <>
+
+                            <Box component="div" sx={{ mb: 4, textAlign: 'center' }}>
+                                <Typography variant="h3" sx={{}}>{scoreAverage()}</Typography>
+                                <Rating name="read-only" value={scoreAverage()} readOnly size="large" />
+                                <Typography component="p" sx={{ fontSize: '10px', color: 'gray' }}>Promedio entre {reviews.length} opiniones</Typography>
+                            </Box>
+
+                            {
+                                reviews?.map((review, i) => {
+                                    return <Box component="div" key={i} sx={{ my: 2 }}>
+                                        <Rating name="read-only" value={review.score} readOnly size="small" />
+                                        <Typography variant="h6">{review.title}</Typography>
+                                        <DialogContentText sx={{ mb: 2 }}>
+                                            {review.message}
+                                        </DialogContentText>
+
+                                    </Box>
+                                })
+                            }
+                        </>}
+
                 </DialogContent>
             </Dialog>
-        </div>
+        </ >
     );
 }

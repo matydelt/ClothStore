@@ -53,6 +53,13 @@ export default function CreatePublication(): JSX.Element {
 
 
   useEffect(() => {
+    setForm({...form, id: user?._id});
+    console.log(form);
+    
+  }, []);
+
+
+  useEffect(() => {
 
     console.log(user?._id)
 
@@ -99,7 +106,6 @@ export default function CreatePublication(): JSX.Element {
   }
 
 
-  console.log(form)
   return (<>
 
     <Box sx={{ backgroundColor: '#eeeeee', minHeight: '105vh', height: 'max-content' }}>

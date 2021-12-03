@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Avatar, Box } from '@material-ui/core'
 import "./HomeUsuarios.css"
-import { TextField } from '@mui/material'
+import { Badge, Card, TextField } from '@mui/material'
 import axios from 'axios'
 import { useEffect } from 'react'
 import CardPublicacion from '../HomePage/publicaciones/cardPublicaciones/cardPublicaciones'
@@ -29,6 +29,7 @@ interface FormUserInterface {
     calle: string;
     numero: string;
     ciudad: string;
+    country:string;
     cp: string;
     publications: any[];
     shopping: any[];
@@ -66,6 +67,7 @@ export default function HomeUsuarios() {
         numero: "",
         ciudad: "",
         cp: "",
+        country:"",
         publications: [],
         shopping: []
     });
@@ -78,7 +80,6 @@ export default function HomeUsuarios() {
         }
         getOneUser()
     }, [])
-
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         if (e.target.name === "firstName") {
@@ -175,6 +176,13 @@ export default function HomeUsuarios() {
                             disabled={flag}
                             label="Ciudad:"
                             value={input.ciudad}
+                            onChange={handleChange}
+                        />
+                        <TextField
+                            name='country'
+                            disabled={flag}
+                            label="Pais:"
+                            value={input.country}
                             onChange={handleChange}
                         />
 
