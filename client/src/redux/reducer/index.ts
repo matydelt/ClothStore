@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { userRegisterReducer, userSigninReducer } from "./userReducer";
+import { userRegisterReducer, userSigninReducer, getUSersReducer } from "./userReducer";
 import {
     publicationListReducer,
     publicationSaveReducer,
@@ -10,6 +10,7 @@ import {
 
 
 export default combineReducers({
+    users: getUSersReducer,
     userRegister: userRegisterReducer,
     userSignin: userSigninReducer,
     publicationList: publicationListReducer,

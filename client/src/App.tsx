@@ -45,6 +45,7 @@ const App = (): JSX.Element => {
         <ThemeProvider theme={theme}>
           <Routes>
             <Route path="/admin" element={<AdminPage />} />
+            <Route path="/admin/usuarios" element={<UsuariosAdmPage />} />
             <Route path="/" element={<Homepage />} />
             <Route path="/nueva-publicacion" element={<CreatePublication />} />
             <Route

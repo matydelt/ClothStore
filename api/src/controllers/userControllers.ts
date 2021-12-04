@@ -84,7 +84,7 @@ export default class UserController {
   }
   static async putStateUser(req: Request, res: Response) {
     try {
-      const { id, flag } = req.params;
+      const { id, flag } = req.body;
       const user = await UserSchema.findOne({ _id: id });
       if (user) {
         if (flag) user.type = "employee"

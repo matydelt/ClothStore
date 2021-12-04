@@ -4,6 +4,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { SidebarData } from './components/sidebar/sidebar';
 import './Navbar.css';
 import CloseIcon from '@mui/icons-material/Close';
+import PersonIcon from '@mui/icons-material/Person';
 function NavBar() {
     const [sidebar, setSidebar] = useState(false);
 
@@ -11,10 +12,18 @@ function NavBar() {
 
     return (
         <>
-            <div className='navbar'>
-                <Link to='#' className='menu-bars'>
+            <div className='navbar' >
+
+
+                <button className='menu-bars' style={{ border: "none", cursor: "pointer" }}>
                     <MenuIcon onClick={showSidebar} />
-                </Link>
+                </button>
+                <div style={{ marginLeft: "90%" }}>
+                    <button style={{ border: "none", backgroundColor: "transparent", cursor: "pointer" }}>
+                        <div style={{ display: "flex" }}><PersonIcon sx={{ marginTop: "15%" }} />  <h3>Perfil</h3></div>
+                    </button>
+                </div>
+
             </div>
             <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
                 <ul className='nav-menu-items' onClick={showSidebar}>
