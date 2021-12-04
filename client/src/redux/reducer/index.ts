@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import { userRegisterReducer, userSigninReducer } from "./userReducer";
 import { allUsersReducer } from "./usersReducer";
+import { allMarksReducer } from "./marksReducer";
 import {
   publicationListReducer,
   publicationSaveReducer,
@@ -12,4 +13,5 @@ export default combineReducers({
   publicationList: publicationListReducer,
   publicationSave: publicationSaveReducer,
   allUsers: allUsersReducer,
+  allMarks: allMarksReducer,
 });

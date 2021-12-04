@@ -16,4 +16,7 @@ export type ActionTypes =
   | "CART_LENGTH"
   | "ALL_USERS_REQUEST"
   | "ALL_USERS_SUCCESS"
-  | "ALL_USERS_FAIL";
+  | "ALL_USERS_FAIL"
+  | "ALL_MARKS_REQUEST"
+  | "ALL_MARKS_SUCCESS"
+  | "ALL_MARKS_FAIL";

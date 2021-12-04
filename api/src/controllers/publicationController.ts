@@ -195,4 +195,19 @@ export default class PublicationController {
       res.sendStatus(500);
     }
   }
+  
+  static async getPublicationsMarks(req: Request, res: Response): Promise<void> {
+    try {
+      let allMarks: Array<any>;
+      allMarks = await PublicationSchema.find();
+      allMarks = allMarks.map(e => e.mark);
+      allMarks = allMarks.filter((item,index)=>{
+        return allMarks.indexOf(item) === index;
+      })
+      res.json(allMarks);
+    } catch (e) {
+      console.log(e);
+      res.sendStatus(500);
+    }
+  }
 }

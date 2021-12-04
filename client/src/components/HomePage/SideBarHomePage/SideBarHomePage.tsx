@@ -14,6 +14,7 @@ import ButtonGroup from "@material-ui/core/ButtonGroup";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import axios from "axios";
 import { getAllUsers } from "../../../redux/actions/usersActions";
+import { getallMarks } from "../../../redux/actions/marksActions";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,24 +27,30 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const SideBarHomePage = () => {
+  
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(getAllUsers());
+    dispatch(getallMarks());
+    return () => {};
+  }, [dispatch]);
+  
   const classes = useStyles();
+  
   const { loading, mark, gender, category, price, author } = useSelector(
     (state: RootState) => state.publicationList
   );
+
   const { users } = useSelector((state: RootState) => state.allUsers);
+
+  const { marks } = useSelector((state: RootState) => state.allMarks);
 
   const [selectedValueGender, setSelectedValueGender] = React.useState(gender);
   const [selectedValueMark, setSelectedValueMark] = React.useState(mark);
   const [selectedValueCategory, setSelectedValueCategory] =
     React.useState(category);
   const [selectedValueAuthor, setSelectedValueAuthor] = React.useState(author);
-
-  const dispatch = useDispatch();
-
-  React.useEffect(() => {
-    dispatch(getAllUsers());
-    return () => {};
-  }, [dispatch]);
 
   const handleListItemClickGender = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -69,7 +76,7 @@ const SideBarHomePage = () => {
     value: string
   ) => {
     selectedValueAuthor===value ? setSelectedValueAuthor("") : setSelectedValueAuthor(value);
-  }; //
+  };
 
   const handleReset = () => {
     dispatch(
@@ -198,6 +205,41 @@ const SideBarHomePage = () => {
                 <Checkbox
                   edge="start"
                   checked={selectedValueAuthor === value?true:false}
+                  tabIndex={-1}
+                  disableRipple
+                  inputProps={{ "aria-labelledby": labelId }}
+                />
+              </ListItemIcon>
+              <ListItemText id={labelId} primary={value} />
+            </ListItem>
+          );
+        })}
+      </List>
+      <List
+        className={classes.list}
+        subheader={<ListSubheader>Marcas</ListSubheader>}
+      >
+        {marks?.map((value) => {
+          const labelId = `checkbox-list-label-${value}`;
+
+          return (
+            <ListItem
+              key={value}
+              dense
+              role={undefined}
+              button
+              onClick={(event) =>
+                handleListItemClickMark(
+                  event,
+                  value
+                )
+              }
+              disabled={loading}
+            >
+              <ListItemIcon>
+                <Checkbox
+                  edge="start"
+                  checked={selectedValueMark === value?true:false}
                   tabIndex={-1}
                   disableRipple
                   inputProps={{ "aria-labelledby": labelId }}

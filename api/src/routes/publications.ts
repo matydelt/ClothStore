@@ -7,5 +7,6 @@ router.get("/publication", PublicationController.getPublication);
 router.post("/publications/new", PublicationController.setPublication);
 router.delete("/publications/:_id", PublicationController.deletePublications);
 router.put("/publications/stock", PublicationController.putStock);
+router.get("/publications/marks", PublicationController.getPublicationsMarks);
 
 module.exports = router;
