@@ -112,48 +112,53 @@ const CartScreen = () => {
     );
   };
 
-  const handleAddQuantityToCartDB = (email: string | null | undefined, id: string):void => {
+  const handleAddQuantityToCartDB = (email: string | null | undefined, id: string): void => {
     console.log('addquantity', email, id)
     dispatch(putCarrito(email, id))
   }
 
-  const handleRemoveQuantityToCartDB = (email: string | null | undefined, id: string):void => {
+  const handleRemoveQuantityToCartDB = (email: string | null | undefined, id: string): void => {
     console.log('addquantity', email, id)
     dispatch(putCarritoRemove(email, id))
   }
 
-  
+
 
   return (
     <>
       <Typography variant='h3' align='center'>
         Mi Carro
       </Typography>
-      {cart.length === 0  ? <Typography variant='h5'>No items</Typography> : null}
+      {(!auth?.user && cart?.length === 0 || auth?.user && carrito?.publications?.length === 0) ? <Typography variant='h5'>No items</Typography> : null}
 
 
       <Container maxWidth='lg' classes={{ root: classes.container }}>
+
+        { (!!!auth?.user && cart?.length > 0 || !!auth?.user && carrito?.publications?.length > 0) &&
+  <>
+
         <TableContainer classes={{ root: classes.root }}>
           <Table aria-label="customized table">
-            <TableHead>
-              <TableRow>
-                <StyledTableCell >Producto</StyledTableCell>
-                <StyledTableCell align="right">Price $</StyledTableCell>
-                <StyledTableCell align="right">Cantidad</StyledTableCell>
-                <StyledTableCell align="right">Total</StyledTableCell>
-              </TableRow>
-            </TableHead>
-                {
-                !auth.user ? cart.map((item: any) => (
-                  <CartItem
-                    key={item.id}
-                    item={item}
-                    addToCart={handleAddToCart}
-                    removeFromCart={handleRemoveFromCart}
-                  /> 
-                
-                  ))
-                
+              <TableHead>
+                <TableRow>
+                  <StyledTableCell >Producto</StyledTableCell>
+                  <StyledTableCell align="right">Price $</StyledTableCell>
+                  <StyledTableCell align="right">Cantidad</StyledTableCell>
+                  <StyledTableCell align="right">Total</StyledTableCell>
+                </TableRow>
+              </TableHead>
+          
+            {
+              !auth.user ? cart.map((item: any) => (
+                <CartItem
+                  key={item.id}
+                  item={item}
+                  addToCart={handleAddToCart}
+                  removeFromCart={handleRemoveFromCart}
+                />
+
+              ))
+
                 : carrito?.publications?.map((item: any) => (
                   <CartItem
                     key={item.id}
@@ -162,12 +167,15 @@ const CartScreen = () => {
                     removeFromCart={() => handleRemoveQuantityToCartDB(auth.user && auth?.user?.email, item.publication)}
                   />
                 ))
-                }
+            }
           </Table>
         </TableContainer>
         <Box component='div' className={classes.containerTotal}>
           <Typography variant='h5'>Total: $ {calculateTotal().toFixed(2)}</Typography>
         </Box>
+
+        </>}
+
       </Container>
     </>
   );

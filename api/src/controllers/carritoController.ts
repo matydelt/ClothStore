@@ -189,8 +189,9 @@ export default class CarritoController {
 
             const publicationSearched = carritoBuscado?.publications?.find((p: any) => {
                 if (p?.publication.equals(id)) {
-                    if (p.quantity === 0) {
-                        p.publication.remove(p)
+                    if (p.quantity < 2) {
+                        carritoBuscado.publications = carritoBuscado?.publications.filter((publicationDelete: any) => publicationDelete.publication !== p.publication);
+                        console.log(p, 'publicacion borrada')
                         return;
                     };
                     p.quantity--
@@ -203,7 +204,7 @@ export default class CarritoController {
 
             carritoBuscado.markModified('publications')
             await carritoBuscado.save()
-            console.log(carritoBuscado.publications, 'publication******')
+            console.log('publication END')
 
 
             res.status(200).json(carritoBuscado);
