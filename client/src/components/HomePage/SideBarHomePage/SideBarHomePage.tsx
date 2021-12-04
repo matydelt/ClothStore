@@ -194,7 +194,7 @@ const SideBarHomePage = () => {
                   edge="start"
                   checked={
                     selectedValueAuthor ===
-                    value.name.firstName + value.name.lastName
+                    value?.name?.firstName + value?.name?.lastName
                   }
                   tabIndex={-1}
                   disableRipple
