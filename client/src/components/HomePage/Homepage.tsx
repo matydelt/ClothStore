@@ -5,11 +5,14 @@ import { Box } from "@mui/system";
 import SideBarHomePage from "./SideBarHomePage/SideBarHomePage";
 import Footer from "../Footer";
 import { Container } from "@mui/material";
+import SearchBar from "./SearchBar";
+
 const Homepage = () => {
   return (
     <Box>
       <Header />
       <Container id="tienda" maxWidth="lg">
+        <SearchBar />
         <Box
           component="main"
           sx={{

@@ -10,7 +10,8 @@ import {
 } from "firebase/auth";
 import { auth } from "../firebase/firebase.config";
 import { FirebaseError } from "@firebase/util";
-
+import { setSignedInUser } from "../redux/actions/userActions";
+import { useDispatch } from 'react-redux'
 interface signProps {
   email: string;
   password: string;
@@ -43,6 +44,9 @@ export const useAuth = () => {
 
 function useProvideAuth() {
   const [user, setUser] = useState<User>();
+
+  const dispatch = useDispatch()
+
 
   const signin = async ({
     email,
@@ -93,7 +97,9 @@ function useProvideAuth() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log(user)
       if (user) {
+        dispatch(setSignedInUser(user))
         setUser(user);
       } else {
         setUser(undefined);

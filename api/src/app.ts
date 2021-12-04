@@ -1,9 +1,9 @@
-import express, { Application, Request, Response, NextFunction } from "express";
-import cookieParser from "cookie-parser";
-import bodyParser from "body-parser";
-import morgan from "morgan";
-const { users, publications, cloudinary } = require("./routes/index");
-require("./db.ts"); // conexion a base de datos
+import express, { Application, Request, Response, NextFunction } from 'express';
+import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
+import morgan from 'morgan';
+const { users, publications, cloudinary, mercadoPago, carrito } = require("./routes/index")
+require('./db.ts'); // conexion a base de datos 
 
 const server: Application = express();
 
@@ -26,7 +26,7 @@ server.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-server.use("/", [users, publications, cloudinary]);
+server.use('/', [users, publications, cloudinary, mercadoPago, carrito]);
 // server.use('/', publications);
 
 // Error catching endware.

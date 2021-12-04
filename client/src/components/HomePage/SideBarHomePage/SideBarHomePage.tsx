@@ -12,7 +12,6 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import axios from "axios";
 import { getAllUsers } from "../../../redux/actions/usersActions";
 import { getallMarks } from "../../../redux/actions/marksActions";
 

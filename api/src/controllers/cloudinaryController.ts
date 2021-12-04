@@ -4,9 +4,10 @@ import cloudinary from 'cloudinary';
 
 
 cloudinary.config  ({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET
+
+    cloud_name: "christiannordfors",
+    api_key: 456175174758593,
+    api_secret: "AGIMGf3w7JcErube-sgqn6Tm-aw"
 });
 
 export default class CloudinaryController {

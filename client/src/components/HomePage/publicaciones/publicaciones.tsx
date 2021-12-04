@@ -8,6 +8,8 @@ import Grid from '@mui/material/Grid'
 
 export default function Publicaciones() {
     const state = useSelector((state: PublicationState) => state)
+
+    console.log(state.publicationList.publications)
     return (
         <Grid container spacing={3}
             sx={{
