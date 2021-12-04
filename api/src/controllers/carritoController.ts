@@ -149,6 +149,7 @@ export default class CarritoController {
                     console.log('entró en else')
                     nuevo = true;
                 }
+
             })
 
             if (!publicationSearched) {
