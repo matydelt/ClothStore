@@ -151,7 +151,10 @@ export default class PublicationController {
         charXPage * (pag - 1) + charXPage
       );
 
-      res.json(allPublications);
+      res.json({
+        result: allPublications, 
+        count: allPublications.length
+      });
     } catch (e) {
       console.log(e);
       res.sendStatus(500);

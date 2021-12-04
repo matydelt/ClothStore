@@ -7,6 +7,7 @@ export type Action = {
   type: ActionTypes;
   payload?: { success?: Publication[]; error?: string };
   cartPayload?: any;
+  countPayload?: number;
 };
 
 export const putPublications =
@@ -39,8 +40,9 @@ export const putPublications =
       );
       dispatch({
         type: "PUBLICATION_LIST_SUCCESS",
-        payload: { success: response.data },
+        payload: { success: response.data.result },
         cartPayload: filter,
+        countPayload: response.data.count ,
       });
     } catch (error) {
       dispatch({
