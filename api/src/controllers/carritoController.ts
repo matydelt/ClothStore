@@ -49,6 +49,8 @@ export default class CarritoController {
         }
     }
     static async putCarrito(req: Request, res: Response) {
+        let nuevo: boolean = false;
+
         try {
 
             const { id, email } = req.params
@@ -83,29 +85,33 @@ export default class CarritoController {
             // console.log(carritoMap)
 
             carritoBuscado?.publications?.forEach((p: any) => {
+
                 if (p?.publication.equals(id)) {
                     p.quantity++
+                    nuevo = false;
                 } else {
-                    PublicationSchema.findById(id).then(findPublic => {
-                        if (findPublic) {
-                            let newPublication = {
-                                quantity: 1,
-                                title: findPublic?.name,
-                                image: findPublic?.images[0].url,
-                                price: findPublic.price
-                            }
-                            console.log(newPublication)
-                            carritoBuscado?.publications?.push(newPublication);
-                        }
-                    })
+                    nuevo = true;
                 }
+
             })
 
+            if (nuevo) {
+                const findPublic = await PublicationSchema.findById(id)
+                if (findPublic) {
+                    carritoBuscado?.publications?.push({
+                        publication: findPublic._id,
+                        quantity: 1,
+                        title: findPublic?.name,
+                        image: findPublic?.images[0].url,
+                        price: findPublic.price
+                    });
+                    console.log(carritoBuscado?.publications, '-----------------------------------------------------------asdsdsadsa')
+                }
+            }
             // carritoBuscado.publications = carritoMap;
             carritoBuscado.markModified('publications')
             await carritoBuscado.save()
             console.log(carritoBuscado.publications, 'publication******')
-
             res.sendStatus(200)
         } catch (error) {
             console.error(error);
