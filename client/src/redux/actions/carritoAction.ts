@@ -27,7 +27,23 @@ export const getCarrito = (email:string) => async (dispatch: Dispatch<Action>) =
 
 export const putCarrito = (email: string | null | undefined, id: string) => async (dispatch: Dispatch<Action>) => {
   try {
-    await axios.put(`/carrito/${email}/${id}`);
+    const response = await axios.put(`/carrito/${email}/${id}`);
+    dispatch({
+      type: "CARRITO_CHECKOUT_GET",
+      payload: { success: response.data },
+    });
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const putCarritoRemove = (email: string | null | undefined, id: string) => async (dispatch: Dispatch<Action>) => {
+  try {
+    const response = await axios.put(`/carrito/remove/${email}/${id}`);
+    dispatch({
+      type: "CARRITO_CHECKOUT_GET",
+      payload: { success: response.data },
+    });
   } catch (error) {
     console.error(error)
   }

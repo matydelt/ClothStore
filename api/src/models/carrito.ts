@@ -1,10 +1,10 @@
-import mongoose, { Schema, model } from 'mongoose'
+import mongoose, { Schema, model, Types } from 'mongoose'
 
 export interface Carrito extends mongoose.Document {
     title: string;
     quantity: number;
     price: number;
-    publications: Schema.Types.ObjectId[];
+    publications: {publication: Types.ObjectId, price: number, quantity: number, image: string, title: string}[];
     image: string;
     userId: Schema.Types.ObjectId;
 }
@@ -13,7 +13,7 @@ const carritoSchema = new Schema({
     publications: [
         {
             publication: {
-                type: Schema.Types.ObjectId,
+                type: Types.ObjectId,
                 ref: "Publication",
             },
             price: Number,

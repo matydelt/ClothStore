@@ -9,8 +9,10 @@ import TableHead from '@material-ui/core/TableHead';
 import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import TableRow from '@material-ui/core/TableRow';
 import { Container, Box } from "@material-ui/core";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from '../redux/store/store';
+import { useAuth } from "../hooks/useAuth";
+import { putCarrito, putCarritoRemove } from "../redux/actions/carritoAction";
 
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
@@ -64,13 +66,22 @@ export type CartType = CartItemType[];
 const CartScreen = () => {
   const [cart, setCart] = useLocalStorage<CartType>("cart", []);
   const carrito: any = useSelector((state: RootState) => state.carrito.carrito)
+  const auth = useAuth();
+  const dispatch = useDispatch();
 
-  console.log(carrito && carrito, 'carrito db')
+  console.log(cart)
 
   const classes = useStyles();
 
-  const calculateTotal = () =>
-    cart.reduce((acc, item) => acc + item.amount * item.price, 0);
+  const calculateTotal = () => {
+
+    if (auth.user && carrito?.publications) {
+      return carrito?.publications?.reduce((acc: any, item: any) => acc + item.quantity * item.price, 0);
+    } else {
+      return cart.reduce((acc, item) => acc + item.amount * item.price, 0);
+    }
+
+  }
 
   const handleAddToCart = (clickedItem: CartItemType) => {
     setCart((prev) => {
@@ -101,7 +112,17 @@ const CartScreen = () => {
     );
   };
 
-  console.log(cart)
+  const handleAddQuantityToCartDB = (email: string | null | undefined, id: string):void => {
+    console.log('addquantity', email, id)
+    dispatch(putCarrito(email, id))
+  }
+
+  const handleRemoveQuantityToCartDB = (email: string | null | undefined, id: string):void => {
+    console.log('addquantity', email, id)
+    dispatch(putCarritoRemove(email, id))
+  }
+
+  
 
   return (
     <>
@@ -123,12 +144,22 @@ const CartScreen = () => {
               </TableRow>
             </TableHead>
                 {
-                carrito?.publications?.map((item: any) => (
+                !auth.user ? cart.map((item: any) => (
                   <CartItem
                     key={item.id}
                     item={item}
                     addToCart={handleAddToCart}
                     removeFromCart={handleRemoveFromCart}
+                  /> 
+                
+                  ))
+                
+                : carrito?.publications?.map((item: any) => (
+                  <CartItem
+                    key={item.id}
+                    item={item}
+                    addToCart={() => handleAddQuantityToCartDB(auth.user && auth?.user?.email, item.publication)}
+                    removeFromCart={() => handleRemoveQuantityToCartDB(auth.user && auth?.user?.email, item.publication)}
                   />
                 ))
                 }
