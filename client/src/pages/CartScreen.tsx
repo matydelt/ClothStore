@@ -9,7 +9,8 @@ import TableHead from '@material-ui/core/TableHead';
 import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import TableRow from '@material-ui/core/TableRow';
 import { Container, Box } from "@material-ui/core";
-
+import { useSelector } from "react-redux";
+import { RootState } from '../redux/store/store';
 
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
@@ -49,10 +50,22 @@ export type CartItemType = {
   category: string;
 };
 
+export type CartItemTypeDB = {
+  id: string;
+  quantity: number;
+  price: number;
+  image: string;
+  title: string;
+  category?: string;
+};
+
 export type CartType = CartItemType[];
 
 const CartScreen = () => {
   const [cart, setCart] = useLocalStorage<CartType>("cart", []);
+  const carrito: any = useSelector((state: RootState) => state.carrito.carrito)
+
+  console.log(carrito && carrito, 'carrito db')
 
   const classes = useStyles();
 
@@ -88,10 +101,6 @@ const CartScreen = () => {
     );
   };
 
-
-  
-
-
   console.log(cart)
 
   return (
@@ -99,7 +108,7 @@ const CartScreen = () => {
       <Typography variant='h3' align='center'>
         Mi Carro
       </Typography>
-      {cart.length === 0 ? <p>No items</p> : null}
+      {cart.length === 0  ? <Typography variant='h5'>No items</Typography> : null}
 
 
       <Container maxWidth='lg' classes={{ root: classes.container }}>
@@ -113,14 +122,16 @@ const CartScreen = () => {
                 <StyledTableCell align="right">Total</StyledTableCell>
               </TableRow>
             </TableHead>
-                {cart.map((item) => (
+                {
+                carrito?.publications?.map((item: any) => (
                   <CartItem
                     key={item.id}
                     item={item}
                     addToCart={handleAddToCart}
                     removeFromCart={handleRemoveFromCart}
                   />
-                ))}
+                ))
+                }
           </Table>
         </TableContainer>
         <Box component='div' className={classes.containerTotal}>

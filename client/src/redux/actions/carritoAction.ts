@@ -24,3 +24,11 @@ export const getCarrito = (email:string) => async (dispatch: Dispatch<Action>) =
         });
       }
 }
+
+export const putCarrito = (email: string | null | undefined, id: string) => async (dispatch: Dispatch<Action>) => {
+  try {
+    await axios.put(`/carrito/${email}/${id}`);
+  } catch (error) {
+    console.error(error)
+  }
+}

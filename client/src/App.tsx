@@ -21,7 +21,7 @@ import { getCarrito } from "./redux/actions/carritoAction";
 import { RootState } from "./redux/store/store";
 import RequireAuth from "./components/RequireAuth";
 
-  // const user = useSelector((state: RootState) => state.userSignin.userInfo)
+// const user = useSelector((state: RootState) => state.userSignin.userInfo)
 
 const App = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -36,8 +36,8 @@ const App = (): JSX.Element => {
     }
   }, [dispatch, auth])
   useEffect(() => {
-    dispatch(putPublications({"name":name, "order":order, "page":page, "mark": mark, "category": category, "gender": gender, "price": price, "author": author} ));
-  }, [dispatch]);
+    dispatch(putPublications({ "name": name, "order": order, "page": page, "mark": mark, "category": category, "gender": gender, "price": price, "author": author }));
+  }, []);
 
   useEffect(() => {
     dispatch(cartLength());
@@ -56,33 +56,31 @@ const App = (): JSX.Element => {
   }, [dispatch]);
 
   return (
-    <ProvideAuth>
-      <MuiThemeProvider theme={theme}>
-        <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/nueva-publicacion" element={<CreatePublication />} />
-          <Route
-            path="/actualizar-publicacion/:publicationId"
-            element={<CreatePublication />}
-          />
-          <Route
-            path="/publication/:publicationId"
-            element={<PublicationDetail />}
-          />
-          <Route path="/register" element={<RegisterScreen />}></Route>
-          <Route path="/login" element={<LoginScreen />}></Route>
-          <Route path="/cart" element={<CartScreen />}></Route>
-          <Route
-            path="/perfil"
-            element={
-              <RequireAuth>
-                <HomeUsuarios />
-              </RequireAuth>
-            }
-          />
-        </Routes>
-      </MuiThemeProvider>
-    </ProvideAuth>
+    <MuiThemeProvider theme={theme}>
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/nueva-publicacion" element={<CreatePublication />} />
+        <Route
+          path="/actualizar-publicacion/:publicationId"
+          element={<CreatePublication />}
+        />
+        <Route
+          path="/publication/:publicationId"
+          element={<PublicationDetail />}
+        />
+        <Route path="/register" element={<RegisterScreen />}></Route>
+        <Route path="/login" element={<LoginScreen />}></Route>
+        <Route path="/cart" element={<CartScreen />}></Route>
+        <Route
+          path="/perfil"
+          element={
+            <RequireAuth>
+              <HomeUsuarios />
+            </RequireAuth>
+          }
+        />
+      </Routes>
+    </MuiThemeProvider>
   );
 };
 

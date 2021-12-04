@@ -49,6 +49,7 @@ const StyledTableRow = withStyles((theme: Theme) =>
 type CartItemType = {
   id: string;
   amount: number;
+  quantity: number;
   price: number;
   image: string;
   title: string;
@@ -94,7 +95,7 @@ const CartItem = ({ item, addToCart, removeFromCart }: Props) => {
             >
               -
             </Button>
-            {item.amount}
+            {item.amount || item.quantity}
             <Button
               disableFocusRipple={true}
               disableRipple={true}
@@ -109,7 +110,7 @@ const CartItem = ({ item, addToCart, removeFromCart }: Props) => {
               +
             </Button>
           </TableCell>
-          <TableCell align="right">${(item.amount * item.price).toFixed(2)}</TableCell>
+          <TableCell align="right">${(item?.amount || item?.quantity * item.price).toFixed(2)}</TableCell>
         </StyledTableRow>
       </TableBody>
     </>

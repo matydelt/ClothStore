@@ -2,7 +2,7 @@ import mongoose, { Schema, model } from "mongoose";
 
 export interface Publication extends mongoose.Document {
     name: string;
-    images: object[];
+    images: {public_id: string, url: string}[];
     stock: number;
     mark: string;
     detail: string;
