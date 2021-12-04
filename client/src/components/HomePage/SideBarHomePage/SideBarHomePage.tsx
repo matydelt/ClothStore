@@ -49,29 +49,29 @@ const SideBarHomePage = () => {
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     value: string
   ) => {
-    setSelectedValueGender(value);
+    console.log()
+    selectedValueGender===value ? setSelectedValueGender("") : setSelectedValueGender(value);
   };
   const handleListItemClickCategory = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     value: string
   ) => {
-    setSelectedValueCategory(value);
+    selectedValueCategory===value ? setSelectedValueCategory("") : setSelectedValueCategory(value);
   };
   const handleListItemClickMark = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     value: string
   ) => {
-    setSelectedValueMark(value);
+    selectedValueMark===value ? setSelectedValueMark("") : setSelectedValueMark(value);
   };
   const handleListItemClickAuthor = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     value: string
   ) => {
-    setSelectedValueAuthor(value);
+    selectedValueAuthor===value ? setSelectedValueAuthor("") : setSelectedValueAuthor(value);
   }; //
 
   const handleReset = () => {
-    setSelectedValueGender("");
     dispatch(
       putPublications({
         name: "",
@@ -84,6 +84,10 @@ const SideBarHomePage = () => {
         author: "",
       })
     );
+    setSelectedValueGender("");
+    setSelectedValueMark("");
+    setSelectedValueCategory("");
+    setSelectedValueAuthor("");
   };
 
   const handleSubmit = () => {
@@ -128,7 +132,7 @@ const SideBarHomePage = () => {
               <ListItemIcon>
                 <Checkbox
                   edge="start"
-                  checked={selectedValueGender === value}
+                  checked={selectedValueGender === value?true:false}
                   tabIndex={-1}
                   disableRipple
                   inputProps={{ "aria-labelledby": labelId }}
@@ -158,7 +162,7 @@ const SideBarHomePage = () => {
               <ListItemIcon>
                 <Checkbox
                   edge="start"
-                  checked={selectedValueCategory === value}
+                  checked={selectedValueCategory === value?true:false}
                   tabIndex={-1}
                   disableRipple
                   inputProps={{ "aria-labelledby": labelId }}
@@ -193,10 +197,7 @@ const SideBarHomePage = () => {
               <ListItemIcon>
                 <Checkbox
                   edge="start"
-                  checked={
-                    selectedValueAuthor ===
-                    value
-                  }
+                  checked={selectedValueAuthor === value?true:false}
                   tabIndex={-1}
                   disableRipple
                   inputProps={{ "aria-labelledby": labelId }}
