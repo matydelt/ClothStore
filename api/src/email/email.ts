@@ -28,17 +28,19 @@ exports.send = async (options: any) => {
 
     let result;
 
-    if(options.fecha) {
+    if(true) {
         let mapObj: any = {
-            fecha: options.fecha,
-            hora: options.hora,
+            mensaje: options.mensaje,
+            publicationName: options.publicationName,
+            publicationPrice: options.publicationPrice,
         }
-        result = file.replace(/fecha|hora/gi,function(matched: any ){
+        result = file.replace(/mensaje|publicationName|publicationPrice/gi,function(matched: any ){
             return mapObj[matched];
         });
-    } else {
-        result = file.replace('[[mensaje]]', options.mensaje);
     }
+    //  else {
+    //     result = file.replace('[[mensaje]]', options.mensaje);
+    // }
     
     
     let mailOptions = {

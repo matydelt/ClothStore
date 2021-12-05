@@ -19,6 +19,8 @@ export default class QAndAControllers {
             await question.save();
 
             sendEMail.send({
+                publicationName: publication?.name,
+                publicationPrice: publication?.price,
                 email: seller?.email,
                 mensaje: message,
                 subject: "Pregunta recibida",
@@ -63,9 +65,11 @@ export default class QAndAControllers {
                 console.log(buyer)
 
                 sendEMail.send({
+                    publicationName: publication?.name,
+                    publicationPrice: publication?.price,
                     email: buyer?.email,
                     mensaje: message,
-                    subject: "Pregunta respondida",
+                    subject: "Pregunta Respondida",
                     htmlFile: "answer.html",
                   });
 
