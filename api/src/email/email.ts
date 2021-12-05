@@ -17,8 +17,8 @@ let transport = nodemailer.createTransport({
     // }
     service: 'gmail',
     auth: {
-        user: 'no.reply.consultora@gmail.com',
-        pass: 'elgrupo10'
+        user: 'no.reply.clothstore@gmail.com',
+        pass: 'grupopg16'
     }
 });
 
