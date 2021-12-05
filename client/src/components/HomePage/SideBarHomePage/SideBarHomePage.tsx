@@ -13,7 +13,11 @@ import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { getAllUsers } from "../../../redux/actions/usersActions";
+import Collapse from "@material-ui/core/Collapse";
+import ListItemButton from "@mui/material/ListItemButton";
 import { getallMarks } from "../../../redux/actions/marksActions";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -50,6 +54,24 @@ const SideBarHomePage = () => {
   const [selectedValueCategory, setSelectedValueCategory] =
     React.useState(category);
   const [selectedValueAuthor, setSelectedValueAuthor] = React.useState(author);
+
+  const [open1, setOpen1] = React.useState(true);
+  const [open2, setOpen2] = React.useState(true);
+  const [open3, setOpen3] = React.useState(true);
+  const [open4, setOpen4] = React.useState(true);
+
+  const handleClick1 = () => {
+    setOpen1(!open1);
+  };
+  const handleClick2 = () => {
+    setOpen2(!open2);
+  };
+  const handleClick3 = () => {
+    setOpen3(!open3);
+  };
+  const handleClick4 = () => {
+    setOpen4(!open4);
+  };
 
   const handleListItemClickGender = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -119,10 +141,15 @@ const SideBarHomePage = () => {
         marginTop: "20px",
       }}
     >
-      <List
-        className={classes.list}
-        subheader={<ListSubheader>Genero</ListSubheader>}
-      >
+    <List
+      component="nav"
+      aria-labelledby="nested-list-subheader"
+    >
+      <ListItemButton onClick={handleClick1}>
+        <ListItemText primary="Genero" />
+        {open1 ? <ExpandLess /> : <ExpandMore />}
+      </ListItemButton>
+      <Collapse in={open1} timeout="auto" unmountOnExit>
         {["Hombre", "Mujer", "Niños"].map((value) => {
           const labelId = `checkbox-list-label-${value}`;
 
@@ -148,11 +175,17 @@ const SideBarHomePage = () => {
             </ListItem>
           );
         })}
-      </List>
-      <List
-        className={classes.list}
-        subheader={<ListSubheader>Categorias</ListSubheader>}
-      >
+        </Collapse>
+        </List> 
+    <List
+      component="nav"
+      aria-labelledby="nested-list-subheader"
+    >
+        <ListItemButton onClick={handleClick2}>
+        <ListItemText primary="Categoria" />
+        {open2 ? <ExpandLess /> : <ExpandMore />}
+      </ListItemButton>
+      <Collapse in={open2} timeout="auto" unmountOnExit>
         {["Remera", "Patanlon", "Zapatillas", "Zapatos"].map((value) => {
           const labelId = `checkbox-list-label-${value}`;
 
@@ -178,11 +211,18 @@ const SideBarHomePage = () => {
             </ListItem>
           );
         })}
-      </List>
-      <List
-        className={classes.list}
-        subheader={<ListSubheader>Vendedor</ListSubheader>}
-      >
+        </Collapse>
+        </List> 
+    <List
+      component="nav"
+      aria-labelledby="nested-list-subheader"
+    >
+      
+        <ListItemButton onClick={handleClick3}>
+        <ListItemText primary="Vendedor" />
+        {open3 ? <ExpandLess /> : <ExpandMore />}
+      </ListItemButton>
+      <Collapse in={open3} timeout="auto" unmountOnExit>
         {users?.map((value) => {
           const labelId = `checkbox-list-label-${value}`;
 
@@ -213,11 +253,18 @@ const SideBarHomePage = () => {
             </ListItem>
           );
         })}
-      </List>
-      <List
-        className={classes.list}
-        subheader={<ListSubheader>Marcas</ListSubheader>}
-      >
+        </Collapse>
+        </List> 
+    <List
+      component="nav"
+      aria-labelledby="nested-list-subheader"
+    >
+
+        <ListItemButton onClick={handleClick4}>
+        <ListItemText primary="Marca" />
+        {open4 ? <ExpandLess /> : <ExpandMore />}
+      </ListItemButton>
+      <Collapse in={open4} timeout="auto" unmountOnExit>
         {marks?.map((value) => {
           const labelId = `checkbox-list-label-${value}`;
 
@@ -248,7 +295,8 @@ const SideBarHomePage = () => {
             </ListItem>
           );
         })}
-      </List>
+        </Collapse>
+        </List> 
       <ButtonGroup
         variant="contained"
         aria-label="outlined primary button group"
