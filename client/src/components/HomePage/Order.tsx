@@ -43,7 +43,7 @@ function SearchOrder() {
     dispatch(
       putPublications({
         name: name,
-        order: text,
+        order: value,
         page: page,
         mark: mark,
         category: category,

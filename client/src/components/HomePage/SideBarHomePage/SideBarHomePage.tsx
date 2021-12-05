@@ -18,6 +18,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import { getallMarks } from "../../../redux/actions/marksActions";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
+import SearchOrder from "../Order";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -141,6 +142,7 @@ const SideBarHomePage = () => {
         marginTop: "20px",
       }}
     >
+      <SearchOrder/>
     <List
       component="nav"
       aria-labelledby="nested-list-subheader"

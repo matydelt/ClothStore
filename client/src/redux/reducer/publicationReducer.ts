@@ -31,7 +31,7 @@ const publicationListReducer = (
     price: "",
     author: "",
     name: "",
-    order: "",
+    order: "Asendente",
     page: "1",
     count: 0
   },
@@ -72,7 +72,7 @@ const publicationSaveReducer = (
     price: "",
     author: "",
     name: "",
-    order: "",
+    order: "Asendente",
     page: "1",
     count: 0,
   },
