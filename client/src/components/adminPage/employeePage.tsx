@@ -20,7 +20,7 @@ function EmployeePage() {
                     <br></br>
                     <p style={{ marginLeft: "5px" }}>Publicaciones : Esta seccion sera donde podras ver las publicaciones que actualmente estan en revision , ahi podras aceptarlas o rechazarlas</p>
                     <br></br>
-                    <p>Denuncias: Aqui podras ver las publicaciones denunciadas por los usuarios , tal vez a algun empleado se le paso algo por alto al momento de aceptar una publicacion o tal vez haya algun problema con el vendedor</p>
+                    <p style={{ marginLeft: "5px" }}>Denuncias: Aqui podras ver las publicaciones denunciadas por los usuarios , tal vez a algun empleado se le paso algo por alto al momento de aceptar una publicacion o tal vez haya algun problema con el vendedor</p>
 
                 </Box>
             </Box>
