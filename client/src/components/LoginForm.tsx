@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Avatar from "@material-ui/core/Avatar";
+import Avatar from "@mui/material/Avatar";
 import { Button } from "@material-ui/core";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";

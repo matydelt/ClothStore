@@ -7,9 +7,9 @@ import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 // import IconButton from '@mui/material/IconButton'
-import IconButton from "@material-ui/core/IconButton";
+import IconButton from "@mui/material/IconButton";
 // import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import InfoIcon from "@mui/icons-material/Info";
 import Grid from "@mui/material/Grid";
 import { CartItemType, CartType, CartItemTypeDB } from "../../../../pages/CartScreen";

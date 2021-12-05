@@ -2,17 +2,17 @@ import React, { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { registerUser } from "../redux/actions/userActions";
 import { useDispatch } from "react-redux";
-import Avatar from "@material-ui/core/Avatar";
-import { Button } from "@material-ui/core";
+import Avatar from "@mui/material/Avatar";
+import { Button } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 // import FormControlLabel from "@mui/material/FormControlLabel";
 // import Checkbox from "@mui/material/Checkbox";
 // import Link from "@mui/material/Link";
-import { Link } from "@material-ui/core"
+import { Link } from "@mui/material"
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";

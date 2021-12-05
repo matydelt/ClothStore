@@ -3,7 +3,7 @@ import ButtonsNav from '../../../GeneralComponents/ButtonsNav'
 import { Link } from 'react-router-dom'
 import Logo from '../../../assets/logo/ClothStore_logotipo_sin_fondo.png';
 import Toolbar from '@mui/material/Toolbar'
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import IconButton from '@mui/material/IconButton';
 import {
     MyNavBarHeader,
