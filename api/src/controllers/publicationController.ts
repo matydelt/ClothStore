@@ -145,7 +145,7 @@ export default class PublicationController {
           }
         });
       }
-
+      const ttal:number = allPublications.length
       allPublications = allPublications.slice(
         charXPage * (pag - 1),
         charXPage * (pag - 1) + charXPage
@@ -153,7 +153,7 @@ export default class PublicationController {
 
       res.json({
         result: allPublications, 
-        count: allPublications.length
+        count: ttal
       });
     } catch (e) {
       console.log(e);

@@ -6,6 +6,7 @@ import SideBarHomePage from "./SideBarHomePage/SideBarHomePage";
 import Footer from "../Footer";
 import { Container } from "@mui/material";
 import SearchBar from "./SearchBar";
+import Paginations from "./Pagination";
 
 const Homepage = () => {
   return (
@@ -27,6 +28,7 @@ const Homepage = () => {
         >
           <SideBarHomePage />
           <Publicaciones />
+        <Paginations/>
         </Box>
       </Container>
       <Box sx={{ height: "50%" }} />
