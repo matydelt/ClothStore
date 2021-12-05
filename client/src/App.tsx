@@ -59,10 +59,19 @@ const App = (): JSX.Element => {
     <MuiThemeProvider theme={theme}>
       <Routes>
         <Route path="/" element={<Homepage />} />
-        <Route path="/nueva-publicacion" element={<CreatePublication />} />
+        <Route path="/nueva-publicacion" element=
+        {
+            <RequireAuth>
+              <CreatePublication />
+             </RequireAuth>
+          } />
         <Route
           path="/actualizar-publicacion/:publicationId"
-          element={<CreatePublication />}
+          element={
+            <RequireAuth>
+              <CreatePublication />
+            </RequireAuth>
+          }
         />
         <Route
           path="/publication/:publicationId"
