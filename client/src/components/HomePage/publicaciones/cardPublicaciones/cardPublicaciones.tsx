@@ -119,7 +119,7 @@ export default function CardPublicacion(props: Props) {
               aria-label="Add to Cart"
               size="medium"
               color="primary"
-              onClick={cart?.length === 0 ? () => handleAddToCart(item) : () => handleAddToCartDB(auth.user && auth?.user?.email, id)}
+              onClick={ !auth.user ? () => handleAddToCart(item) : () => handleAddToCartDB(auth.user && auth?.user?.email, id)}
             >
               <ShoppingCartIcon />
             </IconButton>

@@ -8,9 +8,13 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import TableRow from '@material-ui/core/TableRow';
-import { Container, Box } from "@material-ui/core";
-import { useSelector } from "react-redux";
+import { Container, Box, Button } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from '../redux/store/store';
+import { useAuth } from "../hooks/useAuth";
+import { putCarrito, putCarritoRemove } from "../redux/actions/carritoAction";
+import { useNavigate } from "react-router";
+import axios from "axios";
 
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
@@ -64,13 +68,24 @@ export type CartType = CartItemType[];
 const CartScreen = () => {
   const [cart, setCart] = useLocalStorage<CartType>("cart", []);
   const carrito: any = useSelector((state: RootState) => state.carrito.carrito)
+  const auth = useAuth();
+  const dispatch = useDispatch();
 
-  console.log(carrito && carrito, 'carrito db')
+  const navigate = useNavigate();
+
+  console.log(cart)
 
   const classes = useStyles();
 
-  const calculateTotal = () =>
-    cart.reduce((acc, item) => acc + item.amount * item.price, 0);
+  const calculateTotal = () => {
+
+    if (auth.user && carrito?.publications) {
+      return carrito?.publications?.reduce((acc: any, item: any) => acc + item.quantity * item.price, 0);
+    } else {
+      return cart.reduce((acc, item) => acc + item.amount * item.price, 0);
+    }
+
+  }
 
   const handleAddToCart = (clickedItem: CartItemType) => {
     setCart((prev) => {
@@ -101,42 +116,82 @@ const CartScreen = () => {
     );
   };
 
-  console.log(cart)
+  const handleAddQuantityToCartDB = (email: string | null | undefined, id: string): void => {
+    console.log('addquantity', email, id)
+    dispatch(putCarrito(email, id))
+  }
+
+  const handleRemoveQuantityToCartDB = (email: string | null | undefined, id: string): void => {
+    console.log('addquantity', email, id)
+    dispatch(putCarritoRemove(email, id))
+  }
+
+
+  const handleMercadoPago = (): void => {
+    let order = carrito.publications;
+    axios.post('/checkout', order).then(({ data }) => {
+      var win = window.open(data, '_blank');
+      win?.focus();
+      console.log(data)
+
+    })
+  }
+
+
 
   return (
     <>
       <Typography variant='h3' align='center'>
         Mi Carro
       </Typography>
-      {cart.length === 0  ? <Typography variant='h5'>No items</Typography> : null}
+      {(!auth?.user && cart?.length === 0 || auth?.user && carrito?.publications?.length === 0) ? <Typography variant='h5'>No items</Typography> : null}
 
 
       <Container maxWidth='lg' classes={{ root: classes.container }}>
-        <TableContainer classes={{ root: classes.root }}>
-          <Table aria-label="customized table">
-            <TableHead>
-              <TableRow>
-                <StyledTableCell >Producto</StyledTableCell>
-                <StyledTableCell align="right">Price $</StyledTableCell>
-                <StyledTableCell align="right">Cantidad</StyledTableCell>
-                <StyledTableCell align="right">Total</StyledTableCell>
-              </TableRow>
-            </TableHead>
+
+        {(!!!auth?.user && cart?.length > 0 || !!auth?.user && carrito?.publications?.length > 0) &&
+          <>
+
+            <TableContainer classes={{ root: classes.root }}>
+              <Table aria-label="customized table">
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell >Producto</StyledTableCell>
+                    <StyledTableCell align="right">Price $</StyledTableCell>
+                    <StyledTableCell align="right">Cantidad</StyledTableCell>
+                    <StyledTableCell align="right">Total</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+
                 {
-                carrito?.publications?.map((item: any) => (
-                  <CartItem
-                    key={item.id}
-                    item={item}
-                    addToCart={handleAddToCart}
-                    removeFromCart={handleRemoveFromCart}
-                  />
-                ))
+                  !auth.user ? cart.map((item: any) => (
+                    <CartItem
+                      key={item.id}
+                      item={item}
+                      addToCart={handleAddToCart}
+                      removeFromCart={handleRemoveFromCart}
+                    />
+
+                  ))
+
+                    : carrito?.publications?.map((item: any) => (
+                      <CartItem
+                        key={item.id}
+                        item={item}
+                        addToCart={() => handleAddQuantityToCartDB(auth.user && auth?.user?.email, item.publication)}
+                        removeFromCart={() => handleRemoveQuantityToCartDB(auth.user && auth?.user?.email, item.publication)}
+                      />
+                    ))
                 }
-          </Table>
-        </TableContainer>
-        <Box component='div' className={classes.containerTotal}>
-          <Typography variant='h5'>Total: $ {calculateTotal().toFixed(2)}</Typography>
-        </Box>
+              </Table>
+            </TableContainer>
+            <Box component='div' className={classes.containerTotal}>
+              <Typography variant='h5'>Total: $ {calculateTotal().toFixed(2)}</Typography>
+              <Button onClick={handleMercadoPago}>Comprar</Button>
+            </Box>
+
+          </>}
+
       </Container>
     </>
   );

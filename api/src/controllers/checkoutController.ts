@@ -12,29 +12,53 @@ declare namespace process.env {
 
 
 mercadoPago.configure({
-    access_token: MERCADOPAGO_API_PROD_ACCESS_TOKEN
+    access_token: 'APP_USR-3457427128052750-120215-cdbb5e0a88b281ea5edd53c4c0498629-1031300730'
 })
 
-let preference = {
-    items: [
-        {
-            title: 'Mi producto',
-            unit_price: 100,
-            quantity: 1
-        }
-    ]
-}
+// let preference = {
+//     items: [
+//         {
+// title: 'Mi producto',
+// unit_price: 100,
+// quantity: 1
+//         }
+//     ]
+// }
 
 export default class Checkout {
     static async postCheckout(req: Request, res: Response) {
 
+        const order = req.body;
+
         try {
+
+            let orderMap = order.map((c: any) => {
+                return {
+                    title: c.title,
+                    unit_price: c.price,
+                    quantity: c.quantity
+                }
+            })
+
+            const preference = {
+                // items: orderMap,
+                items: [{
+                    description: 'aaAAAaa',
+                    title: 'aaAAAaa',
+                    unit_price: 500,
+                    quantity: 10
+                }],
+                marketplace: 'Mi negocio',
+                additional_info: "AAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                statement_descriptor: "Keilo's shop",
+                back_urls: { failure: '', pending: '', success: 'www.google.com.ar' }
+            }
 
             const response = await mercadoPago.preferences.create(preference)
 
             console.log(response.body)
 
-            res.send('checkout')
+            res.json(response.body.init_point)
 
 
         } catch (error) {
