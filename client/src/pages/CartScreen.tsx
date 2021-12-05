@@ -8,11 +8,13 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import TableRow from '@material-ui/core/TableRow';
-import { Container, Box } from "@material-ui/core";
+import { Container, Box, Button } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from '../redux/store/store';
 import { useAuth } from "../hooks/useAuth";
 import { putCarrito, putCarritoRemove } from "../redux/actions/carritoAction";
+import { useNavigate } from "react-router";
+import axios from "axios";
 
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
@@ -69,6 +71,8 @@ const CartScreen = () => {
   const auth = useAuth();
   const dispatch = useDispatch();
 
+  const navigate = useNavigate();
+
   console.log(cart)
 
   const classes = useStyles();
@@ -123,6 +127,17 @@ const CartScreen = () => {
   }
 
 
+  const handleMercadoPago = (): void => {
+    let order = carrito.publications;
+    axios.post('/checkout', order).then(({ data }) => {
+      var win = window.open(data, '_blank');
+      win?.focus();
+      console.log(data)
+
+    })
+  }
+
+
 
   return (
     <>
@@ -134,47 +149,48 @@ const CartScreen = () => {
 
       <Container maxWidth='lg' classes={{ root: classes.container }}>
 
-        { (!!!auth?.user && cart?.length > 0 || !!auth?.user && carrito?.publications?.length > 0) &&
-  <>
+        {(!!!auth?.user && cart?.length > 0 || !!auth?.user && carrito?.publications?.length > 0) &&
+          <>
 
-        <TableContainer classes={{ root: classes.root }}>
-          <Table aria-label="customized table">
-              <TableHead>
-                <TableRow>
-                  <StyledTableCell >Producto</StyledTableCell>
-                  <StyledTableCell align="right">Price $</StyledTableCell>
-                  <StyledTableCell align="right">Cantidad</StyledTableCell>
-                  <StyledTableCell align="right">Total</StyledTableCell>
-                </TableRow>
-              </TableHead>
-          
-            {
-              !auth.user ? cart.map((item: any) => (
-                <CartItem
-                  key={item.id}
-                  item={item}
-                  addToCart={handleAddToCart}
-                  removeFromCart={handleRemoveFromCart}
-                />
+            <TableContainer classes={{ root: classes.root }}>
+              <Table aria-label="customized table">
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell >Producto</StyledTableCell>
+                    <StyledTableCell align="right">Price $</StyledTableCell>
+                    <StyledTableCell align="right">Cantidad</StyledTableCell>
+                    <StyledTableCell align="right">Total</StyledTableCell>
+                  </TableRow>
+                </TableHead>
 
-              ))
+                {
+                  !auth.user ? cart.map((item: any) => (
+                    <CartItem
+                      key={item.id}
+                      item={item}
+                      addToCart={handleAddToCart}
+                      removeFromCart={handleRemoveFromCart}
+                    />
 
-                : carrito?.publications?.map((item: any) => (
-                  <CartItem
-                    key={item.id}
-                    item={item}
-                    addToCart={() => handleAddQuantityToCartDB(auth.user && auth?.user?.email, item.publication)}
-                    removeFromCart={() => handleRemoveQuantityToCartDB(auth.user && auth?.user?.email, item.publication)}
-                  />
-                ))
-            }
-          </Table>
-        </TableContainer>
-        <Box component='div' className={classes.containerTotal}>
-          <Typography variant='h5'>Total: $ {calculateTotal().toFixed(2)}</Typography>
-        </Box>
+                  ))
 
-        </>}
+                    : carrito?.publications?.map((item: any) => (
+                      <CartItem
+                        key={item.id}
+                        item={item}
+                        addToCart={() => handleAddQuantityToCartDB(auth.user && auth?.user?.email, item.publication)}
+                        removeFromCart={() => handleRemoveQuantityToCartDB(auth.user && auth?.user?.email, item.publication)}
+                      />
+                    ))
+                }
+              </Table>
+            </TableContainer>
+            <Box component='div' className={classes.containerTotal}>
+              <Typography variant='h5'>Total: $ {calculateTotal().toFixed(2)}</Typography>
+              <Button onClick={handleMercadoPago}>Comprar</Button>
+            </Box>
+
+          </>}
 
       </Container>
     </>
