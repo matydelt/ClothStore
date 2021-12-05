@@ -5,6 +5,7 @@ import Box from "@material-ui/core/Box";
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
+import SearchOrder from "./Order";
 
 function SearchBar() {
   const [text, setText] = React.useState("");
@@ -33,6 +34,7 @@ function SearchBar() {
           if (event.key === "Enter") dispatch(putPublications({ name: text }));
         }}
       />
+      <SearchOrder/>
     </Box>
   );
 }
