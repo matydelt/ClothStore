@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom'
 import Logo from '../../../assets/logo/ClothStore_logotipo_sin_fondo.png';
 import Toolbar from '@mui/material/Toolbar'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import IconButton from '@material-ui/core/IconButton';
+import IconButton from '@mui/material/IconButton';
 import {
     MyNavBarHeader,
 } from '../NavBar/NavBarStyles'
 import { Box } from '@mui/system';
-import Badge from '@material-ui/core/Badge';
+import Badge from '@mui/material/Badge';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/store/store';
 

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import { putPublications } from "../../redux/actions/publicationActions";
 import  Stack  from "@mui/material/Stack";
-import Pagination from "@material-ui/lab/Pagination";
+import Pagination from "@mui/material/Pagination";
 import { Box } from "@mui/system";
 
 function Paginations() {  

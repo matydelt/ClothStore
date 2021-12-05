@@ -1,9 +1,9 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
 import { putPublications } from "../../redux/actions/publicationActions";
-import Box from "@material-ui/core/Box";
-import TextField from "@material-ui/core/TextField";
-import InputAdornment from "@material-ui/core/InputAdornment";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
 
 function SearchBar() {
