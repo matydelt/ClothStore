@@ -4,6 +4,7 @@ import { RootState } from "../../redux/store/store";
 import { putPublications } from "../../redux/actions/publicationActions";
 import  Stack  from "@mui/material/Stack";
 import Pagination from "@material-ui/lab/Pagination";
+import { Box } from "@mui/system";
 
 function Paginations() {  
 
@@ -42,9 +43,21 @@ function Paginations() {
   };
   let pag:number = Math.ceil(count/12);
   return (
-    <Stack spacing={4}>
+    <Box
+      component="aside"
+      sx={{
+        width: "100%",
+        marginTop: "20px",
+        marginBottom: "20px",
+        display: "flex",
+        justifyContent: "center"
+      }}
+    >
+    <Stack>
       <Pagination count={pag} variant="outlined" color="primary" showFirstButton showLastButton onChange={handleChange} />
-    </Stack>);
+    </Stack>
+    </Box>
+    );
 }
 
 export default Paginations;
