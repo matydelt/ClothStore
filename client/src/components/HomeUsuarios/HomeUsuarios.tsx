@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Avatar, Box } from '@material-ui/core'
+import { Avatar, Box } from '@mui/material'
 import "./HomeUsuarios.css"
 import { TextField } from '@mui/material'
 import axios from 'axios'

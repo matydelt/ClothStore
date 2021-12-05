@@ -7,7 +7,7 @@ import {
   Rating,
   CircularProgress,
 } from "@mui/material";
-import { FormControl, Select, Button, MenuItem } from "@material-ui/core";
+import { FormControl, Select, Button, MenuItem } from "@mui/material";
 import { Box } from "@mui/system";
 import axios from "axios";
 import { useParams } from "react-router";

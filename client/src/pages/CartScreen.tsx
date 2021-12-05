@@ -1,14 +1,14 @@
 import * as React from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 import CartItem from "../components/CartItem";
-import Typography from '@material-ui/core/Typography';
-import Table from '@material-ui/core/Table';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
+import Typography from '@mui/material/Typography';
+import Table from '@mui/material/Table';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
 import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/styles';
-import TableRow from '@material-ui/core/TableRow';
-import { Container, Box } from "@material-ui/core";
+import TableRow from '@mui/material/TableRow';
+import { Container, Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from '../redux/store/store';
 
