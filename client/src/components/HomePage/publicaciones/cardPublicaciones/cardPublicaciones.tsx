@@ -99,6 +99,9 @@ export default function CardPublicacion(props: Props) {
           >
             {images.length === 0 ? (
               <Item
+                style={{
+                  width: '100%'
+                }}
                 item={
                   "https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227725184-stock-illustration-no-image-available-icon-flat.jpg"
                 }
