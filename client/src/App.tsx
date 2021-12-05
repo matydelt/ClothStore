@@ -16,6 +16,7 @@ import HomeUsuarios from "./components/HomeUsuarios/HomeUsuarios";
 import { StylesProvider } from "@material-ui/styles";
 import AdminPage from "./components/adminPage/adminPage";
 import UsuariosAdmPage from "./components/adminPage/components/usuarios/usuarios";
+import EmployeePage from "./components/adminPage/employeePage"
 
 const App = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -45,6 +46,7 @@ const App = (): JSX.Element => {
         <ThemeProvider theme={theme}>
           <Routes>
             <Route path="/admin" element={<AdminPage />} />
+            <Route path="employee" element={<EmployeePage />} />
             <Route path="/admin/usuarios" element={<UsuariosAdmPage />} />
             <Route path="/" element={<Homepage />} />
             <Route path="/nueva-publicacion" element={<CreatePublication />} />
