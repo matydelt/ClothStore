@@ -1,0 +1,37 @@
+.card-usuario{
+    margin-top: 10px;
+    width: 70%;
+    border-bottom: solid black 1px ;
+    border-bottom: solid #e6e6e6 1px ;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+.box-usuarios{
+    /* width: 50%; */
+    margin-top: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.box {
+    display: flex;
+  }
+
+  .one {
+    flex: 1 ;
+  }
+
+  .two {
+    flex: 1 ;
+  }
+
+  .three {
+    flex: 1 ;
+  }
+  .four{
+    flex: 1 ;
+  }

@@ -48,25 +48,24 @@ export default class UserController {
   }
   static async getUsers(req: Request, res: Response) {
     try {
-      
-      let users: Array<any>;
-      users = await UserSchema.find();
-      users = users.map((e)=>{
-        if(e.publications.length > 0) return e.userName 
-      }).filter(e => e!=undefined);
-      console.log(users);
-      res.json(users);
+      const user = await UserSchema.find();
+      res.json(user)
     } catch (e) {
       console.log(e);
-      res.json([]);
+      res.sendStatus(500);
     }
   }
 
   static async banUser(req: Request, res: Response) {
     try {
-      const { id } = req.body;
-      await UserSchema.updateOne({ _id: id }, { $set: { active: false } });
-      res.json("El usuario se marco como inactivo");
+      const { id, flag } = req.body;
+      if (flag) {
+        await UserSchema.updateOne({ _id: id }, { $set: { active: true } });
+        res.json("El usuario se marco como activo");
+      } else {
+        await UserSchema.updateOne({ _id: id }, { $set: { active: false } });
+        res.json("El usuario se marco como inactivo");
+      }
     } catch (error) {
       console.log("error en banUser");
       res.sendStatus(500);
@@ -85,7 +84,7 @@ export default class UserController {
   }
   static async putStateUser(req: Request, res: Response) {
     try {
-      const { id, flag } = req.params;
+      const { id, flag } = req.body;
       const user = await UserSchema.findOne({ _id: id });
       if (user) {
         if (flag) user.type = "employee"

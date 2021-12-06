@@ -1,5 +1,6 @@
 
 export type DefaultRootState = {
+    users: any,
     loading: boolean,
     userInfo: any,
     error: any,

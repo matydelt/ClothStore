@@ -22,6 +22,7 @@ import AdminPage from "./components/adminPage/adminPage";
 import UsuariosAdmPage from "./components/adminPage/components/usuarios/usuarios";
 import RequireAuth from "./components/RequireAuth";
 import { RootState } from "./redux/store/store"
+import EmployeePage from "./components/adminPage/employeePage"
 
 const App = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -53,6 +54,8 @@ const App = (): JSX.Element => {
         <MuiThemeProvider theme={theme}>
           <Routes>
             <Route path="/admin" element={<AdminPage />} />
+            <Route path="employee" element={<EmployeePage />} />
+            <Route path="/admin/usuarios" element={<UsuariosAdmPage />} />
             <Route path="/" element={<Homepage />} />
             <Route path="/nueva-publicacion" element={<CreatePublication />} />
             <Route

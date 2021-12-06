@@ -47,6 +47,61 @@ export const signinUser = (user: any) => async (dispatch: Dispatch<Action>) => {
     });
   }
 };
+export const getUsers =
+
+  () => async (dispatch: Dispatch<Action>) => {
+    dispatch({ type: "GET_USERS_REQUEST" });
+    try {
+      const response = await axios.get("http://localhost:3001/users");
+      console.log(response);
+
+      dispatch({
+        type: "GET_USERS_SUCCESS",
+        payload: { success: response.data },
+      });
+    } catch (error) {
+
+      dispatch({
+        type: "GET_USERS_FAIL",
+        payload: { error: (error as Error).message },
+      });
+    }
+  };
+
+export const bannUser = (id: string, flag: boolean) => async (dispatch: Dispatch<Action>) => {
+  try {
+    await axios.put("http://localhost:3001/auth", { id: id, flag: flag });
+    if (!flag) {
+      alert("usuario desactivado")
+    } else alert("usuario activado")
+    dispatch({
+      type: "BANN_CONTROL",
+    });
+  } catch (error) {
+    alert("hubo un problema")
+    dispatch({
+      type: "GET_USERS_FAIL",
+      payload: { error: (error as Error).message },
+    });
+  }
+}
+export const setEmployee = (id: string, flag: boolean) => async (dispatch: Dispatch<Action>) => {
+  try {
+    await axios.put("http://localhost:3001/user/putype", { id: id, flag: flag });
+    if (flag) {
+      alert("usuario establecido como empleado")
+    } else alert("usuario establecido como usuario normal")
+    dispatch({
+      type: "SET_EMPLOYEE",
+    });
+  } catch (error) {
+    alert("hubo un problema")
+    dispatch({
+      type: "SET_EMPLOYEE_FAIL",
+      payload: { error: (error as Error).message },
+    });
+  }
+}
 
 export const logoutUser = () => (dispatch: Dispatch<Action>) => {
   dispatch({ type: "USER_LOGOUT" });
