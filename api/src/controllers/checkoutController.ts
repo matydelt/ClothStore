@@ -44,7 +44,7 @@ export default class Checkout {
                 items: orderMap,
                 marketplace: 'Mi negocio',
                 additional_info: "AAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                statement_descriptor: "Keilo's shop",
+                statement_descriptor: "Clothstore",
                 back_urls: { failure: '', pending: '', success: 'http://localhost:3000/' }
             }
 
