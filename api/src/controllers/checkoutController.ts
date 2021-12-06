@@ -43,7 +43,7 @@ export default class Checkout {
             const preference = {
                 items: orderMap,
                 marketplace: 'Mi negocio',
-                additional_info: "AAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                additional_info: "AAAAAAAAAAAAAAA",
                 statement_descriptor: "Clothstore",
                 back_urls: { failure: '', pending: '', success: 'http://localhost:3000/' }
             }
