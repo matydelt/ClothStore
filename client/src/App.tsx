@@ -23,6 +23,7 @@ import UsuariosAdmPage from "./components/adminPage/components/usuarios/usuarios
 import RequireAuth from "./components/RequireAuth";
 import { RootState } from "./redux/store/store"
 import EmployeePage from "./components/adminPage/employeePage"
+import PerfilUsuario from "./components/PerfilUsuario";
 
 const App = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -69,7 +70,7 @@ const App = (): JSX.Element => {
             <Route path="/register" element={<RegisterScreen />}></Route>
             <Route path="/login" element={<LoginScreen />}></Route>
             <Route path="/cart" element={<CartScreen />}></Route>
-            <Route path="/perfil" element={<RequireAuth><HomeUsuarios /></RequireAuth>} />
+            <Route path="/perfil" element={<RequireAuth><PerfilUsuario /></RequireAuth>} />
           </Routes>
         </MuiThemeProvider>
       </StylesProvider>
