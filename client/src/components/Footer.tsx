@@ -5,6 +5,13 @@ import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import Logo from "../assets/images/ClothStore_logotipo_sin_fondo.png";
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles({
+
+
+})
+
 
 const Copyright = (props: any) => {
   return (
@@ -25,7 +32,7 @@ const Footer = () => {
   return (
     <Box
       component='footer'
-      sx={{ height: '250px' }}
+      sx={{ height: '260px !important' }}
       bgcolor={(theme) =>
         theme.palette.mode === "light"
           ? theme.palette.grey[200]

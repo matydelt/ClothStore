@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import { Button } from "@material-ui/core";
 import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
+import {TextField} from "@material-ui/core";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -96,6 +96,7 @@ const LoginForm = () => {
               autoFocus
               value={input.email}
               onChange={handleChange}
+              variant="outlined"
             />
             <TextField
               margin="normal"
@@ -108,6 +109,7 @@ const LoginForm = () => {
               autoComplete="current-password"
               value={input.password}
               onChange={handleChange}
+              variant="outlined"
             />
             <Button
               type="submit"

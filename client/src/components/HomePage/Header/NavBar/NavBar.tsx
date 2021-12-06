@@ -77,7 +77,7 @@ const NavBar = () => {
                     <Box sx={{ transform: 'translateX(-50%)', display: 'flex', alignItems: 'center' }}>
                         <Link to="/cart">
                             <IconButton size='medium' color='secondary'>
-                                <Badge badgeContent={!user ? cartLength  : carrito?.publications?.length} color='primary'>
+                                <Badge badgeContent={cartLength > 0 ? cartLength  : carrito?.publications?.length} color='primary'>
                                     <ShoppingCartIcon />
                                 </Badge>
                             </IconButton>
