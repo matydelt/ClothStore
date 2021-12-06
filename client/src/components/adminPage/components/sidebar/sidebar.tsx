@@ -6,7 +6,7 @@ import PersonIcon from '@mui/icons-material/Person';
 export const SidebarData = [
     {
         title: 'Home',
-        path: '/admin',
+        path: '/',
         icon: <HomeIcon />,
         cName: 'nav-text'
     },
@@ -28,4 +28,5 @@ export const SidebarData = [
         icon: <ReportProblemIcon />,
         cName: 'nav-text'
     },
+
 ];
