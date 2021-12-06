@@ -12,7 +12,7 @@ declare namespace process.env {
 
 
 mercadoPago.configure({
-    access_token: 'APP_USR-3457427128052750-120215-cdbb5e0a88b281ea5edd53c4c0498629-1031300730'
+    access_token: MERCADOPAGO_API_PROD_ACCESS_TOKEN
 })
 
 // let preference = {
