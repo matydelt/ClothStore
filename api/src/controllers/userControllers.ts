@@ -67,6 +67,21 @@ export default class UserController {
     }
   }
 
+  static async getUserName(req: Request, res: Response) {
+    try {
+      
+      let users: Array<any>;
+      users = await UserSchema.find();
+      users = users.map((e)=>{
+        if(e.publications.length > 0) return e.userName 
+      }).filter(e => e!=undefined);
+      console.log(users);
+      res.json(users);
+    } catch (e) {
+      console.log(e);
+      res.json([]);
+    }
+  }
   static async banUser(req: Request, res: Response) {
     try {
       const { id, flag } = req.body;

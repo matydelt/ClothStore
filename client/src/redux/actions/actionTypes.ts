@@ -26,7 +26,7 @@ export type ActionTypes =
   | "ALL_USERS_FAIL"
   | "ALL_MARKS_REQUEST"
   | "ALL_MARKS_SUCCESS"
-  | "ALL_MARKS_FAIL";
+  | "ALL_MARKS_FAIL"
   | "GET_USERS_REQUEST"
   | "GET_USERS_SUCCESS"
   | "GET_USERS_FAIL"

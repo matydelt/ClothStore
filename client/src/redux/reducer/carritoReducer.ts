@@ -16,6 +16,5 @@ export const carritoReducer = (
             }
         default:
             return  state
-
     }
 }

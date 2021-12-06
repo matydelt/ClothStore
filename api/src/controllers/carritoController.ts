@@ -52,33 +52,6 @@ export default class CarritoController {
 
 
                 })
-
-                // const carritoMap = carrito.map((c: any) => {
-
-                //     // if (carritoBuscado) {
-
-                //         // for (let i = 0; i < carritoBuscado?.publications.length; i++) {
-                //         //     if (carritoBuscado?.publications[i]?.publication?.equals(c.id)) {
-                //         //         carritoBuscado.publications[i].quantity += c.amount;
-                //         //         return carritoBuscado.publications[i];
-                //         //     } else {
-                //         //     }
-                //                 return {
-                //                     publication: c.id,
-                //                     price: c.price,
-                //                     quantity: c.amount,
-                //                     title: c.title,
-                //                     image: c.image
-                //                 }
-
-                //         // }
-
-                //     // }
-
-
-                // })
-
-                // carritoBuscado.publications = carritoMap
                 carritoBuscado.markModified('publications')
                 await carritoBuscado.save()
 
@@ -114,31 +87,6 @@ export default class CarritoController {
 
             const carritoBuscado: any = await carritoSchema.findOne({ userId: user?._id })
 
-            // console.log(carritoBuscado)
-
-            // const carritoMap = carritoBuscado?.publications.map((p: any) => {
-
-            //     if (p.publication.equals(id)) {
-            //         p.quantity++
-            //     } else {
-            //         let newPublication: object;
-            //         PublicationSchema.findById(id).then(findPublic => {
-            //             if (findPublic) {
-            //                 newPublication = {
-            //                     quantity: 1,
-            //                     title: findPublic?.name,
-            //                     image: findPublic?.images[0].url,
-            //                     price: findPublic.price
-            //                 }
-            //                 console.log(newPublication)
-            //             }
-            //         })
-            //     }
-            //     return p
-            // })
-
-            // console.log(carritoMap)
-
             const publicationSearched = carritoBuscado?.publications?.find((p: any) => {
                 if (p?.publication.equals(id)) {
                     console.log('entró en if')
@@ -168,7 +116,6 @@ export default class CarritoController {
 
             }
 
-            // carritoBuscado.publications = carritoMap;
             carritoBuscado.markModified('publications')
             await carritoBuscado.save()
             console.log(carritoBuscado.publications, 'publication******')
