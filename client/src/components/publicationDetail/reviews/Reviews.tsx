@@ -62,7 +62,7 @@ export default function Reviews({ children }: any) {
                 setReviews(data);
             });
         }
-    }, [open]);
+    }, [open, publicationId]);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -72,11 +72,11 @@ export default function Reviews({ children }: any) {
         setOpen(false);
     };
 
-    const handleReviewForm = (e: any) => {
+    const handleReviewForm = (e: React.BaseSyntheticEvent) => {
         setReviewForm({ ...reviewForm, [e.target.name]: e.target.value });
     };
 
-    const submitReviewForm = (e: any) => {
+    const submitReviewForm = (e: React.BaseSyntheticEvent) => {
         e.preventDefault();
 
         axios.post('/review', reviewForm).then(() => {

@@ -94,6 +94,16 @@ export default class UserController {
       }
       else return res.sendStatus(404);
     } catch (error) {
+      console.log("error")
+    } 
+  }
+
+  static async getOneUserByEmail(req: Request, res: Response) {
+    try {
+      const { email } = req.params;
+      const user = await UserSchema.findOne({ email: email });
+      res.json(user);
+    } catch (error) {
       console.log("error en get one user");
       res.sendStatus(500);
     }

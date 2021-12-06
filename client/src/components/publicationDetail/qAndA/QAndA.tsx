@@ -6,6 +6,7 @@ import { useParams } from 'react-router';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store/store';
 import { User } from '../../../redux/reducer/stateTypes';
+import AnswerModal from './answerModal/AnswerModal';
 
 interface Form {
     message: string;
@@ -20,6 +21,7 @@ export default function QAndA(): JSX.Element {
     const user = useSelector((state: RootState): User | undefined => state?.userSignin?.userInfo);
 
     const [form, setForm] = useState<Form>({ message: '', publicationId: publicationId || '', authorId: user?._id || '' });
+    const [isBuyer, setIsBuyer] = useState<boolean>(false);
 
     const { message } = form;
 
@@ -28,6 +30,12 @@ export default function QAndA(): JSX.Element {
 
     React.useEffect(() => {
         getQuestions();
+    }, []);
+
+    React.useEffect(() => {
+        if (user) {
+            setIsBuyer(user && !(user?.publications?.find(p => p._id === publicationId)));
+        }
     }, []);
 
     function getQuestions() {
@@ -55,9 +63,9 @@ export default function QAndA(): JSX.Element {
 
             <Typography variant="h5">Preguntas y respuestas</Typography>
 
-            { user && !(user?.publications?.find(p => p._id === publicationId)) &&
+            {isBuyer &&
 
-                <Grid onSubmit={submitForm} component="form" container spacing={2} xs={12} sx={{ my: 3 }}>
+                <Grid onSubmit={submitForm} component="form" container spacing={2} sx={{ my: 3 }}>
                     <Grid item xs={5}>
                         <TextField
                             onChange={handleForm}
@@ -85,9 +93,17 @@ export default function QAndA(): JSX.Element {
                             {q.message}
                         </Typography>
 
-                        <Typography component="p" sx={{ color: 'gray ' }}>
-                            {q.answer?.message ? q.answer?.message : 'Sin respuesta'} {q.answer?.createdAt && new Date(q.answer?.createdAt).toLocaleDateString()}
-                        </Typography>
+                        {!isBuyer && !q.answer?.message?.length ?
+
+                            <AnswerModal questionId={q._id} authorId={user?._id} getQuestions={getQuestions}>
+                                <div>Responder</div>
+                            </AnswerModal>
+
+                            :
+                            <Typography component="p" sx={{ color: 'gray ' }}>
+                                {q.answer?.message ? q.answer?.message : 'Sin respuesta'} {q.answer?.createdAt && new Date(q.answer?.createdAt).toLocaleDateString()}
+                            </Typography>
+                        }
                     </Box>
                 })
                 }

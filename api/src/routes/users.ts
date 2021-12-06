@@ -10,4 +10,6 @@ router.put("/auth", UserController.banUser); //bann control
 router.put("/auth/update", UserController.updateUser); //actualiza todos los datos menos el email
 router.put("/user/putype", UserController.putStateUser)  //sede tipo empleado y lo quita
 router.get("/users", UserController.getUsers) //arreglo de usuarios para admin
+router.get("/auth/email/:email", UserController.getOneUserByEmail); //trae un solo usuario
+
 module.exports = router;

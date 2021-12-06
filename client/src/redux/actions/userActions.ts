@@ -106,3 +106,25 @@ export const setEmployee = (id: string, flag: boolean) => async (dispatch: Dispa
 export const logoutUser = () => (dispatch: Dispatch<Action>) => {
   dispatch({ type: "USER_LOGOUT" });
 };
+
+export const setSignedInUser =
+
+  (user: any) => async (dispatch: Dispatch<Action>) => {
+    dispatch({ type: "USER_SIGNIN_REQUEST" });
+    try {
+      const response = await axios.get("http://localhost:3001/auth/email/" + user.email);
+      // const response = await axios.get("http://localhost:3001/auth", { params: { email: user.email } });
+      console.log(response);
+
+      dispatch({
+        type: "USER_SIGNIN_SUCCESS",
+        payload: { success: response.data },
+      });
+    } catch (error) {
+      dispatch({
+        type: "USER_SIGNIN_FAIL",
+        payload: { error: (error as Error).message },
+      });
+    }
+  };
+
