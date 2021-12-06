@@ -13,6 +13,7 @@ import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { getAllUsers } from "../../../redux/actions/usersActions";
+import { User } from "../../../redux/reducer/stateTypes";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,7 +30,7 @@ const SideBarHomePage = () => {
   const { loading, mark, gender, category, price, author } = useSelector(
     (state: RootState) => state.publicationList
   );
-  const { users } = useSelector((state: RootState) => state.allUsers);
+  const { users } = useSelector((state: RootState) => state.users);
 
   const [selectedValueGender, setSelectedValueGender] = React.useState(gender);
   const [selectedValueMark, setSelectedValueMark] = React.useState(mark);
@@ -41,7 +42,7 @@ const SideBarHomePage = () => {
 
   React.useEffect(() => {
     dispatch(getAllUsers());
-    return () => {};
+    return () => { };
   }, [dispatch]);
 
   const handleListItemClickGender = (
@@ -172,7 +173,7 @@ const SideBarHomePage = () => {
         className={classes.list}
         subheader={<ListSubheader>Vendedor</ListSubheader>}
       >
-        {users?.map((value) => {
+        {users?.map((value: User) => {
           const labelId = `checkbox-list-label-${value}`;
 
           return (

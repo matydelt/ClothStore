@@ -1,3 +1,4 @@
+import { Button } from '@material-ui/core';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -20,9 +21,12 @@ import { CSSObject, styled, Theme, useTheme } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ManagementUserProfile from '../Profile';
-
+import { logoutUser } from '../../../redux/actions/userActions';
+import { useDispatch } from 'react-redux';
+import { useAuth } from '../../../hooks/useAuth';
+import LogoutIcon from '@mui/icons-material/Logout';
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -59,18 +63,18 @@ interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
 interface Props {
-  photo: string|undefined;
-  phone: string|undefined;
-  email: string|undefined;
-  firstName: string|undefined;
-  lastName: string|undefined;
-  dni: string|undefined;
-  calle: string|undefined;
-  numero: string|undefined;
-  ciudad: string|undefined;
-  country:string|undefined;
-  cp: string|undefined;
-  
+  photo: string | undefined;
+  phone: string | undefined;
+  email: string | undefined;
+  firstName: string | undefined;
+  lastName: string | undefined;
+  dni: string | undefined;
+  calle: string | undefined;
+  numero: string | undefined;
+  ciudad: string | undefined;
+  country: string | undefined;
+  cp: string | undefined;
+
 }
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -107,10 +111,19 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function SideBarUser(props:Props) {
+export default function SideBarUser(props: Props) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const auth = useAuth();
+
+  function logout() {
+    dispatch(logoutUser());
+    auth.signout();
+    navigate('/login')
+  }
+
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -148,57 +161,65 @@ export default function SideBarUser(props:Props) {
         </DrawerHeader>
         <Divider />
         <List >
-            <Link to="/" style={{textDecoration:"none"}}>
-              <ListItem key="Inicio">
-                  <ListItemIcon>
-                    <HomeIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Inicio" />
-              </ListItem>
-            </Link>
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <ListItem key="Inicio">
+              <ListItemIcon>
+                <HomeIcon />
+              </ListItemIcon>
+              <ListItemText primary="Inicio" />
+            </ListItem>
+          </Link>
 
-            <Link to="/perfil/ventas" style={{textDecoration:"none"}}>
-              <ListItem key="Mis productos">
-                  <ListItemIcon>
-                    <BusinessCenterIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Mis Productos" />
-              </ListItem>
-            </Link>
-
-
-          <Link to="/perfil/compras" style={{textDecoration:"none"}}>
-            <ListItem  key="Mis compras">
-                <ListItemIcon>
-                  <ShoppingCartCheckoutIcon />
-                </ListItemIcon>
-                <ListItemText primary="Mis Compras" />
+          <Link to="/perfil/ventas" style={{ textDecoration: "none" }}>
+            <ListItem key="Mis productos">
+              <ListItemIcon>
+                <BusinessCenterIcon />
+              </ListItemIcon>
+              <ListItemText primary="Mis Productos" />
             </ListItem>
           </Link>
 
 
-          <Link to="/" style={{textDecoration:"none"}}>
-          <ListItem  key="Lista de deseos">
+          <Link to="/perfil/compras" style={{ textDecoration: "none" }}>
+            <ListItem key="Mis compras">
+              <ListItemIcon>
+                <ShoppingCartCheckoutIcon />
+              </ListItemIcon>
+              <ListItemText primary="Mis Compras" />
+            </ListItem>
+          </Link>
+
+
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <ListItem key="Lista de deseos">
               <ListItemIcon>
                 <FavoriteIcon />
               </ListItemIcon>
               <ListItemText primary="Lista de deseos" />
-          </ListItem>
+            </ListItem>
           </Link>
 
 
-          <Link to="/perfil/detalles" style={{textDecoration:"none"}}>
-          <ListItem  key="Mi Perfil">
+          <Link to="/perfil/detalles" style={{ textDecoration: "none" }}>
+            <ListItem key="Mi Perfil">
               <ListItemIcon>
                 <ManageAccountsIcon />
               </ListItemIcon>
               <ListItemText primary="Mi Perfil" />
-          </ListItem>
+            </ListItem>
           </Link>
+          <ListItem key="LogOut">
+
+            <IconButton onClick={logout}>
+              <ListItemIcon>
+                <LogoutIcon />
+              </ListItemIcon>
+            </IconButton>
+          </ListItem>
         </List>
-        
+
       </Drawer>
-      
+
     </Box>
   </>);
 }
