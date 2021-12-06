@@ -21,23 +21,23 @@ import AdminPage from "./components/adminPage/adminPage";
 import UsuariosAdmPage from "./components/adminPage/components/usuarios/usuarios";
 import { RootState } from "./redux/store/store"
 import EmployeePage from "./components/adminPage/employeePage"
+import PerfilUsuario from "./components/PerfilUsuario";
 import { getCarrito } from "./redux/actions/carritoAction";
-import PefilUsuario from "./components/PerfilUsuario";
 
 // const user = useSelector((state: RootState) => state.userSignin.userInfo)
 
-const App = (): JSX.Element => {
+function App(): JSX.Element {
   const dispatch = useDispatch();
-  const { name, order, page, mark, category, gender, price, author } = useSelector((state: RootState) => (state.publicationList))
+  const { name, order, page, mark, category, gender, price, author } = useSelector((state: RootState) => (state.publicationList));
 
 
-  const auth = useAuth()
+  const auth = useAuth();
   useEffect(() => {
-    console.log('holaaaaaaaa auth', auth)
+    console.log('holaaaaaaaa auth', auth);
     if (auth?.user && auth.user.email) {
-      dispatch(getCarrito(auth.user.email))
+      dispatch(getCarrito(auth.user.email));
     }
-  }, [dispatch, auth])
+  }, [dispatch, auth]);
   useEffect(() => {
     dispatch(putPublications({ "name": name, "order": order, "page": page, "mark": mark, "category": category, "gender": gender, "price": price, "author": author }));
   }, []);
@@ -69,28 +69,20 @@ const App = (): JSX.Element => {
           <Route path="/nueva-publicacion" element={<CreatePublication />} />
           <Route
             path="/actualizar-publicacion/:publicationId"
-            element={<CreatePublication />}
-          />
+            element={<CreatePublication />} />
           <Route
             path="/publication/:publicationId"
-            element={<PublicationDetail />}
-          />
+            element={<PublicationDetail />} />
           <Route path="/register" element={<RegisterScreen />}></Route>
           <Route path="/login" element={<LoginScreen />}></Route>
           <Route path="/cart" element={<CartScreen />}></Route>
-          <Route path="/perfil" element={<PefilUsuario />}>
-            <Route path="detalles" />
-            <Route path="compras" />
-            <Route path="ventas" />
-            <Route path="deseos" />
-
-          </Route>
+          <Route path="/perfil" element={<RequireAuth><PerfilUsuario /></RequireAuth>} />
         </Routes>
       </MuiThemeProvider>
     </StylesProvider>
 
   );
-};
+}
 
 export default App;
 

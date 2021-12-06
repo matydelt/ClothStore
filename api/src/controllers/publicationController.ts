@@ -195,27 +195,27 @@ export default class PublicationController {
   static async putPublicationState(req: Request, res: Response): Promise<void> {
     try {
 
-      const { publicationId, flag } = req.body;
+        const { publicationId, flag } = req.body;
 
-      const publication = await PublicationSchema.findById(publicationId);
-      if (flag) {
-        if (publication) {
-          publication.state = true
-          res.sendStatus(200)
+        const publication = await PublicationSchema.findById(publicationId);
+        if (flag) {
+            if (publication) {
+                publication.state = true
+                res.sendStatus(200)
+            } else {
+                res.sendStatus(404)
+            }
         } else {
-          res.sendStatus(404)
+            if (publication) {
+                publication.state = false
+                res.sendStatus(200)
+            } else {
+                res.sendStatus(404)
+            }
         }
-      } else {
-        if (publication) {
-          publication.state = false
-          res.sendStatus(200)
-        } else {
-          res.sendStatus(404)
-        }
-      }
     } catch (error) {
-      console.log(error)
-      res.sendStatus(500);
+        console.log(error)
+        res.sendStatus(500);
     }
-  }
+}
 }
