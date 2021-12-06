@@ -41,13 +41,7 @@ export default class Checkout {
             })
 
             const preference = {
-                // items: orderMap,
-                items: [{
-                    description: 'aaAAAaa',
-                    title: 'aaAAAaa',
-                    unit_price: 500,
-                    quantity: 10
-                }],
+                items: orderMap,
                 marketplace: 'Mi negocio',
                 additional_info: "AAAAAAAAAAAAAAAAAAAAAAAAAAA",
                 statement_descriptor: "Keilo's shop",
