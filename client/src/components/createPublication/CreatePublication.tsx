@@ -55,7 +55,7 @@ export default function CreatePublication(): JSX.Element {
   // useEffect(() => {
   //   setForm({...form, id: user?._id});
   //   console.log(form);
-    
+
   // }, [form, user?._id]);
 
 
@@ -248,7 +248,7 @@ export default function CreatePublication(): JSX.Element {
               </Grid>
 
               {
-                form.images.length > 0 ? form.images.map((image: any) => {
+                form.images?.length > 0 ? form.images.map((image: any) => {
                   return <Badge key={image.public_id}
 
                     overlap="circular"

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { ProvideAuth, useAuth } from "./hooks/useAuth";
+import React, { useEffect } from "react";
+import { useAuth } from "./hooks/useAuth";
 import "./App.css";
 import { Route, Routes } from "react-router";
 import RegisterScreen from "./pages/RegisterScreen";
@@ -16,11 +16,9 @@ import { MuiThemeProvider } from "@material-ui/core/styles";
 import theme from "./components/controllers/themeConfig";
 import Homepage from "./components/HomePage/Homepage";
 import PublicationDetail from "./components/publicationDetail/PublicationDetail";
-import HomeUsuarios from "./components/HomeUsuarios/HomeUsuarios";
 import { StylesProvider } from "@material-ui/styles";
 import AdminPage from "./components/adminPage/adminPage";
 import UsuariosAdmPage from "./components/adminPage/components/usuarios/usuarios";
-import RequireAuth from "./components/RequireAuth";
 import { RootState } from "./redux/store/store"
 import EmployeePage from "./components/adminPage/employeePage"
 import { getCarrito } from "./redux/actions/carritoAction";

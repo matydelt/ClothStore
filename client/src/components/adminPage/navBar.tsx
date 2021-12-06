@@ -13,8 +13,6 @@ function NavBar() {
     return (
         <>
             <div className='navbar' >
-
-
                 <button className='menu-bars' style={{ border: "none", cursor: "pointer" }}>
                     <MenuIcon onClick={showSidebar} />
                 </button>

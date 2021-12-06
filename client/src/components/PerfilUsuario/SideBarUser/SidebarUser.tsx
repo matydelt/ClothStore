@@ -1,4 +1,3 @@
-import { Button } from '@material-ui/core';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -19,10 +18,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { CSSObject, styled, Theme, useTheme } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import ManagementUserProfile from '../Profile';
 import { logoutUser } from '../../../redux/actions/userActions';
 import { useDispatch } from 'react-redux';
 import { useAuth } from '../../../hooks/useAuth';
