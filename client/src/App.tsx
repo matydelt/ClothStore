@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { ProvideAuth } from "./hooks/useAuth";
 import "./App.css";
 import { Route, Routes } from "react-router";
@@ -17,6 +17,7 @@ import { StylesProvider } from "@material-ui/styles";
 import AdminPage from "./components/adminPage/adminPage";
 import UsuariosAdmPage from "./components/adminPage/components/usuarios/usuarios";
 import EmployeePage from "./components/adminPage/employeePage"
+import PublicacionesAdmPage from "./components/adminPage/components/publicaciones/pubicaciones";
 
 const App = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -45,6 +46,7 @@ const App = (): JSX.Element => {
       <StylesProvider injectFirst>
         <ThemeProvider theme={theme}>
           <Routes>
+            <Route path="/admin/publicaciones" element={<PublicacionesAdmPage />} />
             <Route path="/admin" element={<AdminPage />} />
             <Route path="employee" element={<EmployeePage />} />
             <Route path="/admin/usuarios" element={<UsuariosAdmPage />} />
