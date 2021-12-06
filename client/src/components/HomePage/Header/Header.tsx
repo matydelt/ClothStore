@@ -16,7 +16,6 @@ import SwiperCore, {
 import NavBar from "./NavBar/NavBar";
 import Woman from "../../assets/img/woman.png";
 import Box from "@mui/material/Box";
-import { TypographyWomanHeaderH4 } from "./HeaderStyles";
 import Typography from "@mui/material/Typography";
 import Man from "../../assets/img/man.png";
 import Kids from "../../assets/img/kids.png";
@@ -44,25 +43,30 @@ const Header = () => {
         >
           {/*********** SLIDE 1 ************/}
           <SwiperSlide>
-            <TypographyWomanHeaderH4
+            <Typography
               sx={{
-                fontSize: { xl: "27px" },
-                transform: { lg: "translateY(10%)", xl: "translateY(10%)" },
+                // transform: 'translate(-107%, -350%)',
+                maxWidth: '300px !important',
+                textAlign: 'center',
+                fontSize: { xl: "25px !important" },
+                transform: { lg: "translateY(10%) !important", xl: "translateY(10%) !important" },
+                // fontWeight: 'lighter !important',
+
               }}
               variant="h4"
             >
               SIEMPRE PARA TI
-            </TypographyWomanHeaderH4>
+            </Typography>
             <Typography
               sx={{
-                fontSize: { lg: "10px", xl: "98px" },
-                width: { lg: "400px", xl: "400px" },
+                fontSize: { lg: "10px !important", xl: "98px !important" },
+                width: { lg: "400px !important", xl: "400px !important" },
                 transform: {
                   lg: "translate(-100%, 0%)",
                   xl: "translate(-100%, 0%)",
                 },
                 textAlign: "center",
-                fontWeight: "500",
+                fontWeight: "400 !important",  
               }}
               variant="h2"
             >
@@ -105,12 +109,12 @@ const Header = () => {
                 textTransform: "capitalize",
                 position: "absolute",
                 right: "18%",
-                width: { lg: "450px", xl: "450px" },
-                fontSize: { lg: "70px", xl: "98px" },
-                fontWeight: "500",
+                width: { lg: "450px !important", xl: "450px !important" },
+                fontSize: { lg: "70px !important", xl: "98px !important" },
+                fontWeight: "400 !important",
                 textAlign: "right",
-                letterSpacing: "2px",
-                lineHeight: { lg: "98px", xl: "120px" },
+                letterSpacing: "2px !important",
+                lineHeight: { lg: "98px !important", xl: "120px !important" },
               }}
             >
               lo mejor para ti.
@@ -120,14 +124,14 @@ const Header = () => {
               variant="h4"
               sx={{
                 textTransform: "uppercase",
-                fontSize: { lg: "23px", xl: "29px" },
+                fontSize: { lg: "23px !important", xl: "29px !important" },
                 position: "absolute",
                 textAlign: "right",
                 right: "15%",
-                top: { lg: "49%", xl: "49%" },
+                top: { lg: "49% !important", xl: "49% !important" },
                 fontWeight: "lighter",
               }}
-              /* color="initial" */
+            /* color="initial" */
             >
               siempre para ti.
             </Typography>
@@ -167,12 +171,12 @@ const Header = () => {
                 textTransform: "capitalize",
                 position: "absolute",
                 left: { lg: "10%", xl: "15%" },
-                width: { lg: "450px", xl: "450px" },
-                fontSize: { lg: "70px", xl: "98px" },
-                fontWeight: "500",
+                width: { lg: "450px !important", xl: "450px !important" },
+                fontSize: { lg: "70px !important", xl: "98px !important" },
+                fontWeight: "400 !important",
                 textAlign: "center",
-                letterSpacing: "4px",
-                lineHeight: { lg: "78px", xl: "94px" },
+                letterSpacing: "4px !important",
+                lineHeight: { lg: "78px !important", xl: "94px !important" },
               }}
               variant="h2"
             >

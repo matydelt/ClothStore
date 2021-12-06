@@ -17,6 +17,8 @@ const NavBar = () => {
 
     const cartLength = useSelector((state: RootState) => state.publicationSave.cartLength)
     const user = useSelector((state: RootState) => state.userSignin.userInfo)
+    const carrito: any = useSelector((state: RootState) => state.carrito.carrito)
+
     return (
         <>
             <MyNavBarHeader position="static">
@@ -24,7 +26,7 @@ const NavBar = () => {
 
                     <Box
                         component='img'
-                        
+
                         src={Logo}
                         alt='ClothStore'
                         sx={{
@@ -80,8 +82,8 @@ const NavBar = () => {
                     <Box sx={{ transform: 'translateX(-50%)', display: 'flex', alignItems: 'center' }}>
                         <Link to="/cart">
                             <IconButton size='medium' color='secondary'>
-                                <Badge badgeContent={cartLength} color='primary'>
-                                    <ShoppingCartIcon  />
+                                <Badge badgeContent={!user ? cartLength  : carrito?.publications?.length} color='primary'>
+                                    <ShoppingCartIcon />
                                 </Badge>
                             </IconButton>
                         </Link>

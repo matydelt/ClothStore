@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { ProvideAuth } from "./hooks/useAuth";
+import React, { useEffect, useState } from "react";
+import { ProvideAuth, useAuth } from "./hooks/useAuth";
 import "./App.css";
 import { Route, Routes } from "react-router";
 import RegisterScreen from "./pages/RegisterScreen";
@@ -17,6 +17,7 @@ import theme from "./components/controllers/themeConfig";
 import Homepage from "./components/HomePage/Homepage";
 import PublicationDetail from "./components/publicationDetail/PublicationDetail";
 import HomeUsuarios from "./components/HomeUsuarios/HomeUsuarios";
+<<<<<<< HEAD
 import { StylesProvider } from "@material-ui/styles";
 import AdminPage from "./components/adminPage/adminPage";
 import UsuariosAdmPage from "./components/adminPage/components/usuarios/usuarios";
@@ -24,14 +25,29 @@ import RequireAuth from "./components/RequireAuth";
 import { RootState } from "./redux/store/store"
 import EmployeePage from "./components/adminPage/employeePage"
 import PerfilUsuario from "./components/PerfilUsuario";
+=======
+import { getCarrito } from "./redux/actions/carritoAction";
+import { RootState } from "./redux/store/store";
+import RequireAuth from "./components/RequireAuth";
+
+// const user = useSelector((state: RootState) => state.userSignin.userInfo)
+>>>>>>> origin/Angelo
 
 const App = (): JSX.Element => {
   const dispatch = useDispatch();
   const { name, order, page, mark, category, gender, price, author } = useSelector((state: RootState) => (state.publicationList))
 
+
+  const auth = useAuth()
   useEffect(() => {
-    dispatch(putPublications({"name":name, "order":order, "page":page, "mark": mark, "category": category, "gender": gender, "price": price, "author": author} ));
-  }, [dispatch]);
+    console.log('holaaaaaaaa auth', auth)
+    if (auth?.user && auth.user.email) {
+      dispatch(getCarrito(auth.user.email))
+    }
+  }, [dispatch, auth])
+  useEffect(() => {
+    dispatch(putPublications({ "name": name, "order": order, "page": page, "mark": mark, "category": category, "gender": gender, "price": price, "author": author }));
+  }, []);
 
   useEffect(() => {
     dispatch(cartLength());
@@ -50,7 +66,6 @@ const App = (): JSX.Element => {
   }, [dispatch]);
 
   return (
-    <ProvideAuth>
       <StylesProvider injectFirst>
         <MuiThemeProvider theme={theme}>
           <Routes>
@@ -74,8 +89,35 @@ const App = (): JSX.Element => {
           </Routes>
         </MuiThemeProvider>
       </StylesProvider>
-    </ProvideAuth>
+    
   );
 };
 
 export default App;
+
+
+/*{ <MuiThemeProvider theme={theme}>
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/nueva-publicacion" element={<CreatePublication />} />
+        <Route
+          path="/actualizar-publicacion/:publicationId"
+          element={<CreatePublication />}
+        />
+        <Route
+          path="/publication/:publicationId"
+          element={<PublicationDetail />}
+        />
+        <Route path="/register" element={<RegisterScreen />}></Route>
+        <Route path="/login" element={<LoginScreen />}></Route>
+        <Route path="/cart" element={<CartScreen />}></Route>
+        <Route
+          path="/perfil"
+          element={
+            <RequireAuth>
+              <HomeUsuarios />
+            </RequireAuth>
+          }
+        />
+      </Routes>
+    </MuiThemeProvider> }*/

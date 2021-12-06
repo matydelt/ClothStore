@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import { Button } from "@material-ui/core";
 import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
+import {TextField} from "@material-ui/core";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -16,7 +16,7 @@ import { signinUser } from "../redux/actions/userActions";
 import { useNavigate, useLocation } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import { Link as RouterLink } from 'react-router-dom'
-import { MemoryRouter as Router } from 'react-router';
+import axios from "axios";
 
 
 type FormState = { email: string; password: string };
@@ -37,15 +37,15 @@ const LoginForm = () => {
   const [input, setInput] = useState<FormState>({ email: "", password: "" });
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  
   const { signin } = useAuth();
   const location = useLocation();
-
+  
   const classes = useStyles();
-
-
+  
+  
   const from = location.state?.from?.pathname || "/";
-
+  
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     signin(input);
@@ -57,6 +57,9 @@ const LoginForm = () => {
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
+
+
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -93,6 +96,7 @@ const LoginForm = () => {
               autoFocus
               value={input.email}
               onChange={handleChange}
+              variant="outlined"
             />
             <TextField
               margin="normal"
@@ -105,6 +109,7 @@ const LoginForm = () => {
               autoComplete="current-password"
               value={input.password}
               onChange={handleChange}
+              variant="outlined"
             />
             <Button
               type="submit"

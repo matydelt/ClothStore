@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import UserSchema, { User } from "../models/user";
+import carritoSchema, { Carrito } from '../models/carrito'
 
 export default class UserController {
   static async setUser(req: Request, res: Response) {
@@ -27,9 +28,17 @@ export default class UserController {
           photo,
           type: "admin"
         });
-        await user.save();
+        const userSave = await user.save();
+
+        const carrito: Carrito = new carritoSchema({
+          publications: undefined,
+          userId: userSave._id
+        })
+  
+        const carritoSave = await carrito.save();
         res.sendStatus(200);
       }
+      res.sendStatus(200);
     } catch (e) {
       console.log(e);
       res.sendStatus(500);
@@ -38,7 +47,9 @@ export default class UserController {
   static async getUser(req: Request, res: Response) {
     try {
       const { email, password } = req.query;
-      const user = await UserSchema.findOne({ "email": `${email}` });
+      // const user = await UserSchema.findOne({ "email": `${email}` });
+      const user = await UserSchema.findOne({ email: email as string });
+      // const user = await UserSchema.find().findOne({ _email: email });
       if (user && user.password === password) res.json(user);
       else res.send("usuario o contraseña erronea");
     } catch (e) {

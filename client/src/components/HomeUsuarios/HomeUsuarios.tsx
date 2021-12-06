@@ -92,7 +92,7 @@ export default function HomeUsuarios() {
 
             setName({ ...name, [e.target.name]: e.target.value });
         } else if (e.target.name === "lastName") {
-            setName({ ...name, ["lastName"]: e.target.value });
+            setName({ ...name, lastName: e.target.value });
         } else {
             setInput({ ...input, [e.target.name]: e.target.value });
         }

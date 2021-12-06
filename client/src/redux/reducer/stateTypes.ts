@@ -24,3 +24,11 @@ export interface User {
   type: string;
   photo: string;
 }
+
+export interface Carrito {
+  title: string;
+  amount: number;
+  price: number;
+  id: string;
+  image: string;
+}

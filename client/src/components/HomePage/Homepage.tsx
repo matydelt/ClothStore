@@ -29,7 +29,7 @@ const Homepage = () => {
           <Publicaciones />
         </Box>
       </Container>
-      <Box sx={{ height: "50%" }} />
+      <Box sx={{ height: "70%" }} />
       <Footer />
     </Box>
   );

@@ -12,10 +12,13 @@ import IconButton from "@material-ui/core/IconButton";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import InfoIcon from "@mui/icons-material/Info";
 import Grid from "@mui/material/Grid";
-import { CartItemType, CartType } from "../../../../pages/CartScreen";
+import { CartItemType, CartType, CartItemTypeDB } from "../../../../pages/CartScreen";
 import useLocalStorage from "../../../../hooks/useLocalStorage";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { cartLength } from "../../../../redux/actions/publicationActions";
+import { RootState } from "../../../../redux/store/store";
+import { putCarrito } from "../../../../redux/actions/carritoAction";
+import { useAuth } from "../../../../hooks/useAuth";
 
 type Props = {
   name: string;
@@ -34,6 +37,10 @@ export default function CardPublicacion(props: Props) {
   const [cart, setCart] = useLocalStorage<CartType | undefined>("cart", []);
   const { name, images, price, categorie, id, stock } = props;
   const dispatch = useDispatch();
+  const carrito: any = useSelector((state: RootState) => state.carrito.carrito);
+  const auth = useAuth()
+
+  
 
   const item: CartItemType = {
     id,
@@ -60,6 +67,11 @@ export default function CardPublicacion(props: Props) {
       return [...aux, { ...clickedItem, amount: 1 }];
     });
   };
+
+  const handleAddToCartDB = (email: string | null | undefined, id: string):void => {
+    dispatch(putCarrito(email, id))
+  }
+
   return (
     <Grid item xs={12} sm={6} md={4} lg={3} xl={4}>
       <Card
@@ -81,7 +93,6 @@ export default function CardPublicacion(props: Props) {
               style: {
                 backgroundColor: "transparent",
                 borderRadius: "0",
-                color: "#000",
               },
             }}
           >
@@ -98,13 +109,13 @@ export default function CardPublicacion(props: Props) {
 
           <Box
             className="noshowButton_Cart_Info"
-            sx={{ display: "flex", justifyContent: "center" }}
+            sx={{ position: 'relative', zIndex: '1',  display: "flex", justifyContent: "center" }}
           >
             <IconButton
               aria-label="Add to Cart"
               size="medium"
               color="primary"
-              onClick={() => handleAddToCart(item)}
+              onClick={cart?.length === 0 ? () => handleAddToCart(item) : () => handleAddToCartDB(auth.user && auth?.user?.email, id)}
             >
               <ShoppingCartIcon />
             </IconButton>

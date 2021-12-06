@@ -5,6 +5,8 @@ const publications = require("./publications")
 const cloudinary = require("./cloudinary")
 const reviews = require("./review");
 const qAndAs = require("./QAndA");
+const mercadoPago = require("./checkout")
+const carrito = require("./carrito")
 
 
 module.exports = {
@@ -13,5 +15,7 @@ module.exports = {
     publications,
     cloudinary,
     reviews,
-    qAndAs
+    qAndAs,
+    mercadoPago,
+    carrito
 };
