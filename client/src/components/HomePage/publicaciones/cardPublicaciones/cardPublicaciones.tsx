@@ -93,7 +93,6 @@ export default function CardPublicacion(props: Props) {
               style: {
                 backgroundColor: "transparent",
                 borderRadius: "0",
-                color: "#000",
               },
             }}
           >
@@ -113,13 +112,13 @@ export default function CardPublicacion(props: Props) {
 
           <Box
             className="noshowButton_Cart_Info"
-            sx={{ display: "flex", justifyContent: "center" }}
+            sx={{ position: 'relative', zIndex: '1',  display: "flex", justifyContent: "center" }}
           >
             <IconButton
               aria-label="Add to Cart"
               size="medium"
               color="primary"
-              onClick={ !auth.user ? () => handleAddToCart(item) : () => handleAddToCartDB(auth.user && auth?.user?.email, id)}
+              onClick={cart?.length === 0 ? () => handleAddToCart(item) : () => handleAddToCartDB(auth.user && auth?.user?.email, id)}
             >
               <ShoppingCartIcon />
             </IconButton>

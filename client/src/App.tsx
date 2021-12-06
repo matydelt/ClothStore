@@ -17,9 +17,14 @@ import theme from "./components/controllers/themeConfig";
 import Homepage from "./components/HomePage/Homepage";
 import PublicationDetail from "./components/publicationDetail/PublicationDetail";
 import HomeUsuarios from "./components/HomeUsuarios/HomeUsuarios";
-import { getCarrito } from "./redux/actions/carritoAction";
-import { RootState } from "./redux/store/store";
+import { StylesProvider } from "@material-ui/styles";
+import AdminPage from "./components/adminPage/adminPage";
+import UsuariosAdmPage from "./components/adminPage/components/usuarios/usuarios";
 import RequireAuth from "./components/RequireAuth";
+import { RootState } from "./redux/store/store"
+import EmployeePage from "./components/adminPage/employeePage"
+import { getCarrito } from "./redux/actions/carritoAction";
+import PefilUsuario from "./components/PerfilUsuario";
 
 // const user = useSelector((state: RootState) => state.userSignin.userInfo)
 
@@ -56,7 +61,43 @@ const App = (): JSX.Element => {
   }, [dispatch]);
 
   return (
-    <MuiThemeProvider theme={theme}>
+    <StylesProvider injectFirst>
+      <MuiThemeProvider theme={theme}>
+        <Routes>
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="employee" element={<EmployeePage />} />
+          <Route path="/admin/usuarios" element={<UsuariosAdmPage />} />
+          <Route path="/" element={<Homepage />} />
+          <Route path="/nueva-publicacion" element={<CreatePublication />} />
+          <Route
+            path="/actualizar-publicacion/:publicationId"
+            element={<CreatePublication />}
+          />
+          <Route
+            path="/publication/:publicationId"
+            element={<PublicationDetail />}
+          />
+          <Route path="/register" element={<RegisterScreen />}></Route>
+          <Route path="/login" element={<LoginScreen />}></Route>
+          <Route path="/cart" element={<CartScreen />}></Route>
+          <Route path="/perfil" element={<PefilUsuario />}>
+            <Route path="detalles" />
+            <Route path="compras" />
+            <Route path="ventas" />
+            <Route path="deseos" />
+
+          </Route>
+        </Routes>
+      </MuiThemeProvider>
+    </StylesProvider>
+
+  );
+};
+
+export default App;
+
+
+/*{ <MuiThemeProvider theme={theme}>
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/nueva-publicacion" element=
@@ -89,8 +130,4 @@ const App = (): JSX.Element => {
           }
         />
       </Routes>
-    </MuiThemeProvider>
-  );
-};
-
-export default App;
+    </MuiThemeProvider> }*/

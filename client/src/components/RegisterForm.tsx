@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import Avatar from "@mui/material/Avatar";
 import { Button } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
+import { TextField } from "@material-ui/core";
 // import FormControlLabel from "@mui/material/FormControlLabel";
 // import Checkbox from "@mui/material/Checkbox";
 // import Link from "@mui/material/Link";
@@ -111,6 +111,7 @@ const RegisterForm = () => {
                   autoFocus
                   value={input.firstName}
                   onChange={handleChange}
+                  variant="outlined"
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -123,6 +124,7 @@ const RegisterForm = () => {
                   autoComplete="family-name"
                   value={input.lastName}
                   onChange={handleChange}
+                  variant="outlined"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -135,6 +137,7 @@ const RegisterForm = () => {
                   autoComplete="email"
                   value={input.email}
                   onChange={handleChange}
+                  variant="outlined"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -156,6 +159,7 @@ const RegisterForm = () => {
                     input.password.length < 6 &&
                     "La contraseña debe tener al menos 6 caracateres"
                   }
+                  variant="outlined"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -173,6 +177,7 @@ const RegisterForm = () => {
                     input.confirmPassword !== input.password &&
                     "Contraseña incorrecta"
                   }
+                  variant="outlined"
                 />
               </Grid>
             </Grid>

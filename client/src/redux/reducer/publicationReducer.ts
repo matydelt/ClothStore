@@ -54,6 +54,20 @@ const publicationListReducer = (
       };
     case "PUBLICATION_LIST_FAIL":
       return { ...state, loading: false, error: action.payload?.error };
+    case "PUBLICATION_NAME_REQUEST":
+      return { ...state, loading: true };
+    case "PUBLICATION_NAME_SUCCESS":
+      return {
+        ...state,
+        loading: false,
+        publications: action.payload?.success,
+      }
+    case "PUBLICATION_NAME_FAIL":
+      return {
+        ...state,
+        loading: false,
+        error: action.payload?.error
+      }
     default:
       return state;
   }

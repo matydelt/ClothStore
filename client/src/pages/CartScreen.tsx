@@ -15,6 +15,7 @@ import { useAuth } from "../hooks/useAuth";
 import { putCarrito, putCarritoRemove } from "../redux/actions/carritoAction";
 import { useNavigate } from "react-router";
 import axios from "axios";
+import { TableHeaderColumn } from "material-ui";
 
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
@@ -35,11 +36,13 @@ const useStyles = makeStyles({
   },
   container: {
     display: 'flex',
+    flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'center',
     height: '600px'
   },
   containerTotal: {
-    width: '23%'
+    width: '23%',
   }
 })
 
@@ -147,52 +150,50 @@ const CartScreen = () => {
       {(!auth?.user && cart?.length === 0 || auth?.user && carrito?.publications?.length === 0) ? <Typography variant='h5'>No items</Typography> : null}
 
 
-      <Container maxWidth='lg' classes={{ root: classes.container }}>
+      {
+        (!!!auth?.user && cart?.length > 0 || !!auth?.user && carrito?.publications?.length > 0) &&
+        <Container maxWidth='lg' classes={{ root: classes.container }}>
 
-        {(!!!auth?.user && cart?.length > 0 || !!auth?.user && carrito?.publications?.length > 0) &&
-          <>
 
-            <TableContainer classes={{ root: classes.root }}>
-              <Table aria-label="customized table">
-                <TableHead>
-                  <TableRow>
-                    <StyledTableCell >Producto</StyledTableCell>
-                    <StyledTableCell align="right">Price $</StyledTableCell>
-                    <StyledTableCell align="right">Cantidad</StyledTableCell>
-                    <StyledTableCell align="right">Total</StyledTableCell>
-                  </TableRow>
-                </TableHead>
+          <TableContainer classes={{ root: classes.root }}>
+            <Table aria-label="customized table">
+              <TableHead>
+                <TableRow>
+                  <StyledTableCell >Producto</StyledTableCell>
+                  <StyledTableCell align="right">Price $</StyledTableCell>
+                  <StyledTableCell align="right">Cantidad</StyledTableCell>
+                  <StyledTableCell align="right">Total</StyledTableCell>
+                </TableRow>
+              </TableHead>
 
-                {
-                  !auth.user ? cart.map((item: any) => (
+              {
+                !auth.user ? cart.map((item: any) => (
+                  <CartItem
+                    key={item.id}
+                    item={item}
+                    addToCart={handleAddToCart}
+                    removeFromCart={handleRemoveFromCart}
+                  />
+
+                ))
+
+                  : carrito?.publications?.map((item: any) => (
                     <CartItem
                       key={item.id}
                       item={item}
-                      addToCart={handleAddToCart}
-                      removeFromCart={handleRemoveFromCart}
+                      addToCart={() => handleAddQuantityToCartDB(auth.user && auth?.user?.email, item.publication)}
+                      removeFromCart={() => handleRemoveQuantityToCartDB(auth.user && auth?.user?.email, item.publication)}
                     />
-
                   ))
-
-                    : carrito?.publications?.map((item: any) => (
-                      <CartItem
-                        key={item.id}
-                        item={item}
-                        addToCart={() => handleAddQuantityToCartDB(auth.user && auth?.user?.email, item.publication)}
-                        removeFromCart={() => handleRemoveQuantityToCartDB(auth.user && auth?.user?.email, item.publication)}
-                      />
-                    ))
-                }
-              </Table>
-            </TableContainer>
-            <Box component='div' className={classes.containerTotal}>
-              <Typography variant='h5'>Total: $ {calculateTotal().toFixed(2)}</Typography>
-              <Button onClick={handleMercadoPago}>Comprar</Button>
-            </Box>
-
-          </>}
-
-      </Container>
+              }
+            </Table>
+          </TableContainer>
+          <Box component='div' className={classes.containerTotal}>
+            <Typography variant='h5'>Total: $ {calculateTotal().toFixed(2)}</Typography>
+            <Button variant="contained" color='secondary' fullWidth={true} onClick={handleMercadoPago}>Comprar</Button>
+          </Box>
+        </Container>
+      }
     </>
   );
 };

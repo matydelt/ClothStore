@@ -4,16 +4,40 @@
 }
 
 .cardMain:hover {
-    transform: translateY(-3%);
+    transform : translateY(-3%);
     box-shadow: 0px 1px 5px #00c2cb;
 }
+
 .cardMain:hover .noshowButton_Cart_Info {
-    transform: translateY(30%);
+    transform: translateY(100%);
 }
+
 .noshowButton_Cart_Info {
-    transform: translateY(118%);
-    transition: all .4s ease-in-out ;
+    transform : translateY(190%);
+    transition: all .4s ease-in;
 }
+
+.noshowButton_Cart_Info svg {
+    margin-right: 7px !important;
+}
+.noshowButton_Cart_Info svg:last-of-type {
+    margin-left: 7px !important;
+}
+
+.makeStyles-button-13 svg {
+    color: white;
+}
+
+.makeStyles-button-13:hover {
+    opacity: 1 !important;
+}
+
+.makeStyles-buttonWrapper-8:hover .makeStyles-button-13 {
+    transition: all .4s ease-in;
+    opacity   : .6 !important;
+    filter    : brightness(120%) !important;
+}
+
 
 .showButton_Cart_Inf {
     transition: all .5s ease-in-out;
@@ -25,6 +49,16 @@
 
 .CarouselItem {
     height: 250px !important;
+}
+
+.makeStyles-indicators-4 {
+    position  : relative !important;
+    margin-top: -40px !important;
+    z-index   : 2 !important;
+}
+
+.MuiIconButton-root {
+    padding: 0 3px !important;
 }
 
 @media (max-width: 1200px) {

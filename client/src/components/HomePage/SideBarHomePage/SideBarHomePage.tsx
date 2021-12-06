@@ -19,6 +19,7 @@ import { getallMarks } from "../../../redux/actions/marksActions";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import SearchOrder from "../Order";
+import { User } from "../../../redux/reducer/stateTypes";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -73,6 +74,10 @@ const SideBarHomePage = () => {
   const handleClick4 = () => {
     setOpen4(!open4);
   };
+  React.useEffect(() => {
+    dispatch(getAllUsers());
+    return () => { };
+  }, [dispatch]);
 
   const handleListItemClickGender = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,

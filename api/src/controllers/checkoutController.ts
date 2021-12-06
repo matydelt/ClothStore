@@ -12,7 +12,7 @@ declare namespace process.env {
 
 
 mercadoPago.configure({
-    access_token: 'APP_USR-3457427128052750-120215-cdbb5e0a88b281ea5edd53c4c0498629-1031300730'
+    access_token: MERCADOPAGO_API_PROD_ACCESS_TOKEN
 })
 
 // let preference = {
@@ -41,17 +41,11 @@ export default class Checkout {
             })
 
             const preference = {
-                // items: orderMap,
-                items: [{
-                    description: 'aaAAAaa',
-                    title: 'aaAAAaa',
-                    unit_price: 500,
-                    quantity: 10
-                }],
+                items: orderMap,
                 marketplace: 'Mi negocio',
-                additional_info: "AAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                statement_descriptor: "Keilo's shop",
-                back_urls: { failure: '', pending: '', success: 'www.google.com.ar' }
+                additional_info: "AAAAAAAAAAAAAAA",
+                statement_descriptor: "Clothstore",
+                back_urls: { failure: '', pending: '', success: 'http://localhost:3000/' }
             }
 
             const response = await mercadoPago.preferences.create(preference)
