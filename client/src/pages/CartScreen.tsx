@@ -15,6 +15,7 @@ import { useAuth } from "../hooks/useAuth";
 import { putCarrito, putCarritoRemove } from "../redux/actions/carritoAction";
 import { useNavigate } from "react-router";
 import axios from "axios";
+import { TableHeaderColumn } from "material-ui";
 
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
@@ -35,11 +36,13 @@ const useStyles = makeStyles({
   },
   container: {
     display: 'flex',
+    flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'center',
     height: '600px'
   },
   containerTotal: {
-    width: '23%'
+    width: '23%',
   }
 })
 
@@ -187,9 +190,8 @@ const CartScreen = () => {
           </TableContainer>
           <Box component='div' className={classes.containerTotal}>
             <Typography variant='h5'>Total: $ {calculateTotal().toFixed(2)}</Typography>
+            <Button variant="contained" color='secondary' fullWidth={true} onClick={handleMercadoPago}>Comprar</Button>
           </Box>
-
-
         </Container>
       }
     </>
