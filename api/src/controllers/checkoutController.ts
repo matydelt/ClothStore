@@ -51,7 +51,7 @@ export default class Checkout {
                 marketplace: 'Mi negocio',
                 additional_info: "AAAAAAAAAAAAAAAAAAAAAAAAAAA",
                 statement_descriptor: "Keilo's shop",
-                back_urls: { failure: '', pending: '', success: 'www.google.com.ar' }
+                back_urls: { failure: '', pending: '', success: 'http://localhost:3000/' }
             }
 
             const response = await mercadoPago.preferences.create(preference)
