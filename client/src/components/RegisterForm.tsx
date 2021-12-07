@@ -1,22 +1,18 @@
+import { TextField } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { Button, Link } from "@mui/material";
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import CssBaseline from "@mui/material/CssBaseline";
+import Grid from "@mui/material/Grid";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useAuth } from "../hooks/useAuth";
 import { registerUser } from "../redux/actions/userActions";
-import { useDispatch } from "react-redux";
-import Avatar from "@mui/material/Avatar";
-import { Button } from "@mui/material";
-import CssBaseline from "@mui/material/CssBaseline";
-import { TextField } from "@material-ui/core";
-// import FormControlLabel from "@mui/material/FormControlLabel";
-// import Checkbox from "@mui/material/Checkbox";
-// import Link from "@mui/material/Link";
-import { Link } from "@mui/material"
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { makeStyles } from '@material-ui/core/styles';
 
 type FormState = {
   firstName: string;
@@ -28,14 +24,13 @@ type FormState = {
 
 const useStyles = makeStyles({
   root: {
-    marginTop: '10px',
-    marginBottom: '10px'
+    marginTop: "10px",
+    marginBottom: "10px",
   },
   avatarLock: {
-    backgroundColor: '#f1f1f1'
-  }
-})
-
+    backgroundColor: "#f1f1f1",
+  },
+});
 
 const theme = createTheme();
 
@@ -87,8 +82,8 @@ const RegisterForm = () => {
             alignItems: "center",
           }}
         >
-          <Avatar classes={{root: classes.avatarLock}}>
-            <LockOutlinedIcon color='primary'/>
+          <Avatar classes={{ root: classes.avatarLock }}>
+            <LockOutlinedIcon color="primary" />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign up
@@ -186,7 +181,7 @@ const RegisterForm = () => {
               fullWidth
               variant="contained"
               classes={{
-                root: classes.root
+                root: classes.root,
               }}
               disabled={
                 input.confirmPassword !== input.password ||
