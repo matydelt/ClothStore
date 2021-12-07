@@ -66,7 +66,7 @@ const Header = () => {
                   xl: "translate(-100%, 0%)",
                 },
                 textAlign: "center",
-                fontWeight: "400 !important",  
+                fontWeight: "400 !important",
               }}
               variant="h2"
             >

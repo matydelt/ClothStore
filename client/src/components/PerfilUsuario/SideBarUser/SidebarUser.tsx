@@ -120,6 +120,8 @@ export default function SideBarUser(props: Props) {
 
   function logout() {
     dispatch(logoutUser());
+    const cart = localStorage.getItem("cart")
+    localStorage.setItem('cart', '[]');
     auth.signout();
     navigate('/login')
   }

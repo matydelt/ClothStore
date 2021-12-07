@@ -1,30 +1,27 @@
-import React, { useEffect, useState } from "react";
-import { ProvideAuth, useAuth } from "./hooks/useAuth";
-import "./App.css";
-import { Route, Routes } from "react-router";
-import RegisterScreen from "./pages/RegisterScreen";
-import LoginScreen from "./pages/LoginScreen";
-import CartScreen from "./pages/CartScreen";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  cartLength,
-  putPublications,
-} from "./redux/actions/publicationActions";
-import CreatePublication from "./components/createPublication/CreatePublication";
 // import { ThemeProvider } from "@mui/material/styles";
 import { MuiThemeProvider } from "@material-ui/core/styles";
-import theme from "./components/controllers/themeConfig";
-import Homepage from "./components/HomePage/Homepage";
-import PublicationDetail from "./components/publicationDetail/PublicationDetail";
-import HomeUsuarios from "./components/HomeUsuarios/HomeUsuarios";
-import { StylesProvider } from "@material-ui/styles";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Route, Routes } from "react-router";
+import "./App.css";
 import AdminPage from "./components/adminPage/adminPage";
 import UsuariosAdmPage from "./components/adminPage/components/usuarios/usuarios";
-import RequireAuth from "./components/RequireAuth";
-import { RootState } from "./redux/store/store"
-import EmployeePage from "./components/adminPage/employeePage"
-import { getCarrito } from "./redux/actions/carritoAction";
+import EmployeePage from "./components/adminPage/employeePage";
+import theme from "./components/controllers/themeConfig";
+import CreatePublication from "./components/createPublication/CreatePublication";
+import Homepage from "./components/HomePage/Homepage";
 import PefilUsuario from "./components/PerfilUsuario";
+import PublicationDetail from "./components/publicationDetail/PublicationDetail";
+import { useAuth } from "./hooks/useAuth";
+import CartScreen from "./pages/CartScreen";
+import LoginScreen from "./pages/LoginScreen";
+import RegisterScreen from "./pages/RegisterScreen";
+import { getCarrito } from "./redux/actions/carritoAction";
+import {
+  cartLength,
+  putPublications
+} from "./redux/actions/publicationActions";
+import { RootState } from "./redux/store/store";
 
 // const user = useSelector((state: RootState) => state.userSignin.userInfo)
 
@@ -61,7 +58,7 @@ const App = (): JSX.Element => {
   }, [dispatch]);
 
   return (
-    <StylesProvider injectFirst>
+    // <StylesProvider injectFirst>
       <MuiThemeProvider theme={theme}>
         <Routes>
           <Route path="/admin" element={<AdminPage />} />
@@ -89,7 +86,7 @@ const App = (): JSX.Element => {
           </Route>
         </Routes>
       </MuiThemeProvider>
-    </StylesProvider>
+    // </StylesProvider>
 
   );
 };

@@ -3,13 +3,13 @@ import ButtonsNav from '../../../GeneralComponents/ButtonsNav'
 import { Link } from 'react-router-dom'
 import Logo from '../../../assets/logo/ClothStore_logotipo_sin_fondo.png';
 import Toolbar from '@mui/material/Toolbar'
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import IconButton from '@mui/material/IconButton';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import IconButton from '@material-ui/core/IconButton';
 import {
     MyNavBarHeader,
 } from '../NavBar/NavBarStyles'
 import { Box } from '@mui/system';
-import Badge from '@mui/material/Badge';
+import Badge from '@material-ui/core/Badge';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/store/store';
 
@@ -19,6 +19,7 @@ const NavBar = () => {
     const user = useSelector((state: RootState) => state.userSignin.userInfo)
     const carrito: any = useSelector((state: RootState) => state.carrito.carrito)
 
+    console.log(user)
     return (
         <>
             <MyNavBarHeader position="static">
