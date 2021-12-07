@@ -19,6 +19,7 @@ const NavBar = () => {
     const user = useSelector((state: RootState) => state.userSignin.userInfo)
     const carrito: any = useSelector((state: RootState) => state.carrito.carrito)
 
+    console.log(user)
     return (
         <>
             <MyNavBarHeader position="static">

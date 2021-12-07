@@ -33,6 +33,3 @@ const carritoSchema = new Schema({
 })
 
 export default model<Carrito>('Carrito', carritoSchema);
-
-
-

@@ -11,7 +11,7 @@ export type Action = {
 export const getAllUsers = () => async (dispatch: Dispatch<Action>) => {
   dispatch({ type: "ALL_USERS_REQUEST" });
   try {
-    const response = await axios.get("/users");
+    const response = await axios.get("/usersname");
     dispatch({
       type: "ALL_USERS_SUCCESS",
       payload: { success: response.data },

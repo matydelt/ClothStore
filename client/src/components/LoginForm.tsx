@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import Avatar from "@material-ui/core/Avatar";
-import { Button } from "@material-ui/core";
+import Avatar from "@mui/material/Avatar";
+import { Button } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import {TextField} from "@material-ui/core";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@material-ui/icons/LockOpenOutlined";
+import LockOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";

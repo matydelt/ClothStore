@@ -10,8 +10,9 @@ import {
 } from "firebase/auth";
 import { auth } from "../firebase/firebase.config";
 import { FirebaseError } from "@firebase/util";
+import { useDispatch } from "react-redux";
 import { setSignedInUser } from "../redux/actions/userActions";
-import { useDispatch } from 'react-redux'
+
 interface signProps {
   email: string;
   password: string;
@@ -44,8 +45,7 @@ export const useAuth = () => {
 
 function useProvideAuth() {
   const [user, setUser] = useState<User>();
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
 
   const signin = async ({

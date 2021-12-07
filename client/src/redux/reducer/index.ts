@@ -1,6 +1,8 @@
 import { combineReducers } from "redux";
-import { userRegisterReducer, userSigninReducer } from "./userReducer";
+import { userRegisterReducer, userSigninReducer, getUSersReducer } from "./userReducer";
 import { allUsersReducer } from "./usersReducer";
+import { allMarksReducer } from "./marksReducer";
+// import { allUsersReducer } from "./usersReducer";
 import {
   publicationListReducer,
   publicationSaveReducer,
@@ -11,10 +13,13 @@ import { carritoReducer } from './carritoReducer'
 
 
 export default combineReducers({
-    userRegister: userRegisterReducer,
-    userSignin: userSigninReducer,
-    publicationList: publicationListReducer,
-    publicationSave: publicationSaveReducer,
-    carrito: carritoReducer,
-    allUsers: allUsersReducer
+  // allUsers: allUsersReducer,
+  users: getUSersReducer,
+  userRegister: userRegisterReducer,
+  userSignin: userSigninReducer,
+  publicationList: publicationListReducer,
+  publicationSave: publicationSaveReducer,
+  carrito: carritoReducer,
+  allUsers: allUsersReducer,
+  allMarks: allMarksReducer,
 });

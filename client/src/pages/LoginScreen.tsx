@@ -3,7 +3,7 @@ import LoginForm from "../components/LoginForm";
 import Footer from "../components/Footer";
 import { useAuth } from "../hooks/useAuth";
 import { Navigate } from "react-router-dom";
-import { Box } from "@mui/system";
+import Box from "@material-ui/core/Box";
 import NavBar from "../components/HomePage/Header/NavBar/NavBar";
 
 const LoginScreen = () => {

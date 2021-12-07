@@ -7,6 +7,7 @@ export type Action = {
   type: ActionTypes;
   payload?: { success?: Publication[]; error?: string };
   cartPayload?: any;
+  countPayload?: number;
 };
 
 export const putPublications =
@@ -39,8 +40,9 @@ export const putPublications =
       );
       dispatch({
         type: "PUBLICATION_LIST_SUCCESS",
-        payload: { success: response.data },
+        payload: { success: response.data.result },
         cartPayload: filter,
+        countPayload: response.data.count ,
       });
     } catch (error) {
       dispatch({
@@ -49,6 +51,22 @@ export const putPublications =
       });
     }
   };
+
+export const getNamePublications = (name: string) => async (dispatch: Dispatch<Action>) => {
+  dispatch ({ type: "PUBLICATION_NAME_REQUEST" });
+  try {
+    const response = await axios.get("/publications?name=" + name);
+    dispatch ({
+      type: "PUBLICATION_NAME_SUCCESS",
+      payload: { success: response.data },
+    });
+  } catch (error) {
+    dispatch ({
+      type: "PUBLICATION_NAME_FAIL",
+      payload: { error: (error as Error).message }
+    })
+  }
+}
 
 export const postPublications =
   (publication: any) => async (dispatch: Dispatch<Action>) => {

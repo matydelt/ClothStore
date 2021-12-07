@@ -21,6 +21,8 @@ export interface User {
   shopping: any[];
   __v: number;
   active: boolean;
+  type: string;
+  photo: string;
 }
 
 export interface Carrito {

@@ -1,11 +1,11 @@
 import * as React from "react";
-import { Button } from "@material-ui/core";
+import { Button } from "@mui/material";
 import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/styles';
-import TableBody from '@material-ui/core/TableBody';
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
+import TableBody from '@mui/material/TableBody';
+import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
 import { Box } from "@mui/system";
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 
 
 const useStyles = makeStyles({

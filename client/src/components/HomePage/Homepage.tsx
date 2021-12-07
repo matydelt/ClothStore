@@ -1,13 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "./Header/Header";
+import { useSelector, useDispatch } from "react-redux";
 import Publicaciones from "./publicaciones/publicaciones";
 import { Box } from "@mui/system";
 import SideBarHomePage from "./SideBarHomePage/SideBarHomePage";
 import Footer from "../Footer";
 import { Container } from "@mui/material";
 import SearchBar from "./SearchBar";
+import Paginations from "./Pagination";
+import { putPublications } from "../../redux/actions/publicationActions";
+import { RootState } from "../../redux/store/store";
 
 const Homepage = () => {
+  const { 
+    mark,
+    gender,
+    category,
+    price,
+    author,
+    name,
+    order,
+    page,
+    count
+  } = useSelector(
+    (state: RootState) => state.publicationList
+  );
+  
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(putPublications({
+      "name": name, "order": order, "page": page,
+      "mark": mark, "category": category, "gender": gender, "price": price, "author": author }));
+  }, []);
+
   return (
     <Box>
       <Header />
@@ -28,6 +54,7 @@ const Homepage = () => {
           <SideBarHomePage />
           <Publicaciones />
         </Box>
+        <Paginations/>
       </Container>
       <Box sx={{ height: "70%" }} />
       <Footer />

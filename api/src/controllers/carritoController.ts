@@ -52,33 +52,6 @@ export default class CarritoController {
 
 
                 })
-
-                // const carritoMap = carrito.map((c: any) => {
-
-                //     // if (carritoBuscado) {
-
-                //         // for (let i = 0; i < carritoBuscado?.publications.length; i++) {
-                //         //     if (carritoBuscado?.publications[i]?.publication?.equals(c.id)) {
-                //         //         carritoBuscado.publications[i].quantity += c.amount;
-                //         //         return carritoBuscado.publications[i];
-                //         //     } else {
-                //         //     }
-                //                 return {
-                //                     publication: c.id,
-                //                     price: c.price,
-                //                     quantity: c.amount,
-                //                     title: c.title,
-                //                     image: c.image
-                //                 }
-
-                //         // }
-
-                //     // }
-
-
-                // })
-
-                // carritoBuscado.publications = carritoMap
                 carritoBuscado.markModified('publications')
                 await carritoBuscado.save()
 
@@ -98,7 +71,7 @@ export default class CarritoController {
             const user = await UserSchema.findOne({ email })
 
             const carritoBuscado: Carrito | null = await carritoSchema.findOne({ userId: user?._id })
-
+console.log(carritoBuscado)
             res.json(carritoBuscado)
         } catch (error) {
             console.error(error);
@@ -109,36 +82,15 @@ export default class CarritoController {
         try {
 
             const { id, email } = req.params
+            console.log("---------id ---------",id)
 
-            const user = await UserSchema.findOne({ email })
+            console.log("---------email ---------",email)
+
+            const user = await UserSchema.findOne({ "email": `${email}` })
+            console.log("------user-----",user)
 
             const carritoBuscado: any = await carritoSchema.findOne({ userId: user?._id })
-
-            // console.log(carritoBuscado)
-
-            // const carritoMap = carritoBuscado?.publications.map((p: any) => {
-
-            //     if (p.publication.equals(id)) {
-            //         p.quantity++
-            //     } else {
-            //         let newPublication: object;
-            //         PublicationSchema.findById(id).then(findPublic => {
-            //             if (findPublic) {
-            //                 newPublication = {
-            //                     quantity: 1,
-            //                     title: findPublic?.name,
-            //                     image: findPublic?.images[0].url,
-            //                     price: findPublic.price
-            //                 }
-            //                 console.log(newPublication)
-            //             }
-            //         })
-            //     }
-            //     return p
-            // })
-
-            // console.log(carritoMap)
-
+            console.log("------carritoBuscado-----",carritoBuscado)
             const publicationSearched = carritoBuscado?.publications?.find((p: any) => {
                 if (p?.publication.equals(id)) {
                     console.log('entró en if')
@@ -151,9 +103,12 @@ export default class CarritoController {
                 }
 
             })
+            console.log("------publicationSearched-----",publicationSearched)
 
             if (!publicationSearched) {
                 const findPublic = await PublicationSchema.findById(id)
+            console.log("------findPublic-----",findPublic)
+                
                 if (findPublic) {
 
                     carritoBuscado?.publications?.push({
@@ -168,7 +123,6 @@ export default class CarritoController {
 
             }
 
-            // carritoBuscado.publications = carritoMap;
             carritoBuscado.markModified('publications')
             await carritoBuscado.save()
             console.log(carritoBuscado.publications, 'publication******')

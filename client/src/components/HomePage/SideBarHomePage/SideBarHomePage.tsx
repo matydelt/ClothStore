@@ -3,16 +3,23 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../redux/store/store";
 import { putPublications } from "../../../redux/actions/publicationActions";
 import { Box } from "@mui/system";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
-import Checkbox from "@material-ui/core/Checkbox";
-import Button from "@material-ui/core/Button";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
+import Checkbox from "@mui/material/Checkbox";
+import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { getAllUsers } from "../../../redux/actions/usersActions";
+import Collapse from "@mui/material/Collapse";
+import ListItemButton from "@mui/material/ListItemButton";
+import { getallMarks } from "../../../redux/actions/marksActions";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import SearchOrder from "../Order";
+import { User } from "../../../redux/reducer/stateTypes";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -25,11 +32,24 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const SideBarHomePage = () => {
+  
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(getAllUsers());
+    dispatch(getallMarks());
+    return () => {};
+  }, [dispatch]);
+  
   const classes = useStyles();
+  
   const { loading, mark, gender, category, price, author } = useSelector(
     (state: RootState) => state.publicationList
   );
+
   const { users } = useSelector((state: RootState) => state.allUsers);
+
+  const { marks } = useSelector((state: RootState) => state.allMarks);
 
   const [selectedValueGender, setSelectedValueGender] = React.useState(gender);
   const [selectedValueMark, setSelectedValueMark] = React.useState(mark);
@@ -37,40 +57,55 @@ const SideBarHomePage = () => {
     React.useState(category);
   const [selectedValueAuthor, setSelectedValueAuthor] = React.useState(author);
 
-  const dispatch = useDispatch();
+  const [open1, setOpen1] = React.useState(true);
+  const [open2, setOpen2] = React.useState(true);
+  const [open3, setOpen3] = React.useState(true);
+  const [open4, setOpen4] = React.useState(true);
 
+  const handleClick1 = () => {
+    setOpen1(!open1);
+  };
+  const handleClick2 = () => {
+    setOpen2(!open2);
+  };
+  const handleClick3 = () => {
+    setOpen3(!open3);
+  };
+  const handleClick4 = () => {
+    setOpen4(!open4);
+  };
   React.useEffect(() => {
     dispatch(getAllUsers());
-    return () => {};
+    return () => { };
   }, [dispatch]);
 
   const handleListItemClickGender = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     value: string
   ) => {
-    setSelectedValueGender(value);
+    console.log()
+    selectedValueGender===value ? setSelectedValueGender("") : setSelectedValueGender(value);
   };
   const handleListItemClickCategory = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     value: string
   ) => {
-    setSelectedValueCategory(value);
+    selectedValueCategory===value ? setSelectedValueCategory("") : setSelectedValueCategory(value);
   };
   const handleListItemClickMark = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     value: string
   ) => {
-    setSelectedValueMark(value);
+    selectedValueMark===value ? setSelectedValueMark("") : setSelectedValueMark(value);
   };
   const handleListItemClickAuthor = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     value: string
   ) => {
-    setSelectedValueAuthor(value);
-  }; //
+    selectedValueAuthor===value ? setSelectedValueAuthor("") : setSelectedValueAuthor(value);
+  };
 
   const handleReset = () => {
-    setSelectedValueGender("");
     dispatch(
       putPublications({
         name: "",
@@ -83,6 +118,10 @@ const SideBarHomePage = () => {
         author: "",
       })
     );
+    setSelectedValueGender("");
+    setSelectedValueMark("");
+    setSelectedValueCategory("");
+    setSelectedValueAuthor("");
   };
 
   const handleSubmit = () => {
@@ -108,10 +147,16 @@ const SideBarHomePage = () => {
         marginTop: "20px",
       }}
     >
-      <List
-        className={classes.list}
-        subheader={<ListSubheader>Genero</ListSubheader>}
-      >
+      <SearchOrder/>
+    <List
+      component="nav"
+      aria-labelledby="nested-list-subheader"
+    >
+      <ListItemButton onClick={handleClick1}>
+        <ListItemText primary="Genero" />
+        {open1 ? <ExpandLess /> : <ExpandMore />}
+      </ListItemButton>
+      <Collapse in={open1} timeout="auto" unmountOnExit>
         {["Hombre", "Mujer", "Niños"].map((value) => {
           const labelId = `checkbox-list-label-${value}`;
 
@@ -127,7 +172,7 @@ const SideBarHomePage = () => {
               <ListItemIcon>
                 <Checkbox
                   edge="start"
-                  checked={selectedValueGender === value}
+                  checked={selectedValueGender === value?true:false}
                   tabIndex={-1}
                   disableRipple
                   inputProps={{ "aria-labelledby": labelId }}
@@ -137,11 +182,17 @@ const SideBarHomePage = () => {
             </ListItem>
           );
         })}
-      </List>
-      <List
-        className={classes.list}
-        subheader={<ListSubheader>Categorias</ListSubheader>}
-      >
+        </Collapse>
+        </List> 
+    <List
+      component="nav"
+      aria-labelledby="nested-list-subheader"
+    >
+        <ListItemButton onClick={handleClick2}>
+        <ListItemText primary="Categoria" />
+        {open2 ? <ExpandLess /> : <ExpandMore />}
+      </ListItemButton>
+      <Collapse in={open2} timeout="auto" unmountOnExit>
         {["Remera", "Patanlon", "Zapatillas", "Zapatos"].map((value) => {
           const labelId = `checkbox-list-label-${value}`;
 
@@ -157,7 +208,7 @@ const SideBarHomePage = () => {
               <ListItemIcon>
                 <Checkbox
                   edge="start"
-                  checked={selectedValueCategory === value}
+                  checked={selectedValueCategory === value?true:false}
                   tabIndex={-1}
                   disableRipple
                   inputProps={{ "aria-labelledby": labelId }}
@@ -167,24 +218,31 @@ const SideBarHomePage = () => {
             </ListItem>
           );
         })}
-      </List>
-      <List
-        className={classes.list}
-        subheader={<ListSubheader>Vendedor</ListSubheader>}
-      >
+        </Collapse>
+        </List> 
+    <List
+      component="nav"
+      aria-labelledby="nested-list-subheader"
+    >
+      
+        <ListItemButton onClick={handleClick3}>
+        <ListItemText primary="Vendedor" />
+        {open3 ? <ExpandLess /> : <ExpandMore />}
+      </ListItemButton>
+      <Collapse in={open3} timeout="auto" unmountOnExit>
         {users?.map((value) => {
           const labelId = `checkbox-list-label-${value}`;
 
           return (
             <ListItem
-              key={value._id}
+              key={value}
               dense
               role={undefined}
               button
               onClick={(event) =>
                 handleListItemClickAuthor(
                   event,
-                  value.name.firstName + value.name.lastName
+                  value
                 )
               }
               disabled={loading}
@@ -192,10 +250,7 @@ const SideBarHomePage = () => {
               <ListItemIcon>
                 <Checkbox
                   edge="start"
-                  checked={
-                    selectedValueAuthor ===
-                    value?.name?.firstName + value?.name?.lastName
-                  }
+                  checked={selectedValueAuthor === value?true:false}
                   tabIndex={-1}
                   disableRipple
                   inputProps={{ "aria-labelledby": labelId }}
@@ -205,7 +260,50 @@ const SideBarHomePage = () => {
             </ListItem>
           );
         })}
-      </List>
+        </Collapse>
+        </List> 
+    <List
+      component="nav"
+      aria-labelledby="nested-list-subheader"
+    >
+
+        <ListItemButton onClick={handleClick4}>
+        <ListItemText primary="Marca" />
+        {open4 ? <ExpandLess /> : <ExpandMore />}
+      </ListItemButton>
+      <Collapse in={open4} timeout="auto" unmountOnExit>
+        {marks?.map((value) => {
+          const labelId = `checkbox-list-label-${value}`;
+
+          return (
+            <ListItem
+              key={value}
+              dense
+              role={undefined}
+              button
+              onClick={(event) =>
+                handleListItemClickMark(
+                  event,
+                  value
+                )
+              }
+              disabled={loading}
+            >
+              <ListItemIcon>
+                <Checkbox
+                  edge="start"
+                  checked={selectedValueMark === value?true:false}
+                  tabIndex={-1}
+                  disableRipple
+                  inputProps={{ "aria-labelledby": labelId }}
+                />
+              </ListItemIcon>
+              <ListItemText id={labelId} primary={value} />
+            </ListItem>
+          );
+        })}
+        </Collapse>
+        </List> 
       <ButtonGroup
         variant="contained"
         aria-label="outlined primary button group"

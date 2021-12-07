@@ -15,16 +15,6 @@ mercadoPago.configure({
     access_token: MERCADOPAGO_API_PROD_ACCESS_TOKEN
 })
 
-// let preference = {
-//     items: [
-//         {
-// title: 'Mi producto',
-// unit_price: 100,
-// quantity: 1
-//         }
-//     ]
-// }
-
 export default class Checkout {
     static async postCheckout(req: Request, res: Response) {
 
