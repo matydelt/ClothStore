@@ -71,7 +71,7 @@ export default class CarritoController {
             const user = await UserSchema.findOne({ email })
 
             const carritoBuscado: Carrito | null = await carritoSchema.findOne({ userId: user?._id })
-
+console.log(carritoBuscado)
             res.json(carritoBuscado)
         } catch (error) {
             console.error(error);
@@ -82,11 +82,15 @@ export default class CarritoController {
         try {
 
             const { id, email } = req.params
+            console.log("---------id ---------",id)
 
-            const user = await UserSchema.findOne({ email })
+            console.log("---------email ---------",email)
+
+            const user = await UserSchema.findOne({ "email": `${email}` })
+            console.log("------user-----",user)
 
             const carritoBuscado: any = await carritoSchema.findOne({ userId: user?._id })
-
+            console.log("------carritoBuscado-----",carritoBuscado)
             const publicationSearched = carritoBuscado?.publications?.find((p: any) => {
                 if (p?.publication.equals(id)) {
                     console.log('entró en if')
@@ -99,9 +103,12 @@ export default class CarritoController {
                 }
 
             })
+            console.log("------publicationSearched-----",publicationSearched)
 
             if (!publicationSearched) {
                 const findPublic = await PublicationSchema.findById(id)
+            console.log("------findPublic-----",findPublic)
+                
                 if (findPublic) {
 
                     carritoBuscado?.publications?.push({

@@ -5,9 +5,10 @@ import carritoSchema, { Carrito } from '../models/carrito'
 export default class UserController {
   static async setUser(req: Request, res: Response) {
     try {
+      const { firstName, lastName, phone, email, password, photo } = req.body;
       const users = await UserSchema.find()
-      if (users.length >= 1) {
-        const { firstName, lastName, phone, email, password, photo } = req.body;
+      console.log("----------------U---",users)
+      if (users.length > 0) {
         const user: User = new UserSchema({
           phone,
           email,
@@ -16,10 +17,17 @@ export default class UserController {
           photo,
           type: "normal"
         });
-        await user.save();
+        const userSave = await user.save();
+        
+        const carrito: Carrito = new carritoSchema({
+          publications: undefined,
+          userId: userSave._id
+        })
+        console.log("--------carrito----------",carrito)
+  
+        const carritoSave = await carrito.save();
         res.sendStatus(200);
       } else {
-        const { firstName, lastName, phone, email, password, photo } = req.body;
         const user: User = new UserSchema({
           phone,
           email,
@@ -34,11 +42,10 @@ export default class UserController {
           publications: undefined,
           userId: userSave._id
         })
-  
+        
         const carritoSave = await carrito.save();
         res.sendStatus(200);
       }
-      res.sendStatus(200);
     } catch (e) {
       console.log(e);
       res.sendStatus(500);
