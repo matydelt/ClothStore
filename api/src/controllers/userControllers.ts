@@ -16,7 +16,14 @@ export default class UserController {
           photo,
           type: "normal"
         });
-        await user.save();
+        const userSave = await user.save();
+
+        const carrito: Carrito = new carritoSchema({
+          publications: undefined,
+          userId: userSave._id
+        })
+
+        await carrito.save();
         res.sendStatus(200);
       } else {
         const { firstName, lastName, phone, email, password, photo } = req.body;
@@ -28,17 +35,9 @@ export default class UserController {
           photo,
           type: "admin"
         });
-        const userSave = await user.save();
-
-        const carrito: Carrito = new carritoSchema({
-          publications: undefined,
-          userId: userSave._id
-        })
-  
-        const carritoSave = await carrito.save();
+        await user.save();
         res.sendStatus(200);
       }
-      res.sendStatus(200);
     } catch (e) {
       console.log(e);
       res.sendStatus(500);
@@ -69,12 +68,12 @@ export default class UserController {
 
   static async getUserName(req: Request, res: Response) {
     try {
-      
+
       let users: Array<any>;
       users = await UserSchema.find();
-      users = users.map((e)=>{
-        if(e.publications.length > 0) return e.userName 
-      }).filter(e => e!=undefined);
+      users = users.map((e) => {
+        if (e.publications.length > 0) return e.userName
+      }).filter(e => e != undefined);
       console.log(users);
       res.json(users);
     } catch (e) {
@@ -121,7 +120,7 @@ export default class UserController {
       else return res.sendStatus(404);
     } catch (error) {
       console.log("error")
-    } 
+    }
   }
 
   static async getOneUserByEmail(req: Request, res: Response) {
