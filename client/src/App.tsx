@@ -61,7 +61,7 @@ const App = (): JSX.Element => {
   }, [dispatch]);
 
   return (
-    <StylesProvider injectFirst>
+    // <StylesProvider injectFirst>
       <MuiThemeProvider theme={theme}>
         <Routes>
           <Route path="/admin" element={<AdminPage />} />
@@ -89,7 +89,6 @@ const App = (): JSX.Element => {
           </Route>
         </Routes>
       </MuiThemeProvider>
-    </StylesProvider>
 
   );
 };
