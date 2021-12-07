@@ -1,12 +1,14 @@
 import { Request, Response } from "express";
 import UserSchema, { User } from "../models/user";
+import carritoSchema, { Carrito } from '../models/carrito'
 
 export default class UserController {
   static async setUser(req: Request, res: Response) {
     try {
+      const { firstName, lastName, phone, email, password, photo } = req.body;
       const users = await UserSchema.find()
-      if (users.length >= 1) {
-        const { firstName, lastName, phone, email, password, photo } = req.body;
+      console.log("----------------U---",users)
+      if (users.length > 0) {
         const user: User = new UserSchema({
           phone,
           email,
@@ -15,10 +17,16 @@ export default class UserController {
           photo,
           type: "normal"
         });
-        await user.save();
+        const userSave = await user.save();
+        
+        const carrito: Carrito = new carritoSchema({
+          publications: undefined,
+          userId: userSave._id
+        })
+
+        await carrito.save();
         res.sendStatus(200);
       } else {
-        const { firstName, lastName, phone, email, password, photo } = req.body;
         const user: User = new UserSchema({
           phone,
           email,
@@ -38,7 +46,9 @@ export default class UserController {
   static async getUser(req: Request, res: Response) {
     try {
       const { email, password } = req.query;
-      const user = await UserSchema.findOne({ "email": `${email}` });
+      // const user = await UserSchema.findOne({ "email": `${email}` });
+      const user = await UserSchema.findOne({ email: email as string });
+      // const user = await UserSchema.find().findOne({ _email: email });
       if (user && user.password === password) res.json(user);
       else res.send("usuario o contraseña erronea");
     } catch (e) {
@@ -56,6 +66,21 @@ export default class UserController {
     }
   }
 
+  static async getUserName(req: Request, res: Response) {
+    try {
+
+      let users: Array<any>;
+      users = await UserSchema.find();
+      users = users.map((e) => {
+        if (e.publications.length > 0) return e.userName
+      }).filter(e => e != undefined);
+      console.log(users);
+      res.json(users);
+    } catch (e) {
+      console.log(e);
+      res.json([]);
+    }
+  }
   static async banUser(req: Request, res: Response) {
     try {
       const { id, flag } = req.body;
@@ -93,6 +118,16 @@ export default class UserController {
         return res.json(user);
       }
       else return res.sendStatus(404);
+    } catch (error) {
+      console.log("error")
+    }
+  }
+
+  static async getOneUserByEmail(req: Request, res: Response) {
+    try {
+      const { email } = req.params;
+      const user = await UserSchema.findOne({ email: email });
+      res.json(user);
     } catch (error) {
       console.log("error en get one user");
       res.sendStatus(500);

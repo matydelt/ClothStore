@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material/styles/'
+import { createTheme } from '@material-ui/core/styles'
 
 interface Theme {
     palette: object;
@@ -9,7 +9,7 @@ const theme: Theme = createTheme({
 
     palette: {
         primary: {
-            main: '#00c2cb'
+            main: '#00c2cb',
         },
         secondary: {
             main: '#7ed957'

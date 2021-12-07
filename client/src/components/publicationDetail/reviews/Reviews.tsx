@@ -6,7 +6,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { IconButton, Rating, Typography } from '@mui/material';
+import { Rating, Typography } from '@mui/material';
+import { IconButton, makeStyles } from '@material-ui/core';
 import CloseIcon from '@mui/icons-material/Close';
 import { Box } from '@mui/system';
 import axios from 'axios';
@@ -23,6 +24,15 @@ interface ReviewForm {
     publicationId: string,
 }
 
+const useStyles = makeStyles({
+    root: {
+        position: 'absolute',
+        right: '0',
+        top: '0'
+    }
+})
+
+
 export default function Reviews({ children }: any) {
 
     const user = useSelector((state: RootState): User | undefined => state?.userSignin?.userInfo);
@@ -30,6 +40,8 @@ export default function Reviews({ children }: any) {
     const { publicationId } = useParams();
 
     const [open, setOpen] = React.useState(false);
+    const classes = useStyles()
+
 
     const [reviews, setReviews] = React.useState<ReviewForm[]>([]);
     
@@ -50,7 +62,7 @@ export default function Reviews({ children }: any) {
                 setReviews(data);
             });
         }
-    }, [open]);
+    }, [open, publicationId]);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -60,11 +72,11 @@ export default function Reviews({ children }: any) {
         setOpen(false);
     };
 
-    const handleReviewForm = (e: any) => {
+    const handleReviewForm = (e: React.BaseSyntheticEvent) => {
         setReviewForm({ ...reviewForm, [e.target.name]: e.target.value });
     };
 
-    const submitReviewForm = (e: any) => {
+    const submitReviewForm = (e: React.BaseSyntheticEvent) => {
         e.preventDefault();
 
         axios.post('/review', reviewForm).then(() => {
@@ -88,12 +100,7 @@ export default function Reviews({ children }: any) {
                 <IconButton
                     aria-label="close"
                     onClick={handleClose}
-                    sx={{
-                        position: 'absolute',
-                        right: 8,
-                        top: 8,
-                        // color: (theme) => theme.palette.grey[500],
-                    }}
+                    classes={{root: classes.root}}
                 >
                     <CloseIcon />
                 </IconButton>

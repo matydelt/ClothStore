@@ -1,7 +1,9 @@
 import { Request, Response } from "express";
 import { FilterQuery } from "mongoose";
 import PublicationSchema, { Publication } from "../models/publication";
-import QAndASchema, { QAndA } from "../models/QAndA";
+import UserSchema, { User } from "../models/user";
+import QAndASchema, { QAndA } from "../models/qAndA";
+const sendEMail = require('../email/email');
 
 export default class QAndAControllers {
 
@@ -11,8 +13,19 @@ export default class QAndAControllers {
         try {
 
             const question: QAndA = new QAndASchema({ author: authorId, publication: publicationId, message, isQuestion: true });
+            const publication = await PublicationSchema.findById(publicationId).populate('author');
+            const seller = await UserSchema.findById(publication?.author);
 
             await question.save();
+
+            sendEMail.send({
+                publicationName: publication?.name,
+                publicationPrice: publication?.price,
+                email: seller?.email,
+                mensaje: message,
+                subject: "Pregunta recibida",
+                htmlFile: "question.html",
+              });
 
             // const publication: Publication | null = await PublicationSchema.findById(publicationId);
 
@@ -46,6 +59,20 @@ export default class QAndAControllers {
                 question.answer = savedAnswer?._id
 
                 await question?.save();
+
+                const buyer = await UserSchema.findById(question?.author);
+
+                console.log(buyer)
+
+                sendEMail.send({
+                    publicationName: publication?.name,
+                    publicationPrice: publication?.price,
+                    email: buyer?.email,
+                    mensaje: message,
+                    subject: "Pregunta Respondida",
+                    htmlFile: "answer.html",
+                  });
+
             }
             return res.sendStatus(200);
         } catch (e) {

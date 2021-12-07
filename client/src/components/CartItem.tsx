@@ -1,10 +1,55 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
-import { Box } from "@mui/material";
-import "./cartItem.css"
+import { Button } from "@mui/material";
+import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/styles';
+import TableBody from '@mui/material/TableBody';
+import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
+import { Box } from "@mui/system";
+import Typography from '@mui/material/Typography';
+
+
+const useStyles = makeStyles({
+  tableCell: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  imgCell: {
+    width: '50px',
+    objectFit: 'cover',
+    marginRight: '10px'
+  },
+  buttonAmountRigth: {
+    padding: '1px 5px',
+    minWidth: '5px',
+    marginLeft: '15px',
+  },
+  buttonAmountLeft: {
+    padding: '1px 5px',
+    minWidth: '5px',
+    marginRight: '15px',
+  },
+  cellButton: {
+    marginLeft: '15px'
+  }
+
+})
+
+const StyledTableRow = withStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      '&:nth-of-type(odd)': {
+        backgroundColor: theme.palette.action.hover,
+      },
+      width: '77px',
+    },
+  }),
+)(TableRow);
+
+
 type CartItemType = {
   id: string;
   amount: number;
+  quantity: number;
   price: number;
   image: string;
   title: string;
@@ -18,48 +63,57 @@ type Props = {
 };
 
 const CartItem = ({ item, addToCart, removeFromCart }: Props) => {
+
+  const classes = useStyles();
   return (
-    <Box className="card-box">
-
-      <img src={item.image} alt={item.title} />
-      <h3>{item.title}</h3>
-      <div>
-        <p>Price: $ {item.price}</p>
-        <p>Total: $ {(item.amount * item.price).toFixed(2)}</p>
-      </div>
-      <div style={{ display: "flex", flexDirection: "row" }}>
-        <p>{item.amount}</p>
-        {item.amount === 1 ?
-
-          <Button
-            style={{ marginLeft: "5px", marginRight: "5px" }}
-            size="small"
-            disableElevation
-            variant="contained"
-            onClick={() => removeFromCart(item.id)}
-          >
-            eliminar
-          </Button> :
-          <Button
-            style={{ marginLeft: "5px", marginRight: "5px" }}
-            size="small"
-            disableElevation
-            variant="contained"
-            onClick={() => removeFromCart(item.id)}
-          >
-            -
-          </Button>
-        }
-        <Button
-          size="small"
-          disableElevation
-          variant="contained"
-          onClick={() => addToCart(item)}
-        >
-          +
-        </Button>
-      </div>
-    </Box>
+    <>
+      <TableBody>
+        <StyledTableRow>
+          <TableCell classes={{ root: classes.tableCell }} component="th" scope="row">
+            <Box
+              className={classes.imgCell}
+              component='img'
+              src={item.image || "https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227725184-stock-illustration-no-image-available-icon-flat.jpg"}
+              alt={item.title}
+            />
+            <Typography variant='h5'>{item.title}</Typography>
+          </TableCell>
+          <TableCell align="right">
+            ${item.price}
+          </TableCell>
+          <TableCell classes={{root: classes.cellButton}}  align="right">
+            <Button
+              disableRipple={true}
+              disableFocusRipple={true}
+              classes={{ root: classes.buttonAmountLeft }}
+              className='buttonHoverOff'
+              color='primary'
+              size="small"
+              disableElevation
+              variant="text"
+              onClick={() => removeFromCart(item.id)}
+            >
+              -
+            </Button>
+            {item.amount || item.quantity}
+            <Button
+              disableFocusRipple={true}
+              disableRipple={true}
+              classes={{ root: classes.buttonAmountRigth }}
+              className='buttonHoverOff'
+              color='primary'
+              size="small"
+              disableElevation
+              variant="text"
+              onClick={() => addToCart(item)}
+            >
+              +
+            </Button>
+          </TableCell>
+          <TableCell align="right">${(item?.amount || item?.quantity * item.price).toFixed(2)}</TableCell>
+        </StyledTableRow>
+      </TableBody>
+    </>
   );
 };
 

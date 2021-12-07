@@ -1,11 +1,11 @@
 import * as React from 'react'
-import { Avatar, Box } from '@material-ui/core'
+import { Avatar, Box } from '@mui/material'
 import "./HomeUsuarios.css"
-import { Badge, Card, TextField } from '@mui/material'
+import { TextField } from '@mui/material'
 import axios from 'axios'
 import { useEffect } from 'react'
 import CardPublicacion from '../HomePage/publicaciones/cardPublicaciones/cardPublicaciones'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../../redux/store/store'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -16,6 +16,9 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Link } from 'react-router-dom'
 import NavBar from "../HomePage/Header/NavBar/NavBar"
+import { logoutUser } from "../../redux/actions/userActions";
+import { useNavigate } from 'react-router';
+import { useAuth } from '../../hooks/useAuth'
 
 interface FormUserInterface {
     photo: string;
@@ -29,7 +32,6 @@ interface FormUserInterface {
     calle: string;
     numero: string;
     ciudad: string;
-    country:string;
     cp: string;
     publications: any[];
     shopping: any[];
@@ -53,6 +55,10 @@ export default function HomeUsuarios() {
         firstName: "",
         lastName: ""
     })
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const auth = useAuth();
+
     type Name = { firstName: string, lastName: string }
     const [input, setInput] = React.useState<FormUserInterface>({
         photo: "",
@@ -67,7 +73,6 @@ export default function HomeUsuarios() {
         numero: "",
         ciudad: "",
         cp: "",
-        country:"",
         publications: [],
         shopping: []
     });
@@ -81,12 +86,13 @@ export default function HomeUsuarios() {
         getOneUser()
     }, [])
 
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         if (e.target.name === "firstName") {
 
             setName({ ...name, [e.target.name]: e.target.value });
         } else if (e.target.name === "lastName") {
-            setName({ ...name, ["lastName"]: e.target.value });
+            setName({ ...name, lastName: e.target.value });
         } else {
             setInput({ ...input, [e.target.name]: e.target.value });
         }
@@ -95,12 +101,19 @@ export default function HomeUsuarios() {
         e.preventDefault()
         console.log(input)
     }
+    function logout() {
+        dispatch(logoutUser());
+        auth.signout();
+        navigate('/login')
+    }
     return (
         <Box style={{ display: "flex", flexDirection: "column" }}>
 
             <Box>
                 <NavBar></NavBar>
                 <Box component="form" className="form-home-usuario">
+
+                    <button onClick={logout}>Logout</button>
 
                     <label>Mis Datos</label>
                     <Avatar alt={input?.photo ? input.photo : input?.name.firstName[0]} className="avatar-usuario">{input.name.firstName[0]} </Avatar>
@@ -176,13 +189,6 @@ export default function HomeUsuarios() {
                             disabled={flag}
                             label="Ciudad:"
                             value={input.ciudad}
-                            onChange={handleChange}
-                        />
-                        <TextField
-                            name='country'
-                            disabled={flag}
-                            label="Pais:"
-                            value={input.country}
                             onChange={handleChange}
                         />
 

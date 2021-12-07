@@ -3,13 +3,13 @@ import ButtonsNav from '../../../GeneralComponents/ButtonsNav'
 import { Link } from 'react-router-dom'
 import Logo from '../../../assets/logo/ClothStore_logotipo_sin_fondo.png';
 import Toolbar from '@mui/material/Toolbar'
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import IconButton from '@mui/material/IconButton'
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import IconButton from '@material-ui/core/IconButton';
 import {
     MyNavBarHeader,
 } from '../NavBar/NavBarStyles'
-import Box from '@mui/material/Box';
-import Badge from '@mui/material/Badge';
+import { Box } from '@mui/system';
+import Badge from '@material-ui/core/Badge';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/store/store';
 
@@ -17,6 +17,9 @@ const NavBar = () => {
 
     const cartLength = useSelector((state: RootState) => state.publicationSave.cartLength)
     const user = useSelector((state: RootState) => state.userSignin.userInfo)
+    const carrito: any = useSelector((state: RootState) => state.carrito.carrito)
+
+    console.log(user)
     return (
         <>
             <MyNavBarHeader position="static">
@@ -24,6 +27,7 @@ const NavBar = () => {
 
                     <Box
                         component='img'
+
                         src={Logo}
                         alt='ClothStore'
                         sx={{
@@ -43,22 +47,17 @@ const NavBar = () => {
                     }}
                     >
                         <Box sx={{ fontSize: { xl: '25px' }, marginRight: { lg: '16px', xl: '25px' } }}>
-                            {user?.type === "employee" || user?.type === "admin" ? <ButtonsNav
-                                link="/admin"
+                            <ButtonsNav
+                                link="/"
                                 text="HOME"
                                 nameClass='textDecoration colorPrimary buttonLink'
-                            /> :
-                                <ButtonsNav
-                                    link="/"
-                                    text="HOME"
-                                    nameClass='textDecoration colorPrimary buttonLink'
-                                />}
+                            />
                         </Box>
 
                         <Box sx={{ marginRight: { lg: '16px', xl: '25px' } }}>
                             <Box
                                 component='a'
-                                href="#"
+                                href="#tienda"
                                 className='buttonLink colorPrimary textDecoration'
                                 sx={{ fontSize: { xl: '25px' } }}
                             >
@@ -78,8 +77,8 @@ const NavBar = () => {
 
                     <Box sx={{ transform: 'translateX(-50%)', display: 'flex', alignItems: 'center' }}>
                         <Link to="/cart">
-                            <IconButton size='large' color="primary">
-                                <Badge badgeContent={cartLength} color="primary">
+                            <IconButton size='medium' color='secondary'>
+                                <Badge badgeContent={!user ? cartLength  : carrito?.publications?.length} color='primary'>
                                     <ShoppingCartIcon />
                                 </Badge>
                             </IconButton>
