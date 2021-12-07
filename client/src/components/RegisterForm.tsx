@@ -1,22 +1,17 @@
+import { Button, Link, TextField } from "@material-ui/core";
+import Avatar from "@material-ui/core/Avatar";
+import { makeStyles } from '@material-ui/core/styles';
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import CssBaseline from "@mui/material/CssBaseline";
+import Grid from "@mui/material/Grid";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useAuth } from "../hooks/useAuth";
 import { registerUser } from "../redux/actions/userActions";
-import { useDispatch } from "react-redux";
-import Avatar from "@material-ui/core/Avatar";
-import { Button } from "@material-ui/core";
-import CssBaseline from "@mui/material/CssBaseline";
-import { TextField } from "@material-ui/core";
-// import FormControlLabel from "@mui/material/FormControlLabel";
-// import Checkbox from "@mui/material/Checkbox";
-// import Link from "@mui/material/Link";
-import { Link } from "@material-ui/core"
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { makeStyles } from '@material-ui/core/styles';
 
 type FormState = {
   firstName: string;
