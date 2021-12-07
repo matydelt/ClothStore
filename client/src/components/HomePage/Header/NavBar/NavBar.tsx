@@ -47,16 +47,11 @@ const NavBar = () => {
                     }}
                     >
                         <Box sx={{ fontSize: { xl: '25px' }, marginRight: { lg: '16px', xl: '25px' } }}>
-                            {user?.type === "employee" || user?.type === "admin" ? <ButtonsNav
-                                link="/admin"
+                            <ButtonsNav
+                                link="/"
                                 text="HOME"
                                 nameClass='textDecoration colorPrimary buttonLink'
-                            /> :
-                                <ButtonsNav
-                                    link="/"
-                                    text="HOME"
-                                    nameClass='textDecoration colorPrimary buttonLink'
-                                />}
+                            />
                         </Box>
 
                         <Box sx={{ marginRight: { lg: '16px', xl: '25px' } }}>
