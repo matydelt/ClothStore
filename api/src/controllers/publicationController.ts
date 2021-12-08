@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import UserSchema, { User } from "../models/user";
 import PublicationSchema, { Publication } from "../models/publication";
 import { equal } from "assert/strict";
+const sendEMail = require('../email/email');
 
 export default class PublicationController {
   static async setPublication(req: Request, res: Response) {
@@ -220,10 +221,17 @@ export default class PublicationController {
       console.log(id)
 
       const publication = await PublicationSchema.findById(id);
+      const seller = await UserSchema.findById(publication?.author);
       if (flag) {
         if (publication) {
           publication.state = true
           await publication.save();
+          sendEMail.send({
+            publicationPrice: publication?.price,
+            email: seller?.email,
+            mensaje: "Su publicacion a sido APROBADA!",
+            htmlFile: "question.html",
+          })
           res.sendStatus(200)
         } else {
           res.sendStatus(404)
@@ -236,6 +244,23 @@ export default class PublicationController {
           res.sendStatus(404)
         }
       }
+    } catch (error) {
+      console.log(error)
+      res.sendStatus(500);
+    }
+  }
+
+  static async postPublicationMessageADM(req: Request, res: Response): Promise<void> {
+    try {
+      const { id, message } = req.body;
+      const publication = await PublicationSchema.findByIdAndUpdate(id, { message: message });
+      const seller = await UserSchema.findById(publication?.author);
+      sendEMail.send({
+        email: seller?.email,
+        mensaje: message,
+        htmlFile: "question.html",
+      })
+      res.sendStatus(200);
     } catch (error) {
       console.log(error)
       res.sendStatus(500);

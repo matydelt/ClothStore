@@ -102,3 +102,14 @@ export const activatePublication = (id: string, flag: boolean) => async (dispatc
     dispatch({ type: "ACTIVATE_PUBLICATION_FAIL" });
   }
 }
+
+export const publicationMessage = (id: string, message: string) => async (dispatch: Dispatch<Action>) => {
+  dispatch({ type: "MESSAGE_PUBLICATION_REQUEST" });
+  try {
+    await axios.post("/publication/message", { id, message })
+    dispatch({ type: "MESSAGE_PUBLICATION_SUCCESS" });
+  } catch (e) {
+    console.log(e)
+    dispatch({ type: "MESSAGE_PUBLICATION_FAIL" });
+  }
+}

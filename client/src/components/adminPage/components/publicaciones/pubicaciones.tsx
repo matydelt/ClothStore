@@ -1,5 +1,7 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable array-callback-return */
 import { Box } from "@mui/material"
-import React, { useEffect } from "react"
+import React, { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { getUsers, } from "../../../../redux/actions/userActions"
 import { Publication } from "../../../../redux/types"
@@ -8,7 +10,7 @@ import NavBar from "../../navBar"
 import { Link } from 'react-router-dom';
 import "./publicaciones.css"
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import { activatePublication, putPublications } from "../../../../redux/actions/publicationActions"
+import { activatePublication, publicationMessage, putPublications } from "../../../../redux/actions/publicationActions"
 import CloseIcon from '@mui/icons-material/Close';
 
 interface State {
@@ -20,12 +22,18 @@ const PublicacionesAdmPage = () => {
     const dispatch = useDispatch()
     const state = useSelector((state: State) => state)
     const { userInfo } = useSelector((state: State) => state.userSignin)
-    const publications = state.publicationList.publications
+    const publications = state.publicationList.publications;
+    const [mensaje, setMensaje] = useState("");
 
     useEffect(() => {
         dispatch(getUsers())
     }, [dispatch])
     if (!userInfo?.type) return (<div></div>)
+
+    function HandlerSubmit(e: React.SyntheticEvent<EventTarget>, id: string) {
+        e.preventDefault()
+        dispatch(publicationMessage(id, mensaje))
+    }
     return (
         <Box>{userInfo?.type === "admin" ?
             <NavBar></NavBar> :
@@ -42,7 +50,6 @@ const PublicacionesAdmPage = () => {
                 {
                     publications.map((e: Publication) => {
                         if (!e.state) {
-                            console.log(e.state)
                             return (
                                 <div style={{ flexDirection: "row", display: "flex", borderBottom: "#e6e6e6 solid 1px", justifyContent: "initial", width: "70%", alignItems: "center" }}>
                                     <div className="one">
@@ -79,7 +86,11 @@ const PublicacionesAdmPage = () => {
 
                                                 <input type="button" value={"aceptar"} className="aceptar" style={{ display: "flex", justifyContent: "center" }} onClick={async () => {
                                                     await dispatch(activatePublication(e._id, true))
-                                                    await dispatch(putPublications({ name: undefined, author: undefined, category: undefined, gender: undefined, mark: undefined, order: undefined, page: undefined, price: undefined }))
+                                                    await dispatch(putPublications({
+                                                        name: undefined, author: undefined,
+                                                        category: undefined, gender: undefined, mark: undefined,
+                                                        order: undefined, page: undefined, price: undefined
+                                                    }))
                                                 }} />
                                             </div>
                                         </div>
@@ -91,10 +102,13 @@ const PublicacionesAdmPage = () => {
                                             </a>
                                             <p>Envie un mensaje al creador de la publicacion acerca de lo que deberia modificar</p>
                                             <div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
-                                                <form>
+                                                <form onSubmit={(k: React.SyntheticEvent<EventTarget>) => HandlerSubmit(k, e._id)}>
                                                     <div style={{ display: "flex", justifyContent: "center", minWidth: "100px" }}>
 
-                                                        <textarea style={{ minWidth: "310px", resize: "block", minHeight: "150px" }} className="text"></textarea>
+                                                        <textarea style={{ minWidth: "310px", resize: "none", minHeight: "150px" }} value={mensaje} className="text"
+                                                            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>): any =>
+                                                                setMensaje(e.target.value)
+                                                            } />
                                                     </div >
                                                     <div style={{ display: "flex", justifyContent: "center", marginTop: "3px" }}>
 
