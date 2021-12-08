@@ -6,6 +6,22 @@ import Carousel from "react-material-ui-carousel";
 import { ArrowCircleUpOutlined } from '@mui/icons-material';
 import { Publication } from '../../../redux/types';
 import { Box } from '@mui/system';
+import { Swiper, SwiperSlide } from "swiper/react";
+// import "swiper/swiper-bundle.min.css";
+// import "swiper/swiper.min.css";
+// import "swiper/components/navigation/navigation.min.css";
+// import "swiper/components/pagination/pagination.min.css";
+// import "swiper/components/scrollbar/scrollbar.min.css";
+// import "swiper/components/autoplay";
+import SwiperCore, {
+  Autoplay,
+  EffectFade,
+  Navigation,
+  Pagination,
+} from "swiper";
+
+SwiperCore.use([Autoplay, EffectFade, Navigation, Pagination]);
+
 interface props {
     publicationId: string | undefined
 }
@@ -25,38 +41,32 @@ export default function RelatedPublications({ publicationId }: props): JSX.Eleme
 
     return (
 
-        <Box sx={{ width: '100%'}}>
+        <Box sx={{ width: '100%' }}>
 
 
-        <Carousel
-            className="Carousel-root-1 CarouselItem"
-            autoPlay={false}
-            navButtonsProps={{
-                style: {
-                    backgroundColor: "gray",
-                    width: '50px',
-                    height: '50px',
-                    borderRadius: 100,
-                    color: 'red',
-                    boxShadow: '1px 1px 1px 1px gray'
-                },
-            }}
-            indicators={false}
-            navButtonsAlwaysVisible={true}
-            navButtonsAlwaysInvisible={false}
-            
+<Swiper
+          spaceBetween={35}
+          slidesPerView={4}
+          navigation={true}
+          effect={"slide"}
+          loop={false}
+        
+        //   pagination={{ clickable: true }}
+   
         >
             {
                 publications.map((e: Publication) => {
                     return (
                         <>
+                        <SwiperSlide style={{ width: 'auto' }}>
                             <CardPublicacion name={e.name} author={e.author} images={e.images} mark={e.mark} stock={e.stock} price={e.price} categorie={e.categorie} detail={e.detail} gender={e.gender} key={e._id} id={e._id}
                             />
+                            </SwiperSlide>
                         </>
                     )
                 })
             }
-        </Carousel>
+        </Swiper>
             </Box>
     )
 };
