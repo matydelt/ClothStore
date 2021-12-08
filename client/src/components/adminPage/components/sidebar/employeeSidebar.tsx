@@ -5,19 +5,19 @@ import SearchIcon from '@mui/icons-material/Search';
 export const SidebarData = [
     {
         title: 'Home',
-        path: '/admin',
+        path: '/',
         icon: <HomeIcon />,
         cName: 'nav-text'
     },
     {
         title: 'Publicaciones',
-        path: '/admin/publicaciones',
+        path: '/employee/publicaciones',
         icon: <SearchIcon />,
         cName: 'nav-text'
     },
     {
         title: 'Denuncias',
-        path: '/admin/denuncias',
+        path: '/employee/denuncias',
         icon: <ReportProblemIcon />,
         cName: 'nav-text'
     },

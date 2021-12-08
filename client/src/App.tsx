@@ -23,6 +23,7 @@ import {
   putPublications
 } from "./redux/actions/publicationActions";
 import { RootState } from "./redux/store/store";
+import PublicacionesAdmPage from "./components/adminPage/components/publicaciones/pubicaciones";
 
 // const user = useSelector((state: RootState) => state.userSignin.userInfo)
 
@@ -62,7 +63,9 @@ const App = (): JSX.Element => {
     <MuiThemeProvider theme={theme}>
       <Routes>
         <Route path="/admin" element={<AdminPage />} />
-        <Route path="employee" element={<EmployeePage />} />
+        <Route path="/admin/publicaciones" element={<PublicacionesAdmPage />} />
+        <Route path="/employee" element={<EmployeePage />} />
+        <Route path="/employee/publicaciones" element={<PublicacionesAdmPage />} />
         <Route path="/admin/usuarios" element={<UsuariosAdmPage />} />
         <Route path="/" element={<Homepage />} />
         <Route path="/nueva-publicacion" element={<CreatePublication />} />
