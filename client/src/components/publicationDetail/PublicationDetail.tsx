@@ -30,6 +30,7 @@ export interface Publication {
 export default function PublicationDetail(): JSX.Element {
 
   const [publication, setPublication] = useState<Publication | undefined>();
+  const [scoreAverage, setScoreAverage] = React.useState<number>(0);
 
   const [imageShow, setImageShow] = useState<string>();
   const [loading, setLoading] = useState<boolean>(true);
@@ -47,19 +48,15 @@ export default function PublicationDetail(): JSX.Element {
         setLoading(false);
       });
     }
+    axios.get('/reviews/' + publicationId).then(({ data }) => {
+      setScoreAverage(data.scoreAverage);
+  });
   }, [publicationId]);
 
 
   function imageToShow(img: string): void {
     setImageShow(img)
   }
-
-  const scoreAverage = (): number | undefined => {
-    if (publication) {
-      const sum = publication?.reviews.reduce((partial_sum, r) => partial_sum + r.score, 0);
-      return Math.round(sum / publication?.reviews?.length);
-    }
-  };
 
 
   return (<>
@@ -162,7 +159,7 @@ export default function PublicationDetail(): JSX.Element {
 
                 <Box component="div" sx={{ alignItems: 'center', display: 'flex', mt: 0.2 }}>
                   <Reviews>
-                    <Rating name="read-only" value={scoreAverage()} readOnly />
+                    <Rating sx={{ color: '#00c2cb'}} name="read-only" value={scoreAverage} readOnly />
                   </Reviews>
                   <Typography component="span" sx={{ fontSize: '10px', color: 'gray', ml: 1 }}>
                     {publication?.reviews.length} opiniones

@@ -6,6 +6,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 import { Rating, Typography } from '@mui/material';
 import { IconButton, makeStyles } from '@material-ui/core';
 import CloseIcon from '@mui/icons-material/Close';
@@ -44,7 +46,13 @@ export default function Reviews({ children }: any) {
 
 
     const [reviews, setReviews] = React.useState<ReviewForm[]>([]);
-    
+    const [scoreAverage, setScoreAverage] = React.useState<number>(0);
+    const [totalScores, setTotalScores] = React.useState<number>(0);
+    const [tab, setTab] = React.useState(0);
+    const [element, setElement] = React.useState<any>(null);
+    const [from, setFrom] = React.useState<number>(1);
+    const [filterCriteria, setFilterCriteria] = React.useState<string>('all');
+
     const [reviewForm, setReviewForm] = React.useState<ReviewForm>({
         score: 1,
         title: '',
@@ -55,20 +63,57 @@ export default function Reviews({ children }: any) {
 
     const { title, score, message } = reviewForm;
 
+    const observer = React.useRef(
+        new IntersectionObserver(
+            async entries => {
+                const first = entries[0];
+                if (first.isIntersecting) {
+                    setFrom(state => state + 1)
+                }
+            },
+            { threshold: 1 }
+        ));
+
+
+    React.useEffect(() => {
+        const currentElement = element;
+        const currentObserver = observer.current;
+
+        if (currentElement) {
+            currentObserver.observe(currentElement);
+        }
+
+        return () => {
+            if (currentElement) {
+                currentObserver.unobserve(currentElement);
+            }
+        };
+    }, [element]);
+
+
 
     React.useEffect(() => {
         if (open) {
-            axios.get('/reviews/' + publicationId).then(({ data }) => {
-                setReviews(data);
-            });
+            // setFilterCriteria('all')
+            // setTab(0)
+            // setFrom(1)
+            // getReviews('all');
+            handleTab(undefined, 0)
         }
-    }, [open, publicationId]);
+    }, [open]);
+
+    React.useEffect(() => {
+        if(from > 0) {
+            getReviewsInfiniteScroll(filterCriteria, from);
+        }
+    }, [from]);
 
     const handleClickOpen = () => {
         setOpen(true);
     };
 
     const handleClose = () => {
+        setFrom(1)
         setOpen(false);
     };
 
@@ -84,29 +129,67 @@ export default function Reviews({ children }: any) {
         });
     };
 
-    const scoreAverage = (): number => {
-        const sum = reviews.reduce((partial_sum, r) => partial_sum + r.score, 0);
-        return Math.round(sum / reviews.length);
+    const getReviews = (filterCriteria: string) => {
+        axios.get('/reviews/' + publicationId, { params: { filterCriteria } }).then(({ data }) => {
+            setScoreAverage(data.scoreAverage);
+            setReviews(data.reviews);
+            setTotalScores(data.totalScores);
+        });
     };
+
+    const getReviewsInfiniteScroll = (filterCriteria: string, from: number) => {
+        axios.get('/reviews/' + publicationId, { params: { filterCriteria, from } }).then(({ data }) => {
+            setScoreAverage(data.scoreAverage);
+            setReviews(state => [...state, ...data.reviews]);
+            setTotalScores(data.totalScores);
+        });
+    };
+
+    const handleTab = (event: any, newTab: number) => {
+        setTab(newTab);
+        setFrom(0)
+        let filter = 'all';
+        if (newTab === 0) {
+            filter = 'all'
+            setFilterCriteria('all');
+        }
+        if (newTab === 1) {
+            filter = 'positive'
+            setFilterCriteria('positive');
+        }
+        if (newTab === 2) {
+            filter = 'negative'
+            setFilterCriteria('negative');
+        }
+        getReviews(filter);
+    };
+
+
+
+
+
 
     return (
         <>
             <Button onClick={handleClickOpen}>
                 {children}
             </Button>
+
+
+
             <Dialog open={open} onClose={handleClose} fullWidth
                 maxWidth="md">
-                <DialogTitle>Opiniones sobre el producto</DialogTitle>
+                <DialogTitle sx={{ fontSize: 30 }}>Opiniones sobre el producto</DialogTitle>
                 <IconButton
                     aria-label="close"
                     onClick={handleClose}
-                    classes={{root: classes.root}}
+                    classes={{ root: classes.root }}
                 >
                     <CloseIcon />
                 </IconButton>
 
                 <DialogContent>
-                    <Box component="form"
+                    {/* <Box component="form"
                         onSubmit={(e: any) => submitReviewForm(e)}
                     >
 
@@ -144,13 +227,27 @@ export default function Reviews({ children }: any) {
                             <Button type="submit" >Publicar reseña</Button>
                         </DialogActions>
 
+                    </Box> */}
+
+                    <Box component="div" sx={{ my: 6, textAlign: 'center' }}>
+                        <Typography variant="h3" sx={{}}>{scoreAverage}</Typography>
+                        <Rating sx={{ color: '#00c2cb'}} name="read-only" value={scoreAverage} readOnly size="large" />
+                        <Typography component="p" sx={{ fontSize: '10px', color: 'gray' }}>Promedio entre {totalScores} opiniones</Typography>
+                    </Box>
+
+                    <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
+                        <Tabs textColor="primary" indicatorColor="primary"  value={tab} onChange={handleTab} centered>
+                            <Tab sx={{ width: '30%' }} label="Todas" />
+                            <Tab sx={{ width: '30%' }} label="Positivas" />
+                            <Tab sx={{ width: '30%' }} label="Negativas" />
+                        </Tabs>
                     </Box>
 
                     {reviews?.length < 1 ?
 
                         <Box component="div" sx={{ display: 'flex', justifyContent: 'center', my: 5 }}>
 
-                            <Typography variant="h6" sx={{color: 'gray'}}>
+                            <Typography variant="h6" sx={{ color: 'gray' }}>
                                 No hay reseñas sobre este producto
                             </Typography>
 
@@ -158,16 +255,10 @@ export default function Reviews({ children }: any) {
 
                         : <>
 
-                            <Box component="div" sx={{ mb: 4, textAlign: 'center' }}>
-                                <Typography variant="h3" sx={{}}>{scoreAverage()}</Typography>
-                                <Rating name="read-only" value={scoreAverage()} readOnly size="large" />
-                                <Typography component="p" sx={{ fontSize: '10px', color: 'gray' }}>Promedio entre {reviews.length} opiniones</Typography>
-                            </Box>
-
                             {
-                                reviews?.map((review, i) => {
-                                    return <Box component="div" key={i} sx={{ my: 2 }}>
-                                        <Rating name="read-only" value={review.score} readOnly size="small" />
+                                reviews && reviews?.map((review, i) => {
+                                    return <Box component="div" key={i} sx={{ my: 5 }}>
+                                        <Rating sx={{ color: '#00c2cb'}} name="read-only" value={review?.score} readOnly size="small" />
                                         <Typography variant="h6">{review.title}</Typography>
                                         <DialogContentText sx={{ mb: 2 }}>
                                             {review.message}
@@ -175,6 +266,21 @@ export default function Reviews({ children }: any) {
 
                                     </Box>
                                 })
+                            }
+                            {
+                                <div
+                                    ref={setElement}
+                                    // disabled={dias.length >= cantidadDias}
+                                    // style={{
+                                    //     position: "relative",
+                                    //     width: "100%",
+                                    //     height: "100px",
+                                    //     // marginTop: "500px",
+                                    //     marginBottom: "10px",
+                                    //     display: "block",
+                                    //     // background: "transparent",
+                                    // }}
+                                ></div>
                             }
                         </>}
 
