@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, SetStateAction, useEffect, useState } from 'react';
 import { Avatar, Button, Container, FormControl, Grid, MenuItem, Select, Typography, Rating, CircularProgress, Divider, SelectChangeEvent } from '@mui/material';
 import { Box } from '@mui/system';
 import axios from 'axios';
@@ -12,6 +12,7 @@ import { SideBySideMagnifier } from "react-image-magnifiers";
 import { useAuth } from '../../hooks/useAuth';
 import { putCarritoAmount } from '../../redux/actions/carritoAction';
 import { useDispatch } from 'react-redux';
+import RelatedPublications from './relatedPublications/RelatedPublications';
 
 export interface Publication {
   _id: string;
@@ -57,7 +58,7 @@ export default function PublicationDetail(): JSX.Element {
     }
     axios.get('/reviews/' + publicationId).then(({ data }) => {
       setScoreAverage(data.scoreAverage);
-  });
+    });
   }, [publicationId]);
 
 
@@ -66,8 +67,8 @@ export default function PublicationDetail(): JSX.Element {
   }
 
 
-  const handleAddCart = ():void => {
-    if(publication) {
+  const handleAddCart = (): void => {
+    if (publication) {
       dispatch(putCarritoAmount(auth?.user?.email, publication?._id, amount))
       navigate('/cart');
     }
@@ -75,7 +76,7 @@ export default function PublicationDetail(): JSX.Element {
 
   return (<>
 
-    <Box sx={{ backgroundColor: '#eeeeee', minHeight: '140vh', height: 'max-content' }}>
+    <Box sx={{ backgroundColor: '#eeeeee', minHeight: '100vh', height: 'max-content', pb: 20 }}>
       <NavBar></NavBar>
       <Box sx={{ backgroundColor: '#f5f5f5', minHeight: '15vh' }}>
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -85,7 +86,7 @@ export default function PublicationDetail(): JSX.Element {
 
       <Box sx={{ mt: 0, display: 'flex', justifyContent: 'center' }}>
 
-        <Container sx={{ mt: -10, position: 'absolute' }}>
+        <Container sx={{ mt: -10, mb: 10 }}>
 
 
 
@@ -125,16 +126,16 @@ export default function PublicationDetail(): JSX.Element {
 
               >
                 {imageShow && imageShow?.length > 0 &&
-                <Avatar variant="square" sx={{ width: 350, height: 500, borderRadius: 1, bgcolor: 'white' }} alt="" >
-                  <SideBySideMagnifier
-                  // fillAvailableSpace={true}
-                    // magnifierSize="40%"
-                    // square={true}
-                    alwaysInPlace
-                    imageSrc={imageShow}
-                  >
+                  <Avatar variant="square" sx={{ width: 350, height: 500, borderRadius: 1, bgcolor: 'white' }} alt="" >
+                    <SideBySideMagnifier
+                      // fillAvailableSpace={true}
+                      // magnifierSize="40%"
+                      // square={true}
+                      alwaysInPlace
+                      imageSrc={imageShow}
+                    >
 
-                  </SideBySideMagnifier>
+                    </SideBySideMagnifier>
                   </Avatar>
                 }
 
@@ -173,7 +174,7 @@ export default function PublicationDetail(): JSX.Element {
 
                 <Box component="div" sx={{ alignItems: 'center', display: 'flex', mt: 0.2 }}>
                   <Reviews>
-                    <Rating sx={{ color: '#00c2cb'}} name="read-only" value={scoreAverage} readOnly />
+                    <Rating sx={{ color: '#00c2cb' }} name="read-only" value={scoreAverage} readOnly />
                   </Reviews>
                   <Typography component="span" sx={{ fontSize: '10px', color: 'gray', ml: 1 }}>
                     {publication?.reviews.length} opiniones
@@ -217,7 +218,7 @@ export default function PublicationDetail(): JSX.Element {
                       <FormControl variant="standard">
                         {/* <InputLabel id="demo-simple-select-standard-label">Cantidad</InputLabel> */}
                         <Select defaultValue={1}
-                          onChange={(event: any) => setAmount(event.target.value)}
+                          onChange={(event: SelectChangeEvent<number>) => setAmount(event.target.value as SetStateAction<number>)}
                           value={amount}
                           name="amount"
                           labelId="demo-simple-select-standard-label"
@@ -258,6 +259,16 @@ export default function PublicationDetail(): JSX.Element {
             </>}
 
           </Grid>
+
+
+
+          <Box sx={{ width: '100%', my: 6, height: 'max-content' }}>
+
+            <Typography variant="h5" component="h5" style={{ marginBottom: '20px'}}>Publicaciones relacionadas</Typography>
+
+            <RelatedPublications publicationId={publicationId}></RelatedPublications>
+          </Box>
+
         </Container>
 
       </Box>

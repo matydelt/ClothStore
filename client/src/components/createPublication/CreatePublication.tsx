@@ -105,7 +105,7 @@ export default function CreatePublication(): JSX.Element {
 
   return (<>
 
-    <Box sx={{ backgroundColor: '#eeeeee', minHeight: '105vh', height: 'max-content' }}>
+    <Box sx={{ backgroundColor: '#eeeeee', minHeight: '100vh', height: 'max-content' }}>
       <NavBar></NavBar>
       <Box sx={{ backgroundColor: '#f5f5f5', minHeight: '30vh' }}>
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -124,7 +124,7 @@ export default function CreatePublication(): JSX.Element {
 
       <Box sx={{ mt: 0, display: 'flex', justifyContent: 'center' }}>
 
-        <Container sx={{ mt: -18, position: 'absolute' }}>
+        <Container sx={{ mt: -18, mb: 10 }}>
 
           <Grid item component="form"
             onSubmit={submitForm}
