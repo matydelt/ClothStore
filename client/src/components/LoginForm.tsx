@@ -122,7 +122,7 @@ const LoginForm = () => {
               onClick={googleSignin}
               endIcon={<GoogleIcon />}
             >
-              Sign up with Google
+              Iniciar Sesión con Google
             </Button>
             <Grid container>
               <Grid item xs>
