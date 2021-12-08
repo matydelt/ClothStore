@@ -29,8 +29,8 @@ interface ReviewForm {
 const useStyles = makeStyles({
     root: {
         position: 'absolute',
-        right: '0',
-        top: '0'
+        right: '10px',
+        top: '10px'
     }
 })
 
@@ -179,7 +179,7 @@ export default function Reviews({ children }: any) {
 
             <Dialog open={open} onClose={handleClose} fullWidth
                 maxWidth="md">
-                <DialogTitle sx={{ fontSize: 30 }}>Opiniones sobre el producto</DialogTitle>
+                <DialogTitle>Opiniones sobre el producto</DialogTitle>
                 <IconButton
                     aria-label="close"
                     onClick={handleClose}

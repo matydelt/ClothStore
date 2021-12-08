@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Avatar, Button, Container, FormControl, Grid, MenuItem, Select, Typography, Rating, CircularProgress, Divider } from '@mui/material';
+import { Avatar, Button, Container, FormControl, Grid, MenuItem, Select, Typography, Rating, CircularProgress, Divider, SelectChangeEvent } from '@mui/material';
 import { Box } from '@mui/system';
 import axios from 'axios';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { FavoriteBorderOutlined } from '@mui/icons-material';
 import Reviews from './reviews/Reviews';
 import NavBar from '../HomePage/Header/NavBar/NavBar';
 import QAndA from './qAndA/QAndA';
 // import { Publication } from '../../redux/reducer/stateTypes';
 import { SideBySideMagnifier } from "react-image-magnifiers";
+import { useAuth } from '../../hooks/useAuth';
+import { putCarritoAmount } from '../../redux/actions/carritoAction';
+import { useDispatch } from 'react-redux';
 
 export interface Publication {
   _id: string;
@@ -34,9 +37,13 @@ export default function PublicationDetail(): JSX.Element {
 
   const [imageShow, setImageShow] = useState<string>();
   const [loading, setLoading] = useState<boolean>(true);
+  const [amount, setAmount] = useState<number>(1);
 
   const { publicationId } = useParams();
+  const auth = useAuth();
+  const navigate = useNavigate();
 
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (publicationId && publicationId.length > 0) {
@@ -58,6 +65,13 @@ export default function PublicationDetail(): JSX.Element {
     setImageShow(img)
   }
 
+
+  const handleAddCart = ():void => {
+    if(publication) {
+      dispatch(putCarritoAmount(auth?.user?.email, publication?._id, amount))
+      navigate('/cart');
+    }
+  }
 
   return (<>
 
@@ -203,9 +217,9 @@ export default function PublicationDetail(): JSX.Element {
                       <FormControl variant="standard">
                         {/* <InputLabel id="demo-simple-select-standard-label">Cantidad</InputLabel> */}
                         <Select defaultValue={1}
-                          // onChange={handleForm}
-                          // value={gender}
-                          // name="gender"
+                          onChange={(event: any) => setAmount(event.target.value)}
+                          value={amount}
+                          name="amount"
                           labelId="demo-simple-select-standard-label"
                           id="demo-simple-select-standard"
                           label="Categoría"
@@ -220,7 +234,7 @@ export default function PublicationDetail(): JSX.Element {
                       </FormControl>
 
                     </Grid>
-                    <Button variant="outlined" fullWidth sx={{ mt: 4 }}>
+                    <Button onClick={handleAddCart} variant="outlined" fullWidth sx={{ mt: 4 }}>
                       Añadir al carrito
                     </Button>
                   </Grid>
