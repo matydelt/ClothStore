@@ -1,13 +1,24 @@
 // @ts-nocheck
 import { Request, Response } from "express"
 import cloudinary from 'cloudinary';
+import dotenv from "dotenv";
+dotenv.config()
 
+const { CLOUDINARY_PROD_CLOUD_NAME } = process.env
+const { CLOUDINARY_PROD_API_KEY } = process.env
+const { CLOUDINARY_PROD_API_SECRET } = process.env
+
+declare namespace process.env {
+    const CLOUDINARY_PROD_CLOUD_NAME: string;
+    const CLOUDINARY_PROD_API_KEY: number;
+    const CLOUDINARY_PROD_API_SECRET: string;
+}
 
 cloudinary.config  ({
 
-    cloud_name: "christiannordfors",
-    api_key: 456175174758593,
-    api_secret: "AGIMGf3w7JcErube-sgqn6Tm-aw"
+    cloud_name: CLOUDINARY_PROD_CLOUD_NAME,
+    api_key: CLOUDINARY_PROD_API_KEY,
+    api_secret: CLOUDINARY_PROD_API_SECRET
 });
 
 export default class CloudinaryController {
