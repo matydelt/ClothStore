@@ -16,15 +16,22 @@ const ShoppingSchema = new Schema({
         type: Number,
         required: [true, "necesita un amount"]
     },
-    price: {
-        type: Number,
-        required: [true, "necesita price"]
+    date: {
+        type: String,
+        required: [true, "necesita date"]
     },
     state: {
         type: Boolean,
         required: [true, "necesita un state"]
+    },
+    status:{
+        type: String,
+        required: [true, "necesita un status"]
+    },
+    status_detail:{
+        type: String,
+        required: [true, "necesita un status_detail"]
     }
-
 })
 
 export default model<Shopping>("Shopping", ShoppingSchema)
