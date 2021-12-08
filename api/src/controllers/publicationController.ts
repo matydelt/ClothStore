@@ -62,6 +62,10 @@ export default class PublicationController {
       let allPublications: Array<any>;
       allPublications = await PublicationSchema.find();
 
+      allPublications = allPublications.filter((e) => {
+        return e.state === true
+      });
+
       if (name && name !== "") {
         allPublications = allPublications.filter((e) => {
           return e.name.search(name as string) > -1;
