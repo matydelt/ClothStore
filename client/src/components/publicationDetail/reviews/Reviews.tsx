@@ -103,7 +103,7 @@ export default function Reviews({ children }: any) {
     }, [open]);
 
     React.useEffect(() => {
-        if(from > 0) {
+        if (from > 0) {
             getReviewsInfiniteScroll(filterCriteria, from);
         }
     }, [from]);
@@ -229,6 +229,10 @@ export default function Reviews({ children }: any) {
 
                     </Box> */}
 
+                    { reviews?.length > 0 &&
+                    
+                    <>
+
                     <Box component="div" sx={{ my: 6, textAlign: 'center' }}>
                         <Typography variant="h3" sx={{}}>{scoreAverage}</Typography>
                         <Rating sx={{ color: '#00c2cb'}} name="read-only" value={scoreAverage} readOnly size="large" />
@@ -242,6 +246,10 @@ export default function Reviews({ children }: any) {
                             <Tab sx={{ width: '30%' }} label="Negativas" />
                         </Tabs>
                     </Box>
+
+                    </>
+
+                    }
 
                     {reviews?.length < 1 ?
 
@@ -258,7 +266,7 @@ export default function Reviews({ children }: any) {
                             {
                                 reviews && reviews?.map((review, i) => {
                                     return <Box component="div" key={i} sx={{ my: 5 }}>
-                                        <Rating sx={{ color: '#00c2cb'}} name="read-only" value={review?.score} readOnly size="small" />
+                                        <Rating sx={{ color: '#00c2cb' }} name="read-only" value={review?.score} readOnly size="small" />
                                         <Typography variant="h6">{review.title}</Typography>
                                         <DialogContentText sx={{ mb: 2 }}>
                                             {review.message}
@@ -270,16 +278,16 @@ export default function Reviews({ children }: any) {
                             {
                                 <div
                                     ref={setElement}
-                                    // disabled={dias.length >= cantidadDias}
-                                    // style={{
-                                    //     position: "relative",
-                                    //     width: "100%",
-                                    //     height: "100px",
-                                    //     // marginTop: "500px",
-                                    //     marginBottom: "10px",
-                                    //     display: "block",
-                                    //     // background: "transparent",
-                                    // }}
+                                // disabled={dias.length >= cantidadDias}
+                                // style={{
+                                //     position: "relative",
+                                //     width: "100%",
+                                //     height: "100px",
+                                //     // marginTop: "500px",
+                                //     marginBottom: "10px",
+                                //     display: "block",
+                                //     // background: "transparent",
+                                // }}
                                 ></div>
                             }
                         </>}

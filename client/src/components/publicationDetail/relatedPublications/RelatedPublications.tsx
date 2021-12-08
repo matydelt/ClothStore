@@ -58,7 +58,7 @@ export default function RelatedPublications({ publicationId }: props): JSX.Eleme
                 publications.map((e: Publication) => {
                     return (
                         <>
-                        <SwiperSlide style={{ width: 'auto' }}>
+                        <SwiperSlide style={{  width: 'auto', justifyContent: 'space-between'}}>
                             <CardPublicacion name={e.name} author={e.author} images={e.images} mark={e.mark} stock={e.stock} price={e.price} categorie={e.categorie} detail={e.detail} gender={e.gender} key={e._id} id={e._id}
                             />
                             </SwiperSlide>
