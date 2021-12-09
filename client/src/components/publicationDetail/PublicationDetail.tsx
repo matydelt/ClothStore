@@ -260,7 +260,8 @@ export default function PublicationDetail(): JSX.Element {
 
           </Grid>
 
-
+          
+          { !loading &&
 
           <Box sx={{ width: '100%', my: 6, height: 'max-content' }}>
 
@@ -268,6 +269,8 @@ export default function PublicationDetail(): JSX.Element {
 
             <RelatedPublications publicationId={publicationId}></RelatedPublications>
           </Box>
+
+          }
 
         </Container>
 

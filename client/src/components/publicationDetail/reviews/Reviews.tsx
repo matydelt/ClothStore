@@ -145,9 +145,13 @@ export default function Reviews({ children }: any) {
         });
     };
 
-    const handleTab = (event: any, newTab: number) => {
+    console.log(from)
+
+    const handleTab = async (event: any, newTab: number) => {
         setTab(newTab);
-        setFrom(0)
+        
+        await setFrom(1);
+
         let filter = 'all';
         if (newTab === 0) {
             filter = 'all'
@@ -228,10 +232,7 @@ export default function Reviews({ children }: any) {
                         </DialogActions>
 
                     </Box> */}
-
-                    { reviews?.length > 0 &&
-                    
-                    <>
+             
 
                     <Box component="div" sx={{ my: 6, textAlign: 'center' }}>
                         <Typography variant="h3" sx={{}}>{scoreAverage}</Typography>
@@ -246,10 +247,7 @@ export default function Reviews({ children }: any) {
                             <Tab sx={{ width: '30%' }} label="Negativas" />
                         </Tabs>
                     </Box>
-
-                    </>
-
-                    }
+           
 
                     {reviews?.length < 1 ?
 
@@ -265,7 +263,7 @@ export default function Reviews({ children }: any) {
 
                             {
                                 reviews && reviews?.map((review, i) => {
-                                    return <Box component="div" key={i} sx={{ my: 5 }}>
+                                    return <Box component="div" key={review.title+i} sx={{ my: 5 }}>
                                         <Rating sx={{ color: '#00c2cb' }} name="read-only" value={review?.score} readOnly size="small" />
                                         <Typography variant="h6">{review.title}</Typography>
                                         <DialogContentText sx={{ mb: 2 }}>
