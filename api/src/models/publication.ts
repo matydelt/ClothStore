@@ -36,6 +36,10 @@ const PublicationSchema = new Schema({
         type: Number,
         required: [true, "falta stock"]
     },
+    stockInicial: {
+        type: Number,
+        required: [true, "falta stock"]
+    },
     mark: {
         type: String,
         required: [true, "necesita una marca"]

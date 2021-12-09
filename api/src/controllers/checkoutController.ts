@@ -60,6 +60,7 @@ export default class Checkout {
             const compra : Shopping = new ShoppingSchema({
                 publications: order.publications,
                 amount: compras,
+                userId: order.userId,
                 date: response.body.date_created,
                 state: true,
                 status: "pending",

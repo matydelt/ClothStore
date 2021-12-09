@@ -28,6 +28,7 @@ export default class PublicationController {
           name,
           images,
           stock,
+          stockInicial: stock,
           mark,
           detail,
           price,
@@ -178,8 +179,9 @@ export default class PublicationController {
 
   static async putStock(req: Request, res: Response): Promise<void> {
     try {
-      const { id, stock } = req.body;
+      const { id, stock } = req.body;//stockInicial
       await PublicationSchema.findById(id).updateOne({ stock: stock });
+      await PublicationSchema.findById(id).updateOne({ stockInicial: stock });
       res.send("stock modificado");
     } catch (e) {
       console.log(e);

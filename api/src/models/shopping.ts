@@ -5,6 +5,8 @@ export interface Shopping extends mongoose.Document {
     price: number;
     amount: number;
     state: boolean;
+    userId: Schema.Types.ObjectId;
+
 }
 
 const ShoppingSchema = new Schema({
@@ -23,6 +25,11 @@ const ShoppingSchema = new Schema({
             }
         }
     ],
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true
+    },
     amount: {
         type: Number,
         required: [true, "necesita un amount"]
