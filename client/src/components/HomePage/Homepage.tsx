@@ -10,6 +10,7 @@ import SearchBar from "./SearchBar";
 import Paginations from "./Pagination";
 import { putPublications } from "../../redux/actions/publicationActions";
 import { RootState } from "../../redux/store/store";
+import CardsBenefit from "./CardsBenefit/CardsBenefit";
 
 const Homepage = () => {
   const { 
@@ -37,8 +38,8 @@ const Homepage = () => {
   return (
     <Box>
       <Header />
+      <CardsBenefit/>
       <Container id="tienda" maxWidth="lg">
-        <SearchBar />
         <Box
           component="main"
           sx={{

@@ -15,6 +15,8 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useAuth } from "../hooks/useAuth";
 import { registerUser } from "../redux/actions/userActions";
+import { Link as RouterLink } from 'react-router-dom'
+
 
 type FormState = {
   firstName: string;
@@ -190,13 +192,14 @@ const RegisterForm = () => {
                 input.confirmPassword !== input.password ||
                 input.password.length < 6
               }
+              color='primary'
             >
               Sign up
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link variant="body2" href="/login">
-                  Ya tienes una cuenta?
+                <Link component={RouterLink} to="/login" variant="body2" underline='hover'>
+                Ya tienes una cuenta?
                 </Link>
               </Grid>
             </Grid>
