@@ -4,7 +4,7 @@ import { Review } from "./review";
 
 export interface Publication extends mongoose.Document {
     name: string;
-    images: {public_id: string, url: string}[];
+    images: { public_id: string, url: string }[];
     stock: number;
     mark: string;
     detail: string;
@@ -15,6 +15,8 @@ export interface Publication extends mongoose.Document {
     order: string;
     state: boolean;
     reviews: [Review];
+    message: string;
+    isRejected: boolean;
     // qAndAs: any[];
 }
 
@@ -69,6 +71,13 @@ const PublicationSchema = new Schema({
         ref: "Review",
     },
     state: {
+        type: Boolean,
+        default: false
+    },
+    message: {
+        type: String,
+    },
+    isRejected: {
         type: Boolean,
         default: false
     }

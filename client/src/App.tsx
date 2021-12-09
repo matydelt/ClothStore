@@ -1,6 +1,7 @@
-// import { ThemeProvider } from "@mui/material/styles";
-import { MuiThemeProvider } from "@material-ui/core/styles";
 import React, { useEffect } from "react";
+import { ProvideAuth } from "./hooks/useAuth";
+import "./App.css";
+import { MuiThemeProvider } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router";
 import "./App.css";
@@ -22,6 +23,8 @@ import {
   putPublications
 } from "./redux/actions/publicationActions";
 import { RootState } from "./redux/store/store";
+import PublicacionesAdmPage from "./components/adminPage/components/publicaciones/pubicaciones";
+import Denuncias from "./components/adminPage/components/denuncias/denunias";
 
 // const user = useSelector((state: RootState) => state.userSignin.userInfo)
 
@@ -58,58 +61,20 @@ const App = (): JSX.Element => {
   }, [dispatch]);
 
   return (
-    // <StylesProvider injectFirst>
-      <MuiThemeProvider theme={theme}>
-        <Routes>
-          <Route path="/admin" element={<AdminPage />} />
-          <Route path="employee" element={<EmployeePage />} />
-          <Route path="/admin/usuarios" element={<UsuariosAdmPage />} />
-          <Route path="/" element={<Homepage />} />
-          <Route path="/nueva-publicacion" element={<CreatePublication />} />
-          <Route
-            path="/actualizar-publicacion/:publicationId"
-            element={<CreatePublication />}
-          />
-          <Route
-            path="/publication/:publicationId"
-            element={<PublicationDetail />}
-          />
-          <Route path="/register" element={<RegisterScreen />}></Route>
-          <Route path="/login" element={<LoginScreen />}></Route>
-          <Route path="/cart" element={<CartScreen />}></Route>
-          <Route path="/perfil" element={<PefilUsuario />}>
-            <Route path="detalles" />
-            <Route path="compras" />
-            <Route path="ventas" />
-            <Route path="deseos" />
-
-          </Route>
-        </Routes>
-      </MuiThemeProvider>
-    // </StylesProvider>
-
-  );
-};
-
-export default App;
-
-
-/*{ <MuiThemeProvider theme={theme}>
+    <MuiThemeProvider theme={theme}>
       <Routes>
+        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/employee" element={<EmployeePage />} />
+        <Route path="/admin/publicaciones" element={<PublicacionesAdmPage />} />
+        <Route path="/employee/publicaciones" element={<PublicacionesAdmPage />} />
+        <Route path="/admin/denuncias" element={<Denuncias />} />
+        <Route path="/employee/denuncias" element={<Denuncias />} />
+        <Route path="/admin/usuarios" element={<UsuariosAdmPage />} />
         <Route path="/" element={<Homepage />} />
-        <Route path="/nueva-publicacion" element=
-        {
-            <RequireAuth>
-              <CreatePublication />
-             </RequireAuth>
-          } />
+        <Route path="/nueva-publicacion" element={<CreatePublication />} />
         <Route
           path="/actualizar-publicacion/:publicationId"
-          element={
-            <RequireAuth>
-              <CreatePublication />
-            </RequireAuth>
-          }
+          element={<CreatePublication />}
         />
         <Route
           path="/publication/:publicationId"
@@ -118,13 +83,18 @@ export default App;
         <Route path="/register" element={<RegisterScreen />}></Route>
         <Route path="/login" element={<LoginScreen />}></Route>
         <Route path="/cart" element={<CartScreen />}></Route>
-        <Route
-          path="/perfil"
-          element={
-            <RequireAuth>
-              <HomeUsuarios />
-            </RequireAuth>
-          }
-        />
+        <Route path="/perfil" element={<PefilUsuario />}>
+          <Route path="detalles" />
+          <Route path="compras" />
+          <Route path="ventas" />
+          <Route path="deseos" />
+
+        </Route>
       </Routes>
-    </MuiThemeProvider> }*/
+    </MuiThemeProvider>
+
+  );
+};
+
+export default App;
+

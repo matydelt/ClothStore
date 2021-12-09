@@ -9,6 +9,8 @@ export interface Publication {
   category: string;
   author: string;
   gender: "Hombre" | "Mujer" | "Niños";
+  isRejected: boolean;
+  message: string;
   __v: number;
 }
 

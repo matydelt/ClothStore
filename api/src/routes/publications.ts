@@ -9,6 +9,7 @@ router.delete("/publications/:_id", PublicationController.deletePublications);
 router.put("/publications/stock", PublicationController.putStock);
 router.get("/publications/marks", PublicationController.getPublicationsMarks);
 router.get("/publications/related", PublicationController.getRelatedPublications);
-router.put("/publications/state", PublicationController.putPublicationState)
+router.put("/publications/state", PublicationController.putPublicationState);
+router.post("/publication/message", PublicationController.postPublicationMessageADM);
 
 module.exports = router;

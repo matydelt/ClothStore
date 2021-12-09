@@ -2,14 +2,14 @@ import { Request, Response } from "express";
 import UserSchema, { User } from "../models/user";
 import PublicationSchema, { Publication } from "../models/publication";
 import { equal } from "assert/strict";
+const sendEMail = require('../email/email');
 
 export default class PublicationController {
   static async setPublication(req: Request, res: Response) {
     const { publicationId } = req.query;
 
     try {
-      const { name, images, id, stock, mark, detail, price, category, gender } =
-        req.body;
+      const { name, images, id, stock, mark, detail, price, category, gender } = req.body;
       function numOrder() {
         const value: string = (Math.random() * 0xffffff * 1000000).toString(16);
         return `${value.slice(0, 6)}`;
@@ -19,7 +19,7 @@ export default class PublicationController {
       if (publicationId) {
         await PublicationSchema.findByIdAndUpdate(
           publicationId,
-          { name, images, stock, mark, detail, price, category, gender },
+          { name, images, stock, mark, detail, price, category, gender, isRejected: false },
           { new: true }
         );
         res.json(publicationId);
@@ -121,9 +121,9 @@ export default class PublicationController {
       if (author && author !== "") {
         const autor = await UserSchema.findOne({ userName: `${author}` })
         console.log(autor?._id)
-        allPublications = allPublications.map(e =>{
-          if(e.author.equals(autor?._id)) return e
-        }).filter(e => e!=null);
+        allPublications = allPublications.map(e => {
+          if (e.author.equals(autor?._id)) return e
+        }).filter(e => e != null);
       }
 
       if (price && price !== "") {
@@ -145,14 +145,14 @@ export default class PublicationController {
           }
         });
       }
-      const ttal:number = allPublications.length
+      const ttal: number = allPublications.length
       allPublications = allPublications.slice(
         charXPage * (pag - 1),
         charXPage * (pag - 1) + charXPage
       );
 
       res.json({
-        result: allPublications, 
+        result: allPublications,
         count: ttal
       });
     } catch (e) {
@@ -198,13 +198,13 @@ export default class PublicationController {
       res.sendStatus(500);
     }
   }
-  
+
   static async getPublicationsMarks(req: Request, res: Response): Promise<void> {
     try {
       let allMarks: Array<any>;
       allMarks = await PublicationSchema.find();
       allMarks = allMarks.map(e => e.mark);
-      allMarks = allMarks.filter((item,index)=>{
+      allMarks = allMarks.filter((item, index) => {
         return allMarks.indexOf(item) === index;
       })
       res.json(allMarks);
@@ -216,12 +216,22 @@ export default class PublicationController {
   static async putPublicationState(req: Request, res: Response): Promise<void> {
     try {
 
-      const { publicationId, flag } = req.body;
+      const { id, flag } = req.body;
+      console.log(id)
 
-      const publication = await PublicationSchema.findById(publicationId);
+      const publication = await PublicationSchema.findById(id);
+      const seller = await UserSchema.findById(publication?.author);
       if (flag) {
         if (publication) {
           publication.state = true
+          await publication.save();
+          sendEMail.send({
+            publicationPrice: publication?.price,
+            email: seller?.email,
+            mensaje: "Su publicacion a sido APROBADA!",
+            subject: "Tu publicacion fue aprobada",
+            htmlFile: "question.html",
+          })
           res.sendStatus(200)
         } else {
           res.sendStatus(404)
@@ -259,4 +269,22 @@ export default class PublicationController {
     }
   }
 
+  static async postPublicationMessageADM(req: Request, res: Response): Promise<void> {
+    try {
+      const { id, message } = req.body;
+      const publication = await PublicationSchema.findByIdAndUpdate(id, { message: message, isRejected: true });
+      const seller = await UserSchema.findById(publication?.author);
+      console.log(publication)
+      sendEMail.send({
+        email: seller?.email,
+        mensaje: message,
+        subject: "Tu publicacion fue rechazada",
+        htmlFile: "question.html",
+      })
+      res.sendStatus(200);
+    } catch (error) {
+      console.log(error)
+      res.sendStatus(500);
+    }
+  }
 }

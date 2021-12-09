@@ -1,5 +1,4 @@
 import { Action } from "../actions/marksActions";
-import { User } from "./stateTypes";
 
 export interface AllMarksState {
   loading: boolean;

@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import NavBar from './employeeNavBar';
 import { useDispatch } from "react-redux"
 import { getUsers } from '../../redux/actions/userActions';
+import "./employeePage.css"
 function EmployeePage() {
     const dispatch = useDispatch()
 
@@ -23,6 +24,7 @@ function EmployeePage() {
                     <p style={{ marginLeft: "5px" }}>Denuncias: Aqui podras ver las publicaciones denunciadas por los usuarios , tal vez a algun empleado se le paso algo por alto al momento de aceptar una publicacion o tal vez haya algun problema con el vendedor</p>
 
                 </Box>
+
             </Box>
         </Box>
     );

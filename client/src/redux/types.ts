@@ -18,7 +18,10 @@ export type Publication = {
     author: string;
     gender: string;
     _id: string;
-    cantidad: number
+    cantidad: number;
+    state: boolean;
+    isRejected: boolean;
+    message: string;
 }
 
 export type Publications = Publication[];
