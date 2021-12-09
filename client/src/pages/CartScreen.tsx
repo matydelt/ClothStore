@@ -131,7 +131,7 @@ const CartScreen = () => {
 
 
   const handleMercadoPago = (): void => {
-    let order = carrito.publications;
+    let order = carrito;
     axios.post('/checkout', order).then(({ data }) => {
       var win = window.open(data, '_blank');
       win?.focus();

@@ -71,6 +71,9 @@ export default class UserController {
 
       let users: Array<any>;
       users = await UserSchema.find();
+      users = users.filter((e) => {
+        return e.active === true
+      });
       users = users.map((e) => {
         if (e.publications.length > 0) return e.userName
       }).filter(e => e != undefined);
@@ -101,6 +104,7 @@ export default class UserController {
     try {
       const { id } = req.params;
       const user = await UserSchema.findOne({ _id: id });
+      console.log("----------------user--------------",user)
       res.json(user);
     } catch (error) {
       console.log("error en get one user");
