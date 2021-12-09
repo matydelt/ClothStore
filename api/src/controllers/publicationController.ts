@@ -245,4 +245,24 @@ export default class PublicationController {
       res.sendStatus(500);
     }
   }
+
+  static async getRelatedPublications(req: Request, res: Response): Promise<void> {
+    try {
+      const { publicationId } = req.query;
+
+      const publication = await PublicationSchema.findById(publicationId);
+
+      const publications = await PublicationSchema.find({ category: publication?.category, name: { $ne: publication?.name } }).limit(12);
+
+      if (publication) {
+        res.json(publications);
+      } else {
+        res.json({ msg: "La publicación no existe" });
+      }
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  }
+
 }
