@@ -13,7 +13,7 @@ import {
   makeStyles,
 } from "@material-ui/core/styles";
 import TableRow from "@material-ui/core/TableRow";
-import { Container, Box, Button } from "@material-ui/core";
+import { Container, Box, Button, TableBody } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store/store";
 import { useAuth } from "../hooks/useAuth";
@@ -21,39 +21,54 @@ import { putCarrito, putCarritoRemove } from "../redux/actions/carritoAction";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import { TableHeaderColumn } from "material-ui";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import Paper from "@material-ui/core/Paper";
 
-const StyledTableCell = withStyles((theme: Theme) =>
-  createStyles({
-    head: {
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.common.white,
-      width: "300px",
-    },
-    body: {
-      fontSize: 14,
-    },
-  })
-)(TableCell);
+// const StyledTableCell = withStyles((theme: Theme) =>
+//   createStyles({
+//     head: {
+//       backgroundColor: theme.palette.primary.main,
+//       color: theme.palette.common.white,
+//       width: "300px",
+//     },
+//     body: {
+//       fontSize: 14,
+//     },
+//   })
+// )(TableCell);
+
+// const useStyles = makeStyles({
+//   root: {
+//     width: "77%",
+//   },
+//   container: {
+//     display: "flex",
+//     flexDirection: "column",
+//     alignItems: "center",
+//     justifyContent: "center",
+//     height: "600px",
+//   },
+//   containerTotal: {
+//     width: "23%",
+//   },
+// });
 
 const useStyles = makeStyles({
   root: {
-    width: "77%",
+    width: "70%",
+    margin: "10% auto 0 auto",
   },
   container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    height: "600px",
+    maxHeight: 440,
   },
-  containerTotal: {
+  buttonContainer: {
     width: "23%",
+    margin: "0 auto",
   },
 });
-
 export type CartItemType = {
   id: string;
-  amount: number;
+  quantity: number;
   price: number;
   image: string;
   title: string;
@@ -90,7 +105,7 @@ const CartScreen = () => {
         0
       );
     } else {
-      return cart.reduce((acc, item) => acc + item.amount * item.price, 0);
+      return cart.reduce((acc, item) => acc + item.quantity * item.price, 0);
     }
   };
 
@@ -101,12 +116,12 @@ const CartScreen = () => {
       if (isItemInCart) {
         return prev.map((item) =>
           item.id === clickedItem.id
-            ? { ...item, amount: item.amount + 1 }
+            ? { ...item, quantity: item.quantity + 1 }
             : item
         );
       }
 
-      return [...prev, { ...clickedItem, amount: 1 }];
+      return [...prev, { ...clickedItem, quantity: 1 }];
     });
   };
 
@@ -114,8 +129,8 @@ const CartScreen = () => {
     setCart((prev) =>
       prev.reduce((acc, item) => {
         if (item.id === id) {
-          if (item.amount === 1) return acc;
-          return [...acc, { ...item, amount: item.amount - 1 }];
+          if (item.quantity === 1) return acc;
+          return [...acc, { ...item, quantity: item.quantity - 1 }];
         } else {
           return [...acc, item];
         }
@@ -149,73 +164,145 @@ const CartScreen = () => {
   };
 
   return (
+    // <>
+    //
+    //   <Typography variant="h3" align="center">
+    //     Mi Carro
+    //   </Typography>
+    //   {(!auth?.user && cart?.length === 0) ||
+    //   (auth?.user && carrito?.publications?.length === 0) ? (
+    //     <Typography variant="h5">No items</Typography>
+    //   ) : null}
+
+    //   {((!!!auth?.user && cart?.length > 0) ||
+    //     (!!auth?.user && carrito?.publications?.length > 0)) && (
+    //     <Container maxWidth="lg" classes={{ root: classes.container }}>
+    //       <TableContainer classes={{ root: classes.root }}>
+    //         <Table aria-label="customized table">
+    //           <TableHead>
+    //             <TableRow>
+    //               <StyledTableCell>Producto</StyledTableCell>
+    //               <StyledTableCell align="right">Price $</StyledTableCell>
+    //               <StyledTableCell align="right">Cantidad</StyledTableCell>
+    //               <StyledTableCell align="right">Total</StyledTableCell>
+    //             </TableRow>
+    //           </TableHead>
+
+    //           {!auth.user
+    //             ? cart.map((item: any) => (
+    //                 <CartItem
+    //                   key={item.id}
+    //                   item={item}
+    //                   addToCart={handleAddToCart}
+    //                   removeFromCart={handleRemoveFromCart}
+    //                 />
+    //               ))
+    //             : carrito?.publications?.map((item: any) => (
+    //                 <CartItem
+    //                   key={item.id}
+    //                   item={item}
+    //                   addToCart={() =>
+    //                     handleAddQuantityToCartDB(
+    //                       auth.user && auth?.user?.email,
+    //                       item.publication
+    //                     )
+    //                   }
+    //                   removeFromCart={() =>
+    //                     handleRemoveQuantityToCartDB(
+    //                       auth.user && auth?.user?.email,
+    //                       item.publication
+    //                     )
+    //                   }
+    //                 />
+    //               ))}
+    //         </Table>
+    //       </TableContainer>
+    //       <Box component="div" className={classes.containerTotal}>
+    //         <Typography variant="h5">
+    //           Total: $ {calculateTotal().toFixed(2)}
+    //         </Typography>
+    //         <Button
+    //           variant="contained"
+    //           color="secondary"
+    //           fullWidth={true}
+    //           onClick={handleMercadoPago}
+    //         >
+    //           Comprar
+    //         </Button>
+    //       </Box>
+    //     </Container>
+    //   )}
+    // </>
     <>
-      <Typography variant="h3" align="center">
-        Mi Carro
-      </Typography>
-      {(!auth?.user && cart?.length === 0) ||
-      (auth?.user && carrito?.publications?.length === 0) ? (
-        <Typography variant="h5">No items</Typography>
-      ) : null}
+      <Button
+        onClick={() => navigate("/")}
+        startIcon={<ArrowBackIcon />}
+        variant="contained"
+        color="primary"
+      >
+        Continua con tus compras
+      </Button>
 
-      {((!!!auth?.user && cart?.length > 0) ||
-        (!!auth?.user && carrito?.publications?.length > 0)) && (
-        <Container maxWidth="lg" classes={{ root: classes.container }}>
-          <TableContainer classes={{ root: classes.root }}>
-            <Table aria-label="customized table">
-              <TableHead>
-                <TableRow>
-                  <StyledTableCell>Producto</StyledTableCell>
-                  <StyledTableCell align="right">Price $</StyledTableCell>
-                  <StyledTableCell align="right">Cantidad</StyledTableCell>
-                  <StyledTableCell align="right">Total</StyledTableCell>
-                </TableRow>
-              </TableHead>
-
-              {!auth.user
-                ? cart.map((item: any) => (
-                    <CartItem
-                      key={item.id}
-                      item={item}
-                      addToCart={handleAddToCart}
-                      removeFromCart={handleRemoveFromCart}
-                    />
-                  ))
-                : carrito?.publications?.map((item: any) => (
-                    <CartItem
-                      key={item.id}
-                      item={item}
-                      addToCart={() =>
-                        handleAddQuantityToCartDB(
-                          auth.user && auth?.user?.email,
-                          item.publication
-                        )
-                      }
-                      removeFromCart={() =>
-                        handleRemoveQuantityToCartDB(
-                          auth.user && auth?.user?.email,
-                          item.publication
-                        )
-                      }
-                    />
-                  ))}
-            </Table>
-          </TableContainer>
-          <Box component="div" className={classes.containerTotal}>
-            <Typography variant="h5">
-              Total: $ {calculateTotal().toFixed(2)}
-            </Typography>
-            <Button
-              variant="contained"
-              color="secondary"
-              fullWidth={true}
-              onClick={handleMercadoPago}
-            >
-              Comprar
-            </Button>
-          </Box>
-        </Container>
-      )}
+      <Paper className={classes.root}>
+        <TableContainer className={classes.container}>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow>
+                {["Producto", "Precio", "Cantidad", "Total"].map(
+                  (column, index) => (
+                    <TableCell
+                      key={index}
+                      align={index === 0 ? "left" : "right"}
+                    >
+                      {column}
+                    </TableCell>
+                  )
+                )}
+              </TableRow>
+            </TableHead>
+            {auth.user
+              ? carrito.publications.map((item: any) => (
+                  <CartItem
+                    key={item.id}
+                    item={item}
+                    addToCart={() =>
+                      handleAddQuantityToCartDB(
+                        auth.user && auth?.user?.email,
+                        item.publication
+                      )
+                    }
+                    removeFromCart={() =>
+                      handleRemoveQuantityToCartDB(
+                        auth.user && auth?.user?.email,
+                        item.publication
+                      )
+                    }
+                  />
+                ))
+              : cart.map((item) => (
+                  <CartItem
+                    key={item.id}
+                    item={item}
+                    addToCart={handleAddToCart}
+                    removeFromCart={handleRemoveFromCart}
+                  />
+                ))}
+          </Table>
+        </TableContainer>
+      </Paper>
+      <Box component="div" className={classes.buttonContainer}>
+        {/* <Typography variant="h5">
+          Total: $ {calculateTotal().toFixed(2)}
+        </Typography> */}
+        <Button
+          variant="contained"
+          color="secondary"
+          fullWidth={true}
+          onClick={handleMercadoPago}
+        >
+          Checkout ${calculateTotal().toFixed(2)}
+        </Button>
+      </Box>
     </>
   );
 };
