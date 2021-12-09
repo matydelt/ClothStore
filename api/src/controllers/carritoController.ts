@@ -77,6 +77,47 @@ console.log(carritoBuscado)
             console.error(error);
         }
     }
+    static async putCarritoAmount(req: Request, res: Response) {
+        let nuevo: boolean = false;
+        try {
+            const { id, email, amount } = req.params
+            const user = await UserSchema.findOne({ "email": `${email}` })
+
+            const carritoBuscado: any = await carritoSchema.findOne({ userId: user?._id })
+            const publicationSearched = carritoBuscado?.publications?.find((p: any) => {
+                if (p?.publication.equals(id)) {
+                    console.log('entró en if')
+                    p.quantity = p.quantity + parseInt(amount)
+                    nuevo = false;
+                    return p;
+                } else {
+                    console.log('entró en else')
+                    nuevo = true;
+                }
+            })
+
+            if (!publicationSearched) {
+                const findPublic = await PublicationSchema.findById(id)
+                
+                if (findPublic) {
+                    carritoBuscado?.publications?.push({
+                        publication: findPublic._id,
+                        quantity: parseInt(amount),
+                        title: findPublic?.name,
+                        image: findPublic?.images[0].url,
+                        price: findPublic.price
+                    });
+                }
+            }
+
+            carritoBuscado.markModified('publications')
+            await carritoBuscado.save()
+
+            res.status(200).json(carritoBuscado);
+        } catch (error) {
+            console.error(error);
+        }
+    }
     static async putCarrito(req: Request, res: Response) {
         let nuevo: boolean = false;
         try {
@@ -157,7 +198,7 @@ console.log(carritoBuscado)
 
 
 
-            carritoBuscado.markModified('publications')
+            carritoBuscado?.markModified('publications')
             await carritoBuscado.save()
             console.log('publication END')
 

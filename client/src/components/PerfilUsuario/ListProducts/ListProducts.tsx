@@ -39,7 +39,7 @@ export default function ListProducts(props:User) {
     React.useEffect(() => {
         async function getOneUser() {
             await axios.get(`http://localhost:3001/auth/${props.id}`).then(({ data }) => {
-                setArticulos(data)
+                setArticulos(data.publications)
             })
         }
         getOneUser()
