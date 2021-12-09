@@ -229,6 +229,7 @@ export default class PublicationController {
             publicationPrice: publication?.price,
             email: seller?.email,
             mensaje: "Su publicacion a sido APROBADA!",
+            subject: "Tu publicacion fue aprobada",
             htmlFile: "question.html",
           })
           res.sendStatus(200)
@@ -258,6 +259,7 @@ export default class PublicationController {
       sendEMail.send({
         email: seller?.email,
         mensaje: message,
+        subject: "Tu publicacion fue rechazada",
         htmlFile: "question.html",
       })
       res.sendStatus(200);
