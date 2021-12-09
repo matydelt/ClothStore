@@ -2,7 +2,7 @@ import { Request, Response } from "express"
 import PublicationSchema from "../models/publication";
 import ShoppingSchema, {Shopping} from "../models/shopping";
 import UserSchema from "../models/user";
-import CarritoSchema from "../models/user";
+import carritoSchema from "../models/carrito";
 import mercadoPago from 'mercadopago'
 import dotenv from "dotenv";
 
@@ -68,14 +68,16 @@ export default class Checkout {
             });
             await compra.save();//userId
             const user = await UserSchema.findById(order.userId);
-
+            // await PublicationSchema.findById(id).updateOne({ stock: stock });
             user?.shopping.push(compra);
             await user?.save();
 
-            const carrito = await CarritoSchema.findById(order._Id);
-
-            carrito?.publications.splice(0, carrito?.publications.length);
-            await carrito?.save();
+            const carrito = await carritoSchema.findById(order._id)
+            if(carrito){
+                carrito.publications = [];
+                carrito.markModified('publications')
+                await carrito.save();
+            }
 
             res.json(response.body.init_point)
 

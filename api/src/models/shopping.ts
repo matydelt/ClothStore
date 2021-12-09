@@ -1,17 +1,28 @@
-import Mongoose, { model, Schema } from "mongoose";
+import mongoose, { Schema, model, Types } from 'mongoose'
 
-export interface Shopping extends Mongoose.Document {
-    publications: "Product";
+export interface Shopping extends mongoose.Document {
+    publications: {publication: Types.ObjectId, price: number, quantity: number, image: string, title: string}[];
     price: number;
     amount: number;
     state: boolean;
 }
 
 const ShoppingSchema = new Schema({
-    publications: {
-        type: [Schema.Types.ObjectId],
-        ref: "Product"
-    },
+    publications: [
+        {
+            publication: {
+                type: Types.ObjectId,
+                ref: "Publication",
+            },
+            price: Number,
+            quantity: Number,
+            image: String,
+            title: {
+                type: String,
+                trim: true
+            }
+        }
+    ],
     amount: {
         type: Number,
         required: [true, "necesita un amount"]
