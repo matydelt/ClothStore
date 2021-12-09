@@ -21,6 +21,7 @@ export type Publication = {
     cantidad: number;
     state: boolean;
     isRejected: boolean;
+    message: string;
 }
 
 export type Publications = Publication[];

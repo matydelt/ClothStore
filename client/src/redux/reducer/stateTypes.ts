@@ -10,6 +10,7 @@ export interface Publication {
   author: string;
   gender: "Hombre" | "Mujer" | "Niños";
   isRejected: boolean;
+  message: string;
   __v: number;
 }
 
