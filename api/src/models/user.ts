@@ -2,6 +2,7 @@ import mongoose, { Schema, model } from "mongoose";
 import { Publication } from "./publication";
 import { Shopping } from "./shopping";
 import { Address } from "./address";
+import { Denunciation } from "./denunciation";
 
 export interface User extends mongoose.Document {
   name: object;
@@ -16,6 +17,7 @@ export interface User extends mongoose.Document {
   address: [Address];
   type: string;
   active: boolean;
+  denunciations: [Denunciation];
 }
 
 const UserSchema = new Schema({
@@ -79,6 +81,10 @@ const UserSchema = new Schema({
     required: [true, "necesita un type"],
     enum: ["normal", "admin", "employee"]
 
+  },
+  denunciations: {
+    type: ["Denunciation"],
+    ref: "Denunciation"
   }
 });
 
