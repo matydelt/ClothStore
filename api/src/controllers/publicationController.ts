@@ -9,8 +9,7 @@ export default class PublicationController {
     const { publicationId } = req.query;
 
     try {
-      const { name, images, id, stock, mark, detail, price, category, gender } =
-        req.body;
+      const { name, images, id, stock, mark, detail, price, category, gender } = req.body;
       function numOrder() {
         const value: string = (Math.random() * 0xffffff * 1000000).toString(16);
         return `${value.slice(0, 6)}`;
@@ -20,7 +19,7 @@ export default class PublicationController {
       if (publicationId) {
         await PublicationSchema.findByIdAndUpdate(
           publicationId,
-          { name, images, stock, mark, detail, price, category, gender },
+          { name, images, stock, mark, detail, price, category, gender, isRejected: false },
           { new: true }
         );
         res.json(publicationId);
@@ -253,8 +252,9 @@ export default class PublicationController {
   static async postPublicationMessageADM(req: Request, res: Response): Promise<void> {
     try {
       const { id, message } = req.body;
-      const publication = await PublicationSchema.findByIdAndUpdate(id, { message: message });
+      const publication = await PublicationSchema.findByIdAndUpdate(id, { message: message, isRejected: true });
       const seller = await UserSchema.findById(publication?.author);
+      console.log(publication)
       sendEMail.send({
         email: seller?.email,
         mensaje: message,

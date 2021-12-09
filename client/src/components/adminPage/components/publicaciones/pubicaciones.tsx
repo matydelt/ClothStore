@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable array-callback-return */
 import { Box } from "@mui/material"
-import React, { ChangeEvent, ChangeEventHandler, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { getUsers, } from "../../../../redux/actions/userActions"
 import { Publication } from "../../../../redux/types"
@@ -30,10 +30,16 @@ const PublicacionesAdmPage = () => {
     }, [dispatch])
     if (!userInfo?.type) return (<div></div>)
 
-    function HandlerSubmit(e: React.SyntheticEvent<EventTarget>, id: string) {
+    async function HandlerSubmit(e: React.SyntheticEvent<EventTarget>, id: string) {
         e.preventDefault()
-        dispatch(publicationMessage(id, mensaje))
+        await dispatch(publicationMessage(id, mensaje))
+        await dispatch(putPublications({
+            name: undefined, author: undefined,
+            category: undefined, gender: undefined, mark: undefined,
+            order: undefined, page: undefined, price: undefined
+        }))
     }
+    console.log(publications)
     return (
         <Box>{userInfo?.type === "admin" ?
             <NavBar></NavBar> :
@@ -49,7 +55,7 @@ const PublicacionesAdmPage = () => {
                 </Box>
                 {
                     publications.map((e: Publication) => {
-                        if (!e.state) {
+                        if (!e.state && !e.isRejected) {
                             return (
                                 <div style={{ flexDirection: "row", display: "flex", borderBottom: "#e6e6e6 solid 1px", justifyContent: "initial", width: "70%", alignItems: "center" }}>
                                     <div className="one">
@@ -111,7 +117,6 @@ const PublicacionesAdmPage = () => {
                                                             } />
                                                     </div >
                                                     <div style={{ display: "flex", justifyContent: "center", marginTop: "3px" }}>
-
                                                         <input type={"submit"} className="aceptar" />
                                                     </div>
                                                 </form>

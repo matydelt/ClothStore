@@ -16,6 +16,7 @@ export interface Publication extends mongoose.Document {
     state: boolean;
     reviews: [Review];
     message: string;
+    isRejected: boolean;
     // qAndAs: any[];
 }
 
@@ -75,6 +76,10 @@ const PublicationSchema = new Schema({
     },
     message: {
         type: String,
+    },
+    isRejected: {
+        type: Boolean,
+        default: false
     }
     // qAndAs: {
     //     type: ["QAndA"],

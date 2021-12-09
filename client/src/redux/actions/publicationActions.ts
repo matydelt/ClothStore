@@ -108,6 +108,7 @@ export const publicationMessage = (id: string, message: string) => async (dispat
   try {
     await axios.post("/publication/message", { id, message })
     dispatch({ type: "MESSAGE_PUBLICATION_SUCCESS" });
+    alert("mensaje enviado")
   } catch (e) {
     console.log(e)
     dispatch({ type: "MESSAGE_PUBLICATION_FAIL" });
