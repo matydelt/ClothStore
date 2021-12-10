@@ -69,11 +69,7 @@ const CartItem = ({ item, addToCart, removeFromCart }: Props) => {
     <>
       <TableBody>
         {/* <StyledTableRow> */}
-        <TableCell
-          classes={{ root: classes.tableCell }}
-          component="th"
-          scope="row"
-        >
+        <TableCell classes={{ root: classes.tableCell }}>
           <Box
             className={classes.imgCell}
             component="img"
@@ -85,8 +81,8 @@ const CartItem = ({ item, addToCart, removeFromCart }: Props) => {
           />
           <Typography variant="h5">{item.title}</Typography>
         </TableCell>
-        <TableCell align="right">${item.price}</TableCell>
-        <TableCell classes={{ root: classes.cellButton }} align="right">
+        <TableCell align="center">${item.price}</TableCell>
+        <TableCell classes={{ root: classes.cellButton }} align="center">
           <Button
             disableRipple={true}
             disableFocusRipple={true}
@@ -115,7 +111,7 @@ const CartItem = ({ item, addToCart, removeFromCart }: Props) => {
             +
           </Button>
         </TableCell>
-        <TableCell align="right">
+        <TableCell align="center">
           ${(item.quantity * item.price).toFixed(2)}
         </TableCell>
         {/* </StyledTableRow> */}

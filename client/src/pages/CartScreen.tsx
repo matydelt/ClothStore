@@ -1,28 +1,22 @@
-import * as React from "react";
-import useLocalStorage from "../hooks/useLocalStorage";
-import CartItem from "../components/CartItem";
-import Typography from "@material-ui/core/Typography";
+import { Box, Button, Container } from "@material-ui/core";
+import Paper from "@material-ui/core/Paper";
+import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
-import {
-  withStyles,
-  Theme,
-  createStyles,
-  makeStyles,
-} from "@material-ui/core/styles";
 import TableRow from "@material-ui/core/TableRow";
-import { Container, Box, Button, TableBody } from "@material-ui/core";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store/store";
-import { useAuth } from "../hooks/useAuth";
-import { putCarrito, putCarritoRemove } from "../redux/actions/carritoAction";
-import { useNavigate } from "react-router";
-import axios from "axios";
-import { TableHeaderColumn } from "material-ui";
+import Typography from "@material-ui/core/Typography";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import Paper from "@material-ui/core/Paper";
+import axios from "axios";
+import * as React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import CartItem from "../components/CartItem";
+import { useAuth } from "../hooks/useAuth";
+import useLocalStorage from "../hooks/useLocalStorage";
+import { putCarrito, putCarritoRemove } from "../redux/actions/carritoAction";
+import { RootState } from "../redux/store/store";
 
 // const StyledTableCell = withStyles((theme: Theme) =>
 //   createStyles({
@@ -55,15 +49,15 @@ import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles({
   root: {
-    width: "70%",
-    margin: "10% auto 0 auto",
+    width: "100%",
+    margin: "0 auto",
   },
   container: {
     maxHeight: 440,
   },
   buttonContainer: {
     width: "23%",
-    margin: "0 auto",
+    margin: "2% auto",
   },
 });
 export type CartItemType = {
@@ -93,8 +87,6 @@ const CartScreen = () => {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
-
-  console.log(cart);
 
   const classes = useStyles();
 
@@ -129,7 +121,12 @@ const CartScreen = () => {
     setCart((prev) =>
       prev.reduce((acc, item) => {
         if (item.id === id) {
-          if (item.quantity === 1) return acc;
+          if (item.quantity === 1) {
+            const respuesta = window.confirm(
+              "Estas seguro de que queres eliminar este producto de tu carro?"
+            );
+            return respuesta ? acc : [...acc, item];
+          }
           return [...acc, { ...item, quantity: item.quantity - 1 }];
         } else {
           return [...acc, item];
@@ -142,7 +139,6 @@ const CartScreen = () => {
     email: string | null | undefined,
     id: string
   ): void => {
-    console.log("addquantity", email, id);
     dispatch(putCarrito(email, id));
   };
 
@@ -150,8 +146,12 @@ const CartScreen = () => {
     email: string | null | undefined,
     id: string
   ): void => {
-    console.log("addquantity", email, id);
-    dispatch(putCarritoRemove(email, id));
+    const respuesta = window.confirm(
+      "Estas seguro de que queres eliminar este producto de tu carro?"
+    );
+    if (respuesta) {
+      dispatch(putCarritoRemove(email, id));
+    }
   };
 
   const handleMercadoPago = (): void => {
@@ -164,146 +164,81 @@ const CartScreen = () => {
   };
 
   return (
-    // <>
-    //
-    //   <Typography variant="h3" align="center">
-    //     Mi Carro
-    //   </Typography>
-    //   {(!auth?.user && cart?.length === 0) ||
-    //   (auth?.user && carrito?.publications?.length === 0) ? (
-    //     <Typography variant="h5">No items</Typography>
-    //   ) : null}
-
-    //   {((!!!auth?.user && cart?.length > 0) ||
-    //     (!!auth?.user && carrito?.publications?.length > 0)) && (
-    //     <Container maxWidth="lg" classes={{ root: classes.container }}>
-    //       <TableContainer classes={{ root: classes.root }}>
-    //         <Table aria-label="customized table">
-    //           <TableHead>
-    //             <TableRow>
-    //               <StyledTableCell>Producto</StyledTableCell>
-    //               <StyledTableCell align="right">Price $</StyledTableCell>
-    //               <StyledTableCell align="right">Cantidad</StyledTableCell>
-    //               <StyledTableCell align="right">Total</StyledTableCell>
-    //             </TableRow>
-    //           </TableHead>
-
-    //           {!auth.user
-    //             ? cart.map((item: any) => (
-    //                 <CartItem
-    //                   key={item.id}
-    //                   item={item}
-    //                   addToCart={handleAddToCart}
-    //                   removeFromCart={handleRemoveFromCart}
-    //                 />
-    //               ))
-    //             : carrito?.publications?.map((item: any) => (
-    //                 <CartItem
-    //                   key={item.id}
-    //                   item={item}
-    //                   addToCart={() =>
-    //                     handleAddQuantityToCartDB(
-    //                       auth.user && auth?.user?.email,
-    //                       item.publication
-    //                     )
-    //                   }
-    //                   removeFromCart={() =>
-    //                     handleRemoveQuantityToCartDB(
-    //                       auth.user && auth?.user?.email,
-    //                       item.publication
-    //                     )
-    //                   }
-    //                 />
-    //               ))}
-    //         </Table>
-    //       </TableContainer>
-    //       <Box component="div" className={classes.containerTotal}>
-    //         <Typography variant="h5">
-    //           Total: $ {calculateTotal().toFixed(2)}
-    //         </Typography>
-    //         <Button
-    //           variant="contained"
-    //           color="secondary"
-    //           fullWidth={true}
-    //           onClick={handleMercadoPago}
-    //         >
-    //           Comprar
-    //         </Button>
-    //       </Box>
-    //     </Container>
-    //   )}
-    // </>
-    <>
+    <Container>
+      {/* Botón para regresar a la homepage */}
       <Button
         onClick={() => navigate("/")}
         startIcon={<ArrowBackIcon />}
         variant="contained"
         color="primary"
+        style={{ margin: "2%" }}
       >
         Continua con tus compras
       </Button>
 
+      {/* Tabla de items a comprar */}
       <Paper className={classes.root}>
-        <TableContainer className={classes.container}>
-          <Table stickyHeader aria-label="sticky table">
-            <TableHead>
-              <TableRow>
-                {["Producto", "Precio", "Cantidad", "Total"].map(
-                  (column, index) => (
-                    <TableCell
-                      key={index}
-                      align={index === 0 ? "left" : "right"}
-                    >
-                      {column}
-                    </TableCell>
-                  )
-                )}
-              </TableRow>
-            </TableHead>
-            {auth.user
-              ? carrito.publications.map((item: any) => (
-                  <CartItem
-                    key={item.id}
-                    item={item}
-                    addToCart={() =>
-                      handleAddQuantityToCartDB(
-                        auth.user && auth?.user?.email,
-                        item.publication
-                      )
-                    }
-                    removeFromCart={() =>
-                      handleRemoveQuantityToCartDB(
-                        auth.user && auth?.user?.email,
-                        item.publication
-                      )
-                    }
-                  />
-                ))
-              : cart.map((item) => (
-                  <CartItem
-                    key={item.id}
-                    item={item}
-                    addToCart={handleAddToCart}
-                    removeFromCart={handleRemoveFromCart}
-                  />
-                ))}
-          </Table>
-        </TableContainer>
+        {!cart.length && !carrito?.publications?.length ? (
+          <Typography>Aún no has seleccionado nada</Typography>
+        ) : (
+          <TableContainer className={classes.container}>
+            <Table stickyHeader aria-label="sticky table">
+              <TableHead>
+                <TableRow>
+                  {["Producto", "Precio", "Cantidad", "Total"].map(
+                    (column, index) => (
+                      <TableCell key={index} align="center">
+                        {column}
+                      </TableCell>
+                    )
+                  )}
+                </TableRow>
+              </TableHead>
+              {auth.user
+                ? carrito.publications.map((item: any) => (
+                    <CartItem
+                      key={item.id}
+                      item={item}
+                      addToCart={() =>
+                        handleAddQuantityToCartDB(
+                          auth.user && auth?.user?.email,
+                          item.publication
+                        )
+                      }
+                      removeFromCart={() =>
+                        handleRemoveQuantityToCartDB(
+                          auth.user && auth?.user?.email,
+                          item.publication
+                        )
+                      }
+                    />
+                  ))
+                : cart.map((item) => (
+                    <CartItem
+                      key={item.id}
+                      item={item}
+                      addToCart={handleAddToCart}
+                      removeFromCart={handleRemoveFromCart}
+                    />
+                  ))}
+            </Table>
+          </TableContainer>
+        )}
       </Paper>
+
+      {/* Botón checkout Mercado Pago */}
       <Box component="div" className={classes.buttonContainer}>
-        {/* <Typography variant="h5">
-          Total: $ {calculateTotal().toFixed(2)}
-        </Typography> */}
         <Button
           variant="contained"
           color="secondary"
-          fullWidth={true}
+          fullWidth
           onClick={handleMercadoPago}
+          disabled={!cart.length && !carrito?.publications?.length}
         >
           Checkout ${calculateTotal().toFixed(2)}
         </Button>
       </Box>
-    </>
+    </Container>
   );
 };
 
