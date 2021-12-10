@@ -7,10 +7,10 @@ import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 // import IconButton from '@mui/material/IconButton'
-import IconButton from "@mui/material/IconButton";
+import { IconButton } from "@material-ui/core";
 // import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import InfoIcon from "@mui/icons-material/Info";
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import InfoIcon from '@material-ui/icons/Info';
 import Grid from "@mui/material/Grid";
 import { CartItemType, CartType, CartItemTypeDB } from "../../../../pages/CartScreen";
 import useLocalStorage from "../../../../hooks/useLocalStorage";
@@ -19,6 +19,8 @@ import { cartLength } from "../../../../redux/actions/publicationActions";
 import { RootState } from "../../../../redux/store/store";
 import { putCarrito } from "../../../../redux/actions/carritoAction";
 import { useAuth } from "../../../../hooks/useAuth";
+
+
 
 type Props = {
   name: string;
@@ -39,8 +41,6 @@ export default function CardPublicacion(props: Props) {
   const dispatch = useDispatch();
   const carrito: any = useSelector((state: RootState) => state.carrito.carrito);
   const auth = useAuth()
-
-  
 
   const item: CartItemType = {
     id,
@@ -68,18 +68,18 @@ export default function CardPublicacion(props: Props) {
     });
   };
 
-  const handleAddToCartDB = (email: string | null | undefined, id: string):void => {
+  const handleAddToCartDB = (email: string | null | undefined, id: string): void => {
     dispatch(putCarrito(email, id))
   }
 
   return (
-    <Grid item xs={12} sm={6} md={4} lg={3} xl={4}>
+    <Grid sx={{paddingRight: '100px'}} item xs={12} sm={6} md={4} lg={3} xl={4}>
       <Card
         className="cardMain"
         sx={{
-          height: { lg: "400px", xl: "400px" },
-          width: { lg: 195, xl: "260px" },
-          borderBottom: "2px solid #00c2cb",
+          width: { lg: '195px !important', xl: "260px !important" },
+          height: { lg: "400px !important", xl: "400px !important" },
+          borderBottom: "2px solid #00c2cb !important",
         }}
       >
         <CardMedia
@@ -89,17 +89,18 @@ export default function CardPublicacion(props: Props) {
           <Carousel
             className="Carousel-root-1 CarouselItem"
             autoPlay={false}
-            navButtonsProps={{
-              style: {
-                backgroundColor: "transparent",
-                borderRadius: "0",
-              },
-            }}
+            // navButtonsProps={{
+            //   style: {
+            //     backgroundColor: "transparent !important",
+            //     borderRadius: "0 !important",
+            //     fontSize: '100px'
+            //   },
+            // }}
           >
             {images.length === 0 ? (
               <Item
                 style={{
-                  width: '100%'
+                  width: '100% !important'
                 }}
                 item={
                   "https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227725184-stock-illustration-no-image-available-icon-flat.jpg"
@@ -112,18 +113,18 @@ export default function CardPublicacion(props: Props) {
 
           <Box
             className="noshowButton_Cart_Info"
-            sx={{ position: 'relative', zIndex: '1',  display: "flex", justifyContent: "center" }}
+            sx={{ position: 'relative', zIndex: '1 !important', display: "flex !important", justifyContent: "center !important" }}
           >
             <IconButton
               aria-label="Add to Cart"
               size="medium"
-              color="primary"
-              onClick={ !auth.user ? () => handleAddToCart(item) : () => handleAddToCartDB(auth.user && auth?.user?.email, id)}
+              color="secondary"
+              onClick={!auth.user ? () => handleAddToCart(item) : () => handleAddToCartDB(auth.user && auth?.user?.email, id)}
             >
               <ShoppingCartIcon />
             </IconButton>
             <Link to={`/publication/${id}`}>
-              <IconButton color="primary" size="medium">
+              <IconButton color="secondary" size="medium">
                 <InfoIcon />
               </IconButton>
             </Link>
@@ -131,13 +132,13 @@ export default function CardPublicacion(props: Props) {
         </CardMedia>
         <CardContent>
           <Typography
-            sx={{ fontSize: "19px", textAlign: "center" }}
+            sx={{ fontSize: "19px !important", textAlign: "center" }}
             variant="h5"
           >
             {name}
           </Typography>
           <Typography
-            sx={{ fontSize: "17px", textAlign: "center" }}
+            sx={{ fontSize: "17px !important", textAlign: "center" }}
             variant="body2"
           >
             $ {`  ${price}`}
@@ -154,11 +155,11 @@ function Item(props: any) {
     <Box>
       <Box
         sx={{
-          height: { lg: "100%", xl: "100%" },
-          width: { lg: "93%", xl: "93%" },
-          padding: "4px",
-          justifyContent: "center",
-          display: "flex",
+          height: { lg: "100% !important", xl: "100% !important" },
+          width: { lg: "93% !important", xl: "93% !important" },
+          padding: "4px !important",
+          justifyContent: "center !important",
+          display: "flex !important",
           alignItems: "center",
         }}
       >
@@ -171,20 +172,20 @@ function Item(props: any) {
           alt="productoImage"
           sx={{
             height: {
-              xs: "100%",
-              sm: "100%",
-              md: "100%",
-              lg: "280px",
-              xl: "280px",
+              xs: "100% !important",
+              sm: "100% !important",
+              md: "100% !important",
+              lg: "280px !important",
+              xl: "280px !important",
             },
             width: {
-              xs: "100%",
-              sm: "100%",
-              md: "100%",
-              lg: "230px",
-              xl: "230px",
+              xs: "100% !important",
+              sm: "100% !important",
+              md: "100% !important",
+              lg: "230px !important",
+              xl: "230px !important",
             },
-            borderRadius: "3px",
+            borderRadius: "3px !important",
             objectFit: "contain",
           }}
         />

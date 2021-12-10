@@ -1,3 +1,4 @@
+/* Efecto hover card  */
 .cardMain {
     box-shadow: 1px 1px 3px #00c1cb6c !important;
     transition: all .4s ease-in-out !important;
@@ -18,26 +19,73 @@
 }
 
 .noshowButton_Cart_Info svg {
-    margin-right: 7px !important;
+    margin-right: 1px !important;
+    text-align  : center;
 }
+
 .noshowButton_Cart_Info svg:last-of-type {
     margin-left: 7px !important;
 }
 
-.makeStyles-button-13 svg {
-    color: white;
+.CarouselItem {
+    height: 250px !important;
 }
 
-.makeStyles-button-13:hover {
+.CarouselItem svg {
+    font-size: 13px !important;
+    color    : #00c2cb !important;
+    margin   : 0px -1px !important;
+}
+
+
+/* Button next and Previous */
+
+div.makeStyles-fullHeightHoverWrapper-9 {
+    width: 13%;
+}
+
+div.makeStyles-fullHeightHoverWrapper-9 button,
+div.makeStyles-fullHeightHoverWrapper-9 button svg {
+    opacity   : 0 !important;
+    transition: all .4s ease;
+}
+
+div.makeStyles-fullHeightHoverWrapper-9 button svg {
+    font-size: 29px !important;
+    color    : #00c2cb !important;
+}
+
+div.makeStyles-fullHeightHoverWrapper-9 button:hover svg {
+    color: #148288 !important;
+}
+
+.cardMain:hover div.makeStyles-fullHeightHoverWrapper-9 button svg {
     opacity: 1 !important;
 }
 
-.makeStyles-buttonWrapper-8:hover .makeStyles-button-13 {
-    transition: all .4s ease-in;
-    opacity   : .6 !important;
-    filter    : brightness(120%) !important;
+div.makeStyles-fullHeightHoverWrapper-9:hover button,
+div.makeStyles-fullHeightHoverWrapper-9 button:hover {
+    border-radius   : 0px !important;
+    background-color: transparent !important;
 }
 
+
+div.makeStyles-fullHeightHoverWrapper-9 button:active svg {
+    transform: scale(.70);
+}
+
+
+.makeStyles-button-13 {
+    transition      : all .4s ease !important;
+    transition-delay: .4s !important;
+}
+
+.cardMain:hover .makeStyles-buttonWrapper-8 .makeStyles-button-13 {
+    opacity: 1 !important;
+    filter : brightness(2) !important; /* hace que brille mas (mayor valor) o sea mas oscuro (menor valor) */
+}
+
+/*  ****************** cierra acá */
 
 .showButton_Cart_Inf {
     transition: all .5s ease-in-out;
@@ -47,15 +95,13 @@
     overflow: visible !important;
 }
 
-.CarouselItem {
-    height: 250px !important;
-}
 
 .makeStyles-indicators-4 {
     position  : relative !important;
     margin-top: -40px !important;
     z-index   : 2 !important;
 }
+
 
 .MuiIconButton-root {
     padding: 0 3px !important;

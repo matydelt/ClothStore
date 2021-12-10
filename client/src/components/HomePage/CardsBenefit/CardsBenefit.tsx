@@ -6,8 +6,7 @@ import WomanGender from '../../assets/img/woman_genero.png'
 import ManGender from '../../assets/img/man_genero.png'
 import KidGender from '../../assets/img/kid_genero.png'
 import './CardsBenefit.css';
-import { RootState } from '../../../redux/store/store'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { putPublications } from '../../../redux/actions/publicationActions'
 
 const useStyles = makeStyles({
@@ -27,7 +26,9 @@ const useStyles = makeStyles({
         height: '600px',
     },
     title: {
-        marginBottom: '30px'
+        marginBottom: '60px',
+        fontWeight: 400,
+        textDecoration: 'underline'
     }
 })
 
@@ -49,7 +50,7 @@ const CardsBenefit = () => {
 
     return (
         <Container classes={{ root: classes.containerBenefit }} maxWidth="md">
-            <Typography classes={{ root: classes.title }} align='center' variant="h4" color="primary">
+            <Typography classes={{ root: classes.title }} align='center' variant="h3" color="primary">
                 Género
             </Typography>
             <Grid className='gridBenefit' container spacing={10}>
