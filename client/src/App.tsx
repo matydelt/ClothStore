@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { ProvideAuth } from "./hooks/useAuth";
 import "./App.css";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,12 +32,13 @@ const App = (): JSX.Element => {
     useSelector((state: RootState) => state.publicationList);
 
   const auth = useAuth();
+
   useEffect(() => {
-    console.log("holaaaaaaaa auth", auth);
     if (auth?.user && auth.user.email) {
       dispatch(getCarrito(auth.user.email));
     }
   }, [dispatch, auth]);
+
   useEffect(() => {
     dispatch(
       putPublications({

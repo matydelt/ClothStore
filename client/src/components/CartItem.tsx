@@ -7,10 +7,11 @@ import {
   makeStyles,
 } from "@material-ui/core/styles";
 import TableBody from "@mui/material/TableBody";
-import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import { Box } from "@mui/system";
 import Typography from "@mui/material/Typography";
+import RemoveIcon from "@mui/icons-material/Remove";
+import AddIcon from "@mui/icons-material/Add";
 
 const useStyles = makeStyles({
   tableCell: {
@@ -21,6 +22,7 @@ const useStyles = makeStyles({
     width: "70px",
     objectFit: "cover",
     marginRight: "10px",
+    borderRadius: "5px",
   },
   buttonAmountRigth: {
     padding: "1px 5px",
@@ -81,7 +83,9 @@ const CartItem = ({ item, addToCart, removeFromCart }: Props) => {
           />
           <Typography variant="h5">{item.title}</Typography>
         </TableCell>
-        <TableCell align="center">${item.price}</TableCell>
+        <TableCell align="center">
+          <Typography>${item.price}</Typography>
+        </TableCell>
         <TableCell classes={{ root: classes.cellButton }} align="center">
           <Button
             disableRipple={true}
@@ -92,9 +96,16 @@ const CartItem = ({ item, addToCart, removeFromCart }: Props) => {
             size="small"
             disableElevation
             variant="text"
-            onClick={() => removeFromCart(item.id)}
+            onClick={() => {
+              if (item.quantity === 1) {
+                const respuesta = window.confirm(
+                  "Estas seguro de que queres eliminar este producto de tu carro?"
+                );
+                if (respuesta) removeFromCart(item.id);
+              } else removeFromCart(item.id);
+            }}
           >
-            -
+            <RemoveIcon />
           </Button>
           {item.quantity}
           <Button
@@ -108,11 +119,11 @@ const CartItem = ({ item, addToCart, removeFromCart }: Props) => {
             variant="text"
             onClick={() => addToCart(item)}
           >
-            +
+            <AddIcon />
           </Button>
         </TableCell>
         <TableCell align="center">
-          ${(item.quantity * item.price).toFixed(2)}
+          <Typography>${(item.quantity * item.price).toFixed(2)}</Typography>
         </TableCell>
         {/* </StyledTableRow> */}
       </TableBody>

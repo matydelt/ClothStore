@@ -18,48 +18,31 @@ import useLocalStorage from "../hooks/useLocalStorage";
 import { putCarrito, putCarritoRemove } from "../redux/actions/carritoAction";
 import { RootState } from "../redux/store/store";
 
-// const StyledTableCell = withStyles((theme: Theme) =>
-//   createStyles({
-//     head: {
-//       backgroundColor: theme.palette.primary.main,
-//       color: theme.palette.common.white,
-//       width: "300px",
-//     },
-//     body: {
-//       fontSize: 14,
-//     },
-//   })
-// )(TableCell);
-
-// const useStyles = makeStyles({
-//   root: {
-//     width: "77%",
-//   },
-//   container: {
-//     display: "flex",
-//     flexDirection: "column",
-//     alignItems: "center",
-//     justifyContent: "center",
-//     height: "600px",
-//   },
-//   containerTotal: {
-//     width: "23%",
-//   },
-// });
-
 const useStyles = makeStyles({
   root: {
     width: "100%",
     margin: "0 auto",
+    border: "2px solid #00c2cb",
   },
   container: {
     maxHeight: 440,
   },
-  buttonContainer: {
-    width: "23%",
+  checkoutContainer: {
+    padding: "1%",
+    width: "85%",
+    background: "#D6D6D6",
+    display: "flex",
+    justifyContent: "space-between",
     margin: "2% auto",
+    borderRadius: "25px",
+  },
+  button: {
+    "& span": {
+      marginLeft: 0,
+    },
   },
 });
+
 export type CartItemType = {
   id: string;
   quantity: number;
@@ -80,7 +63,7 @@ export type CartItemTypeDB = {
 
 export type CartType = CartItemType[];
 
-const CartScreen = () => {
+export default function CartScreen() {
   const [cart, setCart] = useLocalStorage<CartType>("cart", []);
   const carrito: any = useSelector((state: RootState) => state.carrito.carrito);
   const auth = useAuth();
@@ -122,10 +105,7 @@ const CartScreen = () => {
       prev.reduce((acc, item) => {
         if (item.id === id) {
           if (item.quantity === 1) {
-            const respuesta = window.confirm(
-              "Estas seguro de que queres eliminar este producto de tu carro?"
-            );
-            return respuesta ? acc : [...acc, item];
+            return acc;
           }
           return [...acc, { ...item, quantity: item.quantity - 1 }];
         } else {
@@ -146,12 +126,7 @@ const CartScreen = () => {
     email: string | null | undefined,
     id: string
   ): void => {
-    const respuesta = window.confirm(
-      "Estas seguro de que queres eliminar este producto de tu carro?"
-    );
-    if (respuesta) {
-      dispatch(putCarritoRemove(email, id));
-    }
+    dispatch(putCarritoRemove(email, id));
   };
 
   const handleMercadoPago = (): void => {
@@ -225,21 +200,30 @@ const CartScreen = () => {
           </TableContainer>
         )}
       </Paper>
-
-      {/* Botón checkout Mercado Pago */}
-      <Box component="div" className={classes.buttonContainer}>
-        <Button
-          variant="contained"
-          color="secondary"
-          fullWidth
-          onClick={handleMercadoPago}
-          disabled={!cart.length && !carrito?.publications?.length}
-        >
-          Checkout ${calculateTotal().toFixed(2)}
-        </Button>
+      <Box className={classes.checkoutContainer}>
+        <Box style={{ border: "1px solid", width: "25%" }}>
+          <Typography>Descuento: </Typography>
+        </Box>
+        <Box style={{ width: "25%" }}>
+          <Typography variant="h6">
+            Subtotal: ${calculateTotal().toFixed(2)}
+          </Typography>
+          <Typography variant="h6">Descuento: 0%</Typography>
+          <Typography variant="h6" style={{ borderTop: "1px solid gray" }}>
+            Total: ${calculateTotal().toFixed(2)}{" "}
+          </Typography>
+          <Button
+            variant="contained"
+            color="secondary"
+            fullWidth
+            onClick={handleMercadoPago}
+            disabled={!cart.length && !carrito?.publications?.length}
+            className={classes.button}
+          >
+            Checkout
+          </Button>
+        </Box>
       </Box>
     </Container>
   );
-};
-
-export default CartScreen;
+}
