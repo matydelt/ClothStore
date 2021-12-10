@@ -69,7 +69,7 @@ export default class PublicationController {
 
       if (name && name !== "") {
         allPublications = allPublications.filter((e) => {
-          return e.name.search(name as string) > -1;
+          return e.name.toLowerCase().search((name as string).toLowerCase()) > -1;
         });
       }
       switch (order) {
