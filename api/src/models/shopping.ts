@@ -2,7 +2,6 @@ import mongoose, { Schema, model, Types } from 'mongoose'
 
 export interface Shopping extends mongoose.Document {
     publications: {publication: Types.ObjectId, price: number, quantity: number, image: string, title: string}[];
-    price: number;
     amount: number;
     date: string;
     state: boolean;
