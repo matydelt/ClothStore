@@ -10,7 +10,7 @@ interface Publication  {
     mark: string;
     detail: string;
     price: number;
-    categorie: string;
+    category: string;
     author: string;
     gender: string;
     key: string;
@@ -30,7 +30,7 @@ export default function ListProducts(props:User) {
         mark: "",
         detail: "",
         price: 0,
-        categorie: "",
+        category: "",
         author: "",
         gender: "",
         key: "",
@@ -74,7 +74,7 @@ export default function ListProducts(props:User) {
                         {e.name}
                     </TableCell>
                     <TableCell align="right">{e.mark}</TableCell>
-                    <TableCell align="right">{e.categorie}</TableCell>
+                    <TableCell align="right">{e.category}</TableCell>
                     <TableCell align="right">{e.gender}</TableCell>
                     <TableCell align="right">{e.price}</TableCell>
                     <TableCell align="right"> <Link to={`/actualizar-publicacion/${e.id}`}><button>Actualizar</button></Link></TableCell>

@@ -124,7 +124,7 @@ export default function PefilUsuario() {
                 country={country}
                 cp={cp}
             />}/>
-            <Route path="ventas" element={<ListProducts id={GetUser?._id}/>}></Route>
+            <Route path="productos" element={<ListProducts id={GetUser?._id}/>}></Route>
         
         </Routes>
         </>

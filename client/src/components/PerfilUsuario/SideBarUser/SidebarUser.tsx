@@ -1,5 +1,6 @@
 import { Button } from '@material-ui/core';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -172,7 +173,7 @@ export default function SideBarUser(props: Props) {
             </ListItem>
           </Link>
 
-          <Link to="/perfil/ventas" style={{ textDecoration: "none" }}>
+          <Link to="/perfil/productos" style={{ textDecoration: "none" }}>
             <ListItem key="Mis productos">
               <ListItemIcon>
                 <BusinessCenterIcon />
@@ -181,6 +182,14 @@ export default function SideBarUser(props: Props) {
             </ListItem>
           </Link>
 
+          <Link to="/perfil/ventas" style={{ textDecoration: "none" }}>
+            <ListItem key="Mis ventas">
+              <ListItemIcon>
+                <CurrencyExchangeIcon />
+              </ListItemIcon>
+              <ListItemText primary="Mis ventas" />
+            </ListItem>
+          </Link>
 
           <Link to="/perfil/compras" style={{ textDecoration: "none" }}>
             <ListItem key="Mis compras">

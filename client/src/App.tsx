@@ -86,6 +86,7 @@ const App = (): JSX.Element => {
         <Route path="/perfil" element={<PefilUsuario />}>
           <Route path="detalles" />
           <Route path="compras" />
+          <Route path="productos" />
           <Route path="ventas" />
           <Route path="deseos" />
 
