@@ -1,5 +1,5 @@
 
-import { Box } from "@material-ui/core";
+import { Box } from "@mui/material";
 import { Container, Grid } from '@mui/material';
 import Addresses from './Addresses';
 import ProfileCover from './ProfileCover';
