@@ -25,6 +25,7 @@
     "axios": "^0.24.0",
     "chart.js": "^3.6.1",
     "firebase": "^9.5.0",
+    "gsap": "^3.8.0",
     "mercadopago": "^1.5.9",
     "react": "^17.0.2",
     "react-chartjs-2": "^4.0.0",

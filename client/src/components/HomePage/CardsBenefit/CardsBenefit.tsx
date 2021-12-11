@@ -11,11 +11,16 @@ import { putPublications } from '../../../redux/actions/publicationActions'
 
 const useStyles = makeStyles({
     containerBenefit: {
-        marginTop: '100px',
-        marginBottom: '100px '
+        // marginTop: '80px',
+        // marginBottom: '80px',
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     button: {
-        height: '90%',
+        height: '100%',
         overflow: 'hidden',
         position: 'relative',
         transformOrigin: 'center',
@@ -51,7 +56,7 @@ const CardsBenefit = () => {
     return (
         <Container classes={{ root: classes.containerBenefit }} maxWidth="md">
             <Typography classes={{ root: classes.title }} align='center' variant="h3" color="primary">
-                Género
+               Busca por Género
             </Typography>
             <Grid className='gridBenefit' container spacing={10}>
                 <Grid classes={{ root: classes.gridItem }} item xs={12} sm={6} md={4} lg={3} xl={4}>

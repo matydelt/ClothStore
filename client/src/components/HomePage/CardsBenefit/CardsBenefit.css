@@ -84,7 +84,7 @@
 }
 
 .containedButtonBenefitWoman:hover p {
-    transform: translate(151%, -40%);
+    transform: translate(151%, -51%);
     opacity  : 1;
 }
 
@@ -128,7 +128,7 @@
 .overlayMan p {
     position : absolute !important;
     bottom   : 87px;
-    right    : 49px;
+    right    : 59px;
     font-size: 28px;
 }
 

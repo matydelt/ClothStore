@@ -32,7 +32,7 @@ const StyledTableCell = withStyles((theme: Theme) =>
 
 const useStyles = makeStyles({
   root: {
-    width: '77%'
+    width: '77%',
   },
   container: {
     display: 'flex',
