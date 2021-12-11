@@ -78,7 +78,19 @@ export default class Checkout {
                 const publi = await PublicationSchema.findById(order.publications[i].publication)
                 if(publi){
                     const us = await UserSchema.findById(publi.author)
-                    if(us){ 
+                    if(us){
+                        publi.stock -= order.publications[i].quantity
+                        publi.markModified('stock')
+                        await publi.save();
+                    
+                        for(let j :number = 0; j< us.publications.length; j++){
+                            if(us.publications[j].order==publi.order){
+                                us.publications[j].stock -= order.publications[i].quantity
+                            }
+                        }
+                        us.markModified('publications')
+                        await us.save();
+
                         if (!(Object.keys(obj).includes(us.email as string))) {
                             obj[`${us.email}`] = [order.publications[i]]
                             obj.users.push(us.email)
@@ -97,7 +109,6 @@ export default class Checkout {
                     comprar= obj[`${obj.users[i]}`].forEach( (c:any) => {
                         compras = compras + (c.price*c.quantity)
                     })
-                    console.log(compras);
                     
                     const venta : Sales = new SalesSchema({
                         publications: obj[`${obj.users[i]}`],
@@ -111,7 +122,7 @@ export default class Checkout {
                     });
                     await venta.save();
                     userVenta.sales.push(venta);
-                    await userVenta?.save();
+                    await userVenta.save();
                 }
             }
             
