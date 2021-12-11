@@ -1,7 +1,7 @@
 import mongoose, { Schema, model } from "mongoose";
 import { Publication } from "./publication";
 import { Shopping } from "./shopping";
-import { Sales } from "./Sales";
+import { Sales } from "./sales";
 import { Address } from "./address";
 import { Denunciation } from "./denunciation";
 
