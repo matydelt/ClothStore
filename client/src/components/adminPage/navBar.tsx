@@ -15,8 +15,8 @@ function NavBar() {
             <div className='navbar' >
 
 
-                <button className='menu-bars' style={{ border: "none", cursor: "pointer" }}>
-                    <MenuIcon onClick={showSidebar} />
+                <button className='menu-bars' style={{ border: "none", cursor: "pointer", color: "black" }} onClick={showSidebar} >
+                    <MenuIcon />
                 </button>
                 <div style={{ marginLeft: "90%" }}>
                     <button style={{ border: "none", backgroundColor: "transparent", cursor: "pointer" }}>
@@ -28,7 +28,7 @@ function NavBar() {
             <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
                 <ul className='nav-menu-items' onClick={showSidebar}>
                     <li className='navbar-toggle'>
-                        <Link to='#' className='menu-bars'>
+                        <Link to='#' className='menu-bars' style={{ color: "red" }}>
                             <CloseIcon />
                         </Link>
                     </li>

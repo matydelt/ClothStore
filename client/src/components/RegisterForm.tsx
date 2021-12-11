@@ -13,9 +13,9 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { Link as RouterLink } from 'react-router-dom';
 import { useAuth } from "../hooks/useAuth";
 import { registerUser } from "../redux/actions/userActions";
-import { Link as RouterLink } from 'react-router-dom'
 
 
 type FormState = {
@@ -28,14 +28,13 @@ type FormState = {
 
 const useStyles = makeStyles({
   root: {
-    marginTop: '10px',
-    marginBottom: '10px'
+    marginTop: "10px",
+    marginBottom: "10px",
   },
   avatarLock: {
-    backgroundColor: '#f1f1f1'
-  }
-})
-
+    backgroundColor: "#f1f1f1",
+  },
+});
 
 const theme = createTheme();
 
@@ -87,8 +86,8 @@ const RegisterForm = () => {
             alignItems: "center",
           }}
         >
-          <Avatar classes={{root: classes.avatarLock}}>
-            <LockOutlinedIcon color='primary'/>
+          <Avatar classes={{ root: classes.avatarLock }}>
+            <LockOutlinedIcon color="primary" />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign up
@@ -186,7 +185,7 @@ const RegisterForm = () => {
               fullWidth
               variant="contained"
               classes={{
-                root: classes.root
+                root: classes.root,
               }}
               disabled={
                 input.confirmPassword !== input.password ||

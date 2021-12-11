@@ -42,7 +42,7 @@ export const putPublications =
         type: "PUBLICATION_LIST_SUCCESS",
         payload: { success: response.data.result },
         cartPayload: filter,
-        countPayload: response.data.count ,
+        countPayload: response.data.count,
       });
     } catch (error) {
       dispatch({
@@ -52,21 +52,22 @@ export const putPublications =
     }
   };
 
-export const getNamePublications = (name: string) => async (dispatch: Dispatch<Action>) => {
-  dispatch ({ type: "PUBLICATION_NAME_REQUEST" });
-  try {
-    const response = await axios.get("/publications?name=" + name);
-    dispatch ({
-      type: "PUBLICATION_NAME_SUCCESS",
-      payload: { success: response.data },
-    });
-  } catch (error) {
-    dispatch ({
-      type: "PUBLICATION_NAME_FAIL",
-      payload: { error: (error as Error).message }
-    })
-  }
-}
+export const getNamePublications =
+  (name: string) => async (dispatch: Dispatch<Action>) => {
+    dispatch({ type: "PUBLICATION_NAME_REQUEST" });
+    try {
+      const response = await axios.get("/publications?name=" + name);
+      dispatch({
+        type: "PUBLICATION_NAME_SUCCESS",
+        payload: { success: response.data },
+      });
+    } catch (error) {
+      dispatch({
+        type: "PUBLICATION_NAME_FAIL",
+        payload: { error: (error as Error).message },
+      });
+    }
+  };
 
 export const postPublications =
   (publication: any) => async (dispatch: Dispatch<Action>) => {
@@ -91,3 +92,27 @@ export const cartLength = () => async (dispatch: Dispatch<Action>) => {
     cartPayload: length,
   });
 };
+
+export const activatePublication =
+  (id: string, flag: boolean) => async (dispatch: Dispatch<Action>) => {
+    dispatch({ type: "ACTIVATE_PUBLICATION_REQUEST" });
+    try {
+      await axios.put("/publications/state", { id: id, flag });
+      dispatch({ type: "ACTIVATE_PUBLICATION_SUCCESS" });
+    } catch (e) {
+      console.log(e);
+      dispatch({ type: "ACTIVATE_PUBLICATION_FAIL" });
+    }
+  };
+
+export const publicationMessage =
+  (id: string, message: string) => async (dispatch: Dispatch<Action>) => {
+    dispatch({ type: "MESSAGE_PUBLICATION_REQUEST" });
+    try {
+      await axios.post("/publication/message", { id, message });
+      dispatch({ type: "MESSAGE_PUBLICATION_SUCCESS" });
+    } catch (e) {
+      console.log(e);
+      dispatch({ type: "MESSAGE_PUBLICATION_FAIL" });
+    }
+  };

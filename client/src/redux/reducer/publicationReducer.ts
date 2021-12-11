@@ -15,7 +15,7 @@ export interface PublicationState {
   name: string;
   order: string;
   page: string;
-  count: number| any;
+  count: number | any;
 }
 
 const publicationListReducer = (
@@ -100,6 +100,18 @@ const publicationSaveReducer = (
     case "PUBLICATION_SAVE_SUCCESS":
       return { ...state, loading: false };
     case "PUBLICATION_SAVE_FAIL":
+      return { ...state, loading: false, error: action.payload?.error };
+    case "ACTIVATE_PUBLICATION_REQUEST":
+      return { ...state, loading: true };
+    case "ACTIVATE_PUBLICATION_SUCCESS":
+      return { ...state, loading: false };
+    case "MESSAGE_PUBLICATION_REQUEST":
+      return { ...state, loading: true };
+    case "MESSAGE_PUBLICATION_SUCCESS":
+      return { ...state, loading: false };
+    case "MESSAGE_PUBLICATION_FAIL":
+      return { ...state, loading: false, error: action.payload?.error };
+    case "ACTIVATE_PUBLICATION_FAIL":
       return { ...state, loading: false, error: action.payload?.error };
     default:
       return state;

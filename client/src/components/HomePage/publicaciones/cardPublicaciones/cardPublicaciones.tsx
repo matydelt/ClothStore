@@ -12,7 +12,11 @@ import { IconButton } from "@material-ui/core";
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import InfoIcon from '@material-ui/icons/Info';
 import Grid from "@mui/material/Grid";
-import { CartItemType, CartType, CartItemTypeDB } from "../../../../pages/CartScreen";
+import {
+  CartItemType,
+  CartType,
+  CartItemTypeDB,
+} from "../../../../pages/CartScreen";
 import useLocalStorage from "../../../../hooks/useLocalStorage";
 import { useDispatch, useSelector } from "react-redux";
 import { cartLength } from "../../../../redux/actions/publicationActions";
@@ -40,11 +44,11 @@ export default function CardPublicacion(props: Props) {
   const { name, images, price, categorie, id, stock } = props;
   const dispatch = useDispatch();
   const carrito: any = useSelector((state: RootState) => state.carrito.carrito);
-  const auth = useAuth()
+  const auth = useAuth();
 
   const item: CartItemType = {
     id,
-    amount: stock,
+    quantity: stock,
     price,
     image: images[0]?.url,
     title: name,
@@ -60,17 +64,20 @@ export default function CardPublicacion(props: Props) {
       if (typeof aux === "string") aux = JSON.parse(aux);
       const isItemInCart = aux.find((item: any) => item.id === clickedItem.id);
       if (isItemInCart) {
-        isItemInCart.amount += 1;
+        isItemInCart.quantity += 1;
         return aux;
       }
       console.log(clickedItem);
-      return [...aux, { ...clickedItem, amount: 1 }];
+      return [...aux, { ...clickedItem, quantity: 1 }];
     });
   };
 
-  const handleAddToCartDB = (email: string | null | undefined, id: string): void => {
-    dispatch(putCarrito(email, id))
-  }
+  const handleAddToCartDB = (
+    email: string | null | undefined,
+    id: string
+  ): void => {
+    dispatch(putCarrito(email, id));
+  };
 
   return (
     <Grid sx={{paddingRight: '100px'}} item xs={12} sm={6} md={4} lg={3} xl={4}>
@@ -100,7 +107,7 @@ export default function CardPublicacion(props: Props) {
             {images.length === 0 ? (
               <Item
                 style={{
-                  width: '100% !important'
+                  width: "100%",
                 }}
                 item={
                   "https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227725184-stock-illustration-no-image-available-icon-flat.jpg"
@@ -113,13 +120,22 @@ export default function CardPublicacion(props: Props) {
 
           <Box
             className="noshowButton_Cart_Info"
-            sx={{ position: 'relative', zIndex: '1 !important', display: "flex !important", justifyContent: "center !important" }}
+            sx={{
+              position: "relative",
+              zIndex: "1",
+              display: "flex",
+              justifyContent: "center",
+            }}
           >
             <IconButton
               aria-label="Add to Cart"
               size="medium"
-              color="secondary"
-              onClick={!auth.user ? () => handleAddToCart(item) : () => handleAddToCartDB(auth.user && auth?.user?.email, id)}
+              color="primary"
+              onClick={
+                !auth.user
+                  ? () => handleAddToCart(item)
+                  : () => handleAddToCartDB(auth.user && auth?.user?.email, id)
+              }
             >
               <ShoppingCartIcon />
             </IconButton>

@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import UserSchema, { User } from "../models/user";
 import PublicationSchema, { Publication } from "../models/publication";
 import { equal } from "assert/strict";
+const sendEMail = require("../email/email");
 
 export default class PublicationController {
   static async setPublication(req: Request, res: Response) {
@@ -62,6 +63,10 @@ export default class PublicationController {
       let allPublications: Array<any>;
       allPublications = await PublicationSchema.find();
 
+      // allPublications = allPublications.filter((e) => {
+      //   return e.state === true;
+      // });
+
       if (name && name !== "") {
         allPublications = allPublications.filter((e) => {
           return e.name.search(name as string) > -1;
@@ -119,11 +124,13 @@ export default class PublicationController {
       }
 
       if (author && author !== "") {
-        const autor = await UserSchema.findOne({ userName: `${author}` })
-        console.log(autor?._id)
-        allPublications = allPublications.map(e =>{
-          if(e.author.equals(autor?._id)) return e
-        }).filter(e => e!=null);
+        const autor = await UserSchema.findOne({ userName: `${author}` });
+        console.log(autor?._id);
+        allPublications = allPublications
+          .map((e) => {
+            if (e.author.equals(autor?._id)) return e;
+          })
+          .filter((e) => e != null);
       }
 
       if (price && price !== "") {
@@ -145,15 +152,15 @@ export default class PublicationController {
           }
         });
       }
-      const ttal:number = allPublications.length
+      const ttal: number = allPublications.length;
       allPublications = allPublications.slice(
         charXPage * (pag - 1),
         charXPage * (pag - 1) + charXPage
       );
 
       res.json({
-        result: allPublications, 
-        count: ttal
+        result: allPublications,
+        count: ttal,
       });
     } catch (e) {
       console.log(e);
@@ -198,15 +205,18 @@ export default class PublicationController {
       res.sendStatus(500);
     }
   }
-  
-  static async getPublicationsMarks(req: Request, res: Response): Promise<void> {
+
+  static async getPublicationsMarks(
+    req: Request,
+    res: Response
+  ): Promise<void> {
     try {
       let allMarks: Array<any>;
       allMarks = await PublicationSchema.find();
-      allMarks = allMarks.map(e => e.mark);
-      allMarks = allMarks.filter((item,index)=>{
+      allMarks = allMarks.map((e) => e.mark);
+      allMarks = allMarks.filter((item, index) => {
         return allMarks.indexOf(item) === index;
-      })
+      });
       res.json(allMarks);
     } catch (e) {
       console.log(e);
@@ -215,27 +225,57 @@ export default class PublicationController {
   }
   static async putPublicationState(req: Request, res: Response): Promise<void> {
     try {
+      const { id, flag } = req.body;
+      console.log(id);
 
-      const { publicationId, flag } = req.body;
-
-      const publication = await PublicationSchema.findById(publicationId);
+      const publication = await PublicationSchema.findById(id);
+      const seller = await UserSchema.findById(publication?.author);
       if (flag) {
         if (publication) {
-          publication.state = true
-          res.sendStatus(200)
+          publication.state = true;
+          await publication.save();
+          sendEMail.send({
+            publicationPrice: publication?.price,
+            email: seller?.email,
+            mensaje: "Su publicacion a sido APROBADA!",
+            htmlFile: "question.html",
+          });
+          res.sendStatus(200);
         } else {
-          res.sendStatus(404)
+          res.sendStatus(404);
         }
       } else {
         if (publication) {
-          publication.state = false
-          res.sendStatus(200)
+          publication.state = false;
+          res.sendStatus(200);
         } else {
-          res.sendStatus(404)
+          res.sendStatus(404);
         }
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      res.sendStatus(500);
+    }
+  }
+
+  static async postPublicationMessageADM(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    try {
+      const { id, message } = req.body;
+      const publication = await PublicationSchema.findByIdAndUpdate(id, {
+        message: message,
+      });
+      const seller = await UserSchema.findById(publication?.author);
+      sendEMail.send({
+        email: seller?.email,
+        mensaje: message,
+        htmlFile: "question.html",
+      });
+      res.sendStatus(200);
+    } catch (error) {
+      console.log(error);
       res.sendStatus(500);
     }
   }

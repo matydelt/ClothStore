@@ -1,23 +1,21 @@
-import React, { useState } from "react";
-import Avatar from "@mui/material/Avatar";
-import { Button } from "@material-ui/core";
-import CssBaseline from "@mui/material/CssBaseline";
-import {TextField} from "@material-ui/core";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
+import { TextField } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import GoogleIcon from "@mui/icons-material/Google";
 import LockOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
-import Typography from "@mui/material/Typography";
+import { Button } from "@mui/material";
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
+import CssBaseline from "@mui/material/CssBaseline";
+import Grid from "@mui/material/Grid";
+import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useAuth } from "../hooks/useAuth";
+import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 import { signinUser } from "../redux/actions/userActions";
-import { useNavigate, useLocation } from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
-import { Link as RouterLink } from 'react-router-dom'
-import axios from "axios";
-
 
 type FormState = { email: string; password: string };
 
@@ -25,27 +23,27 @@ const theme = createTheme();
 
 const useStyles = makeStyles({
   root: {
-    marginTop: '10px',
-    marginBottom: '10px'
+    marginTop: "10px",
+    marginBottom: "10px",
   },
   avatarLock: {
-    backgroundColor: '#f1f1f1'
-  }
-})
+    backgroundColor: "#f1f1f1",
+  },
+});
 
 const LoginForm = () => {
   const [input, setInput] = useState<FormState>({ email: "", password: "" });
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
-  const { signin } = useAuth();
+
+  const { signin, googleSignin } = useAuth();
+
   const location = useLocation();
-  
+
   const classes = useStyles();
-  
-  
+
   const from = location.state?.from?.pathname || "/";
-  
+
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     signin(input);
@@ -57,9 +55,6 @@ const LoginForm = () => {
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
-
-
-
 
   return (
     <ThemeProvider theme={theme}>
@@ -73,8 +68,8 @@ const LoginForm = () => {
             alignItems: "center",
           }}
         >
-          <Avatar classes={{root: classes.avatarLock}}>
-            <LockOutlinedIcon color='primary'/>
+          <Avatar classes={{ root: classes.avatarLock }}>
+            <LockOutlinedIcon color="primary" />
           </Avatar>
           <Typography component="h1" variant="h5">
             Iniciar Sesión
@@ -115,17 +110,31 @@ const LoginForm = () => {
               type="submit"
               fullWidth
               variant="contained"
-              color='primary'
+              color="primary"
               classes={{ root: classes.root }}
             >
               Iniciar Sesión
+            </Button>
+            <Button
+              fullWidth
+              variant="contained"
+              classes={{ root: classes.root }}
+              onClick={googleSignin}
+              endIcon={<GoogleIcon />}
+            >
+              Iniciar Sesión con Google
             </Button>
             <Grid container>
               <Grid item xs>
                 <Link variant="body2">Olvidaste tu contraseña?</Link>
               </Grid>
               <Grid item>
-                <Link component={RouterLink} to="/register" variant="body2" underline='hover'>
+                <Link
+                  component={RouterLink}
+                  to="/register"
+                  variant="body2"
+                  underline="hover"
+                >
                   No tienes una cuenta? Registrate
                 </Link>
               </Grid>

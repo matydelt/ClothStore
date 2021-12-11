@@ -71,6 +71,9 @@ export default class UserController {
 
       let users: Array<any>;
       users = await UserSchema.find();
+      users = users.filter((e) => {
+        return e.active === true
+      });
       users = users.map((e) => {
         if (e.publications.length > 0) return e.userName
       }).filter(e => e != undefined);
