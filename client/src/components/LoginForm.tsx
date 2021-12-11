@@ -22,7 +22,7 @@ type FormState = { email: string; password: string };
 const theme = createTheme();
 
 const useStyles = makeStyles({
-  root: {
+  rootButtonLogin: {
     marginTop: "10px",
     marginBottom: "10px",
   },
@@ -111,14 +111,14 @@ const LoginForm = () => {
               fullWidth
               variant="contained"
               color="primary"
-              classes={{ root: classes.root }}
+              classes={{ root: classes.rootButtonLogin }}
             >
               Iniciar Sesión
             </Button>
             <Button
               fullWidth
               variant="contained"
-              classes={{ root: classes.root }}
+              classes={{ root: classes.rootButtonLogin }}
               onClick={googleSignin}
               endIcon={<GoogleIcon />}
             >

@@ -80,7 +80,7 @@ export default function CardPublicacion(props: Props) {
   };
 
   return (
-    <Grid sx={{paddingRight: '100px'}} item xs={12} sm={6} md={4} lg={3} xl={4}>
+    <Grid className='itemPublicationRelated' sx={{paddingRight: '100px'}} item xs={12} sm={6} md={4} lg={3} xl={4}>
       <Card
         className="cardMain"
         sx={{
@@ -130,7 +130,7 @@ export default function CardPublicacion(props: Props) {
             <IconButton
               aria-label="Add to Cart"
               size="medium"
-              color="primary"
+              color="secondary"
               onClick={
                 !auth.user
                   ? () => handleAddToCart(item)

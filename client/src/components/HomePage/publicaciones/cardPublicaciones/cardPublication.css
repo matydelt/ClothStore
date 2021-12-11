@@ -14,8 +14,12 @@
 }
 
 .noshowButton_Cart_Info {
-    transform : translateY(190%);
+    transform : translateY(213%);
     transition: all .4s ease-in;
+}
+
+.noshowButton_Cart_Info span {
+    margin: 0px;
 }
 
 .noshowButton_Cart_Info svg {

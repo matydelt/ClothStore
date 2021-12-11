@@ -1,16 +1,16 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Tabs, Tab } from '@material-ui/core';
+// import DialogActions from '@mui/material/DialogActions';
+// import DialogContent from '@mui/material/DialogContent';
+// import DialogContentText from '@mui/material/DialogContentText';
+// import DialogTitle from '@mui/material/DialogTitle';
+// import Tabs from '@mui/material/Tabs';
+// import Tab from '@mui/material/Tab';
 import { Rating, Typography } from '@mui/material';
 import { IconButton, makeStyles } from '@material-ui/core';
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from '@material-ui/icons/Close';
 import { Box } from '@mui/system';
 import axios from 'axios';
 import { useParams } from 'react-router';
@@ -27,10 +27,19 @@ interface ReviewForm {
 }
 
 const useStyles = makeStyles({
-    root: {
+    rootReviews: {
         position: 'absolute',
         right: '10px',
-        top: '10px'
+        top: '10px',
+        '& span': {
+            marginLeft: '0px'
+        }
+    },
+    tabs: {
+        width: '30%'
+    },
+    dialogContent: {
+        marginBottom: '2px'
     }
 })
 
@@ -187,7 +196,7 @@ export default function Reviews({ children }: any) {
                 <IconButton
                     aria-label="close"
                     onClick={handleClose}
-                    classes={{ root: classes.root }}
+                    classes={{ root: classes.rootReviews }}
                 >
                     <CloseIcon />
                 </IconButton>
@@ -242,9 +251,9 @@ export default function Reviews({ children }: any) {
 
                     <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
                         <Tabs textColor="primary" indicatorColor="primary"  value={tab} onChange={handleTab} centered>
-                            <Tab sx={{ width: '30%' }} label="Todas" />
-                            <Tab sx={{ width: '30%' }} label="Positivas" />
-                            <Tab sx={{ width: '30%' }} label="Negativas" />
+                            <Tab classes={{ root: classes.tabs }} label="Todas" />
+                            <Tab classes={{ root: classes.tabs }} label="Positivas" />
+                            <Tab classes={{ root: classes.tabs }} label="Negativas" />
                         </Tabs>
                     </Box>
            
@@ -266,7 +275,7 @@ export default function Reviews({ children }: any) {
                                     return <Box component="div" key={review.title+i} sx={{ my: 5 }}>
                                         <Rating sx={{ color: '#00c2cb' }} name="read-only" value={review?.score} readOnly size="small" />
                                         <Typography variant="h6">{review.title}</Typography>
-                                        <DialogContentText sx={{ mb: 2 }}>
+                                        <DialogContentText classes={{ root: classes.dialogContent }}>
                                             {review.message}
                                         </DialogContentText>
 
