@@ -260,7 +260,7 @@ export default function HomeUsuarios() {
                         <h3>Compras</h3>
                     </div>
                     {input.shopping.length > 0 ?
-                        input.shopping.map((e) => { return (<CardPublicacion id={e._id} name={e.name} author={e.author} images={e.images} mark={e.mark} stock={e.stock} price={e.price} categorie={e.categorie} detail={e.detail} gender={e.gender} key={e._id} />) }) :
+                        input.shopping.map((e) => { return (<CardPublicacion discount={e.discount} id={e._id} name={e.name} author={e.author} images={e.images} mark={e.mark} stock={e.stock} price={e.price} categorie={e.categorie} detail={e.detail} gender={e.gender} key={e._id} />) }) :
                         <div style={{ display: "flex", justifyContent: "center" }}>
                             <h4>No se han realizado Compras</h4>
                         </div>

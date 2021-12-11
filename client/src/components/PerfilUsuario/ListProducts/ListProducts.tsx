@@ -2,6 +2,8 @@ import { Box, Paper, Table, TableCell, TableContainer, TableHead, TableRow,Table
 import axios from "axios"
 import * as React from 'react'
 import { Link } from "react-router-dom"
+import DiscountModal from "./DiscountModal/DiscountModal"
+import Button from '@mui/material/Button';
 
 interface Publication  {
     name: string;
@@ -14,7 +16,8 @@ interface Publication  {
     author: string;
     gender: string;
     key: string;
-    id: string;
+    _id: string;
+    discount: any;
 }
 interface Articulos{
     articulos:[Publication]
@@ -34,15 +37,19 @@ export default function ListProducts(props:User) {
         author: "",
         gender: "",
         key: "",
-        id: "",
+        _id: "",
+        discount: ""
     }],)
     React.useEffect(() => {
-        async function getOneUser() {
-            await axios.get(`http://localhost:3001/auth/${props.id}`).then(({ data }) => {
-                setArticulos(data.publications)
+        // async function getOneUser() {
+        //     await axios.get(`http://localhost:3001/auth/${props.id}`).then(({ data }) => {
+        //         setArticulos(data.publications)
+        //     })
+        // }
+        // getOneUser()
+        axios.get(`http://localhost:3001/publications`, { params: { authorId: props.id }}).then(({ data }) => {
+                setArticulos(data)
             })
-        }
-        getOneUser()
     }, [])
     return (
         <Box style={{marginTop: "100px",marginLeft: "100px"}}>
@@ -60,7 +67,8 @@ export default function ListProducts(props:User) {
                 <TableCell align="right">Categoria</TableCell>
                 <TableCell align="right">Genero</TableCell>
                 <TableCell align="right">Precio</TableCell>
-                <TableCell align="right">#</TableCell>
+                <TableCell align="right">Precio descuento</TableCell>
+                <TableCell align="center">Opciones</TableCell>
             </TableRow>
         </TableHead>
         <TableBody>
@@ -77,7 +85,13 @@ export default function ListProducts(props:User) {
                     <TableCell align="right">{e.categorie}</TableCell>
                     <TableCell align="right">{e.gender}</TableCell>
                     <TableCell align="right">{e.price}</TableCell>
-                    <TableCell align="right"> <Link to={`/actualizar-publicacion/${e.id}`}><button>Actualizar</button></Link></TableCell>
+                    <TableCell align="right">{e.discount && (e.price * e.discount.percentage / 100) + ` (${e?.discount?.percentage}%)` } </TableCell>
+                    <TableCell sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }} align="right">
+                        <DiscountModal userId={props?.id} publicationId={e?._id}>
+                        <Button>Aplicar descuento</Button>
+                        </DiscountModal>
+                        
+                    <Link to={`/actualizar-publicacion/${e._id}`}><Button>Actualizar</Button></Link></TableCell>
                 </TableRow>
             ))}
         </TableBody>

@@ -28,6 +28,7 @@ export interface Publication {
   reviews: any[];
   qAndAs: any[];
   __v: number;
+  discount: any;
 }
 
 
@@ -185,9 +186,25 @@ export default function PublicationDetail(): JSX.Element {
                   {publication && publication?.detail}
                 </Typography>
 
+{ publication?.discount ?
+<div style={{ marginTop: '20px', marginBottom: '20px'}}>
+
+                <Typography component="p" sx={{ pt: 3, color: 'gray', textDecoration: 'line-through' }}>
+                  $ {publication?.price}
+                </Typography>
+                <Typography variant="h5" component="h5" sx={{ py: 3, mr: 2, color: 'gray', display: 'inline' }}>
+                  $ { publication?.price - (Number(publication?.price)*Number(publication?.discount.percentage)) / 100}
+                </Typography>
+                <Typography component="p" sx={{ color: 'green', display: 'inline' }}>
+                  {publication?.discount?.percentage}% OFF
+                </Typography>
+</div>
+:
+
                 <Typography variant="h5" component="h5" sx={{ py: 3, color: 'gray' }}>
                   $ {publication?.price}
                 </Typography>
+}
 
                 {publication && publication?.stock > 0 ?
                   <Grid item container component="div"

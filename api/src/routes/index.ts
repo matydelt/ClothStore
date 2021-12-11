@@ -7,6 +7,7 @@ const reviews = require("./review");
 const qAndAs = require("./QAndA");
 const mercadoPago = require("./checkout")
 const carrito = require("./carrito")
+const discount = require("./discount")
 
 
 module.exports = {
@@ -17,5 +18,6 @@ module.exports = {
     reviews,
     qAndAs,
     mercadoPago,
-    carrito
+    carrito,
+    discount
 };

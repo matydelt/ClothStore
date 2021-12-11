@@ -97,7 +97,7 @@ console.log(carritoBuscado)
             })
 
             if (!publicationSearched) {
-                const findPublic = await PublicationSchema.findById(id)
+                const findPublic = await PublicationSchema.findById(id).populate('discount')
                 
                 if (findPublic) {
                     carritoBuscado?.publications?.push({
@@ -105,7 +105,7 @@ console.log(carritoBuscado)
                         quantity: parseInt(amount),
                         title: findPublic?.name,
                         image: findPublic?.images[0].url,
-                        price: findPublic.price
+                        price: findPublic.discount ? findPublic.price * findPublic.discount.percentage / 100 : findPublic.price
                     });
                 }
             }
@@ -147,7 +147,7 @@ console.log(carritoBuscado)
             console.log("------publicationSearched-----",publicationSearched)
 
             if (!publicationSearched) {
-                const findPublic = await PublicationSchema.findById(id)
+                const findPublic = await PublicationSchema.findById(id).populate('discount');
             console.log("------findPublic-----",findPublic)
                 
                 if (findPublic) {
@@ -157,7 +157,7 @@ console.log(carritoBuscado)
                         quantity: 1,
                         title: findPublic?.name,
                         image: findPublic?.images[0].url,
-                        price: findPublic.price
+                        price: findPublic.discount ? findPublic.price * findPublic.discount.percentage / 100 : findPublic.price
                     });
                     console.log(carritoBuscado?.publications, '-----------------------------------------------------------asdsdsadsa')
                 }

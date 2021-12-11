@@ -22,7 +22,7 @@ export default function Publicaciones() {
                 state.publicationList.publications.map((e: Publication) => {
                     return (
                         <>
-                            <CardPublicacion name={e.name} author={e.author} images={e.images} mark={e.mark} stock={e.stock} price={e.price} categorie={e.categorie} detail={e.detail} gender={e.gender} key={e._id} id={e._id}
+                            <CardPublicacion discount={e.discount} name={e.name} author={e.author} images={e.images} mark={e.mark} stock={e.stock} price={e.price} categorie={e.categorie} detail={e.detail} gender={e.gender} key={e._id} id={e._id}
                             />
                         </>
                     )

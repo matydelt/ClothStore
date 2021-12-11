@@ -1,4 +1,4 @@
-import mongoose, { Schema, model } from "mongoose";
+import mongoose, { Schema, model, Types } from "mongoose";
 // import { QAndA } from "./QAndA";
 import { Review } from "./review";
 
@@ -17,7 +17,9 @@ export interface Publication extends mongoose.Document {
     reviews: [Review];
     message: string;
     isRejected: boolean;
-    // qAndAs: any[];
+    // discount: Schema.Types.ObjectId;
+    discount: any;
+
 }
 
 
@@ -80,11 +82,11 @@ const PublicationSchema = new Schema({
     isRejected: {
         type: Boolean,
         default: false
+    },
+    discount: {
+        type: Schema.Types.ObjectId,
+        ref: 'Discount'
     }
-    // qAndAs: {
-    //     type: ["QAndA"],
-    //     ref: "QAndA",
-    // },
 })
 
 export default model<Publication>("Publication", PublicationSchema);

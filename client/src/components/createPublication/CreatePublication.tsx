@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store/store';
 import { User } from '../../redux/reducer/stateTypes';
 import NavBar from '../HomePage/Header/NavBar/NavBar';
+import { setTimeout } from 'timers';
 // import { useAuth } from '../../hooks/useAuth';
 
 interface CreatePublicationForm {
@@ -79,19 +80,9 @@ export default function CreatePublication(): JSX.Element {
     e.preventDefault();
 
     axios.post('http://localhost:3001/publications/new', form, { params: { publicationId } }).then(({ data }) => {
-      console.log(data);
-      navigate(`/publication/${data}`)
-      // setForm({
-      //     name: '',
-      //     detail: '',
-      //     mark: '',
-      //     categorie: '',
-      //     gender: '',
-      //     stock: 0,
-      //     price: 0,
-      //     images: [],
-
-      // });
+      setTimeout(() => {
+        navigate(`/publication/${data}`)
+      }, 2000);
     });
   }
 
