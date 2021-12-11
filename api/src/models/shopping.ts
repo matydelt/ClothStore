@@ -4,9 +4,12 @@ export interface Shopping extends mongoose.Document {
     publications: {publication: Types.ObjectId, price: number, quantity: number, image: string, title: string}[];
     price: number;
     amount: number;
+    date: string;
     state: boolean;
     userId: Schema.Types.ObjectId;
-
+    status: string;
+    status_detail: string;
+    link: string;
 }
 
 const ShoppingSchema = new Schema({
@@ -49,6 +52,10 @@ const ShoppingSchema = new Schema({
     status_detail:{
         type: String,
         required: [true, "necesita un status_detail"]
+    },
+    link:{
+        type: String,
+        required: [true, "necesita un link"]
     }
 })
 

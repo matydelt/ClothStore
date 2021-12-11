@@ -4,9 +4,12 @@ export interface Sales extends mongoose.Document {
     publications: {publication: Types.ObjectId, price: number, quantity: number, image: string, title: string}[];
     price: number;
     amount: number;
+    date: string;
     state: boolean;
     userId: Schema.Types.ObjectId;
-
+    status: string;
+    status_detail: string;
+    codigo: string;
 }
 
 const SalesSchema = new Schema({
@@ -49,6 +52,9 @@ const SalesSchema = new Schema({
     status_detail:{
         type: String,
         required: [true, "necesita un status_detail"]
+    },
+    codigo:{
+        type: String,
     }
 })
 
