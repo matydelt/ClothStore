@@ -1,6 +1,7 @@
 import mongoose, { Schema, model } from "mongoose";
 import { Publication } from "./publication";
 import { Shopping } from "./shopping";
+import { Sales } from "./Sales";
 import { Address } from "./address";
 import { Denunciation } from "./denunciation";
 
@@ -11,6 +12,7 @@ export interface User extends mongoose.Document {
   phone: string;
   publications: [Publication];
   shopping: [Shopping];
+  sales: [Sales];
   photo: string;
   dni: string;
   userName: string;
@@ -57,6 +59,10 @@ const UserSchema = new Schema({
   shopping: {
     type: ["Shopping"],
     ref: "Shopping",
+  },
+  sales: {
+    type: ["Sales"],
+    ref: "Sales",
   },
   active: {
     type: Boolean,

@@ -3,17 +3,44 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import { putPublications } from "../../redux/actions/publicationActions";
 import { Box } from "@mui/system";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
+import { List, ListItemIcon, ListItemText, ListItem } from '@material-ui/core';
 import Collapse from "@mui/material/Collapse";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import Checkbox from "@mui/material/Checkbox";
+import Checkbox from '@material-ui/core/Checkbox';
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    list: {
+      maxWidth: '50%',
+      '& span': {
+        margin: '0px'
+      }
+    },
+    buttonGroup: {
+      display: 'flex !importan',
+      justifyContent: 'space-between',
+      maxWidth: '200px',
+      backgroundColor: 'transparent',
+      borderRadius: '10px',
+    },
+    buttonGroupChild: {
+      borderRadius: '10px !important',
+      marginRight: '10px',
+      marginTop: '15px',
+      '& span': {
+        margin: '0'
+      }
+    }
+  })
+);
 
 function SearchOrder() {  
+
+  const classes = useStyles();
 
   const { 
     loading,
@@ -54,13 +81,7 @@ function SearchOrder() {
     );
   };
   return (
-    <Box
-      component="aside"
-      sx={{
-        width: "40%",
-        marginTop: "20px",
-      }}
-      >
+    <Box>
     <List
       component="nav"
       aria-labelledby="nested-list-subheader"
@@ -88,6 +109,7 @@ function SearchOrder() {
                 )
               }
               disabled={loading}
+              classes={{root: classes.list}}
             >
               <ListItemIcon>
                 <Checkbox

@@ -1,33 +1,44 @@
-import * as React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../../redux/store/store";
-import { putPublications } from "../../../redux/actions/publicationActions";
-import { Box } from "@mui/system";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import ListSubheader from "@mui/material/ListSubheader";
-import Checkbox from "@mui/material/Checkbox";
-import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { getAllUsers } from "../../../redux/actions/usersActions";
-import Collapse from "@mui/material/Collapse";
-import ListItemButton from "@mui/material/ListItemButton";
-import { getallMarks } from "../../../redux/actions/marksActions";
+import { Button, ButtonGroup } from "@material-ui/core";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
+import Checkbox from '@material-ui/core/Checkbox';
+import Collapse from "@mui/material/Collapse";
+import ListItemButton from "@mui/material/ListItemButton";
+import { List, ListItemIcon, ListItemText, ListItem } from '@material-ui/core';
+import { Box } from "@mui/system";
+import * as React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getallMarks } from "../../../redux/actions/marksActions";
+import { putPublications } from "../../../redux/actions/publicationActions";
+import { getAllUsers } from "../../../redux/actions/usersActions";
+import { RootState } from "../../../redux/store/store";
 import SearchOrder from "../Order";
-import { User } from "../../../redux/reducer/stateTypes";
+import SearchBar from "../SearchBar";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     list: {
-      width: "100%",
-      maxWidth: 360,
-      backgroundColor: theme.palette.background.paper,
+      width: '70%',
+      '& span': {
+        margin: '0px'
+      }
     },
+    buttonGroup: {
+      display: 'flex !importan',
+      justifyContent: 'space-between',
+      maxWidth: '200px',
+      backgroundColor: 'transparent',
+      borderRadius: '10px',
+    },
+    buttonGroupChild: {
+      borderRadius: '10px !important',
+      marginRight: '10px',
+      marginTop: '15px',
+      '& span': {
+        margin: '0'
+      }
+    }
   })
 );
 
@@ -143,10 +154,12 @@ const SideBarHomePage = () => {
     <Box
       component="aside"
       sx={{
-        width: "40%",
-        marginTop: "20px",
+        width: "40% !important",
+        marginRight: '30px !important',
+        marginTop: "20px !important",
       }}
     >
+      <SearchBar />
       <SearchOrder/>
     <List
       component="nav"
@@ -168,6 +181,7 @@ const SideBarHomePage = () => {
               button
               onClick={(event) => handleListItemClickGender(event, value)}
               disabled={loading}
+              classes={{root: classes.list}}
             >
               <ListItemIcon>
                 <Checkbox
@@ -204,6 +218,7 @@ const SideBarHomePage = () => {
               button
               onClick={(event) => handleListItemClickCategory(event, value)}
               disabled={loading}
+              classes={{root: classes.list}}
             >
               <ListItemIcon>
                 <Checkbox
@@ -246,6 +261,7 @@ const SideBarHomePage = () => {
                 )
               }
               disabled={loading}
+              classes={{root: classes.list}}
             >
               <ListItemIcon>
                 <Checkbox
@@ -288,6 +304,7 @@ const SideBarHomePage = () => {
                 )
               }
               disabled={loading}
+              classes={{root: classes.list}}
             >
               <ListItemIcon>
                 <Checkbox
@@ -304,14 +321,8 @@ const SideBarHomePage = () => {
         })}
         </Collapse>
         </List> 
-      <ButtonGroup
-        variant="contained"
-        aria-label="outlined primary button group"
-        disabled={loading}
-      >
-        <Button onClick={handleSubmit}>Submit</Button>
-        <Button onClick={handleReset}>Reset</Button>
-      </ButtonGroup>
+        <Button color='primary' variant='contained' classes={{root: classes.buttonGroupChild}} onClick={handleSubmit}>Submit</Button>
+        <Button color='primary' variant='contained' classes={{root: classes.buttonGroupChild}} onClick={handleReset}>Reset</Button>
     </Box>
   );
 };

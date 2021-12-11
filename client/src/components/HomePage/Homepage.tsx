@@ -10,9 +10,27 @@ import SearchBar from "./SearchBar";
 import Paginations from "./Pagination";
 import { putPublications } from "../../redux/actions/publicationActions";
 import { RootState } from "../../redux/store/store";
+import CardsBenefit from "./CardsBenefit/CardsBenefit";
+import { Typography } from "@material-ui/core";
+import { makeStyles } from '@material-ui/core/styles';
+import CardsCallToAction from "./CardsCallToAction/CardsCallToAction";
+
+
+
+const useStyles = makeStyles({
+  titleTienda: {
+    fontWeight: 400,
+    textDecoration: 'underline'
+  },
+  containerMain: {
+    height: '100vh',
+    marginTop: '80px'
+  }
+})
+
 
 const Homepage = () => {
-  const { 
+  const {
     mark,
     gender,
     category,
@@ -25,20 +43,27 @@ const Homepage = () => {
   } = useSelector(
     (state: RootState) => state.publicationList
   );
-  
+
   const dispatch = useDispatch();
+
+  const classes = useStyles();
 
   useEffect(() => {
     dispatch(putPublications({
       "name": name, "order": order, "page": page,
-      "mark": mark, "category": category, "gender": gender, "price": price, "author": author }));
+      "mark": mark, "category": category, "gender": gender, "price": price, "author": author
+    }));
   }, []);
 
   return (
     <Box>
       <Header />
-      <Container id="tienda" maxWidth="lg">
-        <SearchBar />
+      <CardsCallToAction />
+      <CardsBenefit />
+      <Container classes={{root: classes.containerMain}} id="tienda" maxWidth="lg">
+          <Typography classes={{ root: classes.titleTienda }} align='center' variant="h3" color="primary">
+            Tienda
+          </Typography>
         <Box
           component="main"
           sx={{
@@ -54,9 +79,9 @@ const Homepage = () => {
           <SideBarHomePage />
           <Publicaciones />
         </Box>
-        <Paginations/>
+        <Paginations />
       </Container>
-      <Box sx={{ height: "70%" }} />
+      <Box sx={{ height: "200px" }} />
       <Footer />
     </Box>
   );

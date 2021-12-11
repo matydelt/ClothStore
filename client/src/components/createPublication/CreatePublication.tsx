@@ -55,7 +55,7 @@ export default function CreatePublication(): JSX.Element {
   // useEffect(() => {
   //   setForm({...form, id: user?._id});
   //   console.log(form);
-    
+
   // }, [form, user?._id]);
 
 
