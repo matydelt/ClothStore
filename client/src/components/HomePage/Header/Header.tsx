@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
@@ -19,13 +19,38 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Man from "../../assets/img/man.png";
 import Kids from "../../assets/img/kids.png";
+import { gsap } from 'gsap';
+
 
 // install Swiper modules
 SwiperCore.use([Autoplay, EffectFade, Navigation, Pagination]);
 
 const Header = () => {
+
+  const timeline = gsap.timeline({
+    defaults: {
+      opacity: 0,
+      duration: 1
+    }
+  })
+
+
+  useEffect(() => {
+    const typoOne = document.getElementById('typoOne');
+    const titleWoman = document.getElementById('titleWoman');
+    const imgWoman = document.getElementById('imgWoman');
+    const circleWoman = document.getElementById('circleWoman');
+
+    timeline.from(typoOne, { y: 150 })
+      .from(titleWoman, { x: -500 }, "-=.5")
+      .from(imgWoman, { y: 100 }, "-=.4")
+      .from(circleWoman, { x: 100 }, "-=2")
+  }, [])
+
+
   return (
     <>
+
       <header
         style={{ height: "100vh", background: "#f3f3f3", overflow: "hidden" }}
       >
@@ -38,22 +63,21 @@ const Header = () => {
           loop={true}
           pagination={{ clickable: true }}
           autoplay={{
-            delay: 3000,
+            delay: 4000,
           }}
         >
           {/*********** SLIDE 1 ************/}
           <SwiperSlide>
+
             <Typography
               sx={{
-                // transform: 'translate(-107%, -350%)',
-                maxWidth: '300px !important',
-                textAlign: 'center',
+                width: '231px !important',
+                textAlign: 'left',
                 fontSize: { xl: "25px !important" },
-                transform: { lg: "translateY(10%) !important", xl: "translateY(10%) !important" },
-                // fontWeight: 'lighter !important',
-
+                transform: { lg: "translate(0%, 10%)", xl: "translateY(30%)" },
               }}
               variant="h4"
+              id="typoOne"
             >
               SIEMPRE PARA TI
             </Typography>
@@ -67,8 +91,10 @@ const Header = () => {
                 },
                 textAlign: "center",
                 fontWeight: "400 !important",
+                lineHeight: '128px !important'
               }}
               variant="h2"
+              id="titleWoman"
             >
               Simplifica Todo.
             </Typography>
@@ -85,6 +111,7 @@ const Header = () => {
                 bottom: "0%",
                 height: "87%",
               }}
+              id='imgWoman'
             />
             <Box
               component="span"
@@ -98,6 +125,7 @@ const Header = () => {
                 zIndex: "-1",
                 borderRadius: "50%",
               }}
+              id='circleWoman'
             />
           </SwiperSlide>
 

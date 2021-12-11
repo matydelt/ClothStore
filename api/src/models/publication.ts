@@ -20,7 +20,6 @@ export interface Publication extends mongoose.Document {
     // qAndAs: any[];
 }
 
-
 const PublicationSchema = new Schema({
     name: {
         type: String,

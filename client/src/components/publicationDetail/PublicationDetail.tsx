@@ -1,5 +1,8 @@
 import React, { ChangeEvent, SetStateAction, useEffect, useState } from 'react';
-import { Avatar, Button, Container, FormControl, Grid, MenuItem, Select, Typography, Rating, CircularProgress, Divider, SelectChangeEvent } from '@mui/material';
+import { Avatar, Button, Container, FormControl, MenuItem, Typography, Divider, Select } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { SelectChangeEvent, Grid, CircularProgress, Rating,  } from '@mui/material';
+// import { Rating } from '@material-ui/lab';
 import { Box } from '@mui/system';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router';
@@ -14,6 +17,53 @@ import { putCarritoAmount } from '../../redux/actions/carritoAction';
 import { useDispatch } from 'react-redux';
 import RelatedPublications from './relatedPublications/RelatedPublications';
 
+
+const useStyles = makeStyles({
+  containerPublicationDetail: {
+    marginTop: '0px',
+    display: 'flex',
+    justifyContent: 'center',
+    
+  },
+  avatarPublicationDetatil: {
+    width: '350px',
+    height: '500px',
+    borderRadius: '1px',
+    bgcolor: 'white',
+    '&:hover': {
+      boxShadow: '5px'
+    }
+  },
+  avatarPublicationDetatilMuestra: {
+    marginTop: '2px', 
+    width: '50px', 
+    height: '50px', 
+    '&:hover': { boxShadow: 5 }
+  },
+  typografyDetail: {
+    marginTop: '1px', 
+    color: 'gray'
+  },
+  typografyReview: {
+    fontSize: '10px', 
+    color: 'gray', 
+    ml: 1
+  },
+  publicationDetailTypografy: {
+    marginTop: '2px'
+  },
+  publicationPriceTypografy: {
+    padding: '3px 0px', 
+    color: 'gray'
+  },
+  addCart: {
+    marginTop: '4px'
+  },
+  dividerDetail: {
+    width: '100%', 
+    margin: '4px 0px'
+  }
+})
 export interface Publication {
   _id: string;
   name: string;
@@ -45,6 +95,7 @@ export default function PublicationDetail(): JSX.Element {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
+  const classes = useStyles();
 
   useEffect(() => {
     if (publicationId && publicationId.length > 0) {
@@ -75,18 +126,17 @@ export default function PublicationDetail(): JSX.Element {
   }
 
   return (<>
-
     <Box sx={{ backgroundColor: '#eeeeee', minHeight: '100vh', height: 'max-content', pb: 20 }}>
       <NavBar></NavBar>
-      <Box sx={{ backgroundColor: '#f5f5f5', minHeight: '15vh' }}>
+      {/* <Box sx={{ backgroundColor: '#f5f5f5', minHeight: '15vh' }}>
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
 
         </Box>
-      </Box>
+      </Box> */}
 
-      <Box sx={{ mt: 0, display: 'flex', justifyContent: 'center' }}>
+      <Box sx={{ mt: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', height: '1000px' }}>
 
-        <Container sx={{ mt: -10, mb: 10 }}>
+        <Container classes={{ root: classes.containerPublicationDetail }}>
 
 
 
@@ -108,7 +158,7 @@ export default function PublicationDetail(): JSX.Element {
               >
                 {publication && publication?.images?.map(img => {
                   return <span key={img.public_id} onMouseEnter={() => imageToShow(img.url)}>
-                    <Avatar sx={{ mt: 2, width: 50, height: 50, '&:hover': { boxShadow: 5 } }} src={img.url} variant="square">
+                    <Avatar classes={{ root: classes.avatarPublicationDetatilMuestra }} src={img.url} variant="square">
 
                     </Avatar>
                   </span>
@@ -126,7 +176,7 @@ export default function PublicationDetail(): JSX.Element {
 
               >
                 {imageShow && imageShow?.length > 0 &&
-                  <Avatar variant="square" sx={{ width: 350, height: 500, borderRadius: 1, bgcolor: 'white' }} alt="" >
+                  <Avatar variant="square" classes={{ root: classes.avatarPublicationDetatil }} alt="" >
                     <SideBySideMagnifier
                       // fillAvailableSpace={true}
                       // magnifierSize="40%"
@@ -152,11 +202,11 @@ export default function PublicationDetail(): JSX.Element {
                   // '& > :not(style)': { mt: 5 },
                 }}>
 
-                <Typography variant="h5" component="p" sx={{}}>
+                <Typography variant="h5" component="p">
                   {publication && publication?.mark}
                 </Typography>
 
-                <Typography component="p" sx={{ mt: 1, color: 'gray' }}>
+                <Typography component="p" classes={{ root: classes.typografyDetail }}>
                   {publication && publication?.categorie}
                 </Typography>
 
@@ -176,16 +226,16 @@ export default function PublicationDetail(): JSX.Element {
                   <Reviews>
                     <Rating sx={{ color: '#00c2cb' }} name="read-only" value={scoreAverage} readOnly />
                   </Reviews>
-                  <Typography component="span" sx={{ fontSize: '10px', color: 'gray', ml: 1 }}>
+                  <Typography component="span" classes={{ root: classes.typografyReview }}>
                     {publication?.reviews.length} opiniones
                   </Typography>
                 </Box>
 
-                <Typography component="p" sx={{ mt: 2 }}>
+                <Typography component="p" classes={{ root: classes.publicationDetailTypografy }}>
                   {publication && publication?.detail}
                 </Typography>
 
-                <Typography variant="h5" component="h5" sx={{ py: 3, color: 'gray' }}>
+                <Typography variant="h5" component="h5" classes={{ root: classes.publicationPriceTypografy }}>
                   $ {publication?.price}
                 </Typography>
 
@@ -218,12 +268,16 @@ export default function PublicationDetail(): JSX.Element {
                       <FormControl variant="standard">
                         {/* <InputLabel id="demo-simple-select-standard-label">Cantidad</InputLabel> */}
                         <Select defaultValue={1}
-                          onChange={(event: SelectChangeEvent<number>) => setAmount(event.target.value as SetStateAction<number>)}
+                          onChange={(event) => setAmount(event.target.value as SetStateAction<number>)}
+                          // onChange={(event: SelectChangeEvent<number>) => setAmount(event.target.value as SetStateAction<number>)}
                           value={amount}
                           name="amount"
                           labelId="demo-simple-select-standard-label"
                           id="demo-simple-select-standard"
                           label="Categoría"
+                          // sx={{color: '#00c2cb'}}
+                          color='secondary'
+                          variant='standard'
                         >
                           {
                             Array.from(Array(publication?.stock).keys()).map((s) => {
@@ -235,7 +289,7 @@ export default function PublicationDetail(): JSX.Element {
                       </FormControl>
 
                     </Grid>
-                    <Button onClick={handleAddCart} variant="outlined" fullWidth sx={{ mt: 4 }}>
+                    <Button color='primary' onClick={handleAddCart} variant="outlined" fullWidth classes={{ root: classes.addCart }}>
                       Añadir al carrito
                     </Button>
                   </Grid>
@@ -252,7 +306,7 @@ export default function PublicationDetail(): JSX.Element {
 
               </Grid>
 
-              <Divider sx={{ width: '100%', my: 4 }}></Divider>
+              <Divider classes={{ root: classes.dividerDetail }}></Divider>
 
               <QAndA></QAndA>
 
@@ -260,21 +314,21 @@ export default function PublicationDetail(): JSX.Element {
 
           </Grid>
 
-          
-          { !loading &&
 
-          <Box sx={{ width: '100%', my: 6, height: 'max-content' }}>
-
-            <Typography variant="h5" component="h5" style={{ marginBottom: '20px'}}>Publicaciones relacionadas</Typography>
-
-            <RelatedPublications publicationId={publicationId}></RelatedPublications>
-          </Box>
-
-          }
 
         </Container>
 
       </Box>
+          {!loading &&
+
+            <Box sx={{ width: '100%', my: 6, height: 'max-content' }}>
+
+              <Typography align='center' variant="h5" component="h5" style={{ marginBottom: '20px' }}>Publicaciones relacionadas</Typography>
+
+              <RelatedPublications publicationId={publicationId}></RelatedPublications>
+            </Box>
+
+          }
     </Box>
   </>)
 }
