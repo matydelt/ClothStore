@@ -18,6 +18,7 @@ interface Props {
   children: any;
   userId: string | undefined;
   publicationId: string | undefined;
+  getPublications: () => void;
 }
 
 const getTodayDate = () => {
@@ -27,7 +28,7 @@ const getTodayDate = () => {
   return tomorrow
 }
 
-export default function DiscountModal({ children, userId, publicationId }: Props) {
+export default function DiscountModal({ children, userId, publicationId, getPublications }: Props) {
 
   const [open, setOpen] = React.useState(false);
 
@@ -66,6 +67,7 @@ export default function DiscountModal({ children, userId, publicationId }: Props
         expirationDate
       })
       setExpirationDate(getTodayDate());
+      getPublications();
     });
   };
 

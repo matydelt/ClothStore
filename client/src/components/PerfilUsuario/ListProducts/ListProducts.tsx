@@ -47,10 +47,15 @@ export default function ListProducts(props:User) {
         //     })
         // }
         // getOneUser()
-        axios.get(`http://localhost:3001/publications`, { params: { authorId: props.id }}).then(({ data }) => {
-                setArticulos(data)
-            })
+        getPublications()
     }, [])
+
+    function getPublications(): void {
+        axios.get(`http://localhost:3001/publications`, { params: { authorId: props.id }}).then(({ data }) => {
+            setArticulos(data)
+        });
+    };
+
     return (
         <Box style={{marginTop: "100px",marginLeft: "100px"}}>
             <div style={{ display: "flex", justifyContent: "center" }}>
@@ -85,9 +90,9 @@ export default function ListProducts(props:User) {
                     <TableCell align="right">{e.categorie}</TableCell>
                     <TableCell align="right">{e.gender}</TableCell>
                     <TableCell align="right">{e.price}</TableCell>
-                    <TableCell align="right">{e.discount && (e.price * e.discount.percentage / 100) + ` (${e?.discount?.percentage}%)` } </TableCell>
+                    <TableCell align="right">{e.discount && (e.price - e.price * e.discount.percentage / 100) + ` (${e?.discount?.percentage}%)` } </TableCell>
                     <TableCell sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }} align="right">
-                        <DiscountModal userId={props?.id} publicationId={e?._id}>
+                        <DiscountModal userId={props?.id} publicationId={e?._id} getPublications={getPublications}>
                         <Button>Aplicar descuento</Button>
                         </DiscountModal>
                         

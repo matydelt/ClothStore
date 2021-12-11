@@ -14,10 +14,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // import "swiper/components/scrollbar/scrollbar.min.css";
 // import "swiper/components/autoplay";
 import SwiperCore, {
-  Autoplay,
-  EffectFade,
-  Navigation,
-  Pagination,
+    Autoplay,
+    EffectFade,
+    Navigation,
+    Pagination,
 } from "swiper";
 
 SwiperCore.use([Autoplay, EffectFade, Navigation, Pagination]);
@@ -44,27 +44,27 @@ export default function RelatedPublications({ publicationId }: props): JSX.Eleme
         <Box sx={{ width: '100%' }}>
 
 
-<Swiper
-          spaceBetween={35}
-          slidesPerView={4}
-          navigation={true}
-          effect={"slide"}
-          loop={false}
-        
-        //   pagination={{ clickable: true }}
-   
-        >
-            {
-                publications.map((e: Publication) => {
-                    return (
-                        <SwiperSlide key={e._id} style={{  width: 'auto', justifyContent: 'space-between'}}>
-                            <CardPublicacion discount={e.discount} name={e.name} author={e.author} images={e.images} mark={e.mark} stock={e.stock} price={e.price} categorie={e.categorie} detail={e.detail} gender={e.gender} key={e._id} id={e._id}
-                            />
+            <Swiper
+                spaceBetween={35}
+                slidesPerView={4}
+                navigation={true}
+                effect={"slide"}
+                loop={false}
+
+            //   pagination={{ clickable: true }}
+
+            >
+                {
+                    publications.map((e: Publication) => {
+                        return (
+                            <SwiperSlide key={e._id} style={{ width: 'auto', justifyContent: 'space-between' }}>
+                                <CardPublicacion discount={e.discount} name={e.name} author={e.author} images={e.images} mark={e.mark} stock={e.stock} price={e.price} categorie={e.categorie} detail={e.detail} gender={e.gender} key={e._id} id={e._id}
+                                />
                             </SwiperSlide>
-                    )
-                })
-            }
-        </Swiper>
-            </Box>
+                        )
+                    })
+                }
+            </Swiper>
+        </Box>
     )
 };
