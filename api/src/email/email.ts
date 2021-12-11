@@ -1,20 +1,11 @@
 const nodemailer = require('nodemailer');
 
-// const emailConfig = require('./config');
-
 const { promisify } = require('util');
 const fs = require('fs');
 
 const readFile = promisify(fs.readFile);
-// const writeFile = promisify(fs.writeFile);
 
 let transport = nodemailer.createTransport({
-    // host: emailConfig.host,
-    // port: emailConfig.port,
-    // auth: {
-    //     user: emailConfig.user,
-    //     pass: emailConfig.pass
-    // }
     service: 'gmail',
     auth: {
         user: 'no.reply.clothstore@gmail.com',

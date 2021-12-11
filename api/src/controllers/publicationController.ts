@@ -9,8 +9,7 @@ export default class PublicationController {
     const { publicationId } = req.query;
 
     try {
-      const { name, images, id, stock, mark, detail, price, category, gender } =
-        req.body;
+      const { name, images, id, stock, mark, detail, price, category, gender } = req.body;
       function numOrder() {
         const value: string = (Math.random() * 0xffffff * 1000000).toString(16);
         return `${value.slice(0, 6)}`;
@@ -20,7 +19,7 @@ export default class PublicationController {
       if (publicationId) {
         await PublicationSchema.findByIdAndUpdate(
           publicationId,
-          { name, images, stock, mark, detail, price, category, gender },
+          { name, images, stock, mark, detail, price, category, gender, isRejected: false },
           { new: true }
         );
         res.json(publicationId);
@@ -29,6 +28,7 @@ export default class PublicationController {
           name,
           images,
           stock,
+          stockInicial: stock,
           mark,
           detail,
           price,
@@ -69,7 +69,7 @@ export default class PublicationController {
 
       if (name && name !== "") {
         allPublications = allPublications.filter((e) => {
-          return e.name.search(name as string) > -1;
+          return e.name.toLowerCase().search((name as string).toLowerCase()) > -1;
         });
       }
       switch (order) {
@@ -181,8 +181,9 @@ export default class PublicationController {
 
   static async putStock(req: Request, res: Response): Promise<void> {
     try {
-      const { id, stock } = req.body;
+      const { id, stock } = req.body;//stockInicial
       await PublicationSchema.findById(id).updateOne({ stock: stock });
+      await PublicationSchema.findById(id).updateOne({ stockInicial: stock });
       res.send("stock modificado");
     } catch (e) {
       console.log(e);
@@ -238,6 +239,7 @@ export default class PublicationController {
             publicationPrice: publication?.price,
             email: seller?.email,
             mensaje: "Su publicacion a sido APROBADA!",
+            subject: "Tu publicacion fue aprobada",
             htmlFile: "question.html",
           });
           res.sendStatus(200);
@@ -258,19 +260,35 @@ export default class PublicationController {
     }
   }
 
-  static async postPublicationMessageADM(
-    req: Request,
-    res: Response
-  ): Promise<void> {
+  static async getRelatedPublications(req: Request, res: Response): Promise<void> {
+    try {
+      const { publicationId } = req.query;
+
+      const publication = await PublicationSchema.findById(publicationId);
+
+      const publications = await PublicationSchema.find({ category: publication?.category, name: { $ne: publication?.name } }).limit(12);
+
+      if (publication) {
+        res.json(publications);
+      } else {
+        res.json({ msg: "La publicación no existe" });
+      }
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  }
+
+  static async postPublicationMessageADM(req: Request, res: Response): Promise<void> {
     try {
       const { id, message } = req.body;
-      const publication = await PublicationSchema.findByIdAndUpdate(id, {
-        message: message,
-      });
+      const publication = await PublicationSchema.findByIdAndUpdate(id, { message: message, isRejected: true });
       const seller = await UserSchema.findById(publication?.author);
+      console.log(publication)
       sendEMail.send({
         email: seller?.email,
         mensaje: message,
+        subject: "Tu publicacion fue rechazada",
         htmlFile: "question.html",
       });
       res.sendStatus(200);

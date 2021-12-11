@@ -104,6 +104,7 @@ export default class UserController {
     try {
       const { id } = req.params;
       const user = await UserSchema.findOne({ _id: id });
+      console.log("----------------user--------------",user)
       res.json(user);
     } catch (error) {
       console.log("error en get one user");

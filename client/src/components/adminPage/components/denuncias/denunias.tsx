@@ -8,7 +8,7 @@ import { Publication } from "../../../../redux/types"
 import ENavBar from "../../employeeNavBar"
 import NavBar from "../../navBar"
 import { Link } from 'react-router-dom';
-import "./publicaciones.css"
+import "./denuncias.css"
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { activatePublication, publicationMessage, putPublications } from "../../../../redux/actions/publicationActions"
 import CloseIcon from '@mui/icons-material/Close';
@@ -18,7 +18,7 @@ interface State {
     userSignin: any,
 }
 
-const PublicacionesAdmPage = () => {
+const Denuncias = () => {
     const dispatch = useDispatch()
     const state = useSelector((state: State) => state)
     const { userInfo } = useSelector((state: State) => state.userSignin)
@@ -138,4 +138,4 @@ const PublicacionesAdmPage = () => {
     )
 }
 
-export default PublicacionesAdmPage
+export default Denuncias;

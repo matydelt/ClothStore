@@ -18,10 +18,11 @@ function NavBar() {
                 <button className='menu-bars' style={{ border: "none", cursor: "pointer", color: "black" }} onClick={showSidebar} >
                     <MenuIcon />
                 </button>
-                <div style={{ marginLeft: "90%" }}>
+                <div style={{ marginLeft: "90%" }}><Link to="/perfil">
                     <button style={{ border: "none", backgroundColor: "transparent", cursor: "pointer" }}>
                         <div style={{ display: "flex" }}><PersonIcon sx={{ marginTop: "15%" }} />  <h3>Perfil</h3></div>
                     </button>
+                </Link>
                 </div>
 
             </div>

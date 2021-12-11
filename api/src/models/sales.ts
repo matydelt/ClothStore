@@ -1,6 +1,6 @@
 import mongoose, { Schema, model, Types } from 'mongoose'
 
-export interface Shopping extends mongoose.Document {
+export interface Sales extends mongoose.Document {
     publications: {publication: Types.ObjectId, price: number, quantity: number, image: string, title: string}[];
     price: number;
     amount: number;
@@ -9,7 +9,7 @@ export interface Shopping extends mongoose.Document {
 
 }
 
-const ShoppingSchema = new Schema({
+const SalesSchema = new Schema({
     publications: [
         {
             publication: {
@@ -52,4 +52,4 @@ const ShoppingSchema = new Schema({
     }
 })
 
-export default model<Shopping>("Shopping", ShoppingSchema)
+export default model<Sales>("Sales", SalesSchema)

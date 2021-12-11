@@ -75,81 +75,133 @@ export default class CarritoController {
       console.error(error);
     }
   }
-  static async putCarrito(req: Request, res: Response) {
+
+  static async putCarritoAmount(req: Request, res: Response) {
     let nuevo: boolean = false;
     try {
-      const { id, email } = req.params;
+      const { id, email, amount } = req.params
+      const user = await UserSchema.findOne({ "email": `${email}` })
 
-      const user = await UserSchema.findOne({ email: `${email}` });
-
-      const carritoBuscado: any = await carritoSchema.findOne({
-        userId: user?._id,
-      });
-      const publicationSearched = carritoBuscado?.publications?.find(
-        (p: any) => {
-          if (p?.publication.equals(id)) {
-            p.quantity++;
-            nuevo = false;
-            return p;
-          } else {
-            nuevo = true;
-          }
+      const carritoBuscado: any = await carritoSchema.findOne({ userId: user?._id })
+      const publicationSearched = carritoBuscado?.publications?.find((p: any) => {
+        if (p?.publication.equals(id)) {
+          console.log('entró en if')
+          p.quantity = p.quantity + parseInt(amount)
+          nuevo = false;
+          return p;
+        } else {
+          console.log('entró en else')
+          nuevo = true;
         }
-      );
+      })
 
       if (!publicationSearched) {
-        const findPublic = await PublicationSchema.findById(id);
+        const findPublic = await PublicationSchema.findById(id)
 
         if (findPublic) {
           carritoBuscado?.publications?.push({
             publication: findPublic._id,
-            quantity: 1,
+            quantity: parseInt(amount),
             title: findPublic?.name,
             image: findPublic?.images[0].url,
-            price: findPublic.price,
+            price: findPublic.price
           });
         }
       }
 
-      carritoBuscado.markModified("publications");
-      await carritoBuscado.save();
+      carritoBuscado.markModified('publications')
+      await carritoBuscado.save()
 
       res.status(200).json(carritoBuscado);
     } catch (error) {
       console.error(error);
     }
   }
+  static async putCarrito(req: Request, res: Response) {
+    let nuevo: boolean = false;
+    try {
+
+      const { id, email } = req.params
+      console.log("---------id ---------", id)
+
+      console.log("---------email ---------", email)
+
+      const user = await UserSchema.findOne({ "email": `${email}` })
+      console.log("------user-----", user)
+
+      const carritoBuscado: any = await carritoSchema.findOne({ userId: user?._id })
+      console.log("------carritoBuscado-----", carritoBuscado)
+      const publicationSearched = carritoBuscado?.publications?.find((p: any) => {
+        if (p?.publication.equals(id)) {
+          console.log('entró en if')
+          p.quantity++
+          nuevo = false;
+          return p;
+        } else {
+          console.log('entró en else')
+          nuevo = true;
+        }
+
+      })
+      console.log("------publicationSearched-----", publicationSearched)
+
+      if (!publicationSearched) {
+        const findPublic = await PublicationSchema.findById(id)
+        console.log("------findPublic-----", findPublic)
+
+        if (findPublic) {
+
+          carritoBuscado?.publications?.push({
+            publication: findPublic._id,
+            quantity: 1,
+            title: findPublic?.name,
+            image: findPublic?.images[0].url,
+            price: findPublic.price
+          });
+          console.log(carritoBuscado?.publications, '-----------------------------------------------------------asdsdsadsa')
+        }
+
+      }
+
+      carritoBuscado.markModified('publications')
+      await carritoBuscado.save()
+      console.log(carritoBuscado.publications, 'publication******')
+
+      res.status(200).json(carritoBuscado);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   static async putCarritoRemove(req: Request, res: Response) {
     let nuevo: boolean = false;
     try {
-      const { id, email } = req.params;
 
-      const user = await UserSchema.findOne({ email });
+      const { id, email } = req.params
 
-      const carritoBuscado: any = await carritoSchema.findOne({
-        userId: user?._id,
-      });
+      const user = await UserSchema.findOne({ email })
 
-      const publicationSearched = carritoBuscado?.publications?.find(
-        (p: any) => {
-          if (p?.publication.equals(id)) {
-            if (p.quantity < 2) {
-              carritoBuscado.publications = carritoBuscado?.publications.filter(
-                (publicationDelete: any) =>
-                  publicationDelete.publication !== p.publication
-              );
-              return;
-            }
-            p.quantity--;
-            nuevo = false;
-            return p;
-          }
+      const carritoBuscado: any = await carritoSchema.findOne({ userId: user?._id })
+
+      const publicationSearched = carritoBuscado?.publications?.find((p: any) => {
+        if (p?.publication.equals(id)) {
+          if (p.quantity < 2) {
+            carritoBuscado.publications = carritoBuscado?.publications.filter((publicationDelete: any) => publicationDelete.publication !== p.publication);
+            console.log(p, 'publicacion borrada')
+            return;
+          };
+          p.quantity--
+          nuevo = false;
+          return p;
         }
-      );
+      })
 
-      carritoBuscado.markModified("publications");
-      await carritoBuscado.save();
-      console.log("publication END");
+
+
+      carritoBuscado?.markModified('publications')
+      await carritoBuscado.save()
+      console.log('publication END')
+
 
       res.status(200).json(carritoBuscado);
     } catch (error) {

@@ -89,11 +89,11 @@ export default function PefilUsuario() {
     const phone: string|undefined=user.phone
     const email: string|undefined=user?.email
     const dni: string|undefined=user.dni
-    const calle: string|undefined=user.domicilio[0].street
-    const numero: string|undefined=user.domicilio[0].suite
-    const ciudad: string|undefined=user.domicilio[0].city
-    const country:string|undefined=user.domicilio[0].country
-    const cp: string|undefined=user.domicilio[0].cp
+    const calle: string|undefined=user.domicilio[0]?.street
+    const numero: string|undefined=user.domicilio[0]?.suite
+    const ciudad: string|undefined=user.domicilio[0]?.city
+    const country:string|undefined=user.domicilio[0]?.country
+    const cp: string|undefined=user.domicilio[0]?.cp
     console.log(calle,numero,ciudad)
 
     return (

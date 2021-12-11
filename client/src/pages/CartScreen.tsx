@@ -130,9 +130,9 @@ export default function CartScreen() {
   };
 
   const handleMercadoPago = (): void => {
-    let order = carrito.publications;
-    axios.post("/checkout", order).then(({ data }) => {
-      var win = window.open(data, "_blank");
+    let order = carrito;
+    axios.post('/checkout', order).then(({ data }) => {
+      var win = window.open(data, '_blank');
       win?.focus();
       console.log(data);
     });
