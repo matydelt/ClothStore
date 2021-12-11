@@ -4,6 +4,8 @@ import DenunciationSchema, { Denunciation } from "../models/denunciation";
 import PublicationSchema, { Publication } from "../models/publication";
 import UserSchema, { User } from "../models/user";
 
+
+
 export default class DenunciationController {
 
     static async set(req: Request, res: Response): Promise<Response> {
@@ -14,6 +16,7 @@ export default class DenunciationController {
 
             return res.sendStatus(200);
 
+
         } catch (e) {
             console.log(e);
             return res.sendStatus(500);
@@ -23,8 +26,18 @@ export default class DenunciationController {
     static async get(req: Request, res: Response): Promise<Response> {
         try {
             const denunciations: Denunciation[] = await DenunciationSchema.find()
+            const response: any[] = []
+            for (let i = 0; i < denunciations.length; i++) {
+                const publication = await PublicationSchema.findById(denunciations[i].publication[0])
+                response.push({
+                    publication: publication,
+                    author: await UserSchema.findById(denunciations[i].author[0]),
+                    denunciation: denunciations[i],
+                    infractor: (await UserSchema.findById(publication?.author))
+                })
+            }
+            return res.json(response);
 
-            return res.json(denunciations);
         } catch (error) {
             console.log(error);
             return res.sendStatus(500);
@@ -45,19 +58,18 @@ export default class DenunciationController {
     static async put(req: Request, res: Response): Promise<Response> {
 
         try {
-            const { denunciationId, flag } = req.body;
+            const { denunciationId } = req.body;
 
             const denunciation = await DenunciationSchema.findById(denunciationId)
             if (denunciation) {
-
                 const publication = await PublicationSchema.findById(denunciation?.publication)
                 const infractor = await UserSchema.findById(publication?.author)
 
-                if (flag && infractor && denunciation) {
+                denunciation.state = true
+                if (infractor && denunciation) {
 
                     infractor.denunciations.push(denunciation)
                 }
-                denunciation.state = true
                 await denunciation.save();
 
                 return res.sendStatus(200);

@@ -7,7 +7,7 @@ export default class UserController {
     try {
       const { firstName, lastName, phone, email, password, photo } = req.body;
       const users = await UserSchema.find()
-      console.log("----------------U---",users)
+      console.log("----------------U---", users)
       if (users.length > 0) {
         const user: User = new UserSchema({
           phone,
@@ -18,7 +18,7 @@ export default class UserController {
           type: "normal"
         });
         const userSave = await user.save();
-        
+
         const carrito: Carrito = new carritoSchema({
           publications: undefined,
           userId: userSave._id
@@ -100,6 +100,7 @@ export default class UserController {
   static async getOneUser(req: Request, res: Response) {
     try {
       const { id } = req.params;
+      console.log(req.params)
       const user = await UserSchema.findOne({ _id: id });
       res.json(user);
     } catch (error) {

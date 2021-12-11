@@ -26,7 +26,7 @@
     background-color: rgb(170, 25, 25);
 
 }
-.modal-contenido{
+.infractor{
     background-color:rgba(233, 233, 233, 0.993);
     width:300px;
     padding: 10px 20px;
@@ -45,12 +45,12 @@
     pointer-events:none;
     transition: all 1s;
   }
-  #miModal:target{
+  #infractor:target{
     opacity:1;
     pointer-events:auto;
   }
 
-  .modal-contenido2{
+  .author{
     background-color:rgba(233, 233, 233, 0.993);
     width:300px;
     padding: 10px 20px;
@@ -69,7 +69,7 @@
     pointer-events:none;
     transition: all 1s;
   }
-  #miModa:target{
+  #author:target{
     opacity:1;
     pointer-events:auto;
   }

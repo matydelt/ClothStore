@@ -230,7 +230,7 @@ export default class PublicationController {
             email: seller?.email,
             mensaje: "Su publicacion a sido APROBADA!",
             subject: "Tu publicacion fue aprobada",
-            htmlFile: "question.html",
+            htmlFile: "publicationApproved.html",
           })
           res.sendStatus(200)
         } else {
@@ -279,7 +279,7 @@ export default class PublicationController {
         email: seller?.email,
         mensaje: message,
         subject: "Tu publicacion fue rechazada",
-        htmlFile: "question.html",
+        htmlFile: "publicationRejected.html",
       })
       res.sendStatus(200);
     } catch (error) {
