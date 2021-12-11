@@ -14,7 +14,7 @@ interface Publication  {
     author: string;
     gender: string;
     key: string;
-    _id: string;
+    id: string;
 }
 interface Articulos{
     articulos:[Publication]
@@ -22,7 +22,7 @@ interface Articulos{
 interface User{
     id:string|undefined
 }
-export default function ListProducts(props:User) {
+export default function ListSales(props:User) {
     const [articulos, setArticulos] = React.useState<[Publication]>([{
         name:"",
         images: [],
@@ -34,7 +34,7 @@ export default function ListProducts(props:User) {
         author: "",
         gender: "",
         key: "",
-        _id: "",
+        id: "",
     }],)
     React.useEffect(() => {
         async function getOneUser() {
@@ -77,7 +77,7 @@ export default function ListProducts(props:User) {
                     <TableCell align="right">{e.category}</TableCell>
                     <TableCell align="right">{e.gender}</TableCell>
                     <TableCell align="right">{e.price}</TableCell>
-                    <TableCell align="right"> <Link to={`/actualizar-publicacion/${e._id}`}><button>Actualizar</button></Link></TableCell>
+                    <TableCell align="right"> <Link to={`/actualizar-publicacion/${e.id}`}><button>Actualizar</button></Link></TableCell>
                 </TableRow>
             ))}
         </TableBody>

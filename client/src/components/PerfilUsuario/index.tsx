@@ -7,6 +7,8 @@ import SidebarUser from './SideBarUser/SidebarUser'
 import { Route, Routes } from "react-router";
 import ManagementUserProfile from './Profile'
 import ListProducts from './ListProducts/ListProducts'
+import ListSales from './ListSales/ListSales'
+import ListShopping from './ListShopping/ListShopping'
 
 interface PropsUser {
     photo: string|undefined;
@@ -125,6 +127,8 @@ export default function PefilUsuario() {
                 cp={cp}
             />}/>
             <Route path="productos" element={<ListProducts id={GetUser?._id}/>}></Route>
+            <Route path="ventas" element={<ListSales id={GetUser?._id}/>}></Route>
+            <Route path="compras" element={<ListShopping id={GetUser?._id}/>}></Route>
         
         </Routes>
         </>
