@@ -19,7 +19,7 @@ import { putCarritoAmount } from '../../redux/actions/carritoAction';
 import { useDispatch } from 'react-redux';
 import RelatedPublications from './relatedPublications/RelatedPublications';
 import useLocalStorage from '../../hooks/useLocalStorage';
-import { CartType } from '../../pages/CartScreen';
+import { CartItemType, CartType } from '../../pages/CartScreen';
 
 
 const useStyles = makeStyles({
@@ -59,6 +59,15 @@ const useStyles = makeStyles({
   publicationPriceTypografy: {
     padding: '3px 0px', 
     color: 'gray'
+  },
+  publicationPriceWithoutDiscount: {
+    paddingTop: '3px', color: 'gray', textDecoration: 'line-through'
+  },
+  publicationPriceWithDiscount: {
+    padding: '3px 0 3px 0', marginRight: '10px', color: 'gray', display: 'inline'
+  },
+  offPercentage: {
+    color: 'green', display: 'inline'
   },
   addCart: {
     marginTop: '4px'
@@ -134,13 +143,13 @@ export default function PublicationDetail(): JSX.Element {
           let aux: any = localStorage.getItem("cart");
           console.log(typeof aux);
           if (typeof aux === "string") aux = JSON.parse(aux);
-          const isItemInCart = aux.find((item: any) => item.id === publication?._id);
+          const isItemInCart: CartItemType = aux.find((item: any) => item.id === publication?._id);
           if (isItemInCart) {
-            isItemInCart.amount += amount;
+            isItemInCart.quantity += amount;
             return aux;
           }
           if (publication.images) {
-            return [...aux, { title: publication?.name, id: publication?._id, image: publication?.images[0].url, amount, price: publication?.discount ? publication?.price - publication?.price*publication?.discount.percentage/100 : publication?.price  }];
+            return [...aux, { title: publication?.name, id: publication?._id, image: publication?.images[0].url, quantity: amount, price: publication?.discount ? publication?.price - publication?.price*publication?.discount.percentage/100 : publication?.price  }];
           }
         });
       }
@@ -263,19 +272,21 @@ export default function PublicationDetail(): JSX.Element {
 { publication?.discount ?
 <div style={{ marginTop: '20px', marginBottom: '20px'}}>
 
-                <Typography component="p" sx={{ pt: 3, color: 'gray', textDecoration: 'line-through' }}>
+                {/* <Typography component="p" sx={{ pt: 3, color: 'gray', textDecoration: 'line-through' }}> */}
+                <Typography component="p" classes={{ root: classes.publicationPriceWithoutDiscount }}>
                   $ {publication?.price}
-                  </Typography>
-                <Typography variant="h5" component="h5" sx={{ py: 3, mr: 2, color: 'gray', display: 'inline' }}>
+                </Typography>
+                <Typography variant="h5" component="h5" classes={{ root: classes.publicationPriceWithDiscount }}>
                   $ { publication?.price - (Number(publication?.price)*Number(publication?.discount.percentage)) / 100}
                 </Typography>
-                <Typography component="p" sx={{ color: 'green', display: 'inline' }}>
+                <Typography component="p" classes={{ root: classes.offPercentage }}>
                   {publication?.discount?.percentage}% OFF
                 </Typography>
 </div>
 :
 
-                <Typography variant="h5" component="h5" sx={{ py: 3, color: 'gray' }}>
+                // <Typography variant="h5" component="h5" sx={{ py: 3, color: 'gray' }}>
+                <Typography variant="h5" component="h5" classes={{ root: classes.publicationPriceTypografy }}>
                   $ {publication?.price}
                 </Typography>
 }

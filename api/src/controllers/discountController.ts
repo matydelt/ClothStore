@@ -14,8 +14,6 @@ export default class DiscountController {
         try {
             const discountCreated = new DiscountSchema({ publication: publicationId, author: authorId, percentage, amount });
 
-
-
             discountCreated.expireAt = expirationDate;
 
             await discountCreated.save();
@@ -38,4 +36,26 @@ export default class DiscountController {
         }
 
     }
+
+    static async removeDiscount(req: Request, res: Response) {
+        const { publicationId } = req.body;
+        
+        try {
+            const publication = await PublicationSchema.findById(publicationId);
+            console.log(publication)
+            if (publication) {
+                await DiscountSchema.findByIdAndRemove(publication.discount);
+                return res.sendStatus(200);
+            } else {
+                return res.sendStatus(404);
+            }
+
+        } catch (error) {
+            console.log(error);
+            return res.sendStatus(500);
+        }
+
+    }
+
+
 }

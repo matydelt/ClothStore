@@ -7,12 +7,6 @@ import { ArrowCircleUpOutlined } from '@mui/icons-material';
 import { Publication } from '../../../redux/types';
 import { Box } from '@mui/system';
 import { Swiper, SwiperSlide } from "swiper/react";
-// import "swiper/swiper-bundle.min.css";
-// import "swiper/swiper.min.css";
-// import "swiper/components/navigation/navigation.min.css";
-// import "swiper/components/pagination/pagination.min.css";
-// import "swiper/components/scrollbar/scrollbar.min.css";
-// import "swiper/components/autoplay";
 import SwiperCore, {
     Autoplay,
     EffectFade,
@@ -46,19 +40,17 @@ export default function RelatedPublications({ publicationId }: props): JSX.Eleme
 
 
             <Swiper
-                spaceBetween={35}
-                slidesPerView={4}
+                spaceBetween={-335}
+                slidesPerView={5}
                 navigation={true}
                 effect={"slide"}
                 loop={false}
-
-            //   pagination={{ clickable: true }}
-
-            >
+                className='swipePublicaionRelated'
+                >
                 {
                     publications.map((e: Publication) => {
                         return (
-                            <SwiperSlide key={e._id} style={{ width: 'auto', justifyContent: 'space-between' }}>
+                            <SwiperSlide className='cardPublicationRelated' key={e._id}>
                                 <CardPublicacion discount={e.discount} name={e.name} author={e.author} images={e.images} mark={e.mark} stock={e.stock} price={e.price} categorie={e.categorie} detail={e.detail} gender={e.gender} key={e._id} id={e._id}
                                 />
                             </SwiperSlide>

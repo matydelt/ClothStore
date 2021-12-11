@@ -56,6 +56,13 @@ export default function ListProducts(props:User) {
         });
     };
 
+    function removeDiscount(publicationId: string): void {
+        axios.post('/discount/remove', {publicationId}).then(({data}) => {
+            console.log(data)
+            getPublications();
+        });
+    };
+
     return (
         <Box style={{marginTop: "100px",marginLeft: "100px"}}>
             <div style={{ display: "flex", justifyContent: "center" }}>
@@ -90,10 +97,18 @@ export default function ListProducts(props:User) {
                     <TableCell align="right">{e.category}</TableCell>
                     <TableCell align="right">{e.gender}</TableCell>
                     <TableCell align="right">{e.price}</TableCell>
-                    <TableCell align="right">{e.discount && (e.price - e.price * e.discount.percentage / 100) + ` (${e?.discount?.percentage}%)` } </TableCell>
+                    <TableCell align="right">
+                        {e.discount && 
+                        <Box component="div">
+
+                        {(e.price - e.price * e.discount.percentage / 100) + ` (${e?.discount?.percentage}%)` }
+                        <Button onClick={() => removeDiscount(e._id)}>Cancelar</Button>
+                        </Box>
+                        }
+                    </TableCell>
                     <TableCell sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }} align="right">
                         <DiscountModal userId={props?.id} publicationId={e?._id} getPublications={getPublications}>
-                        <Button>Aplicar descuento</Button>
+                        <Button>{ e.discount ? 'Reemplazar descuento' : 'Aplicar descuento'}</Button>
                         </DiscountModal>
                         
                     <Link to={`/actualizar-publicacion/${e._id}`}><Button>Actualizar</Button></Link></TableCell>

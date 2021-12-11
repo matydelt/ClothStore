@@ -49,7 +49,8 @@ export default function CardPublicacion(props: Props) {
 
   const item: CartItemType = {
     id,
-    quantity: stock,
+    // quantity: stock,
+    quantity: 1,
     price,
     image: images[0]?.url,
     title: name,
@@ -158,6 +159,7 @@ export default function CardPublicacion(props: Props) {
             <Box component="div" textAlign={'center'}>
           <Typography
             sx={{ fontSize: "17px", textAlign: "center", display: 'inline' }}
+            // sx={{ fontSize: "17px !important", textAlign: "center" }}
             variant="body2"
           >
             $ {discount ? 

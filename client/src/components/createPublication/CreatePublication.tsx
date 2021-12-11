@@ -80,9 +80,9 @@ export default function CreatePublication(): JSX.Element {
     e.preventDefault();
 
     axios.post('http://localhost:3001/publications/new', form, { params: { publicationId } }).then(({ data }) => {
-      setTimeout(() => {
+ 
         navigate(`/publication/${data}`)
-      }, 2000);
+ 
     });
   }
 
