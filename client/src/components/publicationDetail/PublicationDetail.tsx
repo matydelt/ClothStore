@@ -13,6 +13,8 @@ import { useAuth } from '../../hooks/useAuth';
 import { putCarritoAmount } from '../../redux/actions/carritoAction';
 import { useDispatch } from 'react-redux';
 import RelatedPublications from './relatedPublications/RelatedPublications';
+import useLocalStorage from '../../hooks/useLocalStorage';
+import { CartType } from '../../pages/CartScreen';
 
 export interface Publication {
   _id: string;
@@ -36,6 +38,7 @@ export default function PublicationDetail(): JSX.Element {
 
   const [publication, setPublication] = useState<Publication | undefined>();
   const [scoreAverage, setScoreAverage] = React.useState<number>(0);
+  const [cart, setCart] = useLocalStorage<CartType | undefined>("cart", []);
 
   const [imageShow, setImageShow] = useState<string>();
   const [loading, setLoading] = useState<boolean>(true);
@@ -70,9 +73,28 @@ export default function PublicationDetail(): JSX.Element {
 
   const handleAddCart = (): void => {
     if (publication) {
-      dispatch(putCarritoAmount(auth?.user?.email, publication?._id, amount))
-      navigate('/cart');
+
+      if (auth?.user) {
+        dispatch(putCarritoAmount(auth?.user?.email, publication?._id, amount))
+      } else {
+        setCart(() => {
+          let aux: any = localStorage.getItem("cart");
+          console.log(typeof aux);
+          if (typeof aux === "string") aux = JSON.parse(aux);
+          const isItemInCart = aux.find((item: any) => item.id === publication?._id);
+          if (isItemInCart) {
+            isItemInCart.amount += amount;
+            return aux;
+          }
+          if (publication.images) {
+            return [...aux, { title: publication?.name, id: publication?._id, image: publication?.images[0].url, amount, price: publication?.discount ? publication?.price - publication?.price*publication?.discount.percentage/100 : publication?.price  }];
+          }
+        });
+      }
+
     }
+
+    navigate('/cart');
   }
 
   return (<>

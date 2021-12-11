@@ -65,7 +65,7 @@ export default function CardPublicacion(props: Props) {
         return aux;
       }
       console.log(clickedItem);
-      return [...aux, { ...clickedItem, amount: 1 }];
+      return [...aux, { ...clickedItem, amount: 1, price: discount ? price - price*discount.percentage/100 : price  }];
     });
   };
 
@@ -144,7 +144,7 @@ export default function CardPublicacion(props: Props) {
             variant="body2"
           >
             $ {discount ? 
-            (price * discount?.percentage / 100)
+            price - (price * discount?.percentage / 100)
             :
              `  ${price}`
              }

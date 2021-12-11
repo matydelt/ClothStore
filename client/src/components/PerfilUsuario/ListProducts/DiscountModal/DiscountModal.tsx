@@ -77,7 +77,8 @@ export default function DiscountModal({ children, userId, publicationId }: Props
   const handleDate = (newValue: Date | null) => {
     if (newValue) {
 
-      setForm({ ...form, expirationDate: new Date(Date.UTC(newValue && newValue?.getFullYear(), newValue?.getMonth(), newValue?.getDate())) });
+      // setForm({ ...form, expirationDate: new Date(Date.UTC(newValue && newValue?.getFullYear(), newValue?.getMonth(), newValue?.getDate())) });
+      setForm({ ...form, expirationDate: newValue });
       setExpirationDate(new Date(Date.UTC(newValue && newValue?.getFullYear(), newValue?.getMonth(), newValue?.getDate() + 1)));
     }
   };
