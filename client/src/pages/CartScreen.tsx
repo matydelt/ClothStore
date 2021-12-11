@@ -7,7 +7,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import axios from "axios";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,7 +19,7 @@ import { putCarrito, putCarritoRemove } from "../redux/actions/carritoAction";
 import { RootState } from "../redux/store/store";
 
 const useStyles = makeStyles({
-  root: {
+  rootContainer: {
     width: "100%",
     margin: "0 auto",
     border: "2px solid #00c2cb",
@@ -152,7 +152,7 @@ export default function CartScreen() {
       </Button>
 
       {/* Tabla de items a comprar */}
-      <Paper className={classes.root}>
+      <Paper className={classes.rootContainer}>
         {!cart.length && !carrito?.publications?.length ? (
           <Typography>Aún no has seleccionado nada</Typography>
         ) : (
