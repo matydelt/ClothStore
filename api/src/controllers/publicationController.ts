@@ -29,6 +29,7 @@ export default class PublicationController {
           name,
           images,
           stock,
+          stockInicial: stock,
           mark,
           detail,
           price,
@@ -62,6 +63,10 @@ export default class PublicationController {
 
       let allPublications: Array<any>;
       allPublications = await PublicationSchema.find().populate('discount');
+
+      // allPublications = allPublications.filter((e) => {
+      //   return e.state === true;
+      // });
 
       if (name && name !== "") {
         allPublications = allPublications.filter((e) => {
@@ -120,11 +125,13 @@ export default class PublicationController {
       }
 
       if (author && author !== "") {
-        const autor = await UserSchema.findOne({ userName: `${author}` })
-        console.log(autor?._id)
-        allPublications = allPublications.map(e => {
-          if (e.author.equals(autor?._id)) return e
-        }).filter(e => e != null);
+        const autor = await UserSchema.findOne({ userName: `${author}` });
+        console.log(autor?._id);
+        allPublications = allPublications
+          .map((e) => {
+            if (e.author.equals(autor?._id)) return e;
+          })
+          .filter((e) => e != null);
       }
 
       if (price && price !== "") {
@@ -146,7 +153,7 @@ export default class PublicationController {
           }
         });
       }
-      const ttal: number = allPublications.length
+      const ttal: number = allPublications.length;
       allPublications = allPublications.slice(
         charXPage * (pag - 1),
         charXPage * (pag - 1) + charXPage
@@ -154,7 +161,7 @@ export default class PublicationController {
 
       res.json({
         result: allPublications,
-        count: ttal
+        count: ttal,
       });
     } catch (e) {
       console.log(e);
@@ -175,8 +182,9 @@ export default class PublicationController {
 
   static async putStock(req: Request, res: Response): Promise<void> {
     try {
-      const { id, stock } = req.body;
+      const { id, stock } = req.body;//stockInicial
       await PublicationSchema.findById(id).updateOne({ stock: stock });
+      await PublicationSchema.findById(id).updateOne({ stockInicial: stock });
       res.send("stock modificado");
     } catch (e) {
       console.log(e);
@@ -200,14 +208,17 @@ export default class PublicationController {
     }
   }
 
-  static async getPublicationsMarks(req: Request, res: Response): Promise<void> {
+  static async getPublicationsMarks(
+    req: Request,
+    res: Response
+  ): Promise<void> {
     try {
       let allMarks: Array<any>;
       allMarks = await PublicationSchema.find();
-      allMarks = allMarks.map(e => e.mark);
+      allMarks = allMarks.map((e) => e.mark);
       allMarks = allMarks.filter((item, index) => {
         return allMarks.indexOf(item) === index;
-      })
+      });
       res.json(allMarks);
     } catch (e) {
       console.log(e);
@@ -216,15 +227,14 @@ export default class PublicationController {
   }
   static async putPublicationState(req: Request, res: Response): Promise<void> {
     try {
-
       const { id, flag } = req.body;
-      console.log(id)
+      console.log(id);
 
       const publication = await PublicationSchema.findById(id);
       const seller = await UserSchema.findById(publication?.author);
       if (flag) {
         if (publication) {
-          publication.state = true
+          publication.state = true;
           await publication.save();
           sendEMail.send({
             publicationPrice: publication?.price,
@@ -232,21 +242,21 @@ export default class PublicationController {
             mensaje: "Su publicacion a sido APROBADA!",
             subject: "Tu publicacion fue aprobada",
             htmlFile: "question.html",
-          })
-          res.sendStatus(200)
+          });
+          res.sendStatus(200);
         } else {
-          res.sendStatus(404)
+          res.sendStatus(404);
         }
       } else {
         if (publication) {
-          publication.state = false
-          res.sendStatus(200)
+          publication.state = false;
+          res.sendStatus(200);
         } else {
-          res.sendStatus(404)
+          res.sendStatus(404);
         }
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       res.sendStatus(500);
     }
   }
@@ -281,10 +291,10 @@ export default class PublicationController {
         mensaje: message,
         subject: "Tu publicacion fue rechazada",
         htmlFile: "question.html",
-      })
+      });
       res.sendStatus(200);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       res.sendStatus(500);
     }
   }

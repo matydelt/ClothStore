@@ -1,54 +1,57 @@
 import * as React from "react";
 import { Button } from "@mui/material";
-import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/styles';
-import TableBody from '@mui/material/TableBody';
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
+import {
+  withStyles,
+  Theme,
+  createStyles,
+  makeStyles,
+} from "@material-ui/core/styles";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
 import { Box } from "@mui/system";
-import Typography from '@mui/material/Typography';
-
+import Typography from "@mui/material/Typography";
+import RemoveIcon from "@mui/icons-material/Remove";
+import AddIcon from "@mui/icons-material/Add";
 
 const useStyles = makeStyles({
   tableCell: {
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
   },
   imgCell: {
-    width: '50px',
-    objectFit: 'cover',
-    marginRight: '10px'
+    width: "70px",
+    objectFit: "cover",
+    marginRight: "10px",
+    borderRadius: "5px",
   },
   buttonAmountRigth: {
-    padding: '1px 5px',
-    minWidth: '5px',
-    marginLeft: '15px',
+    padding: "1px 5px",
+    minWidth: "5px",
+    marginLeft: "15px",
   },
   buttonAmountLeft: {
-    padding: '1px 5px',
-    minWidth: '5px',
-    marginRight: '15px',
+    padding: "1px 5px",
+    minWidth: "5px",
+    marginRight: "15px",
   },
   cellButton: {
-    marginLeft: '15px'
-  }
+    marginLeft: "15px",
+  },
+});
 
-})
-
-const StyledTableRow = withStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.action.hover,
-      },
-      width: '77px',
-    },
-  }),
-)(TableRow);
-
+// const StyledTableRow = withStyles((theme: Theme) =>
+//   createStyles({
+//     root: {
+//       "&:nth-of-type(odd)": {
+//         backgroundColor: theme.palette.action.hover,
+//       },
+//       width: "77px",
+//     },
+//   })
+// )(TableRow);
 
 type CartItemType = {
   id: string;
-  amount: number;
   quantity: number;
   price: number;
   image: string;
@@ -63,55 +66,66 @@ type Props = {
 };
 
 const CartItem = ({ item, addToCart, removeFromCart }: Props) => {
-
   const classes = useStyles();
   return (
     <>
       <TableBody>
-        <StyledTableRow>
-          <TableCell classes={{ root: classes.tableCell }} component="th" scope="row">
-            <Box
-              className={classes.imgCell}
-              component='img'
-              src={item.image || "https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227725184-stock-illustration-no-image-available-icon-flat.jpg"}
-              alt={item.title}
-            />
-            <Typography variant='h5'>{item.title}</Typography>
-          </TableCell>
-          <TableCell align="right">
-            ${item.price}
-          </TableCell>
-          <TableCell classes={{root: classes.cellButton}}  align="right">
-            <Button
-              disableRipple={true}
-              disableFocusRipple={true}
-              classes={{ root: classes.buttonAmountLeft }}
-              className='buttonHoverOff'
-              color='primary'
-              size="small"
-              disableElevation
-              variant="text"
-              onClick={() => removeFromCart(item.id)}
-            >
-              -
-            </Button>
-            {item.amount || item.quantity}
-            <Button
-              disableFocusRipple={true}
-              disableRipple={true}
-              classes={{ root: classes.buttonAmountRigth }}
-              className='buttonHoverOff'
-              color='primary'
-              size="small"
-              disableElevation
-              variant="text"
-              onClick={() => addToCart(item)}
-            >
-              +
-            </Button>
-          </TableCell>
-          <TableCell align="right">${(item?.amount || item?.quantity * item.price).toFixed(2)}</TableCell>
-        </StyledTableRow>
+        {/* <StyledTableRow> */}
+        <TableCell classes={{ root: classes.tableCell }}>
+          <Box
+            className={classes.imgCell}
+            component="img"
+            src={
+              item.image ||
+              "https://st4.depositphotos.com/14953852/22772/v/600/depositphotos_227725184-stock-illustration-no-image-available-icon-flat.jpg"
+            }
+            alt={item.title}
+          />
+          <Typography variant="h5">{item.title}</Typography>
+        </TableCell>
+        <TableCell align="center">
+          <Typography>${item.price}</Typography>
+        </TableCell>
+        <TableCell classes={{ root: classes.cellButton }} align="center">
+          <Button
+            disableRipple={true}
+            disableFocusRipple={true}
+            classes={{ root: classes.buttonAmountLeft }}
+            className="buttonHoverOff"
+            color="primary"
+            size="small"
+            disableElevation
+            variant="text"
+            onClick={() => {
+              if (item.quantity === 1) {
+                const respuesta = window.confirm(
+                  "Estas seguro de que queres eliminar este producto de tu carro?"
+                );
+                if (respuesta) removeFromCart(item.id);
+              } else removeFromCart(item.id);
+            }}
+          >
+            <RemoveIcon />
+          </Button>
+          {item.quantity}
+          <Button
+            disableFocusRipple={true}
+            disableRipple={true}
+            classes={{ root: classes.buttonAmountRigth }}
+            className="buttonHoverOff"
+            color="primary"
+            size="small"
+            disableElevation
+            variant="text"
+            onClick={() => addToCart(item)}
+          >
+            <AddIcon />
+          </Button>
+        </TableCell>
+        <TableCell align="center">
+          <Typography>${(item.quantity * item.price).toFixed(2)}</Typography>
+        </TableCell>
+        {/* </StyledTableRow> */}
       </TableBody>
     </>
   );

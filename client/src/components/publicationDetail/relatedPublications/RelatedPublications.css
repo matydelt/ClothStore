@@ -1,0 +1,12 @@
+.swipePublicaionRelated {
+    height: 500px;
+}
+
+.swipePublicaionRelated  .swiper-slide {
+    background-color: transparent;
+    font-size: 0px;
+}
+
+.cardPublicationRelated .itemPublicationRelated {
+    z-index: 10;
+}

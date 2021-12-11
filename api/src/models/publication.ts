@@ -22,7 +22,6 @@ export interface Publication extends mongoose.Document {
 
 }
 
-
 const PublicationSchema = new Schema({
     name: {
         type: String,
@@ -37,6 +36,10 @@ const PublicationSchema = new Schema({
         required: true
     },
     stock: {
+        type: Number,
+        required: [true, "falta stock"]
+    },
+    stockInicial: {
         type: Number,
         required: [true, "falta stock"]
     },

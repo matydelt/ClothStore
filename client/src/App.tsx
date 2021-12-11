@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { ProvideAuth } from "./hooks/useAuth";
 import "./App.css";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +10,7 @@ import EmployeePage from "./components/adminPage/employeePage";
 import theme from "./components/controllers/themeConfig";
 import CreatePublication from "./components/createPublication/CreatePublication";
 import Homepage from "./components/HomePage/Homepage";
-import PefilUsuario from "./components/PerfilUsuario";
+import PerfilUsuario from "./components/PerfilUsuario";
 import PublicationDetail from "./components/publicationDetail/PublicationDetail";
 import { useAuth } from "./hooks/useAuth";
 import CartScreen from "./pages/CartScreen";
@@ -20,7 +19,7 @@ import RegisterScreen from "./pages/RegisterScreen";
 import { getCarrito } from "./redux/actions/carritoAction";
 import {
   cartLength,
-  putPublications
+  putPublications,
 } from "./redux/actions/publicationActions";
 import { RootState } from "./redux/store/store";
 import PublicacionesAdmPage from "./components/adminPage/components/publicaciones/pubicaciones";
@@ -30,18 +29,30 @@ import Denuncias from "./components/adminPage/components/denuncias/denunias";
 
 const App = (): JSX.Element => {
   const dispatch = useDispatch();
-  const { name, order, page, mark, category, gender, price, author } = useSelector((state: RootState) => (state.publicationList))
+  const { name, order, page, mark, category, gender, price, author } =
+    useSelector((state: RootState) => state.publicationList);
 
+  const auth = useAuth();
 
-  const auth = useAuth()
   useEffect(() => {
-    console.log('holaaaaaaaa auth', auth)
     if (auth?.user && auth.user.email) {
-      dispatch(getCarrito(auth.user.email))
+      dispatch(getCarrito(auth.user.email));
     }
-  }, [dispatch, auth])
+  }, [dispatch, auth]);
+
   useEffect(() => {
-    dispatch(putPublications({ "name": name, "order": order, "page": page, "mark": mark, "category": category, "gender": gender, "price": price, "author": author }));
+    dispatch(
+      putPublications({
+        name: name,
+        order: order,
+        page: page,
+        mark: mark,
+        category: category,
+        gender: gender,
+        price: price,
+        author: author,
+      })
+    );
   }, []);
 
   useEffect(() => {
@@ -61,6 +72,7 @@ const App = (): JSX.Element => {
   }, [dispatch]);
 
   return (
+    // <StylesProvider injectFirst>
     <MuiThemeProvider theme={theme}>
       <Routes>
         <Route path="/admin" element={<AdminPage />} />
@@ -83,18 +95,16 @@ const App = (): JSX.Element => {
         <Route path="/register" element={<RegisterScreen />}></Route>
         <Route path="/login" element={<LoginScreen />}></Route>
         <Route path="/cart" element={<CartScreen />}></Route>
-        <Route path="/perfil" element={<PefilUsuario />}>
+        <Route path="/perfil/*" element={<PerfilUsuario />}>
           <Route path="detalles" />
           <Route path="compras" />
           <Route path="ventas" />
           <Route path="deseos" />
-
         </Route>
       </Routes>
     </MuiThemeProvider>
-
+    // </StylesProvider>
   );
 };
 
 export default App;
-

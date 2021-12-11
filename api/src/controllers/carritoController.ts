@@ -23,7 +23,7 @@ export default class CarritoController {
                         carritoBuscado.publications.push({
                             publication: p.id,
                             price: p.price,
-                            quantity: p.amount,
+                            quantity: p.quantity,
                             title: p.title,
                             image: p.image
                         })
@@ -34,13 +34,13 @@ export default class CarritoController {
 
                     for (let i = 0; i < length; i++) {
                         if (carritoBuscado?.publications[i]?.publication?.equals(c.id)) {
-                            carritoBuscado.publications[i].quantity += parseInt(c.amount);
+                            carritoBuscado.publications[i].quantity += parseInt(c.quantity);
                         } else {
                             if (!carritoBuscado.publications.find(p => p.publication.equals(c.id)))
                                 carritoBuscado?.publications?.push({
                                     publication: c.id,
                                     price: c.price,
-                                    quantity: c.amount,
+                                    quantity: c.quantity,
                                     title: c.title,
                                     image: c.image
                                 })

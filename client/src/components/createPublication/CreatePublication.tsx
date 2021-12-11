@@ -56,7 +56,7 @@ export default function CreatePublication(): JSX.Element {
   // useEffect(() => {
   //   setForm({...form, id: user?._id});
   //   console.log(form);
-    
+
   // }, [form, user?._id]);
 
 
@@ -80,9 +80,9 @@ export default function CreatePublication(): JSX.Element {
     e.preventDefault();
 
     axios.post('http://localhost:3001/publications/new', form, { params: { publicationId } }).then(({ data }) => {
-      setTimeout(() => {
+ 
         navigate(`/publication/${data}`)
-      }, 2000);
+ 
     });
   }
 

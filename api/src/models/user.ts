@@ -1,7 +1,9 @@
 import mongoose, { Schema, model } from "mongoose";
 import { Publication } from "./publication";
 import { Shopping } from "./shopping";
+import { Sales } from "./Sales";
 import { Address } from "./address";
+import { Denunciation } from "./denunciation";
 
 export interface User extends mongoose.Document {
   name: object;
@@ -10,12 +12,14 @@ export interface User extends mongoose.Document {
   phone: string;
   publications: [Publication];
   shopping: [Shopping];
+  sales: [Sales];
   photo: string;
   dni: string;
   userName: string;
   address: [Address];
   type: string;
   active: boolean;
+  denunciations: [Denunciation];
 }
 
 const UserSchema = new Schema({
@@ -56,6 +60,10 @@ const UserSchema = new Schema({
     type: ["Shopping"],
     ref: "Shopping",
   },
+  sales: {
+    type: ["Sales"],
+    ref: "Sales",
+  },
   active: {
     type: Boolean,
     default: true,
@@ -79,6 +87,10 @@ const UserSchema = new Schema({
     required: [true, "necesita un type"],
     enum: ["normal", "admin", "employee"]
 
+  },
+  denunciations: {
+    type: ["Denunciation"],
+    ref: "Denunciation"
   }
 });
 
