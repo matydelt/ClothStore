@@ -1,5 +1,7 @@
 import React, { ChangeEvent, SetStateAction, useEffect, useState } from 'react';
-import { Avatar, Button, Container, FormControl, MenuItem, Typography, Divider, Select } from '@material-ui/core';
+import { Avatar, Button, Container, FormControl, MenuItem, Divider, Select } from '@mui/material';
+
+import { Typography } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
 import { SelectChangeEvent, Grid, CircularProgress, Rating,  } from '@mui/material';
 // import { Rating } from '@material-ui/lab';
@@ -16,6 +18,8 @@ import { useAuth } from '../../hooks/useAuth';
 import { putCarritoAmount } from '../../redux/actions/carritoAction';
 import { useDispatch } from 'react-redux';
 import RelatedPublications from './relatedPublications/RelatedPublications';
+import useLocalStorage from '../../hooks/useLocalStorage';
+import { CartType } from '../../pages/CartScreen';
 
 
 const useStyles = makeStyles({
@@ -78,6 +82,7 @@ export interface Publication {
   reviews: any[];
   qAndAs: any[];
   __v: number;
+  discount: any;
 }
 
 
@@ -85,6 +90,7 @@ export default function PublicationDetail(): JSX.Element {
 
   const [publication, setPublication] = useState<Publication | undefined>();
   const [scoreAverage, setScoreAverage] = React.useState<number>(0);
+  const [cart, setCart] = useLocalStorage<CartType | undefined>("cart", []);
 
   const [imageShow, setImageShow] = useState<string>();
   const [loading, setLoading] = useState<boolean>(true);
@@ -120,9 +126,28 @@ export default function PublicationDetail(): JSX.Element {
 
   const handleAddCart = (): void => {
     if (publication) {
-      dispatch(putCarritoAmount(auth?.user?.email, publication?._id, amount))
-      navigate('/cart');
+
+      if (auth?.user) {
+        dispatch(putCarritoAmount(auth?.user?.email, publication?._id, amount))
+      } else {
+        setCart(() => {
+          let aux: any = localStorage.getItem("cart");
+          console.log(typeof aux);
+          if (typeof aux === "string") aux = JSON.parse(aux);
+          const isItemInCart = aux.find((item: any) => item.id === publication?._id);
+          if (isItemInCart) {
+            isItemInCart.amount += amount;
+            return aux;
+          }
+          if (publication.images) {
+            return [...aux, { title: publication?.name, id: publication?._id, image: publication?.images[0].url, amount, price: publication?.discount ? publication?.price - publication?.price*publication?.discount.percentage/100 : publication?.price  }];
+          }
+        });
+      }
+
     }
+
+    navigate('/cart');
   }
 
   return (<>
@@ -235,9 +260,25 @@ export default function PublicationDetail(): JSX.Element {
                   {publication && publication?.detail}
                 </Typography>
 
-                <Typography variant="h5" component="h5" classes={{ root: classes.publicationPriceTypografy }}>
+{ publication?.discount ?
+<div style={{ marginTop: '20px', marginBottom: '20px'}}>
+
+                <Typography component="p" sx={{ pt: 3, color: 'gray', textDecoration: 'line-through' }}>
+                  $ {publication?.price}
+                  </Typography>
+                <Typography variant="h5" component="h5" sx={{ py: 3, mr: 2, color: 'gray', display: 'inline' }}>
+                  $ { publication?.price - (Number(publication?.price)*Number(publication?.discount.percentage)) / 100}
+                </Typography>
+                <Typography component="p" sx={{ color: 'green', display: 'inline' }}>
+                  {publication?.discount?.percentage}% OFF
+                </Typography>
+</div>
+:
+
+                <Typography variant="h5" component="h5" sx={{ py: 3, color: 'gray' }}>
                   $ {publication?.price}
                 </Typography>
+}
 
                 {publication && publication?.stock > 0 ?
                   <Grid item container component="div"

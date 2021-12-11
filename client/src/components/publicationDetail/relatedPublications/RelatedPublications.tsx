@@ -46,18 +46,20 @@ export default function RelatedPublications({ publicationId }: props): JSX.Eleme
 
 
             <Swiper
-                spaceBetween={-335}
-                slidesPerView={5}
+                spaceBetween={35}
+                slidesPerView={4}
                 navigation={true}
                 effect={"slide"}
                 loop={false}
-                className='swipePublicaionRelated'
+
+            //   pagination={{ clickable: true }}
+
             >
                 {
                     publications.map((e: Publication) => {
                         return (
-                            <SwiperSlide className='cardPublicationRelated' key={e._id}>
-                                <CardPublicacion  name={e.name} author={e.author} images={e.images} mark={e.mark} stock={e.stock} price={e.price} categorie={e.categorie} detail={e.detail} gender={e.gender} key={e._id} id={e._id}
+                            <SwiperSlide key={e._id} style={{ width: 'auto', justifyContent: 'space-between' }}>
+                                <CardPublicacion discount={e.discount} name={e.name} author={e.author} images={e.images} mark={e.mark} stock={e.stock} price={e.price} categorie={e.categorie} detail={e.detail} gender={e.gender} key={e._id} id={e._id}
                                 />
                             </SwiperSlide>
                         )
