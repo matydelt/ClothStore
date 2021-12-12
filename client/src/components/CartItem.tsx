@@ -1,9 +1,6 @@
 import * as React from "react";
 import { Button } from "@mui/material";
 import {
-  withStyles,
-  Theme,
-  createStyles,
   makeStyles,
 } from "@material-ui/core/styles";
 import TableBody from "@mui/material/TableBody";
@@ -39,17 +36,6 @@ const useStyles = makeStyles({
   },
 });
 
-// const StyledTableRow = withStyles((theme: Theme) =>
-//   createStyles({
-//     root: {
-//       "&:nth-of-type(odd)": {
-//         backgroundColor: theme.palette.action.hover,
-//       },
-//       width: "77px",
-//     },
-//   })
-// )(TableRow);
-
 type CartItemType = {
   id: string;
   quantity: number;
@@ -70,7 +56,6 @@ const CartItem = ({ item, addToCart, removeFromCart }: Props) => {
   return (
     <>
       <TableBody>
-        {/* <StyledTableRow> */}
         <TableCell classes={{ root: classes.tableCell }}>
           <Box
             className={classes.imgCell}
@@ -125,7 +110,6 @@ const CartItem = ({ item, addToCart, removeFromCart }: Props) => {
         <TableCell align="center">
           <Typography>${(item.quantity * item.price).toFixed(2)}</Typography>
         </TableCell>
-        {/* </StyledTableRow> */}
       </TableBody>
     </>
   );

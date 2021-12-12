@@ -19,7 +19,7 @@ import SearchBar from "../SearchBar";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     list: {
-      width: '70%',
+      width: '40%',
       '& span': {
         margin: '0px'
       }
