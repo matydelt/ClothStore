@@ -8,7 +8,7 @@ router.get("/usersname", UserController.getUserName);
 router.get("/auth/:id", UserController.getOneUser); //trae un solo usuario
 router.put("/auth", UserController.banUser); //bann control
 router.put("/auth/update", UserController.updateUser); //actualiza todos los datos menos el email y el domicilio
-router.put("auth/domicilio", UserController.updateAddress); //agrega un domicilio
+router.put("/auth/domicilio", UserController.updateAddress); //agrega un domicilio
 router.put("/user/putype", UserController.putStateUser); //sede tipo empleado y lo quita
 router.get("/users", UserController.getUsers); //arreglo de usuarios para admin
 router.get("/auth/email/:email", UserController.getOneUserByEmail); //trae un solo usuario

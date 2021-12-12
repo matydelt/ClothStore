@@ -211,7 +211,7 @@ export default function SideBarUser(props: Props) {
           </Link>
 
 
-          <Link to="/perfil/detalles" style={{ textDecoration: "none" }}>
+          <Link to="/perfil" style={{ textDecoration: "none" }}>
             <ListItem key="Mi Perfil">
               <ListItemIcon>
                 <ManageAccountsIcon />

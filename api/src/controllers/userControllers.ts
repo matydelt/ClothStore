@@ -145,8 +145,7 @@ export default class UserController {
         {
           $set: {
             phone: phone,
-            firstName: firstName,
-            lastName: lastName,
+            name: { firstName: firstName, lastName: lastName },
             dni: dni,
           },
         }

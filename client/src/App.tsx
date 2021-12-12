@@ -24,16 +24,22 @@ import {
 import { RootState } from "./redux/store/store";
 import PublicacionesAdmPage from "./components/adminPage/components/publicaciones/pubicaciones";
 import Denuncias from "./components/adminPage/components/denuncias/denunias";
+import ReactGa from "react-ga"
 
 // const user = useSelector((state: RootState) => state.userSignin.userInfo)
 
 const App = (): JSX.Element => {
+  //google analytics
+  useEffect(() => {
+    ReactGa.initialize("UA-215041281-1")
+    ReactGa.pageview(window.location.pathname + window.location.search)
+  }, [])
+  //google analytics
   const dispatch = useDispatch();
   const { name, order, page, mark, category, gender, price, author } =
     useSelector((state: RootState) => state.publicationList);
 
   const auth = useAuth();
-
   useEffect(() => {
     if (auth?.user && auth.user.email) {
       dispatch(getCarrito(auth.user.email));
