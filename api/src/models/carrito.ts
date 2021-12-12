@@ -4,7 +4,7 @@ export interface Carrito extends mongoose.Document {
     title: string;
     quantity: number;
     price: number;
-    publications: {publication: Types.ObjectId, price: number, quantity: number, image: string, title: string}[];
+    publications: {publication: Types.ObjectId, price: number, quantity: number, image: string, title: string, discount: number}[];
     image: string;
     userId: Schema.Types.ObjectId;
 }
@@ -18,6 +18,7 @@ const carritoSchema = new Schema({
             },
             price: Number,
             quantity: Number,
+            discount: Number,
             image: String,
             title: {
                 type: String,

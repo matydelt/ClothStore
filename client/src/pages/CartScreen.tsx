@@ -50,6 +50,7 @@ export type CartItemType = {
   image: string;
   title: string;
   category: string;
+  discount: number | undefined;
 };
 
 export type CartItemTypeDB = {
@@ -59,6 +60,7 @@ export type CartItemTypeDB = {
   image: string;
   title: string;
   category?: string;
+  discount: number | undefined;
 };
 
 export type CartType = CartItemType[];

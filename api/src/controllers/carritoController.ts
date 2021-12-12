@@ -13,6 +13,8 @@ export default class CarritoController {
             const carrito = req.body
             const { _id } = req.params
 
+            console.log(carrito)
+
             const carritoBuscado: Carrito | null = await carritoSchema.findOne({ userId: _id } as FilterQuery<Carrito>)
 
             if (carritoBuscado) {
@@ -25,7 +27,8 @@ export default class CarritoController {
                             price: p.price,
                             quantity: p.quantity,
                             title: p.title,
-                            image: p.image
+                            image: p.image,
+                            discount: p.discount
                         })
                     })
                 }
@@ -42,7 +45,8 @@ export default class CarritoController {
                                     price: c.price,
                                     quantity: c.quantity,
                                     title: c.title,
-                                    image: c.image
+                                    image: c.image,
+                                    discount: c.discount
                                 })
                         }
 
@@ -96,7 +100,8 @@ export default class CarritoController {
                         quantity: parseInt(amount),
                         title: findPublic?.name,
                         image: findPublic?.images[0].url,
-                        price: findPublic.discount ? findPublic.price - findPublic.price * findPublic.discount.percentage / 100 : findPublic.price
+                        price: findPublic.discount ? findPublic.price - findPublic.price * findPublic.discount.percentage / 100 : findPublic.price,
+                        discount: findPublic.discount.percentage
                     });
                 }
             }
@@ -139,7 +144,8 @@ export default class CarritoController {
                         quantity: 1,
                         title: findPublic?.name,
                         image: findPublic?.images[0].url,
-                        price: findPublic.discount ? findPublic.price - findPublic.price * findPublic.discount.percentage / 100 : findPublic.price
+                        price: findPublic.discount ? findPublic.price - findPublic.price * findPublic.discount.percentage / 100 : findPublic.price,
+                        discount: findPublic.discount.percentage
                     });
                 }
 

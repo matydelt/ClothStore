@@ -93,7 +93,7 @@ export default function DiscountModal({ children, userId, publicationId, getPubl
         <DialogTitle>Aplicar descuento</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Aplicar un nuevo descuento reemplazará al anterior.
+            Aplicar un nuevo descuento reemplazará al actual.
           </DialogContentText>
 
           <Box component="div" sx={{ my: 6, display: "flex", flexDirection: "row", justifyContent: 'space-between' }}>

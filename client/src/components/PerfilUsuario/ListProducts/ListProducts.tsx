@@ -101,7 +101,7 @@ export default function ListProducts(props:User) {
                         {e.discount && 
                         <Box component="div">
 
-                        {(e.price - e.price * e.discount.percentage / 100) + ` (${e?.discount?.percentage}%) hasta ${new Date(e.discount.expireAt).toLocaleDateString()}` }
+                        {(e.price - e.price * e.discount.percentage / 100).toFixed(2) + ` (${e?.discount?.percentage}%) hasta ${new Date(e.discount.expireAt).toLocaleDateString()}` }
                         <Button onClick={() => removeDiscount(e._id)}>Cancelar</Button>
                         </Box>
                         }
