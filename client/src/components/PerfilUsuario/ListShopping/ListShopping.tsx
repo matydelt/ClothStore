@@ -223,19 +223,24 @@ export default function ListShopping(props:User) {
                     <TableCell align="center">
                         <List
                         component="nav"
-                        aria-labelledby="nested-list-subheader">{e.status}
+                        aria-labelledby="nested-list-subheader">
+                            {e.status}
                         </List>
                     </TableCell>
                     <TableCell align="center">
                         <List
                         component="nav"
-                        aria-labelledby="nested-list-subheader">{e.amount}
+                        aria-labelledby="nested-list-subheader">
+                            {e.amount}
                         </List>
                     </TableCell>
                     <TableCell align="center">
                         <List
                         component="nav"
-                        aria-labelledby="nested-list-subheader"> <Link to={`/`}><button>Detalle</button></Link>
+                        aria-labelledby="nested-list-subheader">
+                            <Link to={`/`}>
+                                <button>Detalle</button>
+                            </Link>
                         </List>
                     </TableCell>
                     <TableCell align="center">
