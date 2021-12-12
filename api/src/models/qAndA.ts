@@ -23,8 +23,7 @@ const QAndASchema = new Schema({
   },
   answer: {
     type: Schema.Types.ObjectId,
-    ref: 'QAndA',
-    require: [true, "necesita id de la respuesta"]
+    ref: 'QAndA'
   },
   isQuestion: {
     type: Boolean

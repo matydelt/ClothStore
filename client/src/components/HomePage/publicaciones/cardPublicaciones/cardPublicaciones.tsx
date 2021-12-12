@@ -38,17 +38,19 @@ type Props = {
   gender: string;
   key: string;
   id: string;
+  discount: any;
 };
 export default function CardPublicacion(props: Props) {
   const [cart, setCart] = useLocalStorage<CartType | undefined>("cart", []);
-  const { name, images, price, categorie, id, stock } = props;
+  const { name, images, price, categorie, id, stock, discount } = props;
   const dispatch = useDispatch();
   const carrito: any = useSelector((state: RootState) => state.carrito.carrito);
   const auth = useAuth();
 
   const item: CartItemType = {
     id,
-    quantity: stock,
+    // quantity: stock,
+    quantity: 1,
     price,
     image: images[0]?.url,
     title: name,
@@ -68,7 +70,7 @@ export default function CardPublicacion(props: Props) {
         return aux;
       }
       console.log(clickedItem);
-      return [...aux, { ...clickedItem, quantity: 1 }];
+      return [...aux, { ...clickedItem, amount: 1, price: discount ? price - price*discount.percentage/100 : price  }];
     });
   };
 
@@ -153,12 +155,25 @@ export default function CardPublicacion(props: Props) {
           >
             {name}
           </Typography>
+
+            <Box component="div" textAlign={'center'}>
           <Typography
-            sx={{ fontSize: "17px !important", textAlign: "center" }}
+            sx={{ fontSize: "17px", textAlign: "center", display: 'inline' }}
+            // sx={{ fontSize: "17px !important", textAlign: "center" }}
             variant="body2"
           >
-            $ {`  ${price}`}
+            $ {discount ? 
+            price - (price * discount?.percentage / 100)
+            :
+             `  ${price}`
+             }
           </Typography>
+          { discount &&
+           <Typography component="span" color="green" fontSize={13} sx={{display: 'inline'}}> {discount.percentage}% OFF</Typography>
+
+          }
+          </Box>
+
           <Typography variant="body1">{categorie}</Typography>
         </CardContent>
       </Card>

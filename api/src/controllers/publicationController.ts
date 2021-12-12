@@ -2,7 +2,8 @@ import { Request, Response } from "express";
 import UserSchema, { User } from "../models/user";
 import PublicationSchema, { Publication } from "../models/publication";
 import { equal } from "assert/strict";
-const sendEMail = require("../email/email");
+import { FilterQuery } from "mongoose";
+const sendEMail = require('../email/email');
 
 export default class PublicationController {
   static async setPublication(req: Request, res: Response) {
@@ -61,7 +62,7 @@ export default class PublicationController {
       const charXPage: number = 12;
 
       let allPublications: Array<any>;
-      allPublications = await PublicationSchema.find();
+      allPublications = await PublicationSchema.find().populate('discount');
 
       // allPublications = allPublications.filter((e) => {
       //   return e.state === true;
@@ -194,7 +195,7 @@ export default class PublicationController {
     try {
       const { publicationId } = req.query;
 
-      const publication = await PublicationSchema.findById(publicationId);
+      const publication = await PublicationSchema.findById(publicationId).populate('discount');
 
       if (publication) {
         res.json(publication);
@@ -266,7 +267,7 @@ export default class PublicationController {
 
       const publication = await PublicationSchema.findById(publicationId);
 
-      const publications = await PublicationSchema.find({ category: publication?.category, name: { $ne: publication?.name } }).limit(12);
+      const publications = await PublicationSchema.find({ category: publication?.category, gender: publication?.gender, name: { $ne: publication?.name } }).populate('discount').limit(12);
 
       if (publication) {
         res.json(publications);
@@ -297,4 +298,23 @@ export default class PublicationController {
       res.sendStatus(500);
     }
   }
+
+  static async getPublicationsByUser(req: Request, res: Response): Promise<void> {
+    try {
+      const { authorId } = req.query;
+
+      const publications = await PublicationSchema.find({ author: authorId } as FilterQuery<Publication>).populate('discount');
+
+      if (publications) {
+        res.json(publications);
+      } else {
+        res.json({ msg: "La publicación no existe" });
+      }
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  }
+
 }
+
