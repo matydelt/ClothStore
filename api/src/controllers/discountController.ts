@@ -44,7 +44,7 @@ export default class DiscountController {
             const publication = await PublicationSchema.findById(publicationId);
             console.log(publication)
             if (publication) {
-                await DiscountSchema.findByIdAndRemove(publication.discount);
+                await DiscountSchema.findByIdAndDelete(publication.discount);
                 return res.sendStatus(200);
             } else {
                 return res.sendStatus(404);
