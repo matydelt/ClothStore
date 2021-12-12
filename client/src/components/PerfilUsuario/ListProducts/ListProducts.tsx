@@ -79,7 +79,7 @@ export default function ListProducts(props:User) {
                 <TableCell align="right">Categoria</TableCell>
                 <TableCell align="right">Genero</TableCell>
                 <TableCell align="right">Precio</TableCell>
-                <TableCell align="right">Precio descuento</TableCell>
+                <TableCell align="center">Descuento</TableCell>
                 <TableCell align="center">Opciones</TableCell>
             </TableRow>
         </TableHead>
@@ -101,7 +101,7 @@ export default function ListProducts(props:User) {
                         {e.discount && 
                         <Box component="div">
 
-                        {(e.price - e.price * e.discount.percentage / 100) + ` (${e?.discount?.percentage}%)` }
+                        {(e.price - e.price * e.discount.percentage / 100) + ` (${e?.discount?.percentage}%) hasta ${new Date(e.discount.expireAt).toLocaleDateString()}` }
                         <Button onClick={() => removeDiscount(e._id)}>Cancelar</Button>
                         </Box>
                         }

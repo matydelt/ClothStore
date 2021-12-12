@@ -11,6 +11,8 @@ export default class DiscountController {
     static async postDiscount(req: Request, res: Response) {
         const { publicationId, authorId, percentage, amount, expirationDate } = req.body;
 
+        console.log(expirationDate)
+
         try {
             const discountCreated = new DiscountSchema({ publication: publicationId, author: authorId, percentage, amount });
 
