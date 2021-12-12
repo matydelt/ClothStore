@@ -30,7 +30,7 @@ export default function QAndA(): JSX.Element {
 
     React.useEffect(() => {
         getQuestions();
-    }, []);
+    }, [publicationId]);
 
     React.useEffect(() => {
         if (user) {
@@ -40,7 +40,6 @@ export default function QAndA(): JSX.Element {
 
     function getQuestions() {
         axios.get('/qAndAs/' + publicationId).then(({ data }) => {
-            console.log(data);
             setQuestions(data);
         });
     };
