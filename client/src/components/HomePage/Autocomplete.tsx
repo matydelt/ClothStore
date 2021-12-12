@@ -4,14 +4,18 @@ import MenuItem from '@material-ui/core/MenuItem';
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-interface searchedText {
+interface SearchedText {
     _id: string,
     name: string
 }
 
-export default function Autocomplete({ text }: any) {
+interface Props {
+    text: string
+}
 
-    const [searchedTexts, setSearchedTexts] = React.useState<searchedText[]>([]);
+export default function Autocomplete({ text }: Props) {
+
+    const [searchedTexts, setSearchedTexts] = React.useState<SearchedText[]>([]);
 
     React.useEffect(() => {
         axios.get('/autocomplete', { params: { text } }).then(({ data }) => {
@@ -23,7 +27,7 @@ export default function Autocomplete({ text }: any) {
     return (<>
         {text &&
             <Box boxShadow={5} sx={{ position: 'absolute', zIndex: 5000, backgroundColor: 'white', width: '17rem' }}>
-                {searchedTexts?.map(st => {
+                {searchedTexts?.map((st: SearchedText) => {
                     return <Link style={{ textDecoration: 'none', color: 'black' }} to={`/publication/${st._id}`}>
                         <MenuItem key={st._id} value={st._id}>{st.name}</MenuItem>
                     </Link>
