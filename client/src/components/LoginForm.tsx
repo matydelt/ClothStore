@@ -1,8 +1,8 @@
-import { TextField } from "@material-ui/core";
+import {TextField} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import GoogleIcon from "@mui/icons-material/Google";
-import LockOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
-import { Button } from "@mui/material";
+import LockOutlinedIcon from "@material-ui/icons/LockOpenOutlined";
+import { Button } from "@material-ui/core";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -27,7 +27,7 @@ const useStyles = makeStyles({
     marginBottom: "10px",
   },
   avatarLock: {
-    backgroundColor: "#f1f1f1",
+    backgroundColor: "yellow",
   },
 });
 
@@ -68,7 +68,7 @@ const LoginForm = () => {
             alignItems: "center",
           }}
         >
-          <Avatar classes={{ root: classes.avatarLock }}>
+          <Avatar sx={{ backgroundColor: '#fff', boxShadow: '0px 1px 1px #00c2cb'}}>
             <LockOutlinedIcon color="primary" />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -117,10 +117,11 @@ const LoginForm = () => {
             </Button>
             <Button
               fullWidth
+              color='primary'
               variant="contained"
               classes={{ root: classes.rootButtonLogin }}
               onClick={googleSignin}
-              endIcon={<GoogleIcon />}
+              endIcon={<GoogleIcon sx={{color: '#fff'}} />}
             >
               Iniciar Sesión con Google
             </Button>

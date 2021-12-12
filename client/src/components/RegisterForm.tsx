@@ -32,7 +32,8 @@ const useStyles = makeStyles({
     marginBottom: "10px",
   },
   avatarLock: {
-    backgroundColor: "#f1f1f1",
+    backgroundColor: "#fff",
+    boxShadow: '0px 1px 1px #00c2cb'
   },
 });
 

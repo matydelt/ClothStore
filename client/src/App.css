@@ -1,5 +1,5 @@
 .App {
-  text-align      : center;
+  text-align: center;
 }
 
 .textDecoration {
@@ -30,6 +30,49 @@
 /* body {
   background-color: rgb(230, 230, 230);
 } */
+
+
+
+/* Animacion del carrito */
+
+#homepage,
+#cartAnimation {
+  transition: all .7s ease-in-out;
+  transition-delay: .5s;
+}
+
+
+#cartAnimation {
+  display         : flex;
+  align-items     : center;
+  position        : absolute;
+  top             : 0;
+  bottom          : 0;
+  left            : 0;
+  right           : 0;
+  z-index         : 100;
+  transform       : translateX(300%);
+}
+
+
+#containerHomePage.heightContainerHomePage {
+  height: 100vh;
+}
+
+#homepage {
+  transform: translateX(0%);
+}
+
+
+#cartAnimation.translateCart {
+  transform: translateX(0%);
+}
+
+#homepage.translateLeft {
+  transform: translateX(-300%);
+}
+
+
 
 html,
 body {
