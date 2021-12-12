@@ -8,6 +8,7 @@ const qAndAs = require("./QAndA");
 const mercadoPago = require("./checkout")
 const carrito = require("./carrito")
 const discount = require("./discount")
+const autocomplete = require("./autocomplete")
 
 const denunciation = require("./denunciation")
 
@@ -21,5 +22,6 @@ module.exports = {
     mercadoPago,
     carrito,
     discount,
-    denunciation
+    denunciation,
+    autocomplete
 };
