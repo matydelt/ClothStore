@@ -5,17 +5,17 @@ const UserSchema = new mongoose_1.Schema({
     name: {
         firstName: {
             type: String,
-            required: [true, "falta first name"]
+            required: [true, "falta first name"],
         },
         lastName: {
             type: String,
-            required: [true, "falta first name"]
-        }
+            required: [true, "falta first name"],
+        },
     },
     email: {
         type: String,
         required: [true, "falta email"],
-        _id: [true, "violacion de unicidad"]
+        _id: [true, "violacion de unicidad"],
     },
     password: {
         type: String,
@@ -28,12 +28,47 @@ const UserSchema = new mongoose_1.Schema({
             validator: function (v) {
                 return /\d{2}-\d{2}-\d{4}-\d{4}/.test(v);
             },
-            message: (props) => `${props.value} is not a valid phone number!`
+            message: (props) => `${props.value} is not a valid phone number!`,
         },
     },
     publications: {
-        type: [mongoose_1.Schema.Types.ObjectId],
-        ref: "Product"
+        type: ["Publication"],
+        ref: "Publication",
+    },
+    shopping: {
+        type: ["Shopping"],
+        ref: "Shopping",
+    },
+    sales: {
+        type: ["Sales"],
+        ref: "Sales",
+    },
+    active: {
+        type: Boolean,
+        default: true,
+    },
+    photo: {
+        type: String,
+    },
+    //cambios en modelo
+    dni: {
+        type: String,
+    },
+    userName: {
+        type: String,
+    },
+    address: {
+        type: ["Address"],
+        ref: "Address",
+    },
+    type: {
+        type: String,
+        required: [true, "necesita un type"],
+        enum: ["normal", "admin", "employee"]
+    },
+    denunciations: {
+        type: ["Denunciation"],
+        ref: "Denunciation"
     }
 });
 exports.default = (0, mongoose_1.model)("User", UserSchema);

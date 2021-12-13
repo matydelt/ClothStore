@@ -6,5 +6,5 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
-const conn = mongoose_1.default.connect(`${process.env.DB_SERVER}://${process.env.DB_HOST}:${process.env.PORT}/${process.env.DB_NAME}`);
+const conn = mongoose_1.default.connect(`mongodb://matydelt:matias133@clothstore.jqw1q.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`);
 exports.default = conn;

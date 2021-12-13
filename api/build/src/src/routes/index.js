@@ -5,11 +5,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
-const userControllers_1 = __importDefault(require("../controllers/userControllers"));
-const publicationControlles_1 = __importDefault(require("../controllers/publicationControlles"));
-// console.log(BooksController.setBook)
-router.post("/auth/new", userControllers_1.default.setUser);
-router.post("/products/new", publicationControlles_1.default.setPublication);
-router.get("/products", publicationControlles_1.default.getPublications);
-// router.get("/auth/get", UserController.getUser)
-module.exports = router;
+const users = require("./users.ts");
+const publications = require("./publications");
+const cloudinary = require("./cloudinary");
+const reviews = require("./review");
+const qAndAs = require("./QAndA");
+const mercadoPago = require("./checkout");
+const carrito = require("./carrito");
+const denunciation = require("./denunciation");
+module.exports = {
+    router,
+    users,
+    publications,
+    cloudinary,
+    reviews,
+    qAndAs,
+    mercadoPago,
+    carrito,
+    denunciation
+};
