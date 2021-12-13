@@ -5,7 +5,7 @@
   "scripts": {
     "ts:node": "ts-node index.ts",
     "clean": "del -rf build",
-    "start": "nodemon src/index.js",
+    "start": "nodemon build/src/index.js",
     "dev": "nodemon"
   },
   "dependencies": {
