@@ -3,10 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "ts:node": "ts-node index.ts",
-    "clean": "del -rf build",
-    "start": "nodemon api/build/src/index.js",
-    "dev": "nodemon"
+    "start": "nodemon api/build/src/index.js"
   },
   "dependencies": {
     "@types/cookie-parser": "^1.4.2",
