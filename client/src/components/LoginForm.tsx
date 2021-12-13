@@ -33,9 +33,6 @@ const useStyles = makeStyles({
     marginBottom: "10px",
     backgroundColor: '#de4e3b'
   },
-  avatarLock: {
-    backgroundColor: "yellow",
-  },
   inputsLogin: {
     width: '100%',
     marginRight: 'auto',
@@ -124,7 +121,7 @@ const LoginForm = () => {
             top: '0',
             width: '100%',
             height: '100%',
-            backgroundColor: '#00c2cb',
+            backgroundColor: '#333',
             margin: '0px',
             opacity: '.2'
           }}
@@ -157,7 +154,7 @@ const LoginForm = () => {
             display: 'block',
             position: 'absolute',
             bottom: '-284px',
-            right: '-126px',
+            left: '-126px',
             width: '300px',
             height: '300px',
             backgroundColor: '#00c2cb',
