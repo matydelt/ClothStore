@@ -9,6 +9,7 @@ import { styled } from '@mui/material/styles';
 import { Link } from "react-router-dom"
 import * as React from "react"
 import ModalUpdateUser from "./ModalUpdateUser";
+import FileUpload from "../../fileUpload/FileUpload";
 
 
 const AvatarWrapper = styled(Card)(
@@ -100,10 +101,10 @@ const ProfileCover = (props: Props) => {
         </Box>
       </Box>
       <Box sx={{ marginTop: "100px" }} py={2} pl={2} mb={3}>
-        <AvatarWrapper>
+        {/* <AvatarWrapper>
           <Avatar variant="rounded" alt={props.firstName} src={props.photo} />
-
         </AvatarWrapper>
+        <FileUpload /> */}
         <Typography gutterBottom variant="h4">
           {props.firstName} {props.lastName}
         </Typography>

@@ -46,7 +46,7 @@ export default function ModalQA(props: PubId): JSX.Element {
 
     React.useEffect(() => {
         getQuestions();
-    }, [publicationId]);
+    }, [open]);
 
     React.useEffect(() => {
         if (user) {
