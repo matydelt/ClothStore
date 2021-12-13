@@ -3,43 +3,37 @@ import axios from "axios"
 import * as React from 'react'
 import { Link } from "react-router-dom"
 
-interface Publication  {
-    name: string;
-    images: any[];
-    stock: number;
-    mark: string;
-    detail: string;
-    price: number;
-    category: string;
+interface Shopping  {
     author: string;
-    gender: string;
     key: string;
     _id: string;
+    amount: number;
+    link: string;
+    status: string;
+    status_detail: string;
+    date: string;
 }
 interface Articulos{
-    articulos:[Publication]
+    articulos:[Shopping]
 }
 interface User{
     id:string|undefined
 }
-export default function ListProducts(props:User) {
-    const [articulos, setArticulos] = React.useState<[Publication]>([{
-        name:"",
-        images: [],
-        stock:0,
-        mark: "",
-        detail: "",
-        price: 0,
-        category: "",
+export default function ListShopping(props:User) {
+    const [articulos, setArticulos] = React.useState<[Shopping]>([{
         author: "",
-        gender: "",
         key: "",
         _id: "",
+        amount: 0,
+        link: "",
+        status: "",
+        status_detail: "",
+        date: "",
     }],)
     React.useEffect(() => {
         async function getOneUser() {
             await axios.get(`http://localhost:3001/auth/${props.id}`).then(({ data }) => {
-                setArticulos(data.publications)
+                setArticulos(data.shopping)
             })
         }
         getOneUser()
@@ -48,18 +42,18 @@ export default function ListProducts(props:User) {
         <Box style={{marginTop: "100px",marginLeft: "100px"}}>
             <div style={{ display: "flex", justifyContent: "center" }}>
 
-<h3>Publicaciones</h3>
+<h3>Compras</h3>
 </div>
 {articulos?.length > 0 ?
 <TableContainer component={Paper}>
     <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
             <TableRow>
-                <TableCell>Nombre de articulo</TableCell>
-                <TableCell align="right">Marca</TableCell>
-                <TableCell align="right">Categoria</TableCell>
-                <TableCell align="right">Genero</TableCell>
-                <TableCell align="right">Precio</TableCell>
+                <TableCell>Numero de compra</TableCell>
+                <TableCell align="right">Fecha</TableCell>
+                <TableCell align="right">Status</TableCell>
+                <TableCell align="right">Monto</TableCell>
+                <TableCell align="right">Detalle de la compra</TableCell>
                 <TableCell align="right">#</TableCell>
             </TableRow>
         </TableHead>
@@ -67,17 +61,17 @@ export default function ListProducts(props:User) {
             {articulos?.map((e) => (
 
                 <TableRow
-                    key={e.name}
+                    key={e._id}
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                     <TableCell component="th" scope="row">
-                        {e.name}
+                        {e._id}
                     </TableCell>
-                    <TableCell align="right">{e.mark}</TableCell>
-                    <TableCell align="right">{e.category}</TableCell>
-                    <TableCell align="right">{e.gender}</TableCell>
-                    <TableCell align="right">{e.price}</TableCell>
-                    <TableCell align="right"> <Link to={`/actualizar-publicacion/${e._id}`}><button>Actualizar</button></Link></TableCell>
+                    <TableCell align="right">{e.date}</TableCell>
+                    <TableCell align="right">{e.status}</TableCell>
+                    <TableCell align="right">{e.amount}</TableCell>
+                    <TableCell align="right"> <Link to={`/`}><button>Detalle</button></Link></TableCell>
+                    <TableCell align="right"> <Link to={`${e.link}`}><button disabled={e.status=='pending'?false:true}>Pagar</button></Link></TableCell>
                 </TableRow>
             ))}
         </TableBody>
@@ -85,7 +79,7 @@ export default function ListProducts(props:User) {
 </TableContainer>
 :
 <div style={{ display: "flex", justifyContent: "center" }}>
-    <h4>No se han realizado publicaciones</h4>
+    <h4>No se han realizado compras</h4>
 </div>
 }
         </Box>
