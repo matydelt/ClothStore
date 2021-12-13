@@ -186,7 +186,7 @@ export default function CartScreen({ idHomepage }: Props) {
 
         {/* Tabla de items a comprar */}
         <Paper className={classes.rootContainer}>
-          {!cart.length && !carrito?.publications?.length ? (
+          {(!auth?.user && cart?.length === 0) || (auth?.user && carrito?.publications?.length === 0) ? (
             <Typography>Aún no has seleccionado nada</Typography>
           ) : (
             <TableContainer className={classes.container}>
@@ -203,7 +203,7 @@ export default function CartScreen({ idHomepage }: Props) {
                   </TableRow>
                 </TableHead>
                 {auth.user
-                  ? carrito.publications.map((item: any) => (
+                  ? carrito?.publications?.map((item: any) => (
                     <CartItem
                       key={item.id}
                       item={item}
@@ -221,7 +221,7 @@ export default function CartScreen({ idHomepage }: Props) {
                       }
                     />
                   ))
-                  : cart.map((item) => (
+                  : cart?.map((item) => (
                     <CartItem
                       key={item.id}
                       item={item}
