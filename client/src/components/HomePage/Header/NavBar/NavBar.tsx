@@ -19,8 +19,11 @@ const useStyles = makeStyles({
   }
 })
 
+interface Props {
+  flagButtonTranslate?: boolean;
+}
 
-const NavBar = () => {
+const NavBar = ({ flagButtonTranslate }: Props) => {
 
   const classes = useStyles()
 
@@ -138,7 +141,7 @@ const NavBar = () => {
             }}
             id='containButtonShoppingLogin'
           >
-            {/* <Link className='buttonNavRight' to="/cart"> */}
+           { flagButtonTranslate ?
               <IconButton className='buttonNavRight' onClick={handleCartAnimate} size="medium" color="secondary">
                 <Badge
                   badgeContent={
@@ -149,7 +152,20 @@ const NavBar = () => {
                   <ShoppingCartIcon />
                 </Badge>
               </IconButton>
-            {/* </Link> */}
+              :
+            <Link className='buttonNavRight' to="/cart">
+              <IconButton className='buttonNavRight' onClick={handleCartAnimate} size="medium" color="secondary">
+                <Badge
+                  badgeContent={
+                    !user ? cartLength : carrito?.publications?.length
+                  }
+                  color="primary"
+                >
+                  <ShoppingCartIcon />
+                </Badge>
+              </IconButton>
+            </Link>
+            }
 
             {user ? (
               <Box className='buttonNavRight' sx={{ fontSize: { xl: "25px" }, marginLeft: "16px" }}>

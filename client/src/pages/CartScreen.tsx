@@ -165,13 +165,21 @@ export default function CartScreen({ idHomepage }: Props) {
   };
 
   return (
-    <Box id={idHomepage}>
+    <Box
+      id={idHomepage}
+      sx={{
+        overflow: 'hidden',
+        position: 'relative',
+        height: '100vh'
+      }}
+    >
       <Container >
         {/* Botón para regresar a la homepage */}
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} >
           <Typography classes={{ root: classes.title }} variant='h4' color='primary'>
             Mi Carritto
           </Typography>
+          { idHomepage ?
           <Button
             onClick={handleShowHomepage}
             startIcon={<ArrowBackIcon />}
@@ -180,7 +188,17 @@ export default function CartScreen({ idHomepage }: Props) {
             classes={{ root: classes.buttonTitle }}
           >
             Continua con tus compras
-          </Button>
+          </Button> :
+           <Button
+           onClick={() => navigate("/")}
+           startIcon={<ArrowBackIcon />}
+           variant="contained"
+           color="primary"
+           classes={{ root: classes.buttonTitle }}
+         >
+           Continua con tus compras
+         </Button>
+        }
         </Box>
 
 

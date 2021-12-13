@@ -1,7 +1,7 @@
 import React, { ChangeEvent, SetStateAction, useEffect, useState } from 'react';
 import { Avatar, Button, Container, FormControl, MenuItem, Typography, Divider, Select } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { SelectChangeEvent, Grid, CircularProgress, Rating,  } from '@mui/material';
+import { SelectChangeEvent, Grid, CircularProgress, Rating, } from '@mui/material';
 // import { Rating } from '@material-ui/lab';
 import { Box } from '@mui/system';
 import axios from 'axios';
@@ -18,14 +18,15 @@ import { useDispatch } from 'react-redux';
 import RelatedPublications from './relatedPublications/RelatedPublications';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import { CartItemType, CartType } from '../../pages/CartScreen';
+import Footer from '../Footer';
 
 
 const useStyles = makeStyles({
   containerPublicationDetail: {
-    marginTop: '0px',
+    marginTop: '100px',
     display: 'flex',
     justifyContent: 'center',
-    
+    zIndex: 2
   },
   avatarPublicationDetatil: {
     width: '350px',
@@ -37,25 +38,25 @@ const useStyles = makeStyles({
     }
   },
   avatarPublicationDetatilMuestra: {
-    marginTop: '2px', 
-    width: '50px', 
-    height: '50px', 
+    marginTop: '2px',
+    width: '50px',
+    height: '50px',
     '&:hover': { boxShadow: 5 }
   },
   typografyDetail: {
-    marginTop: '1px', 
+    marginTop: '1px',
     color: 'gray'
   },
   typografyReview: {
-    fontSize: '10px', 
-    color: 'gray', 
+    fontSize: '10px',
+    color: 'gray',
     ml: 1
   },
   publicationDetailTypografy: {
     marginTop: '2px'
   },
   publicationPriceTypografy: {
-    padding: '3px 0px', 
+    padding: '3px 0px',
     color: 'gray'
   },
   publicationPriceWithoutDiscount: {
@@ -71,7 +72,7 @@ const useStyles = makeStyles({
     marginTop: '4px'
   },
   dividerDetail: {
-    width: '100%', 
+    width: '100%',
     margin: '4px 0px'
   }
 })
@@ -147,7 +148,7 @@ export default function PublicationDetail(): JSX.Element {
             return aux;
           }
           if (publication.images) {
-            return [...aux, { title: publication?.name, id: publication?._id, image: publication?.images[0].url, quantity: amount, price: publication?.discount ? publication?.price - publication?.price*publication?.discount.percentage/100 : publication?.price  }];
+            return [...aux, { title: publication?.name, id: publication?._id, image: publication?.images[0].url, quantity: amount, price: publication?.discount ? publication?.price - publication?.price * publication?.discount.percentage / 100 : publication?.price }];
           }
         });
       }
@@ -158,7 +159,7 @@ export default function PublicationDetail(): JSX.Element {
   }
 
   return (<>
-    <Box sx={{ backgroundColor: '#eeeeee', minHeight: '100vh', height: 'max-content', pb: 20 }}>
+    <Box sx={{ backgroundColor: '#eeeeee', minHeight: '100vh', height: 'max-content', position: 'relative' }}>
       <NavBar></NavBar>
       {/* <Box sx={{ backgroundColor: '#f5f5f5', minHeight: '15vh' }}>
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -166,7 +167,7 @@ export default function PublicationDetail(): JSX.Element {
         </Box>
       </Box> */}
 
-      <Box sx={{ mt: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', height: '1000px' }}>
+      <Box sx={{ mt: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', height: '800px' }}>
 
         <Container classes={{ root: classes.containerPublicationDetail }}>
 
@@ -267,27 +268,27 @@ export default function PublicationDetail(): JSX.Element {
                   {publication && publication?.detail}
                 </Typography>
 
-{ publication?.discount ?
-<div style={{ marginTop: '20px', marginBottom: '20px'}}>
+                {publication?.discount ?
+                  <div style={{ marginTop: '20px', marginBottom: '20px' }}>
 
-                {/* <Typography component="p" sx={{ pt: 3, color: 'gray', textDecoration: 'line-through' }}> */}
-                <Typography component="p" classes={{ root: classes.publicationPriceWithoutDiscount }}>
-                  $ {publication?.price}
-                </Typography>
-                <Typography variant="h5" component="h5" classes={{ root: classes.publicationPriceWithDiscount }}>
-                  $ { publication?.price - (Number(publication?.price)*Number(publication?.discount.percentage)) / 100}
-                </Typography>
-                <Typography component="p" classes={{ root: classes.offPercentage }}>
-                  {publication?.discount?.percentage}% OFF
-                </Typography>
-</div>
-:
+                    {/* <Typography component="p" sx={{ pt: 3, color: 'gray', textDecoration: 'line-through' }}> */}
+                    <Typography component="p" classes={{ root: classes.publicationPriceWithoutDiscount }}>
+                      $ {publication?.price}
+                    </Typography>
+                    <Typography variant="h5" component="h5" classes={{ root: classes.publicationPriceWithDiscount }}>
+                      $ {publication?.price - (Number(publication?.price) * Number(publication?.discount.percentage)) / 100}
+                    </Typography>
+                    <Typography component="p" classes={{ root: classes.offPercentage }}>
+                      {publication?.discount?.percentage}% OFF
+                    </Typography>
+                  </div>
+                  :
 
-                // <Typography variant="h5" component="h5" sx={{ py: 3, color: 'gray' }}>
-                <Typography variant="h5" component="h5" classes={{ root: classes.publicationPriceTypografy }}>
-                  $ {publication?.price}
-                </Typography>
-}
+                  // <Typography variant="h5" component="h5" sx={{ py: 3, color: 'gray' }}>
+                  <Typography variant="h5" component="h5" classes={{ root: classes.publicationPriceTypografy }}>
+                    $ {publication?.price}
+                  </Typography>
+                }
 
                 {publication && publication?.stock > 0 ?
                   <Grid item container component="div"
@@ -369,16 +370,17 @@ export default function PublicationDetail(): JSX.Element {
         </Container>
 
       </Box>
-          {!loading &&
+      {!loading &&
 
-            <Box sx={{ width: '100%', my: 6, height: 'max-content' }}>
+        <Box>
 
-              <Typography align='center' variant="h5" component="h5" style={{ marginBottom: '20px' }}>Publicaciones relacionadas</Typography>
+          <Typography align='center' variant="h5" component="h5" style={{ marginTop: '100px' }}>Publicaciones relacionadas</Typography>
 
-              <RelatedPublications publicationId={publicationId}></RelatedPublications>
-            </Box>
+          <RelatedPublications publicationId={publicationId}></RelatedPublications>
+        </Box>
 
-          }
+      }
+      <Footer background='#8b8b8b'/>
     </Box>
   </>)
 }
