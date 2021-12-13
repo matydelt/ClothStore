@@ -33,16 +33,33 @@ export const registerUser =
 export const registerUserGoogle =
   (user: { email: string; password: string }) =>
     async (dispatch: Dispatch<Action>) => {
+      const cart = localStorage.getItem("cart")
       dispatch({ type: "USER_REGISTER_REQUEST" });
         try {
           const response = await axios.post("http://localhost:3001/auth/google", user);
-            dispatch({
-              type: "USER_REGISTER_SUCCESS",
-              payload: { success: response.data },
-            });
+          if (cart && cart.length > 0) {
+            axios.post(`http://localhost:3001/carrito/${response.data._id}`, JSON.parse(cart))
+          }
+    
+          localStorage.setItem('cart', '[]');
+    
+          console.log(response);
+    
+          dispatch({
+            type: "USER_REGISTER_SUCCESS",
+            payload: { success: response.data },
+          });
+          dispatch({
+            type: "USER_SIGNIN_SUCCESS",
+            payload: { success: response.data },
+          });
         } catch (error) {
           dispatch({
             type: "USER_REGISTER_FAIL",
+            payload: { error: (error as Error).message },
+          });
+          dispatch({
+            type: "USER_SIGNIN_FAIL",
             payload: { error: (error as Error).message },
           });
         }

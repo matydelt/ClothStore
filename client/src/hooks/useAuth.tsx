@@ -56,9 +56,9 @@ function useProvideAuth() {
   const [user, setUser] = useState<User>();
   const dispatch = useDispatch();
 
-  const handleSubmit= (e: FormState ) => {
-      signup({email: e.email, password: e.password});
-  };
+  // const handleSubmit= async (e: FormState ) => {
+  //     await signup({email: e.email, password: e.password});
+  // };
 
 
   const signin = async ({
@@ -109,9 +109,8 @@ function useProvideAuth() {
           password: `${response.user.email}${response.user.email}`,
           photo: response.user.photoURL ? response.user.photoURL : ""
         }
-    
-        await dispatch(registerUserGoogle(obj))
-        handleSubmit(obj)
+        
+        dispatch(registerUserGoogle(obj))
         return response.user;
       }
     } catch (error) {
@@ -130,7 +129,7 @@ function useProvideAuth() {
       }
     });
     return () => unsubscribe();
-  }, []);
+  }, [dispatch]);
 
   return { user, signin, signup, signout, googleSignin };
 }

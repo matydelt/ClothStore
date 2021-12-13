@@ -50,8 +50,8 @@ export default class UserController {
       const users = await UserSchema.find()
       if (users.length > 0) {
         const usersGoo = await UserSchema.findOne({email: email})
-      if(!usersGoo){
-      const user: User = new UserSchema({
+        if(!usersGoo){
+          const user: User = new UserSchema({
             phone,
             email,
             password,
@@ -66,12 +66,13 @@ export default class UserController {
             userId: userSave._id
           })
 
-          console.log("----------------carrito---",carrito)
-
           await carrito.save();
+          res.json(user);
         }
-        
-        res.sendStatus(200);
+        else{
+          if (usersGoo && usersGoo.password === password) res.json(usersGoo);
+          else res.send("usuario o contraseña erronea");
+        }
       } else {
         const user: User = new UserSchema({
           phone,
