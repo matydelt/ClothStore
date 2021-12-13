@@ -6,6 +6,7 @@ import carritoSchema from "../models/carrito";
 import mercadoPago from 'mercadopago'
 import dotenv from "dotenv";
 import SalesSchema, { Sales } from "../models/sales";
+import axios from "axios";
 
 dotenv.config()
 
@@ -141,5 +142,21 @@ export default class Checkout {
             console.log(error)
         }
 
+    }
+    static async postMP(req: Request, res: Response) {
+        const MPInfo = req.body;
+        try {
+            console.log(req.body)
+            const mpApi = (
+                await axios.get(
+                    `https://api.mercadopago.com/v1/payments/${MPInfo.data.id}?access_token=${process.env.MERCADOPAGO_API_PROD_ACCESS_TOKEN}`
+                    )
+                    ).data;
+            console.log(mpApi)
+            res.sendStatus(201);
+        } catch (error) {
+            console.log(error);
+            return res.sendStatus(500);
+        }
     }
 }

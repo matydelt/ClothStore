@@ -57,11 +57,7 @@ function useProvideAuth() {
   const dispatch = useDispatch();
 
   const handleSubmit= (e: FormState ) => {
-    dispatch(registerUserGoogle(e))
-    try{
       signup({email: e.email, password: e.password});
-    }
-    catch{}
   };
 
 
@@ -106,7 +102,6 @@ function useProvideAuth() {
       // const credential = GoogleAuthProvider.credentialFromResult(response);
       // const token = credential?.accessToken;
       if(response.user.email){
-      console.log("------------------------------------------",response.user);
         const obj = { 
           firstName: response.user.displayName ? response.user.displayName.split(" ")[0] : "", 
           lastName: response.user.displayName ? response.user.displayName.split(" ")[1] : "",
@@ -114,7 +109,8 @@ function useProvideAuth() {
           password: `${response.user.email}${response.user.email}`,
           photo: response.user.photoURL ? response.user.photoURL : ""
         }
-        
+    
+        await dispatch(registerUserGoogle(obj))
         handleSubmit(obj)
         return response.user;
       }
