@@ -56,14 +56,19 @@ const UsuariosAdmPage = () => {
                                 }
                             </div>
                             <div className="four" >
-                                <div style={{ backgroundColor: "gray", color: "white", borderRadius: "5px", padding: "5px", width: "70%", marginBottom: "3px" }}>
+                                <div style={{ backgroundColor: "gray", color: "white", borderRadius: "5px", padding: "5px", width: "100%", marginBottom: "3px", overflow: "auto", height: "100px" }}>
 
                                     <p>cantidad de denuncias: {e.denunciations.length}</p>{e.denunciations.length !== 0 ?
                                         (<div>
                                             <p> mensajes:</p>
+                                            <hr></hr>
                                             {
-                                                e.denunciations.map((e: Denunciation) => {
-                                                    return (<p>{e.message}</p>)
+                                                e.denunciations.map((k: Denunciation, index: Number) => {
+                                                    return (<div><p>{k.message}</p>{index !== e.denunciations.length - 1 ?
+                                                        <hr></hr> :
+                                                        <div></div>
+                                                    }
+                                                    </div>)
                                                 })
                                             }</div>
                                         ) :
