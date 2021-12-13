@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Tabs, Tab } from '@material-ui/core';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Tabs, Tab, CircularProgress } from '@material-ui/core';
 // import DialogActions from '@mui/material/DialogActions';
 // import DialogContent from '@mui/material/DialogContent';
 // import DialogContentText from '@mui/material/DialogContentText';
@@ -61,6 +61,7 @@ export default function Reviews({ children }: any) {
     const [element, setElement] = React.useState<any>(null);
     const [from, setFrom] = React.useState<number>(1);
     const [filterCriteria, setFilterCriteria] = React.useState<string>('all');
+    const [loading, setLoading] = React.useState<boolean>(false);
 
     const [reviewForm, setReviewForm] = React.useState<ReviewForm>({
         score: 1,
@@ -103,11 +104,13 @@ export default function Reviews({ children }: any) {
 
     React.useEffect(() => {
         if (open) {
+            setLoading(true)
             // setFilterCriteria('all')
             // setTab(0)
             // setFrom(1)
             // getReviews('all');
             handleTab(undefined, 0)
+            
         }
     }, [open]);
 
@@ -143,6 +146,7 @@ export default function Reviews({ children }: any) {
             setScoreAverage(data.scoreAverage);
             setReviews(data.reviews);
             setTotalScores(data.totalScores);
+            setLoading(false);
         });
     };
 
@@ -154,11 +158,9 @@ export default function Reviews({ children }: any) {
         });
     };
 
-    console.log(from)
-
     const handleTab = async (event: any, newTab: number) => {
         setTab(newTab);
-        
+
         await setFrom(1);
 
         let filter = 'all';
@@ -175,6 +177,7 @@ export default function Reviews({ children }: any) {
             setFilterCriteria('negative');
         }
         getReviews(filter);
+
     };
 
 
@@ -201,8 +204,15 @@ export default function Reviews({ children }: any) {
                     <CloseIcon />
                 </IconButton>
 
-                <DialogContent>
-                    {/* <Box component="form"
+
+                {loading ?
+
+                    <CircularProgress color="primary" style={{ padding: '200px 0', margin: 'auto' }}></CircularProgress>
+
+                    :
+
+                    <DialogContent>
+                        {/* <Box component="form"
                         onSubmit={(e: any) => submitReviewForm(e)}
                     >
 
@@ -241,65 +251,56 @@ export default function Reviews({ children }: any) {
                         </DialogActions>
 
                     </Box> */}
-             
 
-                    <Box component="div" sx={{ my: 6, textAlign: 'center' }}>
-                        <Typography variant="h3" sx={{}}>{scoreAverage}</Typography>
-                        <Rating sx={{ color: '#00c2cb'}} name="read-only" value={scoreAverage} readOnly size="large" />
-                        <Typography component="p" sx={{ fontSize: '10px', color: 'gray' }}>Promedio entre {totalScores} opiniones</Typography>
-                    </Box>
 
-                    <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
-                        <Tabs textColor="primary" indicatorColor="primary"  value={tab} onChange={handleTab} centered>
-                            <Tab classes={{ root: classes.tabs }} label="Todas" />
-                            <Tab classes={{ root: classes.tabs }} label="Positivas" />
-                            <Tab classes={{ root: classes.tabs }} label="Negativas" />
-                        </Tabs>
-                    </Box>
-           
-
-                    {reviews?.length < 1 ?
-
-                        <Box component="div" sx={{ display: 'flex', justifyContent: 'center', my: 5 }}>
-
-                            <Typography variant="h6" sx={{ color: 'gray' }}>
-                                No hay reseñas sobre este producto
-                            </Typography>
-
+                        <Box component="div" sx={{ my: 6, textAlign: 'center' }}>
+                            <Typography variant="h3" sx={{}}>{scoreAverage}</Typography>
+                            <Rating sx={{ color: '#00c2cb' }} name="read-only" value={scoreAverage} readOnly size="large" />
+                            <Typography component="p" sx={{ fontSize: '10px', color: 'gray' }}>Promedio entre {totalScores} opiniones</Typography>
                         </Box>
 
-                        : <>
+                        <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
+                            <Tabs textColor="primary" indicatorColor="primary" value={tab} onChange={handleTab} centered>
+                                <Tab classes={{ root: classes.tabs }} label="Todas" />
+                                <Tab classes={{ root: classes.tabs }} label="Positivas" />
+                                <Tab classes={{ root: classes.tabs }} label="Negativas" />
+                            </Tabs>
+                        </Box>
 
-                            {
-                                reviews && reviews?.map((review, i) => {
-                                    return <Box component="div" key={review.title+i} sx={{ my: 5 }}>
-                                        <Rating sx={{ color: '#00c2cb' }} name="read-only" value={review?.score} readOnly size="small" />
-                                        <Typography variant="h6">{review.title}</Typography>
-                                        <DialogContentText classes={{ root: classes.dialogContent }}>
-                                            {review.message}
-                                        </DialogContentText>
 
-                                    </Box>
-                                })
-                            }
-                            {
-                                <div
-                                    ref={setElement}
-                                // disabled={dias.length >= cantidadDias}
-                                // style={{
-                                //     position: "relative",
-                                //     width: "100%",
-                                //     height: "100px",
-                                //     // marginTop: "500px",
-                                //     marginBottom: "10px",
-                                //     display: "block",
-                                //     // background: "transparent",
-                                // }}
-                                ></div>
-                            }
-                        </>}
+                        {reviews?.length < 1 ?
 
-                </DialogContent>
+                            <Box component="div" sx={{ display: 'flex', justifyContent: 'center', my: 5 }}>
+
+                                <Typography variant="h6" sx={{ color: 'gray' }}>
+                                    No hay reseñas sobre este producto
+                                </Typography>
+
+                            </Box>
+
+                            : <>
+
+                                {
+                                    reviews && reviews?.map((review, i) => {
+                                        return <Box component="div" key={review.title + i} sx={{ my: 5 }}>
+                                            <Rating sx={{ color: '#00c2cb' }} name="read-only" value={review?.score} readOnly size="small" />
+                                            <Typography variant="h6">{review.title}</Typography>
+                                            <DialogContentText classes={{ root: classes.dialogContent }}>
+                                                {review.message}
+                                            </DialogContentText>
+
+                                        </Box>
+                                    })
+                                }
+                                {
+                                    <div
+                                        ref={setElement}
+                                    ></div>
+                                }
+                            </>}
+
+                    </DialogContent>
+                }
             </Dialog>
         </ >
     );
