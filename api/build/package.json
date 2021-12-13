@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon api/build/src/index.js"
+    "start": "node build/src/index.js",
+    "build": "tsc",
+    "postinstall": "npm run build"
   },
   "dependencies": {
     "@types/cookie-parser": "^1.4.2",
