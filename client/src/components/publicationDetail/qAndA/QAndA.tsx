@@ -1,5 +1,6 @@
 import React, { BaseSyntheticEvent, useState } from 'react';
-import { Button, Grid, TextField, Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
+import { Button, TextField, makeStyles } from '@material-ui/core';
 import { Box } from '@mui/system';
 import axios from 'axios';
 import { useParams } from 'react-router';
@@ -8,6 +9,20 @@ import { RootState } from '../../../redux/store/store';
 import { User } from '../../../redux/reducer/stateTypes';
 import AnswerModal from './answerModal/AnswerModal';
 
+const useStyles = makeStyles({
+    buttonQandA: {
+        height: '51px',
+        display: 'block',
+        width: '133px',
+        transform: 'translate(0px, 3px)',
+        '& span': {
+            margin: '0px'
+        }
+    },
+    inputQandA: {
+        height: '51px'
+    }
+})
 interface Form {
     message: string;
     publicationId: string;
@@ -16,6 +31,8 @@ interface Form {
 
 
 export default function QAndA(): JSX.Element {
+
+    const classes = useStyles();
 
     const { publicationId } = useParams();
     const user = useSelector((state: RootState): User | undefined => state?.userSignin?.userInfo);
@@ -67,6 +84,7 @@ export default function QAndA(): JSX.Element {
                 <Grid onSubmit={submitForm} component="form" container spacing={2} sx={{ my: 3 }}>
                     <Grid item xs={5}>
                         <TextField
+                            variant='outlined'
                             onChange={handleForm}
                             fullWidth
                             name="message"
@@ -75,10 +93,19 @@ export default function QAndA(): JSX.Element {
                             label="Escribe tu pregunta..."
                             helperText="Consejo: ¡Busca entre las respuestas antes de preguntar!"
                             autoComplete="off"
+                            classes={{ root: classes.inputQandA }}
                         />
                     </Grid>
                     <Grid item xs={1}>
-                        <Button disabled={!message} type="submit">Preguntar</Button>
+                        <Button
+                            variant='contained'
+                            color='primary'
+                            disabled={!message}
+                            type="submit"
+                            classes={{ root: classes.buttonQandA }}
+                        >
+                            Preguntar
+                        </Button>
                     </Grid>
                 </Grid>
             }
