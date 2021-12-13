@@ -6,12 +6,14 @@ export interface Denunciation {
     state: boolean;
     author: [string];
     publication: [string];
+    _id: string;
 }
 export interface DenunciationData {
     denunciation: Denunciation;
     author: User;
     infractor: User;
     publication: Publication;
+
 }
 
 export interface DenunciationState {

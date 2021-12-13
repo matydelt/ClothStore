@@ -1,5 +1,4 @@
 import { Box } from "@mui/material"
-import { Avatar, Table, TableBody } from "material-ui"
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { bannUser, getUsers, setEmployee } from "../../../../redux/actions/userActions"
@@ -7,7 +6,8 @@ import { User } from "../../../../redux/reducer/stateTypes"
 import { DefaultRootState } from "../../../../redux/types"
 import NavBar from "../../navBar"
 import "./usuario.css"
-
+import CloseIcon from '@mui/icons-material/Close';
+import { Denunciation } from "../../../../redux/reducer/denunciationReducers"
 const UsuariosAdmPage = () => {
     const dispatch = useDispatch()
     const state = useSelector((state: DefaultRootState) => state)
@@ -25,6 +25,7 @@ const UsuariosAdmPage = () => {
                     <p className="two">Email</p>
                     <p className="three">Activo</p>
                     <p className="four">Empleado</p>
+                    <p className="four">denuncias</p>
                 </Box>
                 {
                     users?.map((e: User) => {
@@ -54,6 +55,23 @@ const UsuariosAdmPage = () => {
                                     <div>Admin</div>
                                 }
                             </div>
+                            <div className="four" >
+                                <div style={{ backgroundColor: "gray", color: "white", borderRadius: "5px", padding: "5px", width: "70%", marginBottom: "3px" }}>
+
+                                    <p>cantidad de denuncias: {e.denunciations.length}</p>{e.denunciations.length !== 0 ?
+                                        (<div>
+                                            <p> mensajes:</p>
+                                            {
+                                                e.denunciations.map((e: Denunciation) => {
+                                                    return (<p>{e.message}</p>)
+                                                })
+                                            }</div>
+                                        ) :
+                                        <div></div>
+                                    }
+                                </div>
+                            </div>
+
                         </div>)
                     })
                 }
@@ -64,32 +82,3 @@ const UsuariosAdmPage = () => {
 }
 
 export default UsuariosAdmPage
-{/* <table>
-    <tbody>
-        <thead>
-            <th>Nombre</th>
-            <th>Email</th>
-            <th>Activado</th>
-            <th>Es empleado</th>
-        </thead>
-        {
-            users?.map((e: User) => {
-                let flag = e.active
-                let flagEmploye = (e.type === "employee")
-                return (
-                    <tr><td>{e.name.firstName} {e.name.lastName}</td>
-                        <td>{e.email}</td>
-                        {e.type !== "admin" ?
-                            <td><input type={"checkbox"} defaultChecked={e.active} onChange={(k: React.ChangeEvent) => { dispatch(bannUser(e._id, !flag)); flag = !flag }} /></td> :
-                            <td></td>
-                        }
-                        {e.type !== "admin" ?
-                            <td><input type={"checkbox"} defaultChecked={e.type === "employee"} onChange={(k: React.ChangeEvent) => { dispatch(bannUser(e._id, !flagEmploye)); flagEmploye = !flagEmploye }} /></td> :
-                            <td></td>
-                        }
-                    </tr>
-                )
-            })
-        }
-    </tbody>
-</table> */}

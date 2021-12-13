@@ -234,6 +234,7 @@ export default class PublicationController {
       if (flag) {
         if (publication) {
           publication.state = true;
+          publication.stock = 1
           await publication.save();
           sendEMail.send({
             publicationPrice: publication?.price,

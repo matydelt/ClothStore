@@ -1,18 +1,17 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable array-callback-return */
 import { Box } from "@mui/material"
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { Publication } from "../../../../redux/types"
 import ENavBar from "../../employeeNavBar"
 import NavBar from "../../navBar"
 import { Link } from 'react-router-dom';
 import "./denuncias.css"
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import { publicationMessage } from "../../../../redux/actions/publicationActions"
 import CloseIcon from '@mui/icons-material/Close';
-import { getDenunciations } from "../../../../redux/actions/denunciationActions"
-import { Denunciation, DenunciationData } from "../../../../redux/reducer/denunciationReducers"
+import { deleteDenunciations, getDenunciations, putDenunciations } from "../../../../redux/actions/denunciationActions"
+import { DenunciationData } from "../../../../redux/reducer/denunciationReducers"
+import { publicationMessage } from "../../../../redux/actions/publicationActions"
 interface State {
     publicationList: any,
     userSignin: any,
@@ -24,17 +23,30 @@ const Denuncias = () => {
     const state = useSelector((state: State) => state)
     const { userInfo } = state.userSignin
     const denuncias: [DenunciationData] = state.denunciation.denunciations
-    const [mensaje, setMensaje] = useState("");
 
     useEffect(() => {
         dispatch(getDenunciations())
     }, [dispatch])
     if (!userInfo?.type || userInfo?.type === "normal") return (<div></div>)
 
-    async function HandlerSubmit(e: React.SyntheticEvent<EventTarget>, id: string) {
+    async function estimar(e: React.SyntheticEvent<EventTarget>, id: string) {
         e.preventDefault()
-        await dispatch(publicationMessage(id, mensaje))
-        await dispatch(getDenunciations())
+        try {
+            await dispatch(putDenunciations(id))
+            await dispatch(publicationMessage(id, "su publicacion fue denunciada, y quedara desactivada hasta que la modifique y vuelva a ser aprobada"))
+            await dispatch(getDenunciations())
+        } catch (e) {
+            console.log(e)
+        }
+    }
+    async function desestimar(e: React.SyntheticEvent<EventTarget>, id: string) {
+        e.preventDefault()
+        try {
+            await dispatch(deleteDenunciations(id))
+            await dispatch(getDenunciations())
+        } catch (e) {
+            console.log(e)
+        }
     }
     console.log(denuncias)
     return (
@@ -52,39 +64,35 @@ const Denuncias = () => {
                 </Box>
                 {denuncias?.map((e: DenunciationData) => {
                     const { denunciation, infractor, author, publication } = e
-                    return (
-                        <div style={{ flexDirection: "row", display: "flex", borderBottom: "#e6e6e6 solid 1px", justifyContent: "initial", width: "70%", alignItems: "center" }}>
-                            <a href="#infractor" type="button" className="one" style={{ color: "black" }}><RemoveRedEyeIcon />Ver</a>
-                            <a href="#author" type="button" className="two" style={{ color: "black" }}><RemoveRedEyeIcon />Ver</a>
-                            <div className="three">
-                                <button>estimar</button>
-                                <button>desestimar</button>
-                            </div>
-                            <div className="three" ><p style={{ backgroundColor: "gray", width: "60%", borderRadius: "10px", padding: "4px" }}>{denunciation.message}</p></div>
-                            <Link to={`/publication/${publication._id}`} target={"_blank"} className="four" style={{ color: "black" }}><RemoveRedEyeIcon />Ver</Link>
-                            <div id="author" className="modal">
-                                <div className="modal-contenido" style={{ display: "flex", flexDirection: "column" }}>
-                                    <a href="#" style={{ display: "flex", justifyContent: "end" }}>
-                                        <button style={{ color: "red", backgroundColor: "transparent", border: "none", cursor: "pointer" }}><CloseIcon /></button>
-                                    </a>
-                                    <p>Este usuario reporto la publicacion</p>
-                                    <p>{author.name.firstName + " " + author.name.lastName}</p>
-                                    <p>{author.email}</p>
-                                </div>
-                            </div>
-                            <div id="infractor" className="modal">
-                                <div className="modal-contenido" style={{ display: "flex", flexDirection: "column" }}>
-                                    <a href="#" style={{ display: "flex", justifyContent: "end" }}>
-                                        <button style={{ color: "red", backgroundColor: "transparent", border: "none", cursor: "pointer" }}><CloseIcon /></button>
-                                    </a>
-                                    <p>Este usuario es el dueño de la publicacion denunciada</p>
+                    console.log(infractor)
+                    console.log(author)
+                    if (!denunciation.state) {
+
+                        return (
+                            <div style={{ flexDirection: "row", display: "flex", borderBottom: "#e6e6e6 solid 1px", justifyContent: "initial", width: "70%", alignItems: "center" }}>
+                                <div className="one">
                                     <p>{infractor.name.firstName + " " + infractor.name.lastName}</p>
                                     <p>{infractor.email}</p>
                                     <p>denuncias actuales: {infractor.denunciations.length}</p>
                                 </div>
+                                <div className="two">
+                                    <p>{author.name.firstName + " " + author.name.lastName}</p>
+                                    <p>{author.email}</p></div>
+                                <div className="three" style={{ display: "flex", flexDirection: "column" }}>
+
+                                    <div style={{ display: "flex", justifyContent: "initial" }} ><button className="estimarButton" onClick={(e: React.SyntheticEvent<EventTarget>) => estimar(e, denunciation._id)}>estimar</button></div>
+
+
+                                    <div style={{ display: "flex", justifyContent: "initial" }} ><button className="desestimarButton" onClick={(e: React.SyntheticEvent<EventTarget>) => desestimar(e, denunciation._id)}>desestimar</button></div>
+
+                                </div>
+                                <div className="three" ><p style={{ backgroundColor: "gray", width: "60%", borderRadius: "10px", padding: "4px", color: "white" }}>{denunciation.message}</p></div>
+                                <Link to={`/publication/${publication._id}`} target={"_blank"} className="four" style={{ color: "black" }}><RemoveRedEyeIcon />Ver</Link>
                             </div>
-                        </div>
-                    )
+                        )
+                    } else {
+                        return <div></div>
+                    }
                 })
                 }
 
