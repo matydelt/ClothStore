@@ -83,30 +83,36 @@ export default function QAndA(): JSX.Element {
                 </Grid>
             }
 
-            {/* </Box> */}
+            { questions && questions.length > 0 ?
 
-            <Box component="div">
-                {questions?.map((q: any) => {
-                    return <Box key={q._id} component="div" sx={{ my: 3 }}>
-                        <Typography component="p">
-                            {q.message}
-                        </Typography>
-
-                        {!isBuyer && !q.answer?.message?.length ?
-
-                            <AnswerModal questionId={q._id} authorId={user?._id} getQuestions={getQuestions}>
-                                <div>Responder</div>
-                            </AnswerModal>
-
-                            :
-                            <Typography component="p" sx={{ color: 'gray ' }}>
-                                {q.answer?.message ? q.answer?.message : 'Sin respuesta'} {q.answer?.createdAt && new Date(q.answer?.createdAt).toLocaleDateString()}
+                <Box component="div">
+                    {questions?.map((q: any) => {
+                        return <Box key={q._id} component="div" sx={{ my: 3 }}>
+                            <Typography component="p">
+                                {q.message}
                             </Typography>
-                        }
-                    </Box>
-                })
-                }
-            </Box>
+
+                            {!isBuyer && !q.answer?.message?.length ?
+
+                                <AnswerModal questionId={q._id} authorId={user?._id} getQuestions={getQuestions}>
+                                    <div>Responder</div>
+                                </AnswerModal>
+
+                                :
+                                <Typography component="p" sx={{ color: 'gray ' }}>
+                                    {q.answer?.message ? q.answer?.message : 'Sin respuesta'} {q.answer?.createdAt && new Date(q.answer?.createdAt).toLocaleDateString()}
+                                </Typography>
+                            }
+                        </Box>
+                    })
+                    }
+                </Box>
+
+                    :
+
+                    <Typography sx={{ color: 'gray', m: 2 }}>Aún no hay preguntas en esta publicación</Typography>
+            
+            }
         </Box>
 
 
