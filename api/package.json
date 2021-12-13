@@ -5,9 +5,7 @@
   "scripts": {
     "build": "rimraf build && tsc",
     "postinstall": "npm run build",
-    "start": "node build/src/index.js",
-    "test": "jest --watch",
-    "coverage": "jest --coverage"
+    "start": "node api/build/src/index.js"
   },
 
   "dependencies": {
