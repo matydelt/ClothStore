@@ -34,7 +34,7 @@ export default function QAndA(): JSX.Element {
 
     React.useEffect(() => {
         if (user) {
-            setIsBuyer(user && !(user?.publications?.find(p => p._id === publicationId)));
+            setIsBuyer(!!!(user?.publications?.find(p => p._id === publicationId)));
         }
     }, []);
 
