@@ -3,11 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "ts:node": "ts-node index.ts",
-    "clean": "del -rf build",
-    "start": "nodemon build/src/index.js",
-    "dev": "nodemon"
+    "build": "rimraf build && tsc",
+    "postinstall": "npm run build",
+    "start": "node build/src/index.js",
+    "test": "jest --watch",
+    "coverage": "jest --coverage"
   },
+
   "dependencies": {
     "@types/cookie-parser": "^1.4.2",
     "@types/cors": "^2.8.12",
