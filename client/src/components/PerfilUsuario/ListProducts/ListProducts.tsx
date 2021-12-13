@@ -4,6 +4,7 @@ import * as React from 'react'
 import { Link } from "react-router-dom"
 import DiscountModal from "./DiscountModal/DiscountModal"
 import Button from '@mui/material/Button';
+import ModalQA from "./ModalQA"
 
 interface Publication {
     name: string;
@@ -110,7 +111,7 @@ export default function ListProducts(props: User) {
                                         <DiscountModal userId={props?.id} publicationId={e?._id} getPublications={getPublications}>
                                             <Button>{e.discount ? 'Reemplazar descuento' : 'Aplicar descuento'}</Button>
                                         </DiscountModal>
-
+                                        <ModalQA id={e._id} />
                                         <Link to={`/actualizar-publicacion/${e._id}`}><Button>Actualizar</Button></Link></TableCell>
                                 </TableRow>
                             ))}

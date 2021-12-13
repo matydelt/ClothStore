@@ -25,15 +25,18 @@ import { RootState } from "./redux/store/store";
 import PublicacionesAdmPage from "./components/adminPage/components/publicaciones/pubicaciones";
 import Denuncias from "./components/adminPage/components/denuncias/denunias";
 import ReactGa from "react-ga"
+import { useLocation } from "react-router-dom";
 
 // const user = useSelector((state: RootState) => state.userSignin.userInfo)
 
 const App = (): JSX.Element => {
+  const location = useLocation();
+
   //google analytics
   useEffect(() => {
     ReactGa.initialize("UA-215041281-1")
-    ReactGa.pageview(window.location.pathname + window.location.search)
-  }, [])
+    ReactGa.pageview(location.pathname)
+  }, [location])
   //google analytics
   const dispatch = useDispatch();
   const { name, order, page, mark, category, gender, price, author } =
