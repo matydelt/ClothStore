@@ -6,7 +6,6 @@ import { User } from "../../../../redux/reducer/stateTypes"
 import { DefaultRootState } from "../../../../redux/types"
 import NavBar from "../../navBar"
 import "./usuario.css"
-import CloseIcon from '@mui/icons-material/Close';
 import { Denunciation } from "../../../../redux/reducer/denunciationReducers"
 const UsuariosAdmPage = () => {
     const dispatch = useDispatch()

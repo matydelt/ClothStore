@@ -8,7 +8,6 @@ import NavBar from "../../navBar"
 import { Link } from 'react-router-dom';
 import "./denuncias.css"
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import CloseIcon from '@mui/icons-material/Close';
 import { deleteDenunciations, getDenunciations, putDenunciations } from "../../../../redux/actions/denunciationActions"
 import { DenunciationData } from "../../../../redux/reducer/denunciationReducers"
 import { publicationMessage } from "../../../../redux/actions/publicationActions"
