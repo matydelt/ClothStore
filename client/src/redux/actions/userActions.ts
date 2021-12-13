@@ -30,6 +30,24 @@ export const registerUser =
       }
     };
 
+export const registerUserGoogle =
+  (user: { email: string; password: string }) =>
+    async (dispatch: Dispatch<Action>) => {
+      dispatch({ type: "USER_REGISTER_REQUEST" });
+        try {
+          const response = await axios.post("http://localhost:3001/auth/google", user);
+            dispatch({
+              type: "USER_REGISTER_SUCCESS",
+              payload: { success: response.data },
+            });
+        } catch (error) {
+          dispatch({
+            type: "USER_REGISTER_FAIL",
+            payload: { error: (error as Error).message },
+          });
+        }
+    };
+
 export const signinUser =
 
   (user: any) => async (dispatch: Dispatch<Action>) => {

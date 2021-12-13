@@ -6,8 +6,8 @@ export default class UserController {
   static async setUser(req: Request, res: Response) {
     try {
       const { firstName, lastName, phone, email, password, photo } = req.body;
+      console.log("----------------U---",req.body)
       const users = await UserSchema.find()
-      console.log("----------------U---",users)
       if (users.length > 0) {
         const user: User = new UserSchema({
           phone,
@@ -43,6 +43,53 @@ export default class UserController {
       res.sendStatus(500);
     }
   }
+
+  static async setUserGoogle(req: Request, res: Response) {
+    try {
+      const { firstName, lastName, phone, email, password, photo } = req.body;
+      const users = await UserSchema.find()
+      if (users.length > 0) {
+        const usersGoo = await UserSchema.findOne({email: email})
+      if(!usersGoo){
+      const user: User = new UserSchema({
+            phone,
+            email,
+            password,
+            name: { firstName, lastName },
+            photo,
+            type: "normal"
+          });
+          const userSave = await user.save();
+          
+          const carrito: Carrito = new carritoSchema({
+            publications: undefined,
+            userId: userSave._id
+          })
+
+          console.log("----------------carrito---",carrito)
+
+          await carrito.save();
+        }
+        
+        res.sendStatus(200);
+      } else {
+        const user: User = new UserSchema({
+          phone,
+          email,
+          password,
+          name: { firstName, lastName },
+          photo,
+          type: "admin"
+        });
+        await user.save();
+        res.sendStatus(200);
+      }
+    } catch (e) {
+      console.log(e);
+      res.sendStatus(500);
+    }
+  }
+  
   static async getUser(req: Request, res: Response) {
     try {
       const { email, password } = req.query;
