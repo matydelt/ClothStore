@@ -6,8 +6,8 @@ export default class UserController {
   static async setUser(req: Request, res: Response) {
     try {
       const { firstName, lastName, phone, email, password, photo } = req.body;
-      const users = await UserSchema.find();
-      console.log("----------------U---", users);
+      const users = await UserSchema.find()
+      console.log("----------------U---", users)
       if (users.length > 0) {
         const user: User = new UserSchema({
           phone,
@@ -104,6 +104,7 @@ export default class UserController {
   static async getOneUser(req: Request, res: Response) {
     try {
       const { id } = req.params;
+      console.log(req.params)
       const user = await UserSchema.findOne({ _id: id });
       console.log("----------------user--------------", user);
       res.json(user);

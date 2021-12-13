@@ -235,15 +235,16 @@ export default class PublicationController {
       if (flag) {
         if (publication) {
           publication.state = true;
+          publication.stock = 1
           await publication.save();
           sendEMail.send({
             publicationPrice: publication?.price,
             email: seller?.email,
             mensaje: "Su publicacion a sido APROBADA!",
             subject: "Tu publicacion fue aprobada",
-            htmlFile: "question.html",
-          });
-          res.sendStatus(200);
+            htmlFile: "publicationApproved.html",
+          })
+          res.sendStatus(200)
         } else {
           res.sendStatus(404);
         }
@@ -290,8 +291,8 @@ export default class PublicationController {
         email: seller?.email,
         mensaje: message,
         subject: "Tu publicacion fue rechazada",
-        htmlFile: "question.html",
-      });
+        htmlFile: "publicationRejected.html",
+      })
       res.sendStatus(200);
     } catch (error) {
       console.log(error);
