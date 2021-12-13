@@ -18,7 +18,7 @@
 //     =====`-.____`.___ \_____/___.-`___.-'=====
 //                       `=---='  
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-const server = require('./src/app.ts');
+const server = require('./src/app.js');
 // Syncing all the models at once.
 server.listen(process.env.PORT || "3001", process.env.DB_HOST || "localhost", () => {
     console.log("%s listening at " + process.env.PORT);

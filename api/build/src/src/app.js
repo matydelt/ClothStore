@@ -8,7 +8,7 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const morgan_1 = __importDefault(require("morgan"));
 const { users, publications, cloudinary, mercadoPago, carrito, reviews, qAndAs, denunciation } = require("./routes/index");
-require('./db.ts'); // conexion a base de datos 
+require('./db.js'); // conexion a base de datos 
 const server = (0, express_1.default)();
 const cors_1 = __importDefault(require("cors"));
 // server.name = 'API';
