@@ -23,7 +23,7 @@ const server = require('./src/app');
 
 
 server.listen(process.env.PORT || "3001", process.env.HOST || "localhost", () => {
-  console.log("https://" + process.env.HOST + process.env.PORT);
+  console.log("https://" + process.env.HOST + ":" + process.env.PORT);
 });
 
 
