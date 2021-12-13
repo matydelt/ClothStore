@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-const users = require("./users.ts")
+const users = require("./users")
 const publications = require("./publications")
 const cloudinary = require("./cloudinary")
 const reviews = require("./review");

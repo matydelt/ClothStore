@@ -3,7 +3,7 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 const { users, publications, cloudinary, mercadoPago, carrito, reviews, qAndAs, denunciation } = require("./routes/index")
-require('./db.ts'); // conexion a base de datos 
+require('./db'); // conexion a base de datos 
 
 const server: Application = express();
 

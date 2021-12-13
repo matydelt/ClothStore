@@ -17,7 +17,7 @@
 //     =====`-.____`.___ \_____/___.-`___.-'=====
 //                       `=---='  
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-const server = require('./src/app.ts');
+const server = require('./src/app');
 
 // Syncing all the models at once.
 
