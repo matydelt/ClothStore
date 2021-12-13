@@ -15,7 +15,7 @@ import { gsap } from 'gsap'
 const useStyles = makeStyles({
   navBarContain: {
     background: 'transparent',
-    boxShadow: '0px 0px tranparent'
+    boxShadow: '0px 0px 0px'
   }
 })
 
