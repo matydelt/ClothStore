@@ -109,7 +109,7 @@ export default function PublicationDetail(): JSX.Element {
 
   useEffect(() => {
     if (publicationId && publicationId.length > 0) {
-      axios.get('http://localhost:3001/publication', {
+      axios.get('/publication', {
         params: { publicationId: publicationId }
       }).then(({ data }) => {
         setPublication(data);

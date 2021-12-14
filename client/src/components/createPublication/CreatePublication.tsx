@@ -61,7 +61,7 @@ export default function CreatePublication(): JSX.Element {
 
   useEffect(() => {
     if (publicationId && publicationId.length > 0) {
-      axios.get('http://localhost:3001/publication', {
+      axios.get('/publication', {
         params: { publicationId: publicationId }
       }).then(({ data }) => {
         setForm({ ...data })
@@ -78,7 +78,7 @@ export default function CreatePublication(): JSX.Element {
   function submitForm(e: BaseSyntheticEvent): void {
     e.preventDefault();
 
-    axios.post('http://localhost:3001/publications/new', form, { params: { publicationId } }).then(({ data }) => {
+    axios.post('/publications/new', form, { params: { publicationId } }).then(({ data }) => {
       console.log(data);
       navigate(`/publication/${data}`)
       // setForm({
@@ -96,7 +96,7 @@ export default function CreatePublication(): JSX.Element {
   }
 
   function removeImage(imageId: string): void {
-    axios.post('http://localhost:3001/removeimage', { imageId }).then(({ data }) => {
+    axios.post('/removeimage', { imageId }).then(({ data }) => {
       setForm({ ...form, images: images.filter((img: any) => img.public_id !== imageId) });
     }).catch(err => console.log(err));
 

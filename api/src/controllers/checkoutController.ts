@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
-import PublicationSchema, {Publication} from "../models/publication";
-import ShoppingSchema, {Shopping} from "../models/shopping";
+import PublicationSchema, { Publication } from "../models/publication";
+import ShoppingSchema, { Shopping } from "../models/shopping";
 import UserSchema from "../models/user";
 import carritoSchema from "../models/carrito";
 import mercadoPago from 'mercadopago'
@@ -30,7 +30,7 @@ export default class Checkout {
             const orderMap: Array<any> = [];
             for (let i = 0; i < order.publications.length; i++) {
                 const descript = await PublicationSchema.findById(order.publications[i].publication)
-                if(descript){
+                if (descript) {
                     orderMap.push(
                         {
                             id: order.publications[i].publication,
@@ -47,17 +47,17 @@ export default class Checkout {
                 marketplace: 'Cloth Store',
                 additional_info: order._id,
                 statement_descriptor: "Clothstore",
-                back_urls: { failure: '', pending: '', success: 'http://localhost:3000/' }
+                back_urls: { failure: '', pending: '', success: 'https://cloth-store-henry.herokuapp.com' }
             }
             const response = await mercadoPago.preferences.create(preference)
 
-            let compras:number = 0
+            let compras: number = 0
             let comprar = 0
-            comprar= order.publications.forEach( (c:any) => {
-                compras = compras + (c.price*c.quantity)
+            comprar = order.publications.forEach((c: any) => {
+                compras = compras + (c.price * c.quantity)
             })
 
-            const compra : Shopping = new ShoppingSchema({
+            const compra: Shopping = new ShoppingSchema({
                 publications: order.publications,
                 amount: compras,
                 userId: order.userId,
@@ -72,19 +72,19 @@ export default class Checkout {
             userCompra?.shopping.push(compra);
             await userCompra?.save();
 
-            const obj: {[k: string]: any} = {};
+            const obj: { [k: string]: any } = {};
             obj["users"] = []
-            for(let i :number = 0; i< order.publications.length; i++){
+            for (let i: number = 0; i < order.publications.length; i++) {
                 const publi = await PublicationSchema.findById(order.publications[i].publication)
-                if(publi){
+                if (publi) {
                     const us = await UserSchema.findById(publi.author)
-                    if(us){
+                    if (us) {
                         publi.stock -= order.publications[i].quantity
                         publi.markModified('stock')
                         await publi.save();
-                    
-                        for(let j :number = 0; j< us.publications.length; j++){
-                            if(us.publications[j].order==publi.order){
+
+                        for (let j: number = 0; j < us.publications.length; j++) {
+                            if (us.publications[j].order == publi.order) {
                                 us.publications[j].stock -= order.publications[i].quantity
                             }
                         }
@@ -101,16 +101,16 @@ export default class Checkout {
                 }
             }
 
-            for(let i :number = 0; i< obj.users.length; i++){
-                const userVenta = await UserSchema.findOne({email: obj.users[i]});
-                if (userVenta){
+            for (let i: number = 0; i < obj.users.length; i++) {
+                const userVenta = await UserSchema.findOne({ email: obj.users[i] });
+                if (userVenta) {
                     compras = 0
                     comprar = 0
-                    comprar= obj[`${obj.users[i]}`].forEach( (c:any) => {
-                        compras = compras + (c.price*c.quantity)
+                    comprar = obj[`${obj.users[i]}`].forEach((c: any) => {
+                        compras = compras + (c.price * c.quantity)
                     })
-                    
-                    const venta : Sales = new SalesSchema({
+
+                    const venta: Sales = new SalesSchema({
                         publications: obj[`${obj.users[i]}`],
                         amount: compras,
                         userId: userVenta._id,
@@ -125,10 +125,10 @@ export default class Checkout {
                     await userVenta.save();
                 }
             }
-            
+
 
             const carrito = await carritoSchema.findById(order._id)
-            if(carrito){
+            if (carrito) {
                 carrito.publications = [];
                 carrito.markModified('publications')
                 await carrito.save();
