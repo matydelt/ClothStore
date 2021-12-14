@@ -9,7 +9,7 @@ import { Provider } from "react-redux";
 import axios from "axios";
 import { ProvideAuth } from "./hooks/useAuth";
 
-axios.defaults.baseURL = process.env.REACT_APP_API || "http://localhost:3001";
+axios.defaults.baseURL = process.env.REACT_APP_API;
 
 ReactDOM.render(
   <React.StrictMode>
