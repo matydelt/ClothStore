@@ -1,36 +1,33 @@
-import React, { BaseSyntheticEvent, useEffect, useState } from "react";
 import {
   Avatar,
-  Button,
-  Container,
   Badge,
+  Box,
+  Button,
+  CircularProgress,
+  Container,
+  Divider,
   FormControl,
   Grid,
   Input,
   InputAdornment,
   InputLabel,
+  makeStyles,
   MenuItem,
   Select,
   TextField,
-  Typography,
-  Divider,
   Tooltip,
-  CircularProgress,
-  // SelectChangeEvent,
-  Box,
-  makeStyles,
+  Typography,
 } from "@material-ui/core";
-// import { Box } from "@mui/system";
-import axios from "axios";
-import FileUpload from "../fileUpload/FileUpload";
-import CancelIcon from "@mui/icons-material/Cancel";
-import { useNavigate, useParams } from "react-router";
 import { ImageNotSupportedOutlined } from "@mui/icons-material";
+import CancelIcon from "@mui/icons-material/Cancel";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import axios from "axios";
+import React, { BaseSyntheticEvent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router";
 import { RootState } from "../../redux/store/store";
+import FileUpload from "../fileUpload/FileUpload";
 import NavBar from "../HomePage/Header/NavBar/NavBar";
-// import { useAuth } from '../../hooks/useAuth';
 
 interface CreatePublicationForm {
   name: string;
@@ -134,19 +131,7 @@ export default function CreatePublication() {
         params: { publicationId },
       })
       .then(({ data }) => {
-        console.log(data);
         navigate(`/publication/${data}`);
-        // setForm({
-        //     name: '',
-        //     detail: '',
-        //     mark: '',
-        //     categorie: '',
-        //     gender: '',
-        //     stock: 0,
-        //     price: 0,
-        //     images: [],
-
-        // });
       });
   }
 

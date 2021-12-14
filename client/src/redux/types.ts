@@ -22,6 +22,7 @@ export type Publication = {
     state: boolean;
     isRejected: boolean;
     message: string;
+    discount: any;
 }
 
 export type Publications = Publication[];
