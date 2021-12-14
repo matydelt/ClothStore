@@ -63,17 +63,13 @@ export default function ReviewForm({ publicationId }: any) {
 
     const { title, score, message } = reviewForm;
 
-
-
-
-
     React.useEffect(() => {
 
-        
+
         if (open) {
-            console.log(publicationId, '///',  user?._id )
+            console.log(publicationId, '///', user?._id)
             console.log(reviewForm)
-            axios.get(`/review/${publicationId}/${user?._id}`).then(({data}) => {
+            axios.get(`/review/${publicationId}/${user?._id}`).then(({ data }) => {
                 if (data) {
                     setReviewForm(data);
                 }
@@ -109,7 +105,7 @@ export default function ReviewForm({ publicationId }: any) {
     return (
         <>
             <Button onClick={handleClickOpen}>
-                { reviewForm.title ? 'Modificar reseña' : 'Dejar reseña' }
+                {reviewForm.title ? 'Modificar reseña' : 'Dejar reseña'}
             </Button>
 
 
