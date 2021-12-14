@@ -160,7 +160,7 @@ export default function PublicationDetail(): JSX.Element {
             return aux;
           }
           if (publication.images) {
-            return [...aux, { title: publication?.name, id: publication?._id, image: publication?.images[0].url, quantity: amount, price: publication?.discount ? publication?.price - publication?.price*publication?.discount.percentage/100 : publication?.price  }];
+            return [...aux, { title: publication?.name, id: publication?._id, image: publication?.images[0].url, quantity: amount, price: publication?.discount ? publication?.price - publication?.price*publication?.discount.percentage/100 : publication?.price, discount: publication?.discount ? publication?.discount.percentage : undefined  }];
           }
         });
       }
@@ -296,7 +296,7 @@ export default function PublicationDetail(): JSX.Element {
                   $ {publication?.price}
                 </Typography>
                 <Typography variant="h5" component="h5" classes={{ root: classes.publicationPriceWithDiscount }}>
-                  $ { publication?.price - (Number(publication?.price)*Number(publication?.discount.percentage)) / 100}
+                  $ { (publication?.price - (Number(publication?.price)*Number(publication?.discount.percentage)) / 100).toFixed(2)  }
                 </Typography>
                 <Typography component="p" classes={{ root: classes.offPercentage }}>
                   {publication?.discount?.percentage}% OFF

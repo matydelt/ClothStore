@@ -50,6 +50,7 @@ export type CartItemType = {
   image: string;
   title: string;
   category: string;
+  discount: number | undefined;
 };
 
 export type CartItemTypeDB = {
@@ -59,6 +60,7 @@ export type CartItemTypeDB = {
   image: string;
   title: string;
   category?: string;
+  discount: number | undefined;
 };
 
 export type CartType = CartItemType[];
@@ -170,7 +172,7 @@ export default function CartScreen() {
                 </TableRow>
               </TableHead>
               {auth.user
-                ? carrito.publications.map((item: any) => (
+                ? carrito?.publications.map((item: any) => (
                     <CartItem
                       key={item.id}
                       item={item}

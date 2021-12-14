@@ -43,6 +43,7 @@ type CartItemType = {
   image: string;
   title: string;
   category: string;
+  discount: number | undefined;
 };
 
 type Props = {
@@ -69,7 +70,8 @@ const CartItem = ({ item, addToCart, removeFromCart }: Props) => {
           <Typography variant="h5">{item.title}</Typography>
         </TableCell>
         <TableCell align="center">
-          <Typography>${item.price}</Typography>
+          <Typography>$ {item.price.toFixed(2)}</Typography>
+          { item.discount && <Typography color={'green'}>{item.discount}% OFF</Typography>}
         </TableCell>
         <TableCell classes={{ root: classes.cellButton }} align="center">
           <Button

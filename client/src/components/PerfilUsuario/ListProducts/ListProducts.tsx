@@ -62,24 +62,24 @@ export default function ListProducts(props: User) {
         <Box style={{ marginTop: "100px", marginLeft: "100px" }}>
             <div style={{ display: "flex", justifyContent: "center" }}>
 
-                <h3>Publicaciones</h3>
-            </div>
-            {articulos?.length > 0 ?
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Nombre de articulo</TableCell>
-                                <TableCell align="right">Marca</TableCell>
-                                <TableCell align="right">Categoria</TableCell>
-                                <TableCell align="right">Genero</TableCell>
-                                <TableCell align="right">Precio</TableCell>
-                                <TableCell align="right">Precio descuento</TableCell>
-                                <TableCell align="center">Opciones</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {articulos?.map((e) => (
+<h3>Publicaciones</h3>
+</div>
+{articulos?.length > 0 ?
+<TableContainer component={Paper}>
+    <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+        <TableHead>
+            <TableRow>
+                <TableCell>Nombre de articulo</TableCell>
+                <TableCell align="right">Marca</TableCell>
+                <TableCell align="right">Categoria</TableCell>
+                <TableCell align="right">Genero</TableCell>
+                <TableCell align="right">Precio</TableCell>
+                <TableCell align="center">Descuento</TableCell>
+                <TableCell align="center">Opciones</TableCell>
+            </TableRow>
+        </TableHead>
+        <TableBody>
+            {articulos?.map((e) => (
 
                                 <TableRow
                                     key={e.name}
@@ -96,10 +96,10 @@ export default function ListProducts(props: User) {
                                         {e.discount &&
                                             <Box component="div">
 
-                                                {(e.price - e.price * e.discount.percentage / 100) + ` (${e?.discount?.percentage}%)`}
-                                                <Button onClick={() => removeDiscount(e._id)}>Cancelar</Button>
-                                            </Box>
-                                        }
+{(e.price - e.price * e.discount.percentage / 100).toFixed(2) + ` (${e?.discount?.percentage}%) hasta ${new Date(e.discount.expireAt).toLocaleDateString()}` }
+                        <Button onClick={() => removeDiscount(e._id)}>Cancelar</Button>
+                        </Box>
+                        }
                                     </TableCell>
                                     <TableCell sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }} align="right">
                                         <DiscountModal userId={props?.id} publicationId={e?._id} getPublications={getPublications}>

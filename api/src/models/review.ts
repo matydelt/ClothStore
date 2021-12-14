@@ -3,6 +3,7 @@ import mongoose, { Schema, model } from "mongoose";
 export interface Review extends mongoose.Document {
   message: string;
   score: number;
+  title: number;
   author: Schema.Types.ObjectId;
   publication: Schema.Types.ObjectId;
 }

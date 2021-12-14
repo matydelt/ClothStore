@@ -1,8 +1,9 @@
 import { ExpandLess, ExpandMore } from "@mui/icons-material"
-import { Box, Paper, Table, TableCell, TableContainer, TableHead, TableRow,TableBody, List, ListItemButton, ListItemText, Collapse, ListItem, ListItemIcon, Checkbox } from "@mui/material"
+import { Box, Paper, Table, TableCell, TableContainer, TableHead, TableRow,TableBody, List, ListItemButton, ListItemText, Collapse, ListItem, ListItemIcon, Checkbox, Button } from "@mui/material"
 import axios from "axios"
 import * as React from 'react'
 import { Link } from "react-router-dom"
+import ReviewForm from "./reviewForm/ReviewForm"
 
 interface Shopping  {
     author: string;
@@ -212,7 +213,14 @@ export default function ListShopping(props:User) {
                                     component="nav"
                                     aria-labelledby="nested-list-subheader">
                                         <ListItemButton >
-                                            <ListItemText primary="Detalle de la compra" />
+                                            <ListItemText primary="Detalle de la compra" />        
+                    {/* <TableCell>
+                    { e.status !=='success' ?
+                        <ReviewForm publicationId={e._id}></ReviewForm>
+                        :
+                        <Button disabled>Falta pagar</Button>
+                        }
+                    </TableCell> */}
                                         </ListItemButton>
                                     </List>
                                 </TableCell>

@@ -31,7 +31,7 @@ export default function RelatedPublications({ publicationId }: props): JSX.Eleme
             console.log(data)
             setPublications(data);
         });
-    }, []);
+    }, [publicationId]);
 
 
     return (

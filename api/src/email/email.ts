@@ -24,8 +24,9 @@ exports.send = async (options: any) => {
             mensaje: options.mensaje,
             publicationName: options.publicationName,
             publicationPrice: options.publicationPrice,
+            publicationImage: options.publicationImage,
         }
-        result = file.replace(/mensaje|publicationName|publicationPrice/gi,function(matched: any ){
+        result = file.replace(/mensaje|publicationName|publicationPrice|publicationImage/gi,function(matched: any ){
             return mapObj[matched];
         });
     }

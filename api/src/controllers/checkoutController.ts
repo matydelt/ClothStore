@@ -49,8 +49,8 @@ export default class Checkout {
                 marketplace: 'Cloth Store',
                 additional_info: order._id,
                 statement_descriptor: "Clothstore",
+                back_urls: { failure: '', pending: '', success: 'http://localhost:3000/' },
                 notification_url: "https://hookb.in/Px0gpPOPE7hpKPrrKWP9",
-                back_urls: { failure: '', pending: '', success: 'http://localhost:3000/' }
             }
             const response = await mercadoPago.preferences.create(preference)
             

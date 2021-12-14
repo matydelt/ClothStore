@@ -6,6 +6,7 @@ import TextField from "@mui/material/TextField";
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from "@mui/icons-material/Search";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import Autocomplete from "./Autocomplete";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -57,6 +58,7 @@ function SearchBar() {
         }}
         onKeyPress={handleSearchBarEnter}
       />
+        <Autocomplete text={text}></Autocomplete>
     </Box>
   );
 }

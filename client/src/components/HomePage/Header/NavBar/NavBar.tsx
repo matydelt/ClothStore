@@ -48,7 +48,7 @@ export default function NavBar() {
                 position: "absolute",
                 zIndex: "1",
                 left: "0",
-                bottom: { xl: "-245%;" },
+                // bottom: { xl: "-245%;" },
               }}
             />
             <Box

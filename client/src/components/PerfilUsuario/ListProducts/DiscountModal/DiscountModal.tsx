@@ -21,20 +21,18 @@ interface Props {
   getPublications: () => void;
 }
 
-const getTodayDate = () => {
-  let today = new Date()
-  let tomorrow = new Date(today)
-  tomorrow.setDate(tomorrow.getDate() + 1)
-  return tomorrow
-}
+// const getTomorrowDate = () => {
+//   let today = new Date()
+//   let tomorrow = new Date(today)
+//   tomorrow.setDate(tomorrow.getDate() + 1)
+//   return tomorrow
+// }
 
 export default function DiscountModal({ children, userId, publicationId, getPublications }: Props) {
 
   const [open, setOpen] = React.useState(false);
 
-  const [expirationDate, setExpirationDate] = React.useState<Date | null>(getTodayDate());
-
-  console.log(publicationId)
+  const [expirationDate, setExpirationDate] = React.useState<Date | null>(null);
 
   const [form, setForm] = React.useState({
     authorId: userId || '',
@@ -66,22 +64,21 @@ export default function DiscountModal({ children, userId, publicationId, getPubl
         percentage: '',
         expirationDate
       })
-      setExpirationDate(getTodayDate());
       getPublications();
+      setExpirationDate(null);
     });
   };
 
   const handleForm = (e: React.BaseSyntheticEvent) => {
-    if (e.target.value < 1 || e.target.value > 100) return;
+    if ( (e.target.value < 1 || e.target.value > 100) && e.target.value !== '') return;
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleDate = (newValue: Date | null) => {
     if (newValue) {
 
-      // setForm({ ...form, expirationDate: new Date(Date.UTC(newValue && newValue?.getFullYear(), newValue?.getMonth(), newValue?.getDate())) });
-      setForm({ ...form, expirationDate: newValue });
-      setExpirationDate(new Date(Date.UTC(newValue && newValue?.getFullYear(), newValue?.getMonth(), newValue?.getDate() + 1)));
+      setForm({ ...form, expirationDate: new Date(new Date(Date.UTC(newValue && newValue?.getFullYear(), newValue?.getMonth(), newValue?.getDate() + 1 )).setHours(23,59,0,0)) });
+      setExpirationDate(new Date(Date.UTC(newValue && newValue?.getFullYear(), newValue?.getMonth(), newValue?.getDate() + 1 )) );
     }
   };
 
@@ -96,14 +93,14 @@ export default function DiscountModal({ children, userId, publicationId, getPubl
         <DialogTitle>Aplicar descuento</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Aplicar un nuevo descuento reemplazará al anterior.
+            Aplicar un nuevo descuento reemplazará al actual.
           </DialogContentText>
 
           <Box component="div" sx={{ my: 6, display: "flex", flexDirection: "row", justifyContent: 'space-between' }}>
 
-            <DialogContentText>
-              El descuento expirará a las 00:00 hs. del día seleccionado.
-            </DialogContentText>
+          <DialogContentText>
+            El descuento finalizará a las 23:59 hs. del día seleccionado.
+          </DialogContentText>
 
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
@@ -114,7 +111,7 @@ export default function DiscountModal({ children, userId, publicationId, getPubl
                   handleDate(newValue);
                 }}
                 renderInput={(params) => <TextField {...params} />}
-                minDate={getTodayDate()}
+                minDate={new Date()}
               />
             </LocalizationProvider>
           </Box>
@@ -138,7 +135,7 @@ export default function DiscountModal({ children, userId, publicationId, getPubl
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancelar</Button>
-          <Button onClick={submitForm}>Aceptar</Button>
+          <Button disabled={!percentage || !expirationDate} onClick={submitForm}>Aceptar</Button>
         </DialogActions>
       </Dialog>
     </div>
