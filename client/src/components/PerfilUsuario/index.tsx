@@ -14,7 +14,7 @@ import { Box } from '@material-ui/core'
 import Footer from '../Footer'
 
 interface PropsUser {
-    photo: string | undefined;
+    userName: string | undefined;
     phone: string | undefined;
     email: string | undefined;
     name: {
@@ -31,6 +31,7 @@ interface PropsUser {
     }]
     publications: Publication[];
     shopping: any[] | undefined;
+    type: string
 }
 interface Publication {
     name: string;
@@ -48,7 +49,8 @@ interface Publication {
 export default function PefilUsuario() {
     const GetUser = useSelector((state: RootState) => state.userSignin.userInfo)
     const [user, setUser] = React.useState<PropsUser>({
-        photo: "",
+        userName: "",
+        type: "",
         phone: "",
         email: "",
         name: {
@@ -89,7 +91,7 @@ export default function PefilUsuario() {
 
     const firstName: string | undefined = user.name.firstName;
     const lastName: string | undefined = user.name.lastName;
-    const photo: string | undefined = user.photo
+    const userName: string | undefined = user.userName
     const phone: string | undefined = user.phone
     const email: string | undefined = user?.email
     const dni: string | undefined = user.dni
@@ -98,29 +100,19 @@ export default function PefilUsuario() {
     const ciudad: string | undefined = user.domicilio[0]?.city
     const country: string | undefined = user.domicilio[0]?.country
     const cp: string | undefined = user.domicilio[0]?.cp
-    console.log(calle, numero, ciudad)
+    const type: string | undefined = user.type
 
     return (
         <>
             <SidebarUser
-                firstName={firstName}
-                lastName={lastName}
-                photo={photo}
-                phone={phone}
-                email={email}
-                dni={dni}
-                calle={calle}
-                numero={numero}
-                ciudad={ciudad}
-                country={country}
-                cp={cp}
+                type={type}
             />
             <Routes>
                 <Route index element={<ManagementUserProfile
                     id={GetUser?._id}
                     firstName={firstName}
                     lastName={lastName}
-                    photo={photo}
+                    userName={userName}
                     phone={phone}
                     email={email}
                     dni={dni}

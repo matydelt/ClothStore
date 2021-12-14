@@ -22,6 +22,7 @@ const style = {
 interface UpdateUserdata {
     firstName: String;
     lastName: string;
+    userName: string;
     dni: string;
     phone: string;
 }
@@ -36,6 +37,7 @@ export default function ModalUpdateUser(props: UserId) {
     const [input, setInput] = useState<UpdateUserdata>({
         firstName: "",
         lastName: "",
+        userName: "",
         dni: "",
         phone: ""
     })
@@ -46,7 +48,7 @@ export default function ModalUpdateUser(props: UserId) {
 
     const handleSubmit = (event: React.BaseSyntheticEvent) => {
         event.preventDefault();
-        axios.put("http://localhost:3001/auth/update", { id: props.id, phone: input.phone, firstName: input.firstName, lastName: input.lastName, dni: input.dni })
+        axios.put("http://localhost:3001/auth/update", { id: props.id, phone: input.phone, firstName: input.firstName, userName: input.userName, lastName: input.lastName, dni: input.dni })
         handleClose()
     }
 
@@ -69,6 +71,7 @@ export default function ModalUpdateUser(props: UserId) {
                     <Box>
                         <TextField id="outlined-basic" onChange={handleChange} name="firstName" value={input.firstName} label="Nombre" variant="outlined" />
                         <TextField id="outlined-basic" onChange={handleChange} name="lastName" value={input.lastName} label="Apellido" variant="outlined" />
+                        <TextField id="outlined-basic" onChange={handleChange} name="userName" value={input.userName} label="UserName" variant="outlined" />
                         <TextField id="outlined-basic" onChange={handleChange} name="dni" value={input.dni} label="DNI" variant="outlined" />
                         <TextField id="outlined-basic" onChange={handleChange} name="phone" value={input.phone} label="Teléfono" variant="outlined" />
                     </Box>

@@ -46,29 +46,28 @@ export default class UserController {
   static async setUserGoogle(req: Request, res: Response) {
     try {
       const { firstName, lastName, phone, email, password, photo } = req.body;
-      const users = await UserSchema.find()
+      const users = await UserSchema.find();
       if (users.length > 0) {
-        const usersGoo = await UserSchema.findOne({email: email})
-        if(!usersGoo){
+        const usersGoo = await UserSchema.findOne({ email: email });
+        if (!usersGoo) {
           const user: User = new UserSchema({
             phone,
             email,
             password,
             name: { firstName, lastName },
             photo,
-            type: "normal"
+            type: "normal",
           });
           const userSave = await user.save();
-          
+
           const carrito: Carrito = new carritoSchema({
             publications: undefined,
-            userId: userSave._id
-          })
+            userId: userSave._id,
+          });
 
           await carrito.save();
           res.json(user);
-        }
-        else{
+        } else {
           if (usersGoo && usersGoo.password === password) res.json(usersGoo);
           else res.send("usuario o contraseña erronea");
         }
@@ -79,7 +78,7 @@ export default class UserController {
           password,
           name: { firstName, lastName },
           photo,
-          type: "admin"
+          type: "admin",
         });
         await user.save();
         res.sendStatus(200);
@@ -89,7 +88,7 @@ export default class UserController {
       res.sendStatus(500);
     }
   }
-  
+
   static async getUser(req: Request, res: Response) {
     try {
       const { email, password } = req.query;
@@ -149,7 +148,7 @@ export default class UserController {
   static async getOneUser(req: Request, res: Response) {
     try {
       const { id } = req.params;
-      console.log(req.params)
+      console.log(req.params);
       const user = await UserSchema.findOne({ _id: id });
       res.json(user);
     } catch (error) {
@@ -184,7 +183,7 @@ export default class UserController {
   }
   static async updateUser(req: Request, res: Response) {
     try {
-      const { id, phone, firstName, lastName, dni } = req.body;
+      const { id, phone, firstName, lastName, dni, userName } = req.body;
       await UserSchema.updateOne(
         { _id: id },
         {
@@ -192,6 +191,7 @@ export default class UserController {
             phone: phone,
             name: { firstName: firstName, lastName: lastName },
             dni: dni,
+            userName: userName,
           },
         }
       );

@@ -8,7 +8,7 @@ import ProfileCover from './ProfileCover';
 
 interface Props {
   id: string | undefined;
-  photo: string | undefined;
+  userName: string | undefined;
   phone: string | undefined;
   email: string | undefined;
   firstName: string | undefined;
@@ -39,7 +39,7 @@ function ManagementUserProfile(props: Props) {
           <Grid item xs={12} md={8}>
             <ProfileCover id={props.id} firstName={props.firstName}
               lastName={props.lastName}
-              photo={props.photo}
+              userName={props.userName}
               phone={props.phone}
               email={props.email}
               dni={props.dni}
