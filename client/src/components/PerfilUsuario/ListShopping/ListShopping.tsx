@@ -267,7 +267,7 @@ export default function ListShopping(props: User) {
                                         </List>
                                     </TableCell>
                                     <TableCell align="center">
-                                        <ModalDetailsShopping articulos={e.publications} esventa={true} />
+                                        <ModalDetailsShopping articulos={e.publications} esventa={true} userId={props.id} />
                                     </TableCell>
                                 </TableRow>
                             ))}

@@ -16,6 +16,7 @@ import ReviewForm from './reviewForm/ReviewForm';
 interface Propiedades {
     articulos: any[];
     esventa: boolean;
+    userId?: string | undefined;
 }
 const style = {
     position: 'absolute' as 'absolute',
@@ -69,7 +70,7 @@ export default function ModalDetailsShopping(props: Propiedades) {
                                         <TableCell align="right">{a.quantity}</TableCell>
                                         <TableCell align="right"><ModalShopping id={a.publication} /></TableCell>
                                         {esventa && <TableCell>
-                                            <ReviewForm publicationId={a.publication}></ReviewForm>
+                                            <ReviewForm publicationId={a.publication} userId={props.userId}></ReviewForm>
                                         </TableCell>}
 
                                     </TableRow>

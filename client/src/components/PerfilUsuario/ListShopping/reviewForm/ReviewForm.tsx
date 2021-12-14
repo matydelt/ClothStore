@@ -1,13 +1,7 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Tabs, Tab, CircularProgress } from '@material-ui/core';
-// import DialogActions from '@mui/material/DialogActions';
-// import DialogContent from '@mui/material/DialogContent';
-// import DialogContentText from '@mui/material/DialogContentText';
-// import DialogTitle from '@mui/material/DialogTitle';
-// import Tabs from '@mui/material/Tabs';
-// import Tab from '@mui/material/Tab';
+import { Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
 import { Rating, Typography } from '@mui/material';
 import { IconButton, makeStyles } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
@@ -22,8 +16,14 @@ interface ReviewForm {
     score: number,
     title: string,
     message: string,
-    authorId: string,
-    publicationId: string,
+    authorId: string | undefined,
+    publicationId: string | undefined,
+    _id: string | undefined
+}
+
+interface Props {
+    publicationId: string | undefined,
+    userId: string | undefined,
 }
 
 const useStyles = makeStyles({
@@ -44,38 +44,37 @@ const useStyles = makeStyles({
 })
 
 
-export default function ReviewForm({ publicationId }: any) {
+export default function ReviewForm({ publicationId, userId }: Props) {
 
-    const user = useSelector((state: RootState): User | undefined => state?.userSignin?.userInfo);
+    // const user = useSelector((state: RootState): User | undefined => state?.userSignin?.userInfo);
 
 
     const [open, setOpen] = React.useState(false);
     const classes = useStyles()
 
+    console.log(userId)
 
     const [reviewForm, setReviewForm] = React.useState<ReviewForm>({
         score: 1,
         title: '',
         message: '',
-        authorId: user?._id || '',
-        publicationId: publicationId || '',
+        authorId: userId,
+        publicationId,
+        _id: ''
     });
 
     const { title, score, message } = reviewForm;
 
     React.useEffect(() => {
-
-
-        if (open) {
-            console.log(publicationId, '///', user?._id)
-            console.log(reviewForm)
-            axios.get(`/review/${publicationId}/${user?._id}`).then(({ data }) => {
+        // if(open){
+            axios.get(`/review/${publicationId}/${userId}`).then(({ data }) => {
                 if (data) {
-                    setReviewForm(data);
+                    setReviewForm({...reviewForm, message: data.message, score: data.score, title: data.title, _id: data._id});
                 }
             });
-        }
-    }, [open]);
+        // }
+    // }, [open]);
+    }, []);
 
 
 
@@ -94,6 +93,8 @@ export default function ReviewForm({ publicationId }: any) {
     const submitReviewForm = (e: React.BaseSyntheticEvent) => {
         e.preventDefault();
 
+        console.log(reviewForm)
+
         axios.post('/review', reviewForm).then(() => {
             handleClose();
         });
@@ -105,7 +106,7 @@ export default function ReviewForm({ publicationId }: any) {
     return (
         <>
             <Button onClick={handleClickOpen}>
-                {reviewForm.title ? 'Modificar reseña' : 'Dejar reseña'}
+                {reviewForm._id ? 'Modificar reseña' : 'Dejar reseña'}
             </Button>
 
 
