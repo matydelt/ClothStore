@@ -1,10 +1,10 @@
-import { Button } from '@material-ui/core';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
-import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import HomeIcon from '@mui/icons-material/Home';
+import LogoutIcon from '@mui/icons-material/Logout';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
@@ -20,15 +20,11 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { CSSObject, styled, Theme, useTheme } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import ManagementUserProfile from '../Profile';
-import { logoutUser } from '../../../redux/actions/userActions';
 import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../hooks/useAuth';
-import LogoutIcon from '@mui/icons-material/Logout';
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import { logoutUser } from '../../../redux/actions/userActions';
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({

@@ -1,43 +1,10 @@
-import { Avatar } from "@material-ui/core";
-import MoreHorizTwoToneIcon from '@mui/icons-material/MoreHorizTwoTone';
-import UploadTwoToneIcon from '@mui/icons-material/UploadTwoTone';
 import {
-  Box, Button, Card, CardMedia, IconButton, Input, TextField, Typography
+  Box, Button, Card, TextField, Typography
 } from '@mui/material';
-import Modal from '@mui/material/Modal';
 import { styled } from '@mui/material/styles';
-import { Link } from "react-router-dom"
-import * as React from "react"
+import * as React from "react";
+import { Link } from "react-router-dom";
 import ModalUpdateUser from "./ModalUpdateUser";
-import FileUpload from "../../fileUpload/FileUpload";
-
-
-const AvatarWrapper = styled(Card)(
-  ({ theme }) => `
-
-    position: relative;
-    overflow: visible;
-    display: inline-block;
-    margin-top: -${theme.spacing(9)};
-    margin-left: ${theme.spacing(2)};
-
-    .MuiAvatar-root {
-      width: ${theme.spacing(16)};
-      height: ${theme.spacing(16)};
-    }
-`
-);
-const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
 
 
 interface Props {
@@ -76,17 +43,6 @@ const ProfileCover = (props: Props) => {
     lastName: ""
   })
   type Name = { firstName: string, lastName: string }
-
-  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-    if (e.target.name === "firstName") {
-
-      setName({ ...name, [e.target.name]: e.target.value });
-    } else if (e.target.name === "lastName") {
-      setName({ ...name, ["lastName"]: e.target.value });
-    } else {
-      setInput({ ...input, [e.target.name]: e.target.value });
-    }
-  }
 
   return (
     <>

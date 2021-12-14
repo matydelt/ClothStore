@@ -45,10 +45,10 @@ const useStyles = makeStyles({
 
 
 export default function Reviews({ children }: any) {
+    const { publicationId } = useParams();
 
     const user = useSelector((state: RootState): User | undefined => state?.userSignin?.userInfo);
 
-    const { publicationId } = useParams();
 
     const [open, setOpen] = React.useState(false);
     const classes = useStyles()
@@ -158,7 +158,7 @@ export default function Reviews({ children }: any) {
 
     const handleTab = async (event: any, newTab: number) => {
         setTab(newTab);
-        
+
         await setFrom(1);
 
         let filter = 'all';
@@ -241,22 +241,22 @@ export default function Reviews({ children }: any) {
                         </DialogActions>
 
                     </Box> */}
-             
+
 
                     <Box component="div" sx={{ my: 6, textAlign: 'center' }}>
                         <Typography variant="h3" sx={{}}>{scoreAverage}</Typography>
-                        <Rating sx={{ color: '#00c2cb'}} name="read-only" value={scoreAverage} readOnly size="large" />
+                        <Rating sx={{ color: '#00c2cb' }} name="read-only" value={scoreAverage} readOnly size="large" />
                         <Typography component="p" sx={{ fontSize: '10px', color: 'gray' }}>Promedio entre {totalScores} opiniones</Typography>
                     </Box>
 
                     <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
-                        <Tabs textColor="primary" indicatorColor="primary"  value={tab} onChange={handleTab} centered>
+                        <Tabs textColor="primary" indicatorColor="primary" value={tab} onChange={handleTab} centered>
                             <Tab classes={{ root: classes.tabs }} label="Todas" />
                             <Tab classes={{ root: classes.tabs }} label="Positivas" />
                             <Tab classes={{ root: classes.tabs }} label="Negativas" />
                         </Tabs>
                     </Box>
-           
+
 
                     {reviews?.length < 1 ?
 
@@ -272,7 +272,7 @@ export default function Reviews({ children }: any) {
 
                             {
                                 reviews && reviews?.map((review, i) => {
-                                    return <Box component="div" key={review.title+i} sx={{ my: 5 }}>
+                                    return <Box component="div" key={review.title + i} sx={{ my: 5 }}>
                                         <Rating sx={{ color: '#00c2cb' }} name="read-only" value={review?.score} readOnly size="small" />
                                         <Typography variant="h6">{review.title}</Typography>
                                         <DialogContentText classes={{ root: classes.dialogContent }}>
