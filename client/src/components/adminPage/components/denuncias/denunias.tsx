@@ -5,28 +5,45 @@ import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import ENavBar from "../../employeeNavBar"
 import NavBar from "../../navBar"
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import "./denuncias.css"
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { deleteDenunciations, getDenunciations, putDenunciations } from "../../../../redux/actions/denunciationActions"
 import { DenunciationData } from "../../../../redux/reducer/denunciationReducers"
 import { publicationMessage } from "../../../../redux/actions/publicationActions"
+import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
+import { User } from "../../../../redux/reducer/stateTypes"
+interface userSignin {
+    userInfo: User;
+    loading: boolean;
+}
 interface State {
     publicationList: any,
-    userSignin: any,
+    userSignin: userSignin,
     denunciation: any;
 }
 
 const Denuncias = () => {
     const dispatch = useDispatch()
-    const state = useSelector((state: State) => state)
-    const { userInfo } = state.userSignin
-    const denuncias: [DenunciationData] = state.denunciation.denunciations
+    const { userSignin, denunciation } = useSelector((state: State) => state)
+    const { userInfo } = userSignin
+    const denuncias: [DenunciationData] = denunciation.denunciations
 
     useEffect(() => {
         dispatch(getDenunciations())
     }, [dispatch])
-    if (!userInfo?.type || userInfo?.type === "normal") return (<div></div>)
+
+    if (userSignin.loading === false) {
+        if (userSignin.userInfo.type !== "admin" && userSignin.userInfo.type !== "employee") {
+            return (<Navigate to="/" />)
+        }
+    } else {
+        if (userSignin.loading === true) {
+            return (<div style={{ width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}><HourglassEmptyIcon /></div>)
+        } else {
+            return (<Navigate to="/" />)
+        }
+    }
 
     async function estimar(e: React.SyntheticEvent<EventTarget>, id: string) {
         e.preventDefault()

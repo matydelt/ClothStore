@@ -7,11 +7,11 @@ import { getUsers, } from "../../../../redux/actions/userActions"
 import { Publication } from "../../../../redux/types"
 import ENavBar from "../../employeeNavBar"
 import NavBar from "../../navBar"
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import "./publicaciones.css"
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { activatePublication, publicationMessage, putPublications } from "../../../../redux/actions/publicationActions"
-
+import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 interface State {
     publicationList: any,
     userSignin: any,
@@ -19,9 +19,9 @@ interface State {
 
 const PublicacionesAdmPage = () => {
     const dispatch = useDispatch()
-    const state = useSelector((state: State) => state)
+    const { userSignin, publicationList } = useSelector((state: State) => state)
     const { userInfo } = useSelector((state: State) => state.userSignin)
-    const publications = state.publicationList.publications;
+    const publications = publicationList.publications;
     const [mensaje, setMensaje] = useState("");
     const [flag, setFlag] = useState(true)
 
@@ -38,6 +38,17 @@ const PublicacionesAdmPage = () => {
             category: undefined, gender: undefined, mark: undefined,
             order: undefined, page: undefined, price: undefined
         }))
+    }
+    if (userSignin.loading === false) {
+        if (userSignin.userInfo.type !== "admin" && userSignin.userInfo.type !== "employee") {
+            return (<Navigate to="/" />)
+        }
+    } else {
+        if (userSignin.loading === true) {
+            return (<div style={{ width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}><HourglassEmptyIcon /></div>)
+        } else {
+            return (<Navigate to="/" />)
+        }
     }
     console.log(publications)
     return (

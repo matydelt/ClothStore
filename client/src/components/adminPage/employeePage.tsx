@@ -1,16 +1,37 @@
 import { Box } from '@mui/material';
 import React, { useEffect } from 'react';
 import NavBar from './employeeNavBar';
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { getUsers } from '../../redux/actions/userActions';
 import "./employeePage.css"
+import { Navigate } from 'react-router-dom';
+import { User } from '../../redux/reducer/stateTypes';
+import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
+
 function EmployeePage() {
     const dispatch = useDispatch()
-
+    interface userSignin {
+        userInfo: User;
+        loading: boolean;
+    }
+    interface State {
+        userSignin: userSignin;
+    }
+    const state = useSelector((state: State) => state.userSignin)
     useEffect(() => {
         dispatch(getUsers())
     }, [dispatch])
-
+    if (state.loading === false) {
+        if (state.userInfo.type !== "employee") {
+            return (<Navigate to="/" />)
+        }
+    } else {
+        if (state.loading === true) {
+            return (<div style={{ width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}><HourglassEmptyIcon /></div>)
+        } else {
+            return (<Navigate to="/" />)
+        }
+    }
     return (
         <Box sx={{ height: "100%" }}>
             <NavBar></NavBar>

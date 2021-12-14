@@ -7,14 +7,38 @@ import { DefaultRootState } from "../../../../redux/types"
 import NavBar from "../../navBar"
 import "./usuario.css"
 import { Denunciation } from "../../../../redux/reducer/denunciationReducers"
+import { Navigate } from "react-router-dom"
+import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
+
+interface userSignin {
+    userInfo: User;
+    loading: boolean;
+}
+interface State {
+    publicationList: any,
+    userSignin: userSignin,
+    denunciation: any;
+}
 const UsuariosAdmPage = () => {
     const dispatch = useDispatch()
     const state = useSelector((state: DefaultRootState) => state)
+    const { userSignin } = useSelector((state: State) => state)
     const users = state.users.users
 
     useEffect(() => {
         dispatch(getUsers())
     }, [dispatch])
+    if (userSignin.loading === false) {
+        if (userSignin.userInfo.type !== "admin" && userSignin.userInfo.type !== "employee") {
+            return (<Navigate to="/" />)
+        }
+    } else {
+        if (userSignin.loading === true) {
+            return (<div style={{ width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}><HourglassEmptyIcon /></div>)
+        } else {
+            return (<Navigate to="/" />)
+        }
+    }
     return (
         <Box>
             <NavBar></NavBar>

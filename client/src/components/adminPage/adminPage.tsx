@@ -1,14 +1,44 @@
 import { Box } from '@mui/material';
 import React, { useEffect } from 'react';
 import NavBar from './navBar';
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { getUsers } from '../../redux/actions/userActions';
+import { User } from '../../redux/reducer/stateTypes';
+import { useAuth } from "../../hooks/useAuth";
+import { Navigate } from 'react-router-dom';
+import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 function AdminPage() {
     const dispatch = useDispatch()
-
+    interface userSignin {
+        userInfo: User;
+        loading: boolean;
+    }
+    interface State {
+        userSignin: userSignin;
+    }
+    const state = useSelector((state: State) => state.userSignin)
+    const auth = useAuth();
     useEffect(() => {
         dispatch(getUsers())
+        if (!auth.user) {
+            console.log(auth)
+        }
     }, [dispatch])
+    if (state.loading === false) {
+        if (state.userInfo.type !== "admin") {
+            console.log(state.userInfo.type + " false")
+            return (<Navigate to="/" />)
+        }
+    } else {
+        if (state.loading === true) {
+            console.log(state.userInfo.type + " true")
+            return (<div style={{ width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}><HourglassEmptyIcon /></div>)
+        } else {
+            console.log(" undefined")
+            return (<Navigate to="/" />)
+        }
+    }
+
 
     return (
         <Box sx={{ height: "100%" }}>
