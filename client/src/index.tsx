@@ -8,7 +8,8 @@ import store from "./redux/store/store";
 import { Provider } from "react-redux";
 import axios from "axios";
 import { ProvideAuth } from "./hooks/useAuth";
-
+import dotenv from "dotenv"
+dotenv.config();
 axios.defaults.baseURL = process.env.REACT_APP_API;
 
 ReactDOM.render(
