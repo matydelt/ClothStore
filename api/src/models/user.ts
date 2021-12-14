@@ -45,12 +45,6 @@ const UserSchema = new Schema({
   },
   phone: {
     type: String,
-    validate: {
-      validator: function (v: string) {
-        return /\d{2}-\d{2}-\d{4}-\d{4}/.test(v);
-      },
-      message: (props: any) => `${props.value} is not a valid phone number!`,
-    },
   },
   publications: {
     type: ["Publication"],
@@ -85,13 +79,12 @@ const UserSchema = new Schema({
   type: {
     type: String,
     required: [true, "necesita un type"],
-    enum: ["normal", "admin", "employee"]
-
+    enum: ["normal", "admin", "employee"],
   },
   denunciations: {
     type: ["Denunciation"],
-    ref: "Denunciation"
-  }
+    ref: "Denunciation",
+  },
 });
 
 export default model<User>("User", UserSchema);

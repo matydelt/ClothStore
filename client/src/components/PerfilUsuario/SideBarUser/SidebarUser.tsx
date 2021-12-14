@@ -28,6 +28,7 @@ import { logoutUser } from '../../../redux/actions/userActions';
 import { useDispatch } from 'react-redux';
 import { useAuth } from '../../../hooks/useAuth';
 import LogoutIcon from '@mui/icons-material/Logout';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -201,17 +202,17 @@ export default function SideBarUser(props: Props) {
           </Link>
 
 
-          <Link to="/" style={{ textDecoration: "none" }}>
-            <ListItem key="Lista de deseos">
+
+          <Link to="/admin" style={{ textDecoration: "none" }}>
+            <ListItem key="Admin Page">
               <ListItemIcon>
-                <FavoriteIcon />
+                <AdminPanelSettingsIcon />
               </ListItemIcon>
-              <ListItemText primary="Lista de deseos" />
+              <ListItemText primary="Admin Page" />
             </ListItem>
           </Link>
 
-
-          <Link to="/perfil/detalles" style={{ textDecoration: "none" }}>
+          <Link to="/perfil" style={{ textDecoration: "none" }}>
             <ListItem key="Mi Perfil">
               <ListItemIcon>
                 <ManageAccountsIcon />

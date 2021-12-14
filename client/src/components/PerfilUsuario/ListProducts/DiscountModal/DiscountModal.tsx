@@ -101,9 +101,9 @@ export default function DiscountModal({ children, userId, publicationId, getPubl
 
           <Box component="div" sx={{ my: 6, display: "flex", flexDirection: "row", justifyContent: 'space-between' }}>
 
-          <DialogContentText>
-            El descuento expirará a las 00:00 hs. del día seleccionado.
-          </DialogContentText>
+            <DialogContentText>
+              El descuento expirará a las 00:00 hs. del día seleccionado.
+            </DialogContentText>
 
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker

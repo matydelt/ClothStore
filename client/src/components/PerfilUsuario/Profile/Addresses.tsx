@@ -9,50 +9,75 @@ import {
 } from '@mui/material';
 
 import { ArrowForwardTwoTone } from '@mui/icons-material';
+import TableContainer from '@material-ui/core/TableContainer';
+import { Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import { useState } from 'react';
+import axios from 'axios';
+import React from 'react';
 
-interface Props{
-           calle:String|undefined;
-            numero:String|undefined;
-            ciudad:String|undefined;
-            country:String|undefined;
-            cp:String|undefined; 
+interface Props {
+  id: String | undefined;
 }
-function Addresses(props:Props) {
+interface Dom {
+  street: string;
+  suite: string;
+  city: string;
+  country: string;
+  cp: string;
+}
 
-  return (
-    <Grid
-      container
-      direction="row"
-      justifyContent="center"
-      alignItems="stretch"
-      spacing={3}
-    >
-      <Grid item xs={12} sm={6}>
-        <Card>
-          <CardHeader
-            title="Direccion de Entrega"
-          />
-          <Divider />
-          <Box p={2}>
-           
-            {props.calle?<Box sx={{ minHeight: { xs: 0, md: 225 } }} p={2}>
-          
-              <Typography variant="h5">{props.calle}</Typography>
-              <Typography variant="h5" sx={{ py: 1 }} fontWeight="normal">
-                {props.numero}
-              </Typography>
-              <Typography variant="subtitle1">
-                {props.ciudad}, {props.country}
-              </Typography>
-            </Box>:
-            <Typography variant="h5">No hay domicilio registrado, porfavor detalle el lugar de entrega</Typography>
+function Addresses(props: Props) {
+  const [state, setstate] = useState<[Dom]>([{
+    "street": "",
+    "suite": "",
+    "city": "",
+    "country": "",
+    "cp": ""
+  }]);
+
+  React.useEffect(() => {
+    async function getOneUser() {
+      await axios.get(`http://localhost:3001/auth/${props.id}`).then(({ data }) => {
+        setstate(data.address)
+      })
+    }
+    getOneUser()
+  }, [state])
+
+  return (<>
+    {state.length > 0 ?
+      <TableContainer component={Paper}>
+        <Table style={{ maxHeight: "900px", width: "1000px" }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Calle</TableCell>
+              <TableCell align="right">Numero</TableCell>
+              <TableCell align="right">Ciudad</TableCell>
+              <TableCell align="right">País</TableCell>
+              <TableCell align="right">Código postal</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {state?.map(a => (<TableRow
+              key={a.street}
+              style={{ border: 0 }}
+            >
+              <TableCell component="th" scope="row">
+                {a.street}
+              </TableCell>
+              <TableCell align="right">{a.suite}</TableCell>
+              <TableCell align="right">{a.city}</TableCell>
+              <TableCell align="right">{a.country}</TableCell>
+              <TableCell align="right">{a.cp}</TableCell>
+            </TableRow>
+            ))
             }
-            
-          </Box>
-        </Card>
-      </Grid>
-     
-    </Grid>
+          </TableBody>
+        </Table>
+      </TableContainer>
+      : <Typography>No hay domicilios cargados</Typography>
+    }
+  </>
   );
 }
 
