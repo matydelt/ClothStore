@@ -43,16 +43,12 @@ export default function QAndA(): JSX.Element {
     // }, []);
 
     async function getQuestions() {
-        console.log(isBuyer, 'isBuyer amtes')
         await setIsBuyer(!!!(user?.publications?.find(p => p._id === publicationId)));
         axios.get('/qAndAs/' + publicationId).then(({ data }) => {
             setQuestions(data);
             setLoading(false)
-            console.log(!!!(user?.publications?.find(p => p._id === publicationId)))
         });
     };
-    
-    console.log(isBuyer, 'isBuyer despues')
 
     function handleForm(e: BaseSyntheticEvent) {
         setForm({ ...form, [e.target.name]: e.target.value })
@@ -76,7 +72,7 @@ export default function QAndA(): JSX.Element {
             { loading ?
         
         <Stack spacing={2} width={700} marginY={3}>
-            <Skeleton variant="rectangular" height={20} />
+            <Skeleton variant="rectangular" height={20} style={{ marginLeft: 0 }} />
             <Skeleton variant="rectangular" height={50} />
             <Skeleton variant="rectangular" height={20} />
             <Skeleton variant="rectangular" height={50} />

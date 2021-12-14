@@ -215,7 +215,7 @@ export default function ListShopping(props:User) {
                                         <ListItemButton >
                                             <ListItemText primary="Detalle de la compra" />        
                     {/* <TableCell>
-                    { e.status !=='success' ?
+                    { e.status !=='approved' ?
                         <ReviewForm publicationId={e._id}></ReviewForm>
                         :
                         <Button disabled>Falta pagar</Button>
