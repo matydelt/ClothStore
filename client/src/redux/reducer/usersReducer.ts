@@ -1,5 +1,5 @@
 import { Action } from "../actions/usersActions";
-import { User } from "./stateTypes";
+// import { User } from "./stateTypes";
 
 export interface AllUsersState {
   loading: boolean;
