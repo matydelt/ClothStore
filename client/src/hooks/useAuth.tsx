@@ -56,11 +56,6 @@ function useProvideAuth() {
   const [user, setUser] = useState<User>();
   const dispatch = useDispatch();
 
-  // const handleSubmit= async (e: FormState ) => {
-  //     await signup({email: e.email, password: e.password});
-  // };
-
-
   const signin = async ({
     email,
     password,
@@ -99,8 +94,6 @@ function useProvideAuth() {
   const googleSignin = async (): Promise<User | undefined> => {
     try {
       const response = await signInWithPopup(auth, provider)
-      // const credential = GoogleAuthProvider.credentialFromResult(response);
-      // const token = credential?.accessToken;
       if(response.user.email){
         const obj = { 
           firstName: response.user.displayName ? response.user.displayName.split(" ")[0] : "", 
@@ -120,9 +113,9 @@ function useProvideAuth() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      console.log(user)
+      console.log(user);
       if (user) {
-        dispatch(setSignedInUser(user))
+        dispatch(setSignedInUser(user));
         setUser(user);
       } else {
         setUser(undefined);

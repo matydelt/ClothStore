@@ -1,11 +1,11 @@
-import { Button, ButtonGroup } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import Checkbox from '@material-ui/core/Checkbox';
+import Checkbox from "@material-ui/core/Checkbox";
 import Collapse from "@mui/material/Collapse";
 import ListItemButton from "@mui/material/ListItemButton";
-import { List, ListItemIcon, ListItemText, ListItem } from '@material-ui/core';
+import { List, ListItemIcon, ListItemText, ListItem } from "@material-ui/core";
 import { Box } from "@mui/system";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,31 +19,30 @@ import SearchBar from "../SearchBar";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     list: {
-      width: '40%',
-      '& span': {
-        margin: '0px'
-      }
+      width: "70%",
+      "& span": {
+        margin: "0px",
+      },
     },
     buttonGroup: {
-      display: 'flex !importan',
-      justifyContent: 'space-between',
-      maxWidth: '200px',
-      backgroundColor: 'transparent',
-      borderRadius: '10px',
+      display: "flex !importan",
+      justifyContent: "space-between",
+      maxWidth: "200px",
+      backgroundColor: "transparent",
+      borderRadius: "10px",
     },
     buttonGroupChild: {
-      borderRadius: '10px !important',
-      marginRight: '10px',
-      marginTop: '15px',
-      '& span': {
-        margin: '0'
-      }
-    }
+      borderRadius: "10px !important",
+      marginRight: "10px",
+      marginTop: "15px",
+      "& span": {
+        margin: "0",
+      },
+    },
   })
 );
 
 const SideBarHomePage = () => {
-  
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -51,9 +50,9 @@ const SideBarHomePage = () => {
     dispatch(getallMarks());
     return () => {};
   }, [dispatch]);
-  
+
   const classes = useStyles();
-  
+
   const { loading, mark, gender, category, price, author } = useSelector(
     (state: RootState) => state.publicationList
   );
@@ -87,33 +86,41 @@ const SideBarHomePage = () => {
   };
   React.useEffect(() => {
     dispatch(getAllUsers());
-    return () => { };
+    return () => {};
   }, [dispatch]);
 
   const handleListItemClickGender = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     value: string
   ) => {
-    console.log()
-    selectedValueGender===value ? setSelectedValueGender("") : setSelectedValueGender(value);
+    console.log();
+    selectedValueGender === value
+      ? setSelectedValueGender("")
+      : setSelectedValueGender(value);
   };
   const handleListItemClickCategory = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     value: string
   ) => {
-    selectedValueCategory===value ? setSelectedValueCategory("") : setSelectedValueCategory(value);
+    selectedValueCategory === value
+      ? setSelectedValueCategory("")
+      : setSelectedValueCategory(value);
   };
   const handleListItemClickMark = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     value: string
   ) => {
-    selectedValueMark===value ? setSelectedValueMark("") : setSelectedValueMark(value);
+    selectedValueMark === value
+      ? setSelectedValueMark("")
+      : setSelectedValueMark(value);
   };
   const handleListItemClickAuthor = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     value: string
   ) => {
-    selectedValueAuthor===value ? setSelectedValueAuthor("") : setSelectedValueAuthor(value);
+    selectedValueAuthor === value
+      ? setSelectedValueAuthor("")
+      : setSelectedValueAuthor(value);
   };
 
   const handleReset = () => {
@@ -155,174 +162,164 @@ const SideBarHomePage = () => {
       component="aside"
       sx={{
         width: "40% !important",
-        marginRight: '30px !important',
+        marginRight: "30px !important",
         marginTop: "20px !important",
       }}
     >
       <SearchBar />
-      <SearchOrder/>
-    <List
-      component="nav"
-      aria-labelledby="nested-list-subheader"
-    >
-      <ListItemButton onClick={handleClick1}>
-        <ListItemText primary="Genero" />
-        {open1 ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
-      <Collapse in={open1} timeout="auto" unmountOnExit>
-        {["Hombre", "Mujer", "Niños"].map((value) => {
-          const labelId = `checkbox-list-label-${value}`;
+      <SearchOrder />
+      <List component="nav" aria-labelledby="nested-list-subheader">
+        <ListItemButton onClick={handleClick1}>
+          <ListItemText primary="Genero" />
+          {open1 ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+        <Collapse in={open1} timeout="auto" unmountOnExit>
+          {["Hombre", "Mujer", "Niños"].map((value) => {
+            const labelId = `checkbox-list-label-${value}`;
 
-          return (
-            <ListItem
-              key={value}
-              dense
-              role={undefined}
-              button
-              onClick={(event) => handleListItemClickGender(event, value)}
-              disabled={loading}
-              classes={{root: classes.list}}
-            >
-              <ListItemIcon>
-                <Checkbox
-                  edge="start"
-                  checked={selectedValueGender === value?true:false}
-                  tabIndex={-1}
-                  disableRipple
-                  inputProps={{ "aria-labelledby": labelId }}
-                />
-              </ListItemIcon>
-              <ListItemText id={labelId} primary={value} />
-            </ListItem>
-          );
-        })}
+            return (
+              <ListItem
+                key={value}
+                dense
+                role={undefined}
+                button
+                onClick={(event) => handleListItemClickGender(event, value)}
+                disabled={loading}
+                classes={{ root: classes.list }}
+              >
+                <ListItemIcon>
+                  <Checkbox
+                    edge="start"
+                    checked={selectedValueGender === value ? true : false}
+                    tabIndex={-1}
+                    disableRipple
+                    inputProps={{ "aria-labelledby": labelId }}
+                  />
+                </ListItemIcon>
+                <ListItemText id={labelId} primary={value} />
+              </ListItem>
+            );
+          })}
         </Collapse>
-        </List> 
-    <List
-      component="nav"
-      aria-labelledby="nested-list-subheader"
-    >
+      </List>
+      <List component="nav" aria-labelledby="nested-list-subheader">
         <ListItemButton onClick={handleClick2}>
-        <ListItemText primary="Categoria" />
-        {open2 ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
-      <Collapse in={open2} timeout="auto" unmountOnExit>
-        {["Remera", "Patanlon", "Zapatillas", "Zapatos"].map((value) => {
-          const labelId = `checkbox-list-label-${value}`;
+          <ListItemText primary="Categoria" />
+          {open2 ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+        <Collapse in={open2} timeout="auto" unmountOnExit>
+          {["Remera", "Patanlon", "Zapatillas", "Zapatos"].map((value) => {
+            const labelId = `checkbox-list-label-${value}`;
 
-          return (
-            <ListItem
-              key={value}
-              dense
-              role={undefined}
-              button
-              onClick={(event) => handleListItemClickCategory(event, value)}
-              disabled={loading}
-              classes={{root: classes.list}}
-            >
-              <ListItemIcon>
-                <Checkbox
-                  edge="start"
-                  checked={selectedValueCategory === value?true:false}
-                  tabIndex={-1}
-                  disableRipple
-                  inputProps={{ "aria-labelledby": labelId }}
-                />
-              </ListItemIcon>
-              <ListItemText id={labelId} primary={value} />
-            </ListItem>
-          );
-        })}
+            return (
+              <ListItem
+                key={value}
+                dense
+                role={undefined}
+                button
+                onClick={(event) => handleListItemClickCategory(event, value)}
+                disabled={loading}
+                classes={{ root: classes.list }}
+              >
+                <ListItemIcon>
+                  <Checkbox
+                    edge="start"
+                    checked={selectedValueCategory === value ? true : false}
+                    tabIndex={-1}
+                    disableRipple
+                    inputProps={{ "aria-labelledby": labelId }}
+                  />
+                </ListItemIcon>
+                <ListItemText id={labelId} primary={value} />
+              </ListItem>
+            );
+          })}
         </Collapse>
-        </List> 
-    <List
-      component="nav"
-      aria-labelledby="nested-list-subheader"
-    >
-      
+      </List>
+      <List component="nav" aria-labelledby="nested-list-subheader">
         <ListItemButton onClick={handleClick3}>
-        <ListItemText primary="Vendedor" />
-        {open3 ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
-      <Collapse in={open3} timeout="auto" unmountOnExit>
-        {users?.map((value) => {
-          const labelId = `checkbox-list-label-${value}`;
+          <ListItemText primary="Vendedor" />
+          {open3 ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+        <Collapse in={open3} timeout="auto" unmountOnExit>
+          {users?.map((value) => {
+            const labelId = `checkbox-list-label-${value}`;
 
-          return (
-            <ListItem
-              key={value}
-              dense
-              role={undefined}
-              button
-              onClick={(event) =>
-                handleListItemClickAuthor(
-                  event,
-                  value
-                )
-              }
-              disabled={loading}
-              classes={{root: classes.list}}
-            >
-              <ListItemIcon>
-                <Checkbox
-                  edge="start"
-                  checked={selectedValueAuthor === value?true:false}
-                  tabIndex={-1}
-                  disableRipple
-                  inputProps={{ "aria-labelledby": labelId }}
-                />
-              </ListItemIcon>
-              <ListItemText id={labelId} primary={value} />
-            </ListItem>
-          );
-        })}
+            return (
+              <ListItem
+                key={value}
+                dense
+                role={undefined}
+                button
+                onClick={(event) => handleListItemClickAuthor(event, value)}
+                disabled={loading}
+                classes={{ root: classes.list }}
+              >
+                <ListItemIcon>
+                  <Checkbox
+                    edge="start"
+                    checked={selectedValueAuthor === value ? true : false}
+                    tabIndex={-1}
+                    disableRipple
+                    inputProps={{ "aria-labelledby": labelId }}
+                  />
+                </ListItemIcon>
+                <ListItemText id={labelId} primary={value} />
+              </ListItem>
+            );
+          })}
         </Collapse>
-        </List> 
-    <List
-      component="nav"
-      aria-labelledby="nested-list-subheader"
-    >
-
+      </List>
+      <List component="nav" aria-labelledby="nested-list-subheader">
         <ListItemButton onClick={handleClick4}>
-        <ListItemText primary="Marca" />
-        {open4 ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
-      <Collapse in={open4} timeout="auto" unmountOnExit>
-        {marks?.map((value) => {
-          const labelId = `checkbox-list-label-${value}`;
+          <ListItemText primary="Marca" />
+          {open4 ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+        <Collapse in={open4} timeout="auto" unmountOnExit>
+          {marks?.map((value) => {
+            const labelId = `checkbox-list-label-${value}`;
 
-          return (
-            <ListItem
-              key={value}
-              dense
-              role={undefined}
-              button
-              onClick={(event) =>
-                handleListItemClickMark(
-                  event,
-                  value
-                )
-              }
-              disabled={loading}
-              classes={{root: classes.list}}
-            >
-              <ListItemIcon>
-                <Checkbox
-                  edge="start"
-                  checked={selectedValueMark === value?true:false}
-                  tabIndex={-1}
-                  disableRipple
-                  inputProps={{ "aria-labelledby": labelId }}
-                />
-              </ListItemIcon>
-              <ListItemText id={labelId} primary={value} />
-            </ListItem>
-          );
-        })}
+            return (
+              <ListItem
+                key={value}
+                dense
+                role={undefined}
+                button
+                onClick={(event) => handleListItemClickMark(event, value)}
+                disabled={loading}
+                classes={{ root: classes.list }}
+              >
+                <ListItemIcon>
+                  <Checkbox
+                    edge="start"
+                    checked={selectedValueMark === value ? true : false}
+                    tabIndex={-1}
+                    disableRipple
+                    inputProps={{ "aria-labelledby": labelId }}
+                  />
+                </ListItemIcon>
+                <ListItemText id={labelId} primary={value} />
+              </ListItem>
+            );
+          })}
         </Collapse>
-        </List> 
-        <Button color='primary' variant='contained' classes={{root: classes.buttonGroupChild}} onClick={handleSubmit}>Submit</Button>
-        <Button color='primary' variant='contained' classes={{root: classes.buttonGroupChild}} onClick={handleReset}>Reset</Button>
+      </List>
+      <Button
+        color="primary"
+        variant="contained"
+        classes={{ root: classes.buttonGroupChild }}
+        onClick={handleSubmit}
+      >
+        Submit
+      </Button>
+      <Button
+        color="primary"
+        variant="contained"
+        classes={{ root: classes.buttonGroupChild }}
+        onClick={handleReset}
+      >
+        Reset
+      </Button>
     </Box>
   );
 };
