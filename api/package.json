@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node dist/index.js",
-    "build": "tsc"
+    "ts:node": "ts-node index.ts",
+    "clean": "del -rf build",
+    "start": "node build/src",
+    "dev": "nodemon"
   },
-
   "dependencies": {
     "@types/cookie-parser": "^1.4.2",
     "@types/cors": "^2.8.12",
