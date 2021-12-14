@@ -7,6 +7,7 @@ import mercadoPago from 'mercadopago'
 import dotenv from "dotenv";
 import SalesSchema, { Sales } from "../models/sales";
 import axios from "axios";
+const sendEMail = require('../email/email');
 
 dotenv.config()
 
@@ -88,6 +89,14 @@ export default class Checkout {
                     await compra.save();
                     userCompra.shopping.push(compra);
                     await userCompra?.save();
+
+                    sendEMail.send({
+                        purchaseTotal: mpApi.transaction_amount,
+                        email: userCompra.email,
+                        subject: "Compra realizada",
+                        htmlFile: "purchaseSuccess.html",
+                      })
+
     
                     const obj: {[k: string]: any} = {};
                     obj["users"] = []
@@ -137,6 +146,14 @@ export default class Checkout {
                                     status_detail: mpApi.status_detail,
                                     codigo: `${mpApi.id}`
                                 });
+
+                                sendEMail.send({
+                                    purchaseTotal: compras,
+                                    email: userVenta.email,
+                                    purchaseCode: mpApi.codigo,
+                                    subject: "Han realizado una compra de tus productos",
+                                    htmlFile: "purchaseReceived.html",
+                                  })
                                 
                                 await venta.save();
                                 userVenta.sales.push(venta);
@@ -144,6 +161,7 @@ export default class Checkout {
                             }
                         }
 
+                        
                         userCarrito.publications = [];
                         userCarrito.markModified('publications')
                         await userCarrito.save();

@@ -238,9 +238,11 @@ export default class PublicationController {
           publication.stock = 1
           await publication.save();
           sendEMail.send({
+            publicationImage: publication?.images[0]?.url,
+            publicationName: publication?.name,
             publicationPrice: publication?.price,
             email: seller?.email,
-            mensaje: "Su publicacion a sido APROBADA!",
+            mensaje: "Su publicacion ha sido APROBADA!",
             subject: "Tu publicacion fue aprobada",
             htmlFile: "publicationApproved.html",
           })
@@ -288,6 +290,8 @@ export default class PublicationController {
       const seller = await UserSchema.findById(publication?.author);
       console.log(publication)
       sendEMail.send({
+        publicationImage: publication?.images[0]?.url,
+        publicationName: publication?.name,
         email: seller?.email,
         mensaje: message,
         subject: "Tu publicacion fue rechazada",
