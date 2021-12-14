@@ -1,18 +1,24 @@
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import React from 'react';
-import Box from '@mui/material/Box';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DatePicker from '@mui/lab/DatePicker';
-import axios from 'axios';
-import { InputAdornment } from '@mui/material';
-
+import {
+  Button,
+  Box,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  InputAdornment,
+} from "@material-ui/core";
+import * as React from "react";
+import { TextField } from "@mui/material";
+// import Dialog from "@mui/material/Dialog";
+// import DialogActions from "@mui/material/DialogActions";
+// import DialogContent from "@mui/material/DialogContent";
+// import DialogContentText from "@mui/material/DialogContentText";
+// import DialogTitle from "@mui/material/DialogTitle";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import DatePicker from "@mui/lab/DatePicker";
+import axios from "axios";
 
 interface Props {
   children: any;
@@ -22,30 +28,35 @@ interface Props {
 }
 
 const getTodayDate = () => {
-  let today = new Date()
-  let tomorrow = new Date(today)
-  tomorrow.setDate(tomorrow.getDate() + 1)
-  return tomorrow
-}
+  let today = new Date();
+  let tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  return tomorrow;
+};
 
-export default function DiscountModal({ children, userId, publicationId, getPublications }: Props) {
-
+export default function DiscountModal({
+  children,
+  userId,
+  publicationId,
+  getPublications,
+}: Props) {
   const [open, setOpen] = React.useState(false);
 
-  const [expirationDate, setExpirationDate] = React.useState<Date | null>(getTodayDate());
+  const [expirationDate, setExpirationDate] = React.useState<Date | null>(
+    getTodayDate()
+  );
 
-  console.log(publicationId)
+  console.log(publicationId);
 
   const [form, setForm] = React.useState({
-    authorId: userId || '',
-    publicationId: publicationId || '',
+    authorId: userId || "",
+    publicationId: publicationId || "",
     amount: 10,
-    percentage: '',
-    expirationDate
+    percentage: "",
+    expirationDate,
   });
 
   const { percentage } = form;
-
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -55,17 +66,16 @@ export default function DiscountModal({ children, userId, publicationId, getPubl
     setOpen(false);
   };
 
-
   const submitForm = () => {
-    axios.post('/discount', form).then(({ data }) => {
+    axios.post("/discount", form).then(({ data }) => {
       handleClose();
       setForm({
-        authorId: userId || '',
-        publicationId: publicationId || '',
+        authorId: userId || "",
+        publicationId: publicationId || "",
         amount: 10,
-        percentage: '',
-        expirationDate
-      })
+        percentage: "",
+        expirationDate,
+      });
       setExpirationDate(getTodayDate());
       getPublications();
     });
@@ -78,20 +88,23 @@ export default function DiscountModal({ children, userId, publicationId, getPubl
 
   const handleDate = (newValue: Date | null) => {
     if (newValue) {
-
       // setForm({ ...form, expirationDate: new Date(Date.UTC(newValue && newValue?.getFullYear(), newValue?.getMonth(), newValue?.getDate())) });
       setForm({ ...form, expirationDate: newValue });
-      setExpirationDate(new Date(Date.UTC(newValue && newValue?.getFullYear(), newValue?.getMonth(), newValue?.getDate() + 1)));
+      setExpirationDate(
+        new Date(
+          Date.UTC(
+            newValue && newValue?.getFullYear(),
+            newValue?.getMonth(),
+            newValue?.getDate() + 1
+          )
+        )
+      );
     }
   };
 
-
-
   return (
     <div>
-      <Button onClick={handleClickOpen}>
-        {children}
-      </Button>
+      <Button onClick={handleClickOpen}>{children}</Button>
       <Dialog fullWidth open={open} onClose={handleClose}>
         <DialogTitle>Aplicar descuento</DialogTitle>
         <DialogContent>
@@ -99,15 +112,22 @@ export default function DiscountModal({ children, userId, publicationId, getPubl
             Aplicar un nuevo descuento reemplazará al anterior.
           </DialogContentText>
 
-          <Box component="div" sx={{ my: 6, display: "flex", flexDirection: "row", justifyContent: 'space-between' }}>
-
+          <Box
+            component="div"
+            sx={{
+              my: 6,
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
             <DialogContentText>
               El descuento expirará a las 00:00 hs. del día seleccionado.
             </DialogContentText>
 
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
-                inputFormat={'dd/MM/yyyy'}
+                inputFormat={"dd/MM/yyyy"}
                 label="Fecha de expiración"
                 value={expirationDate}
                 onChange={(newValue: Date | null) => {
@@ -128,7 +148,7 @@ export default function DiscountModal({ children, userId, publicationId, getPubl
             name="percentage"
             fullWidth
             variant="standard"
-            autoComplete='off'
+            autoComplete="off"
             onChange={(e) => handleForm(e)}
             InputProps={{
               endAdornment: <InputAdornment position="end">%</InputAdornment>,

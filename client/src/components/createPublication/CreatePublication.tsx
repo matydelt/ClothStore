@@ -12,8 +12,6 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store/store';
 import { User } from '../../redux/reducer/stateTypes';
 import NavBar from '../HomePage/Header/NavBar/NavBar';
-import { setTimeout } from 'timers';
-// import { useAuth } from '../../hooks/useAuth';
 
 const useStyles = makeStyles({
   buttonPublicOrUpdate: {
@@ -93,11 +91,13 @@ export default function CreatePublication(): JSX.Element {
   function submitForm(e: BaseSyntheticEvent): void {
     e.preventDefault();
 
-    axios.post('http://localhost:3001/publications/new', form, { params: { publicationId } }).then(({ data }) => {
-
-      navigate(`/publication/${data}`)
-
-    });
+    axios
+      .post("http://localhost:3001/publications/new", form, {
+        params: { publicationId },
+      })
+      .then(({ data }) => {
+        navigate(`/publication/${data}`);
+      });
   }
 
   function removeImage(imageId: string): void {

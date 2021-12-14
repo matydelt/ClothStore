@@ -47,7 +47,6 @@ function useProvideAuth() {
   const [user, setUser] = useState<User>();
   const dispatch = useDispatch();
 
-
   const signin = async ({
     email,
     password,
@@ -97,16 +96,16 @@ function useProvideAuth() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      console.log(user)
+      console.log(user);
       if (user) {
-        dispatch(setSignedInUser(user))
+        dispatch(setSignedInUser(user));
         setUser(user);
       } else {
         setUser(undefined);
       }
     });
     return () => unsubscribe();
-  }, []);
+  }, [dispatch]);
 
   return { user, signin, signup, signout, googleSignin };
 }
