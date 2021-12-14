@@ -172,7 +172,7 @@ export default function CartScreen() {
                 </TableRow>
               </TableHead>
               {auth.user
-                ? carrito.publications.map((item: any) => (
+                ? carrito?.publications.map((item: any) => (
                     <CartItem
                       key={item.id}
                       item={item}

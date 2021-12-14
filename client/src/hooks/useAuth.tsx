@@ -12,6 +12,7 @@ import { auth } from "../firebase/firebase.config";
 import { FirebaseError } from "@firebase/util";
 import { useDispatch } from "react-redux";
 import { setSignedInUser } from "../redux/actions/userActions";
+import { registerUserGoogle } from "../redux/actions/userActions";
 
 interface signProps {
   email: string;
@@ -43,9 +44,21 @@ export const useAuth = () => {
   return useContext(authContext);
 };
 
+type FormState = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  photo: string;
+};
+
 function useProvideAuth() {
   const [user, setUser] = useState<User>();
   const dispatch = useDispatch();
+
+  const handleSubmit= (e: FormState ) => {
+      signup({email: e.email, password: e.password});
+  };
 
 
   const signin = async ({
@@ -85,11 +98,22 @@ function useProvideAuth() {
 
   const googleSignin = async (): Promise<User | undefined> => {
     try {
-      const response = await signInWithPopup(auth, provider);
+      const response = await signInWithPopup(auth, provider)
       // const credential = GoogleAuthProvider.credentialFromResult(response);
       // const token = credential?.accessToken;
-      setUser(response.user);
-      return response.user;
+      if(response.user.email){
+        const obj = { 
+          firstName: response.user.displayName ? response.user.displayName.split(" ")[0] : "", 
+          lastName: response.user.displayName ? response.user.displayName.split(" ")[1] : "",
+          email: response.user.email,
+          password: `${response.user.email}${response.user.email}`,
+          photo: response.user.photoURL ? response.user.photoURL : ""
+        }
+    
+        await dispatch(registerUserGoogle(obj))
+        handleSubmit(obj)
+        return response.user;
+      }
     } catch (error) {
       console.error((error as FirebaseError).message);
     }

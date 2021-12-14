@@ -28,7 +28,7 @@ export default class CarritoController {
                             quantity: p.quantity,
                             title: p.title,
                             image: p.image,
-                            discount: p.discount
+                            discount: p?.discount
                         })
                     })
                 }
@@ -46,7 +46,7 @@ export default class CarritoController {
                                     quantity: c.quantity,
                                     title: c.title,
                                     image: c.image,
-                                    discount: c.discount
+                                    discount: c?.discount
                                 })
                         }
 
@@ -61,7 +61,6 @@ export default class CarritoController {
         } catch (error) {
             console.log(error)
         }
-
     }
 
     static async getCarrito(req: Request, res: Response) {
@@ -74,6 +73,7 @@ export default class CarritoController {
             console.error(error);
         }
     }
+
     static async putCarritoAmount(req: Request, res: Response) {
         let nuevo: boolean = false;
         try {
@@ -101,7 +101,7 @@ export default class CarritoController {
                         title: findPublic?.name,
                         image: findPublic?.images[0].url,
                         price: findPublic.discount ? findPublic.price - findPublic.price * findPublic.discount.percentage / 100 : findPublic.price,
-                        discount: findPublic.discount.percentage
+                        discount: findPublic?.discount?.percentage
                     });
                 }
             }
@@ -114,6 +114,7 @@ export default class CarritoController {
             console.error(error);
         }
     }
+    
     static async putCarrito(req: Request, res: Response) {
         let nuevo: boolean = false;
         try {
@@ -132,7 +133,6 @@ export default class CarritoController {
                 } else {
                     nuevo = true;
                 }
-
             })
 
             if (!publicationSearched) {
@@ -145,7 +145,7 @@ export default class CarritoController {
                         title: findPublic?.name,
                         image: findPublic?.images[0].url,
                         price: findPublic.discount ? findPublic.price - findPublic.price * findPublic.discount.percentage / 100 : findPublic.price,
-                        discount: findPublic.discount.percentage
+                        discount: findPublic?.discount?.percentage
                     });
                 }
 

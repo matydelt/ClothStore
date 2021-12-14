@@ -1,5 +1,7 @@
 import React, { ChangeEvent, SetStateAction, useEffect, useState } from 'react';
-import { Avatar, Button, Container, FormControl, MenuItem, Typography, Divider, Select } from '@material-ui/core';
+import { Avatar, Button, Container, FormControl, MenuItem, Divider, Select } from '@mui/material';
+
+import { Typography } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
 import { SelectChangeEvent, Grid, CircularProgress, Rating,  } from '@mui/material';
 // import { Rating } from '@material-ui/lab';
@@ -275,7 +277,7 @@ export default function PublicationDetail(): JSX.Element {
                   $ {publication?.price}
                 </Typography>
                 <Typography variant="h5" component="h5" classes={{ root: classes.publicationPriceWithDiscount }}>
-                  $ { publication?.price - (Number(publication?.price)*Number(publication?.discount.percentage)) / 100}
+                  $ { (publication?.price - (Number(publication?.price)*Number(publication?.discount.percentage)) / 100).toFixed(2)  }
                 </Typography>
                 <Typography component="p" classes={{ root: classes.offPercentage }}>
                   {publication?.discount?.percentage}% OFF

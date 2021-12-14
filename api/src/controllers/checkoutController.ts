@@ -1,10 +1,12 @@
 import { Request, Response } from "express"
-import PublicationSchema from "../models/publication";
+import PublicationSchema, {Publication} from "../models/publication";
 import ShoppingSchema, {Shopping} from "../models/shopping";
 import UserSchema from "../models/user";
 import carritoSchema from "../models/carrito";
 import mercadoPago from 'mercadopago'
 import dotenv from "dotenv";
+import SalesSchema, { Sales } from "../models/sales";
+import axios from "axios";
 
 dotenv.config()
 
@@ -24,38 +26,38 @@ export default class Checkout {
 
         const order = req.body;
 
-        let publicaciones: Array<any> = await PublicationSchema.find()
-        let autores: Array<any> = await UserSchema.find()
         try {
 
-            const orderMap = order.publications.map( (c:any) => {
-                const descript = publicaciones.map(e=>{if(e._id ==c.publication)return e.detail}).filter(e => e!=null).toString()
-                return {
-                    id: c.publication,
-                    description: descript,
-                    title: c.title,
-                    unit_price: c.price,
-                    quantity: c.quantity
+            const orderMap: Array<any> = [];
+            for (let i = 0; i < order.publications.length; i++) {
+                const descript = await PublicationSchema.findById(order.publications[i].publication)
+                if(descript){
+                    orderMap.push(
+                        {
+                            id: order.publications[i].publication,
+                            description: descript.detail,
+                            title: order.publications[i].title,
+                            unit_price: order.publications[i].price,
+                            quantity: order.publications[i].quantity
+                        }
+                    )
                 }
-            })
+            }
             const preference = {
                 items: orderMap,
                 marketplace: 'Cloth Store',
                 additional_info: order._id,
                 statement_descriptor: "Clothstore",
-                back_urls: { failure: '', pending: '', success: 'http://localhost:3000/' }
+                back_urls: { failure: '', pending: '', success: 'http://localhost:3000/' },
+                notification_url: "https://hookb.in/Px0gpPOPE7hpKPrrKWP9",
             }
             const response = await mercadoPago.preferences.create(preference)
-
-            console.log(response.body.date_created)
 
             let compras:number = 0
             let comprar = 0
             comprar= order.publications.forEach( (c:any) => {
                 compras = compras + (c.price*c.quantity)
             })
-            console.log("----------------compras----------",order.publications)
-
 
             const compra : Shopping = new ShoppingSchema({
                 publications: order.publications,
@@ -65,13 +67,67 @@ export default class Checkout {
                 state: true,
                 status: "pending",
                 status_detail: "pending accreditation",
-
+                link: `${response.body.init_point}`
             });
-            await compra.save();//userId
-            const user = await UserSchema.findById(order.userId);
-            // await PublicationSchema.findById(id).updateOne({ stock: stock });
-            user?.shopping.push(compra);
-            await user?.save();
+            await compra.save();
+            const userCompra = await UserSchema.findById(order.userId);
+            userCompra?.shopping.push(compra);
+            await userCompra?.save();
+
+            const obj: {[k: string]: any} = {};
+            obj["users"] = []
+            for(let i :number = 0; i< order.publications.length; i++){
+                const publi = await PublicationSchema.findById(order.publications[i].publication)
+                if(publi){
+                    const us = await UserSchema.findById(publi.author)
+                    if(us){
+                        publi.stock -= order.publications[i].quantity
+                        publi.markModified('stock')
+                        await publi.save();
+                    
+                        for(let j :number = 0; j< us.publications.length; j++){
+                            if(us.publications[j].order==publi.order){
+                                us.publications[j].stock -= order.publications[i].quantity
+                            }
+                        }
+                        us.markModified('publications')
+                        await us.save();
+
+                        if (!(Object.keys(obj).includes(us.email as string))) {
+                            obj[`${us.email}`] = [order.publications[i]]
+                            obj.users.push(us.email)
+                            continue;
+                        }
+                        obj[`${us.email}`].push(order.publications[i])
+                    }
+                }
+            }
+
+            for(let i :number = 0; i< obj.users.length; i++){
+                const userVenta = await UserSchema.findOne({email: obj.users[i]});
+                if (userVenta){
+                    compras = 0
+                    comprar = 0
+                    comprar= obj[`${obj.users[i]}`].forEach( (c:any) => {
+                        compras = compras + (c.price*c.quantity)
+                    })
+                    
+                    const venta : Sales = new SalesSchema({
+                        publications: obj[`${obj.users[i]}`],
+                        amount: compras,
+                        userId: userVenta._id,
+                        date: response.body.date_created,
+                        state: true,
+                        status: "pending",
+                        status_detail: "pending accreditation",
+                        codigo: ``
+                    });
+                    await venta.save();
+                    userVenta.sales.push(venta);
+                    await userVenta.save();
+                }
+            }
+            
 
             const carrito = await carritoSchema.findById(order._id)
             if(carrito){
@@ -87,5 +143,21 @@ export default class Checkout {
             console.log(error)
         }
 
+    }
+    static async postMP(req: Request, res: Response) {
+        const MPInfo = req.body;
+        try {
+            console.log(req.body)
+            const mpApi = (
+                await axios.get(
+                    `https://api.mercadopago.com/v1/payments/${MPInfo.data.id}?access_token=${process.env.MERCADOPAGO_API_PROD_ACCESS_TOKEN}`
+                    )
+                    ).data;
+            console.log(mpApi)
+            res.sendStatus(201);
+        } catch (error) {
+            console.log(error);
+            return res.sendStatus(500);
+        }
     }
 }

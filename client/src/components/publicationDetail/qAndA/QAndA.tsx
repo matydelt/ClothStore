@@ -1,5 +1,5 @@
 import React, { BaseSyntheticEvent, useState } from 'react';
-import { Button, Grid, TextField, Typography } from '@mui/material';
+import { Button, Grid, Skeleton, Stack, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import axios from 'axios';
 import { useParams } from 'react-router';
@@ -22,6 +22,7 @@ export default function QAndA(): JSX.Element {
 
     const [form, setForm] = useState<Form>({ message: '', publicationId: publicationId || '', authorId: user?._id || '' });
     const [isBuyer, setIsBuyer] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
 
     const { message } = form;
 
@@ -29,20 +30,29 @@ export default function QAndA(): JSX.Element {
 
 
     React.useEffect(() => {
-        getQuestions();
-    }, [publicationId]);
-
-    React.useEffect(() => {
         if (user) {
-            setIsBuyer(!!!(user?.publications?.find(p => p._id === publicationId)));
+            setLoading(true)
+            getQuestions();
         }
-    }, []);
+    }, [publicationId, user]);
 
-    function getQuestions() {
+    // React.useEffect(() => {
+    //     if (user) {
+    //         setIsBuyer(!!!(user?.publications?.find(p => p._id === publicationId)));
+    //     }
+    // }, []);
+
+    async function getQuestions() {
+        console.log(isBuyer, 'isBuyer amtes')
+        await setIsBuyer(!!!(user?.publications?.find(p => p._id === publicationId)));
         axios.get('/qAndAs/' + publicationId).then(({ data }) => {
             setQuestions(data);
+            setLoading(false)
+            console.log(!!!(user?.publications?.find(p => p._id === publicationId)))
         });
     };
+    
+    console.log(isBuyer, 'isBuyer despues')
 
     function handleForm(e: BaseSyntheticEvent) {
         setForm({ ...form, [e.target.name]: e.target.value })
@@ -58,9 +68,27 @@ export default function QAndA(): JSX.Element {
     }
 
     return (<>
+
         <Box component="div" sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
 
             <Typography variant="h5">Preguntas y respuestas</Typography>
+
+            { loading ?
+        
+        <Stack spacing={2} width={700} marginY={3}>
+            <Skeleton variant="rectangular" height={20} />
+            <Skeleton variant="rectangular" height={50} />
+            <Skeleton variant="rectangular" height={20} />
+            <Skeleton variant="rectangular" height={50} />
+            <Skeleton variant="rectangular" height={20} />
+            <Skeleton variant="rectangular" height={50} />
+        </Stack>
+    
+            :
+
+
+            <Box>
+
 
             {isBuyer &&
 
@@ -113,9 +141,11 @@ export default function QAndA(): JSX.Element {
                     <Typography sx={{ color: 'gray', m: 2 }}>Aún no hay preguntas en esta publicación</Typography>
             
             }
+
+            </Box>
+            }
+
         </Box>
-
-
 
     </>)
 

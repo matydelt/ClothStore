@@ -8,15 +8,21 @@ export default class ReviewControlllers {
     static async setReview(req: Request, res: Response): Promise<Response> {
         const { authorId, publicationId, title, message, score } = req.body;
 
+        console.log(authorId, publicationId, title, message, score)
+
         try {
             const reviewExists: Review | null = await ReviewSchema.findOne({ author: authorId, publication: publicationId }).exec();
             //1 TODO: Validar que el producto haya sido comprado por el autor de la Review
             // ...
 
             //2 Limitar el número de reviews a 1
-            // if (reviewExists) {
-            //     return res.status(400).json({ msg: 'El usuario ya hizo una reseña sobre el producto' });
-            // }
+            if (reviewExists) {
+                reviewExists.message = message;
+                reviewExists.score = score;
+                reviewExists.title = title;
+                await reviewExists.save();
+                return res.sendStatus(200);
+            }
 
             const review: Review = new ReviewSchema({ author: authorId, publication: publicationId, title, message, score });
 
@@ -41,13 +47,13 @@ export default class ReviewControlllers {
 
         let scoreAverage = 0;
         let reviews: Review[] = [];
-        
+
         let fromParsed: number = Number(from);
 
         let limit = 5;
         let offset = 0 + (fromParsed - 1) * limit;
 
-        if (offset < 0) offset = 0; 
+        if (offset < 0) offset = 0;
 
         try {
             if (filterCriteria === 'all') {
@@ -68,6 +74,20 @@ export default class ReviewControlllers {
             console.log(reviews)
 
             return res.json({ reviews, scoreAverage, totalScores: reviewsScores.length });
+
+        } catch (error) {
+            console.log(error);
+            return res.sendStatus(500);
+        }
+    }
+
+    static async getReview(req: Request, res: Response): Promise<Response | undefined> {
+        const { publicationId, authorId } = req.params;
+
+        try {
+            const reviewExists = await ReviewSchema.findOne({ publication: publicationId, author: authorId } as FilterQuery<Review>);
+
+            return res.json(reviewExists);
 
         } catch (error) {
             console.log(error);

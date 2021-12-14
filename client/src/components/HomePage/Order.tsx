@@ -4,7 +4,7 @@ import { RootState } from "../../redux/store/store";
 import { putPublications } from "../../redux/actions/publicationActions";
 import { Box } from "@mui/system";
 import ListItemButton from "@mui/material/ListItemButton";
-import { List, ListItemIcon, ListItemText, ListItem } from '@material-ui/core';
+import { List, ListItemIcon, ListItemText, ListItem } from '@mui/material';
 import Collapse from "@mui/material/Collapse";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";

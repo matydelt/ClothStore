@@ -7,10 +7,10 @@ const reviews = require("./review");
 const qAndAs = require("./QAndA");
 const mercadoPago = require("./checkout")
 const carrito = require("./carrito")
+const denunciation = require("./denunciation")
 const discount = require("./discount")
 const autocomplete = require("./autocomplete")
 
-const denunciation = require("./denunciation")
 
 module.exports = {
     router,
