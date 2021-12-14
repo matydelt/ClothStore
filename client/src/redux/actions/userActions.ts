@@ -123,7 +123,7 @@ export const setSignedInUser =
   (user: any) => async (dispatch: Dispatch<Action>) => {
     dispatch({ type: "USER_SIGNIN_REQUEST" });
     try {
-      const response = await axios.get("auth/email/" + user.email);
+      const response = await axios.get("/auth/email/" + user.email);
       console.log(response);
 
       dispatch({
