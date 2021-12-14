@@ -4,7 +4,7 @@ import NavBar from './navBar';
 import { useDispatch, useSelector } from "react-redux"
 import { getUsers } from '../../redux/actions/userActions';
 import { User } from '../../redux/reducer/stateTypes';
-import { useAuth } from "../../hooks/useAuth";
+// import { useAuth } from "../../hooks/useAuth";
 import { Navigate } from 'react-router-dom';
 import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 function AdminPage() {
@@ -17,12 +17,10 @@ function AdminPage() {
         userSignin: userSignin;
     }
     const state = useSelector((state: State) => state.userSignin)
-    const auth = useAuth();
+    // const auth = useAuth();
     useEffect(() => {
         dispatch(getUsers())
-        if (!auth.user) {
-            console.log(auth)
-        }
+
     }, [dispatch])
     if (state.loading === false) {
         if (state.userInfo.type !== "admin") {
