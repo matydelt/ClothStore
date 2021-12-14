@@ -225,7 +225,7 @@ export default function ListSales(props: User) {
                                         component="nav"
                                         aria-labelledby="nested-list-subheader">
                                         <ListItemButton onClick={handleClick4}>
-                                            <ListItemText primary="Codigo de Descuento" />
+                                            <ListItemText primary="Codigo de Comprobante" />
                                             {open4 ? <ExpandLess /> : <ExpandMore />}
                                         </ListItemButton>
                                     </List>
