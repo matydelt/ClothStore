@@ -65,17 +65,7 @@ interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
 interface Props {
-  userName: string | undefined;
-  phone: string | undefined;
-  email: string | undefined;
-  firstName: string | undefined;
-  lastName: string | undefined;
-  dni: string | undefined;
-  calle: string | undefined;
-  numero: string | undefined;
-  ciudad: string | undefined;
-  country: string | undefined;
-  cp: string | undefined;
+  type: string | undefined;
 
 }
 const AppBar = styled(MuiAppBar, {
@@ -201,16 +191,16 @@ export default function SideBarUser(props: Props) {
             </ListItem>
           </Link>
 
-
-
-          <Link to="/admin" style={{ textDecoration: "none" }}>
+          {props.type === "admin" ? <Link to="/admin" style={{ textDecoration: "none" }}>
             <ListItem key="Admin Page">
               <ListItemIcon>
                 <AdminPanelSettingsIcon />
               </ListItemIcon>
               <ListItemText primary="Admin Page" />
             </ListItem>
-          </Link>
+          </Link> : null}
+
+
 
           <Link to="/perfil" style={{ textDecoration: "none" }}>
             <ListItem key="Mi Perfil">

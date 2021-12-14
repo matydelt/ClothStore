@@ -31,6 +31,7 @@ interface PropsUser {
     }]
     publications: Publication[];
     shopping: any[] | undefined;
+    type: string
 }
 interface Publication {
     name: string;
@@ -49,6 +50,7 @@ export default function PefilUsuario() {
     const GetUser = useSelector((state: RootState) => state.userSignin.userInfo)
     const [user, setUser] = React.useState<PropsUser>({
         userName: "",
+        type: "",
         phone: "",
         email: "",
         name: {
@@ -98,22 +100,12 @@ export default function PefilUsuario() {
     const ciudad: string | undefined = user.domicilio[0]?.city
     const country: string | undefined = user.domicilio[0]?.country
     const cp: string | undefined = user.domicilio[0]?.cp
-    console.log(calle, numero, ciudad)
+    const type: string | undefined = user.type
 
     return (
         <>
             <SidebarUser
-                firstName={firstName}
-                lastName={lastName}
-                userName={userName}
-                phone={phone}
-                email={email}
-                dni={dni}
-                calle={calle}
-                numero={numero}
-                ciudad={ciudad}
-                country={country}
-                cp={cp}
+                type={type}
             />
             <Routes>
                 <Route index element={<ManagementUserProfile
