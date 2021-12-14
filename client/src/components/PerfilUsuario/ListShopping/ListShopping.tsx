@@ -61,27 +61,49 @@ export default function ListShopping(props:User) {
         }
     };
     
+    
     const [open2, setOpen2] = React.useState(true);
     const handleClick2 = () => {
         setOpen2(!open2);
         if(open2){
             const order = articulos.sort((a, b) => {
-                if (a.date > b.date) return 1;
-                else if (a.date < b.date) return -1;
+                if (a.date.split("T")[0] > b.date.split("T")[0]) return 1;
+                else if (a.date.split("T")[0] < b.date.split("T")[0]) return -1;
                 else return 0;
                 setArticulos(order)
             });
         }
         else{
             const order = articulos.sort((a, b) => {
-                if (a.date < b.date) return 1;
-                else if (a.date > b.date) return -1;
+                if (a.date.split("T")[0] < b.date.split("T")[0]) return 1;
+                else if (a.date.split("T")[0] > b.date.split("T")[0]) return -1;
                 else return 0;
                 setArticulos(order)
             });
         };
     }
     
+    const [open21, setOpen21] = React.useState(true);
+    const handleClick21 = () => {
+        setOpen21(!open21);
+        if(open21){
+            const order = articulos.sort((a, b) => {
+                if (a.date.split("T")[1].split(".")[0] > b.date.split("T")[1].split(".")[0]) return 1;
+                else if (a.date.split("T")[1].split(".")[0] < b.date.split("T")[1].split(".")[0]) return -1;
+                else return 0;
+                setArticulos(order)
+            });
+        }
+        else{
+            const order = articulos.sort((a, b) => {
+                if (a.date.split("T")[1].split(".")[0] < b.date.split("T")[1].split(".")[0]) return 1;
+                else if (a.date.split("T")[1].split(".")[0] > b.date.split("T")[1].split(".")[0]) return -1;
+                else return 0;
+                setArticulos(order)
+            });
+        };
+    }
+
     const [open3, setOpen3] = React.useState(true);
     const handleClick3 = () => {
         setOpen3(!open3);
@@ -128,138 +150,134 @@ export default function ListShopping(props:User) {
     return (
         <Box style={{marginTop: "100px",marginLeft: "100px"}}>
             <div style={{ display: "flex", justifyContent: "center" }}>
-
-<h3>Compras</h3>
-</div>
-{articulos?.length > 0 ?
-<TableContainer component={Paper}>
-    <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-        <TableHead>
-            <TableRow>
-                <TableCell>
-                    <List
-                    component="nav"
-                    aria-labelledby="nested-list-subheader">
-                        <ListItemButton onClick={handleClick1}>
-                            <ListItemText primary="Numero de compra" />
-                            {open1 ? <ExpandLess /> : <ExpandMore />}
-                        </ListItemButton>
-                    </List>
-                </TableCell>
-                <TableCell align="right">
-                    <List
-                    component="nav"
-                    aria-labelledby="nested-list-subheader">
-                        <ListItemButton onClick={handleClick2}>
-                            <ListItemText primary="Fecha" />
-                            {open2 ? <ExpandLess /> : <ExpandMore />}
-                        </ListItemButton>
-                        
-                    </List>
-                </TableCell>
-                <TableCell align="right">
-                    <List
-                    component="nav"
-                    aria-labelledby="nested-list-subheader">
-                        <ListItemButton onClick={handleClick3}>
-                            <ListItemText primary="Status" />
-                            {open3 ? <ExpandLess /> : <ExpandMore />}
-                        </ListItemButton>
-                        
-                    </List>
-                </TableCell>
-                <TableCell align="right">
-                    <List
-                    component="nav"
-                    aria-labelledby="nested-list-subheader">
-                        <ListItemButton onClick={handleClick4}>
-                            <ListItemText primary="Monto" />
-                            {open4 ? <ExpandLess /> : <ExpandMore />}
-                        </ListItemButton>
-                        
-                    </List>
-                </TableCell>
-                <TableCell align="right">
-                    <List
-                    component="nav"
-                    aria-labelledby="nested-list-subheader">
-                        <ListItemButton >
-                            <ListItemText primary="Detalle de la compra" />
-                        </ListItemButton>
-                    </List>
-                </TableCell>
-                <TableCell align="right">
-                    <List
-                    component="nav"
-                    aria-labelledby="nested-list-subheader">
-                        <ListItemButton>
-                            <ListItemText primary="#" />
-                        </ListItemButton>
-                    </List>
-                </TableCell>
-            </TableRow>
-        </TableHead>
-        <TableBody>
-            {articulos?.map((e) => (
-
-                <TableRow
-                    key={e._id}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                    <TableCell component="th" scope="row" align="center">
-                        <List
-                        component="nav"
-                        aria-labelledby="nested-list-subheader">
-                            {e._id}
-                        </List>
-                    </TableCell>
-                    <TableCell align="center">
-                        <List
-                        component="nav"
-                        aria-labelledby="nested-list-subheader">
-                        {e.date == "" ? e.date : e.date.split("T")[0] + " " + e.date.split("T")[1].split(".")[0]}
-                        </List>
-                    </TableCell>
-                    <TableCell align="center">
-                        <List
-                        component="nav"
-                        aria-labelledby="nested-list-subheader">
-                            {e.status}
-                        </List>
-                    </TableCell>
-                    <TableCell align="center">
-                        <List
-                        component="nav"
-                        aria-labelledby="nested-list-subheader">
-                            {e.amount}
-                        </List>
-                    </TableCell>
-                    <TableCell align="center">
-                        <List
-                        component="nav"
-                        aria-labelledby="nested-list-subheader">
-                            <Link to={`/`}>
-                                <button>Detalle</button>
-                            </Link>
-                        </List>
-                    </TableCell>
-                    <TableCell align="center">
-                        <List
-                        component="nav"
-                        aria-labelledby="nested-list-subheader">
-                            <Link to={`${e.link}`}><button disabled={e.status=='pending'?false:true}>Pagar</button></Link>
-                        </List>
-                    </TableCell>
-                </TableRow>
-            ))}
-        </TableBody>
-    </Table>
-</TableContainer>
-:
-<div style={{ display: "flex", justifyContent: "center" }}>
-    <h4>No se han realizado compras</h4>
-</div>
-}
+                <h3>Compras</h3>
+            </div>
+            {articulos?.length > 0 ?
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>
+                                    <List
+                                    component="nav"
+                                    aria-labelledby="nested-list-subheader">
+                                        <ListItemButton onClick={handleClick1}>
+                                            <ListItemText primary="Numero de compra" />
+                                            {open1 ? <ExpandLess /> : <ExpandMore />}
+                                        </ListItemButton>
+                                    </List>
+                                </TableCell>
+                                <TableCell align="right">
+                                    <List
+                                    component="nav"
+                                    aria-labelledby="nested-list-subheader">
+                                        <ListItemButton onClick={handleClick2}>
+                                            <ListItemText primary="Fecha" />
+                                            {open2 ? <ExpandLess /> : <ExpandMore />}
+                                        </ListItemButton>
+                                    </List>
+                                </TableCell>
+                                <TableCell align="right">
+                                    <List
+                                    component="nav"
+                                    aria-labelledby="nested-list-subheader">
+                                        <ListItemButton onClick={handleClick21}>
+                                            <ListItemText primary="Hora" />
+                                            {open21 ? <ExpandLess /> : <ExpandMore />}
+                                        </ListItemButton>
+                                    </List>
+                                </TableCell>
+                                <TableCell align="right">
+                                    <List
+                                    component="nav"
+                                    aria-labelledby="nested-list-subheader">
+                                        <ListItemButton onClick={handleClick3}>
+                                            <ListItemText primary="Status" />
+                                            {open3 ? <ExpandLess /> : <ExpandMore />}
+                                        </ListItemButton>
+                                    </List>
+                                </TableCell>
+                                <TableCell align="right">
+                                    <List
+                                    component="nav"
+                                    aria-labelledby="nested-list-subheader">
+                                        <ListItemButton onClick={handleClick4}>
+                                            <ListItemText primary="Monto" />
+                                            {open4 ? <ExpandLess /> : <ExpandMore />}
+                                        </ListItemButton>
+                                    </List>
+                                </TableCell>
+                                <TableCell align="right">
+                                    <List
+                                    component="nav"
+                                    aria-labelledby="nested-list-subheader">
+                                        <ListItemButton >
+                                            <ListItemText primary="Detalle de la compra" />
+                                        </ListItemButton>
+                                    </List>
+                                </TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {articulos?.map((e) => (
+                                <TableRow
+                                key={e._id}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                >
+                                    <TableCell component="th" scope="row" align="center">
+                                        <List
+                                        component="nav"
+                                        aria-labelledby="nested-list-subheader">
+                                        {e._id}
+                                        </List>
+                                    </TableCell>
+                                    <TableCell align="center">
+                                        <List
+                                        component="nav"
+                                        aria-labelledby="nested-list-subheader">
+                                        {e.date == "" ? e.date : e.date.split("T")[0]}
+                                        </List>
+                                    </TableCell>
+                                    <TableCell align="center">
+                                        <List
+                                        component="nav"
+                                        aria-labelledby="nested-list-subheader">
+                                        {e.date == "" ? e.date : e.date.split("T")[1].split(".")[0]}
+                                        </List>
+                                    </TableCell>
+                                    <TableCell align="center">
+                                        <List
+                                        component="nav"
+                                        aria-labelledby="nested-list-subheader">
+                                        {e.status}
+                                        </List>
+                                    </TableCell>
+                                    <TableCell align="center">
+                                        <List
+                                        component="nav"
+                                        aria-labelledby="nested-list-subheader">
+                                        {e.amount}
+                                        </List>
+                                    </TableCell>
+                                    <TableCell align="center">
+                                        <List
+                                        component="nav"
+                                        aria-labelledby="nested-list-subheader">
+                                            <Link to={`/`}>
+                                                <button>Detalle</button>
+                                            </Link>
+                                        </List>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            :
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                    <h4>No se han realizado compras</h4>
+                </div>
+            }
         </Box>
     )
 }
