@@ -42,7 +42,7 @@ function Addresses(props: Props) {
       })
     }
     getOneUser()
-  }, [state])
+  }, [])
 
   return (<>
     {state.length > 0 ?

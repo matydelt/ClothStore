@@ -42,7 +42,7 @@ const style = {
 
 interface Props {
   id: string | undefined;
-  photo: string | undefined;
+  userName: string | undefined;
   phone: string | undefined;
   email: string | undefined;
   firstName: string | undefined;
@@ -58,7 +58,7 @@ interface Props {
 const ProfileCover = (props: Props) => {
   const [input, setInput] = React.useState<Props>({
     id: "",
-    photo: "",
+    userName: "",
     phone: "",
     email: "",
     firstName: "",
@@ -110,6 +110,12 @@ const ProfileCover = (props: Props) => {
         </Typography>
         <legend>Datos de la Cuenta</legend>
         <div className="div-field">
+          <TextField
+            disabled
+            label="User name"
+            value={props.userName}
+
+          />
           <TextField
             name='phone'
             disabled

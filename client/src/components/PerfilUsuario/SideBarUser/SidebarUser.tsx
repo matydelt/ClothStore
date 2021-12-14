@@ -65,7 +65,7 @@ interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
 interface Props {
-  photo: string | undefined;
+  userName: string | undefined;
   phone: string | undefined;
   email: string | undefined;
   firstName: string | undefined;
