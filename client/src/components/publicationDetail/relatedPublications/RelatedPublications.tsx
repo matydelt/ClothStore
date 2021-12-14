@@ -53,6 +53,7 @@ export default function RelatedPublications({ publicationId }: props): JSX.Eleme
                             <SwiperSlide className='cardPublicationRelated' key={e._id}>
                                 <CardPublicacion discount={e.discount} name={e.name} author={e.author} images={e.images} mark={e.mark} stock={e.stock} price={e.price} categorie={e.categorie} detail={e.detail} gender={e.gender} key={e._id} id={e._id}
                                 />
+
                             </SwiperSlide>
                         )
                     })

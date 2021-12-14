@@ -3,7 +3,7 @@ import { Avatar, Button, Container, FormControl, MenuItem, Divider, Select } fro
 
 import { Typography } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
-import { SelectChangeEvent, Grid, CircularProgress, Rating,  } from '@mui/material';
+import { SelectChangeEvent, Grid, CircularProgress, Rating, } from '@mui/material';
 // import { Rating } from '@material-ui/lab';
 import { Box } from '@mui/system';
 import axios from 'axios';
@@ -16,18 +16,22 @@ import QAndA from './qAndA/QAndA';
 import { SideBySideMagnifier } from "react-image-magnifiers";
 import { useAuth } from '../../hooks/useAuth';
 import { putCarritoAmount } from '../../redux/actions/carritoAction';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import RelatedPublications from './relatedPublications/RelatedPublications';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import { CartItemType, CartType } from '../../pages/CartScreen';
-
+import "./publicationDetail.css"
+import CloseIcon from '@mui/icons-material/Close';
+import { postDenunciations } from '../../redux/actions/denunciationActions';
+import { DefaultRootState } from '../../redux/types';
+import { User } from '../../redux/reducer/stateTypes';
 
 const useStyles = makeStyles({
   containerPublicationDetail: {
     marginTop: '0px',
     display: 'flex',
     justifyContent: 'center',
-    
+
   },
   avatarPublicationDetatil: {
     width: '350px',
@@ -39,25 +43,25 @@ const useStyles = makeStyles({
     }
   },
   avatarPublicationDetatilMuestra: {
-    marginTop: '2px', 
-    width: '50px', 
-    height: '50px', 
+    marginTop: '2px',
+    width: '50px',
+    height: '50px',
     '&:hover': { boxShadow: 5 }
   },
   typografyDetail: {
-    marginTop: '1px', 
+    marginTop: '1px',
     color: 'gray'
   },
   typografyReview: {
-    fontSize: '10px', 
-    color: 'gray', 
+    fontSize: '10px',
+    color: 'gray',
     ml: 1
   },
   publicationDetailTypografy: {
     marginTop: '2px'
   },
   publicationPriceTypografy: {
-    padding: '3px 0px', 
+    padding: '3px 0px',
     color: 'gray'
   },
   publicationPriceWithoutDiscount: {
@@ -73,7 +77,7 @@ const useStyles = makeStyles({
     marginTop: '4px'
   },
   dividerDetail: {
-    width: '100%', 
+    width: '100%',
     margin: '4px 0px'
   }
 })
@@ -93,7 +97,13 @@ export interface Publication {
   __v: number;
   discount: any;
 }
-
+interface UserSignin {
+  loading: boolean;
+  userInfo: User;
+}
+interface state {
+  userSignin: UserSignin;
+}
 
 export default function PublicationDetail(): JSX.Element {
 
@@ -104,10 +114,11 @@ export default function PublicationDetail(): JSX.Element {
   const [imageShow, setImageShow] = useState<string>();
   const [loading, setLoading] = useState<boolean>(true);
   const [amount, setAmount] = useState<number>(1);
-
+  const [mensaje, setMensaje] = useState("");
   const { publicationId } = useParams();
   const auth = useAuth();
   const navigate = useNavigate();
+  const userInfo: UserSignin = useSelector((state: state) => state.userSignin)
 
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -158,9 +169,17 @@ export default function PublicationDetail(): JSX.Element {
 
     navigate('/cart');
   }
+  console.log(userInfo)
+  function HandlerSubmit(e: React.SyntheticEvent<EventTarget>) {
+    e.preventDefault()
+    if (publication && publication.author && publication?._id) {
+      dispatch(postDenunciations({ message: mensaje, authorId: userInfo.userInfo._id, publicationId: publication._id }))
+      alert("denuncia enviada")
+    } else alert("ocurrio un error")
 
+  }
   return (<>
-    <Box sx={{ backgroundColor: '#eeeeee', minHeight: '100vh', height: 'max-content', pb: 20 }}>
+    <Box sx={{ backgroundColor: '#eeeeee', minHeight: '80vh', height: 'max-content', pb: 20 }}>
       <NavBar></NavBar>
       {/* <Box sx={{ backgroundColor: '#f5f5f5', minHeight: '15vh' }}>
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -168,7 +187,7 @@ export default function PublicationDetail(): JSX.Element {
         </Box>
       </Box> */}
 
-      <Box sx={{ mt: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', height: '1000px' }}>
+      <Box sx={{ mt: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', height: '1000px', marginTop: "100px" }}>
 
         <Container classes={{ root: classes.containerPublicationDetail }}>
 
@@ -369,18 +388,42 @@ export default function PublicationDetail(): JSX.Element {
 
 
         </Container>
-
       </Box>
-          {!loading &&
+      <div style={{ marginLeft: "25%", width: "55%" }}>
+        <a href='#denunciar' style={{ display: "flex", justifyContent: "end", textDecoration: "none", color: "#2968c8" }}>Denunciar</a>
+      </div>
+      <div id="denunciar" className="modal">
+        <div className="modal-contenido2" style={{ display: "flex", flexDirection: "column" }}>
+          <a href="#" style={{ display: "flex", justifyContent: "end" }}>
+            <button style={{ color: "red", backgroundColor: "transparent", border: "none", cursor: "pointer" }}><CloseIcon /></button>
+          </a>
+          <p>Por favor , especifique el motivo por el cual cree que la publicacion deberia ser procesada</p>
+          <div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
+            <form onSubmit={(k: React.SyntheticEvent<EventTarget>) => HandlerSubmit(k)}>
+              <div style={{ display: "flex", justifyContent: "center", minWidth: "100px" }}>
 
-            <Box sx={{ width: '100%', my: 6, height: 'max-content' }}>
+                <textarea style={{ minWidth: "310px", resize: "none", minHeight: "150px" }} value={mensaje} className="text"
+                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>): any =>
+                    setMensaje(e.target.value)
+                  } />
+              </div >
+              <div style={{ display: "flex", justifyContent: "center", marginTop: "3px" }}>
+                <input type={"submit"} className="aceptar" />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      {!loading &&
 
-              <Typography align='center' variant="h5" component="h5" style={{ marginBottom: '20px' }}>Publicaciones relacionadas</Typography>
+        <Box sx={{ width: '100%', my: 6, height: 'max-content' }}>
 
-              <RelatedPublications publicationId={publicationId}></RelatedPublications>
-            </Box>
+          <Typography align='center' variant="h5" component="h5" style={{ marginBottom: '20px' }}>Publicaciones relacionadas</Typography>
 
-          }
+          <RelatedPublications publicationId={publicationId}></RelatedPublications>
+        </Box>
+
+      }
     </Box>
   </>)
 }

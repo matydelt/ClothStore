@@ -149,6 +149,7 @@ export default class UserController {
   static async getOneUser(req: Request, res: Response) {
     try {
       const { id } = req.params;
+      console.log(req.params)
       const user = await UserSchema.findOne({ _id: id });
       res.json(user);
     } catch (error) {

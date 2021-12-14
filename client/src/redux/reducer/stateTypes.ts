@@ -25,6 +25,7 @@ export interface User {
   active: boolean;
   type: string;
   photo: string;
+  denunciations: any[];
 }
 
 export interface Carrito {
