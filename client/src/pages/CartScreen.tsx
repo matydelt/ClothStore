@@ -86,20 +86,34 @@ export default function CartScreen() {
     }
   };
 
-  const handleAddToCart = (clickedItem: CartItemType) => {
-    setCart((prev) => {
-      const isItemInCart = prev.find((item) => item.id === clickedItem.id);
+  const handleAddToCart = async (clickedItem: CartItemType) => {
+    // setCart((prev) => {
+    //   const isItemInCart = prev.find((item) => item.id === clickedItem.id);
 
-      if (isItemInCart) {
-        return prev.map((item) =>
-          item.id === clickedItem.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
+    //   if (isItemInCart) {
+    //     return prev.map((item) =>
+    //       item.id === clickedItem.id
+    //         ? { ...item, quantity: item.quantity + 1 }
+    //         : item
+    //     );
+    //   }
+
+    //   return [...prev, { ...clickedItem, quantity: 1 }];
+    // });
+
+    const {data} = await axios.get('publication', { params: { publicationId: clickedItem.id }})
+
+    let cartCopy = [ ...cart ];
+
+    cartCopy.forEach(item => {
+      if (item.id === clickedItem.id && item.quantity < data.stock) {
+        console.log('asdsa', item.quantity)
+        item.quantity += 1
       }
+    })
 
-      return [...prev, { ...clickedItem, quantity: 1 }];
-    });
+    setCart(cartCopy);
+
   };
 
   const handleRemoveFromCart = (id: string) => {

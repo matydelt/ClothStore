@@ -63,15 +63,19 @@ export default function CardPublicacion(props: Props) {
   const handleAddToCart = (clickedItem: CartItemType) => {
     setCart(() => {
       let aux: any = localStorage.getItem("cart");
-      console.log(typeof aux);
       if (typeof aux === "string") aux = JSON.parse(aux);
       const isItemInCart = aux.find((item: any) => item.id === clickedItem.id);
-      if (isItemInCart) {
+
+      if (!isItemInCart) {
+        return [...aux, { ...clickedItem, amount: 1, price: discount ? price - price*discount.percentage/100 : price, discount: discount ? discount.percentage : undefined }];
+      }
+      
+      if (isItemInCart && (isItemInCart.quantity < stock)) {
+        console.log(isItemInCart.quantity, stock);
         isItemInCart.quantity += 1;
         return aux;
       }
-      console.log(clickedItem);
-      return [...aux, { ...clickedItem, amount: 1, price: discount ? price - price * discount.percentage / 100 : price, discount: discount ? discount.percentage : undefined }];
+      return [...aux];
     });
   };
 
