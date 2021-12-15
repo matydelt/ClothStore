@@ -1,6 +1,5 @@
 import axios from 'axios'
 import * as React from 'react'
-import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store/store'
 import SidebarUser from './SideBarUser/SidebarUser'
@@ -9,7 +8,6 @@ import ManagementUserProfile from './Profile'
 import ListProducts from './ListProducts/ListProducts'
 import ListSales from './ListSales/ListSales'
 import ListShopping from './ListShopping/ListShopping'
-
 interface PropsUser {
     photo: string | undefined;
     phone: string | undefined;
@@ -76,6 +74,8 @@ export default function PefilUsuario() {
         }],
         shopping: []
     });
+
+
     React.useEffect(() => {
         async function getOneUser() {
             await axios.get(`/auth/${GetUser?._id}`).then(({ data }) => {

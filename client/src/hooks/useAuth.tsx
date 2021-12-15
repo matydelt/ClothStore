@@ -97,7 +97,6 @@ function useProvideAuth() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      console.log(user)
       if (user) {
         dispatch(setSignedInUser(user))
         setUser(user);
@@ -106,7 +105,7 @@ function useProvideAuth() {
       }
     });
     return () => unsubscribe();
-  }, []);
+  }, [dispatch]);
 
   return { user, signin, signup, signout, googleSignin };
 }

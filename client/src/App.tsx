@@ -24,6 +24,9 @@ import {
 import { RootState } from "./redux/store/store";
 import PublicacionesAdmPage from "./components/adminPage/components/publicaciones/pubicaciones";
 import Denuncias from "./components/adminPage/components/denuncias/denunias";
+import { User } from "./redux/reducer/stateTypes";
+import { getAuth } from "firebase/auth";
+import { setSignedInUser } from "./redux/actions/userActions";
 
 // const user = useSelector((state: RootState) => state.userSignin.userInfo)
 
@@ -54,6 +57,15 @@ const App = (): JSX.Element => {
       })
     );
   }, []);
+
+  useEffect(() => {
+    const auth = getAuth();
+    auth.onAuthStateChanged((user: any) => {
+      if (user?._id) {
+        dispatch(setSignedInUser({ eMail: user.email }));
+      }
+    });
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(cartLength());
