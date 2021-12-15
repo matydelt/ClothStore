@@ -44,7 +44,7 @@ export default function ListShopping(props: User) {
             })
         }
         getOneUser()
-    }, [])
+    }, [props.id])
 
     const [open1, setOpen1] = React.useState(true);
     const handleClick1 = () => {

@@ -43,7 +43,7 @@ export default function ListProducts(props: User) {
     }])
     React.useEffect(() => {
         getPublications()
-    }, [])
+    }, [props.id])
 
     function getPublications(): void {
         axios.get(`http://localhost:3001/publications`, { params: { authorId: props.id } }).then(({ data }) => {
