@@ -64,9 +64,9 @@ export default class PublicationController {
       let allPublications: Array<any>;
       allPublications = await PublicationSchema.find({ stock: { $gt: 0 } }).populate('discount');
 
-      // allPublications = allPublications.filter((e) => {
-      //   return e.state === true;
-      // });
+      allPublications = allPublications.filter((e) => {
+        return e.state === true;
+      });
 
       if (name && name !== "") {
         allPublications = allPublications.filter((e) => {
