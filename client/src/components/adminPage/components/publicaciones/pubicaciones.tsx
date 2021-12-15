@@ -68,59 +68,57 @@ const PublicacionesAdmPage = () => {
                 </Box>
                 {
                     publications.length > 0 ? publications.map((e: Publication) => {
-                        if (!e.state && !e.isRejected) {
-                            return (
-                                <div style={{ flexDirection: "row", display: "flex", borderBottom: "#e6e6e6 solid 1px", justifyContent: "initial", width: "70%", alignItems: "center" }}>
-                                    <div className="one">
-                                        <img src={e.images[0].url} alt="no se encontro img" style={{ width: "100px" }}></img>
+
+                        return (
+                            <div style={{ flexDirection: "row", display: "flex", borderBottom: "#e6e6e6 solid 1px", justifyContent: "initial", width: "70%", alignItems: "center" }}>
+                                <div className="one">
+                                    <img src={e.images[0].url} alt="no se encontro img" style={{ width: "100px" }}></img>
+                                </div>
+                                <div className="two">
+                                    <p>{e.mark}</p>
+                                </div>
+                                <div className="three" style={{ display: "flex", flexDirection: "column" }}>{flag ? <div>
+                                    <div style={{ display: "flex", justifyContent: "initial", marginBottom: "2px" }}>
                                     </div>
-                                    <div className="two">
-                                        <p>{e.mark}</p>
-                                    </div>
-                                    <div className="three" style={{ display: "flex", flexDirection: "column" }}>{flag ? <div>
-                                        <div style={{ display: "flex", justifyContent: "initial", marginBottom: "2px" }}>
+                                    <div style={{ display: "flex", justifyContent: "initial", marginBottom: "2px" }}>
+                                        <button className="rechazar" onClick={() => setFlag(!flag)}>Rechazar</button>
+                                    </div> <div style={{ display: "flex", justifyContent: "initial" }}>
+
+                                        <input type="button" value={"aceptar"} className="aceptar" style={{ display: "flex", justifyContent: "center" }} onClick={async () => {
+                                            await dispatch(activatePublication(e._id, true))
+                                            await dispatch(getAllPublications())
+                                        }} />
+                                    </div></div>
+
+                                    : <form onSubmit={(k: React.SyntheticEvent<EventTarget>) => HandlerSubmit(k, e._id)} style={{ marginTop: "3px", marginBottom: "3px" }}>
+                                        <div style={{ display: "flex", justifyContent: "initial" }}>
+                                            <textarea style={{ minWidth: "90%", resize: "none", minHeight: "80px" }} value={mensaje} className="text"
+                                                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>): any =>
+                                                    setMensaje(e.target.value)
+                                                } />
+                                        </div >
+                                        <div style={{ display: "flex", justifyContent: "center", marginTop: "3px" }}>
+                                            <input type={"submit"} className="aceptar" />
+
                                         </div>
-                                        <div style={{ display: "flex", justifyContent: "initial", marginBottom: "2px" }}>
-                                            <button className="rechazar" onClick={() => setFlag(!flag)}>Rechazar</button>
-                                        </div> <div style={{ display: "flex", justifyContent: "initial" }}>
+                                        <div style={{ display: "flex", justifyContent: "center", marginTop: "3px" }}>
+                                            <input type={"button"} className="rechazar" value={"Salir"} onClick={() => setFlag(!flag)} />
 
-                                            <input type="button" value={"aceptar"} className="aceptar" style={{ display: "flex", justifyContent: "center" }} onClick={async () => {
-                                                await dispatch(activatePublication(e._id, true))
-                                                await dispatch(getAllPublications())
-                                            }} />
-                                        </div></div>
-
-                                        : <form onSubmit={(k: React.SyntheticEvent<EventTarget>) => HandlerSubmit(k, e._id)} style={{ marginTop: "3px", marginBottom: "3px" }}>
-                                            <div style={{ display: "flex", justifyContent: "initial" }}>
-                                                <textarea style={{ minWidth: "90%", resize: "none", minHeight: "80px" }} value={mensaje} className="text"
-                                                    onChange={(e: React.ChangeEvent<HTMLTextAreaElement>): any =>
-                                                        setMensaje(e.target.value)
-                                                    } />
-                                            </div >
-                                            <div style={{ display: "flex", justifyContent: "center", marginTop: "3px" }}>
-                                                <input type={"submit"} className="aceptar" />
-
-                                            </div>
-                                            <div style={{ display: "flex", justifyContent: "center", marginTop: "3px" }}>
-                                                <input type={"button"} className="rechazar" value={"Salir"} onClick={() => setFlag(!flag)} />
-
-                                            </div>
-                                        </form>}
-                                    </div>
-                                    <div className="four">
-                                        <div style={{ borderRadius: "10px", backgroundColor: "#3562", width: "50%", height: "50%", padding: "3px" }}>
-                                            <p>{e.detail}</p>
                                         </div>
-                                    </div>
-                                    <div className="four">
-                                        <Link to={`/publication/${e._id}`} target={"_blank"}>
-                                            <RemoveRedEyeIcon sx={{ color: "black" }} />
-                                        </Link>
+                                    </form>}
+                                </div>
+                                <div className="four">
+                                    <div style={{ borderRadius: "10px", backgroundColor: "#3562", width: "50%", height: "50%", padding: "3px" }}>
+                                        <p>{e.detail}</p>
                                     </div>
                                 </div>
-                            )
-                        }
-
+                                <div className="four">
+                                    <Link to={`/publication/${e._id}`} target={"_blank"}>
+                                        <RemoveRedEyeIcon sx={{ color: "black" }} />
+                                    </Link>
+                                </div>
+                            </div>
+                        )
 
                     })
                         :
