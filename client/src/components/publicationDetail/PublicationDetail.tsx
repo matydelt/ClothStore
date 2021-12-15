@@ -144,22 +144,27 @@ export default function PublicationDetail(): JSX.Element {
   }
 
 
-  const handleAddCart = (): void => {
+  const handleAddCart = async () => {
     if (publication) {
 
       if (auth?.user) {
         dispatch(putCarritoAmount(auth?.user?.email, publication?._id, amount))
       } else {
+
+        const { data } = await axios.get('publication', { params: { publicationId }});
+               
         setCart(() => {
           let aux: any = localStorage.getItem("cart");
-          console.log(typeof aux);
           if (typeof aux === "string") aux = JSON.parse(aux);
           const isItemInCart: CartItemType = aux.find((item: any) => item.id === publication?._id);
-          if (isItemInCart) {
+          if (isItemInCart && (isItemInCart.quantity + amount) < data.stock) {
             isItemInCart.quantity += amount;
             return aux;
+          } else if (isItemInCart && (isItemInCart.quantity + amount) > data.stock) {
+            isItemInCart.quantity = data.stock;
+            return aux;
           }
-          if (publication.images) {
+          if (!isItemInCart && publication.images) {
             return [...aux, { title: publication?.name, id: publication?._id, image: publication?.images[0].url, quantity: amount, price: publication?.discount ? publication?.price - publication?.price*publication?.discount.percentage/100 : publication?.price, discount: publication?.discount ? publication?.discount.percentage : undefined  }];
           }
         });
