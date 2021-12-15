@@ -1,15 +1,15 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import axios from 'axios'
-import * as React from 'react'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../redux/store/store'
-import SidebarUser from './SideBarUser/SidebarUser'
+import axios from "axios";
+import * as React from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store/store";
+import SidebarUser from "./SideBarUser/SidebarUser";
 import { Route, Routes } from "react-router";
-import ManagementUserProfile from './Profile'
-import ListProducts from './ListProducts/ListProducts'
-import ListSales from './ListSales/ListSales'
-import ListShopping from './ListShopping/ListShopping'
-import Footer from '../Footer'
+import ManagementUserProfile from "./Profile";
+import ListProducts from "./ListProducts/ListProducts";
+import ListSales from "./ListSales/ListSales";
+import ListShopping from "./ListShopping/ListShopping";
+import Footer from "../Footer";
+import { Box } from "@material-ui/core";
 
 interface PropsUser {
     userName: string | undefined;
@@ -44,7 +44,6 @@ interface Publication {
     key: string;
     id: string;
 }
-
 export default function PefilUsuario() {
     const GetUser = useSelector((state: RootState) => state.userSignin.userInfo)
     const [user, setUser] = React.useState<PropsUser>({
@@ -79,15 +78,15 @@ export default function PefilUsuario() {
         }],
         shopping: []
     });
-    async function getOneUser() {
-        await axios.get(`/auth/${GetUser?._id}`).then(({ data }) => {
-            console.log(data)
-            setUser({ ...user, ...data })
-        })
-    }
     React.useEffect(() => {
+        async function getOneUser() {
+            await axios.get(`/auth/${GetUser?._id}`).then(({ data }) => {
+                setUser({ ...user, ...data })
+            })
+        }
         getOneUser()
-    }, [GetUser?._id])
+    }, [])
+
     const firstName: string | undefined = user.name.firstName;
     const lastName: string | undefined = user.name.lastName;
     const userName: string | undefined = user.userName
@@ -120,16 +119,16 @@ export default function PefilUsuario() {
                     ciudad={ciudad}
                     country={country}
                     cp={cp}
-                    getOneUser={getOneUser}
                 />} />
                 <Route path="productos" element={<ListProducts id={GetUser?._id} />}></Route>
                 <Route path="ventas" element={<ListSales id={GetUser?._id} />}></Route>
                 <Route path="compras" element={<ListShopping id={GetUser?._id} />}></Route>
 
             </Routes>
-            <Footer />
+            <Box display='flex' flexDirection='column' height='100%'>
+                <Box sx={{ flexGrow: 1 }}></Box>
+                <Footer />
+            </Box>
         </>
     )
 }
-
-

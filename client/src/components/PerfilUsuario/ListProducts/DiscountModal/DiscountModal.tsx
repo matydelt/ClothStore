@@ -1,18 +1,24 @@
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import React from 'react';
-import Box from '@mui/material/Box';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DatePicker from '@mui/lab/DatePicker';
-import axios from 'axios';
-import { InputAdornment } from '@mui/material';
-
+import {
+  Button,
+  Box,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  InputAdornment,
+} from "@material-ui/core";
+import * as React from "react";
+import { TextField } from "@mui/material";
+// import Dialog from "@mui/material/Dialog";
+// import DialogActions from "@mui/material/DialogActions";
+// import DialogContent from "@mui/material/DialogContent";
+// import DialogContentText from "@mui/material/DialogContentText";
+// import DialogTitle from "@mui/material/DialogTitle";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import DatePicker from "@mui/lab/DatePicker";
+import axios from "axios";
 
 interface Props {
   children: any;
@@ -35,15 +41,14 @@ export default function DiscountModal({ children, userId, publicationId, getPubl
   const [expirationDate, setExpirationDate] = React.useState<Date | null>(null);
 
   const [form, setForm] = React.useState({
-    authorId: userId || '',
-    publicationId: publicationId || '',
+    authorId: userId || "",
+    publicationId: publicationId || "",
     amount: 10,
-    percentage: '',
-    expirationDate
+    percentage: "",
+    expirationDate,
   });
 
   const { percentage } = form;
-
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -53,13 +58,12 @@ export default function DiscountModal({ children, userId, publicationId, getPubl
     setOpen(false);
   };
 
-
   const submitForm = () => {
-    axios.post('/discount', form).then(({ data }) => {
+    axios.post("/discount", form).then(({ data }) => {
       handleClose();
       setForm({
-        authorId: userId || '',
-        publicationId: publicationId || '',
+        authorId: userId || "",
+        publicationId: publicationId || "",
         amount: 10,
         percentage: '',
         expirationDate
@@ -82,13 +86,9 @@ export default function DiscountModal({ children, userId, publicationId, getPubl
     }
   };
 
-
-
   return (
     <div>
-      <Button onClick={handleClickOpen}>
-        {children}
-      </Button>
+      <Button className='buttonSpan' color='secondary' variant='outlined' onClick={handleClickOpen}>{children}</Button>
       <Dialog fullWidth open={open} onClose={handleClose}>
         <DialogTitle>Aplicar descuento</DialogTitle>
         <DialogContent>
@@ -104,7 +104,7 @@ export default function DiscountModal({ children, userId, publicationId, getPubl
 
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
-                inputFormat={'dd/MM/yyyy'}
+                inputFormat={"dd/MM/yyyy"}
                 label="Fecha de expiración"
                 value={expirationDate}
                 onChange={(newValue: Date | null) => {
@@ -125,7 +125,7 @@ export default function DiscountModal({ children, userId, publicationId, getPubl
             name="percentage"
             fullWidth
             variant="standard"
-            autoComplete='off'
+            autoComplete="off"
             onChange={(e) => handleForm(e)}
             InputProps={{
               endAdornment: <InputAdornment position="end">%</InputAdornment>,

@@ -1,32 +1,33 @@
-import React, { BaseSyntheticEvent, useState } from 'react';
-import { Button, Grid, Skeleton, Stack, TextField, Typography } from '@mui/material';
-import { Box } from '@mui/system';
-import axios from 'axios';
+import React, { BaseSyntheticEvent, useState } from "react";
+import { Button, Grid, TextField, Typography, Modal } from "@material-ui/core";
+import { Box } from "@mui/system";
+import { Skeleton, Stack } from '@mui/material';
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store/store";
+import { User } from "../../../redux/reducer/stateTypes";
+import AnswerModal from "../../publicationDetail/qAndA/answerModal/AnswerModal";
 import { useParams } from 'react-router';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../redux/store/store';
-import { User } from '../../../redux/reducer/stateTypes';
-import AnswerModal from "../../publicationDetail/qAndA/answerModal/AnswerModal"
-import Modal from '@mui/material/Modal';
+
 
 interface Form {
-    message: string;
-    publicationId: string;
-    authorId: string;
+  message: string;
+  publicationId: string;
+  authorId: string;
 }
 interface PubId {
-    id: string
+  id: string;
 }
 const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: "white",
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "white",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
 };
 export default function ModalQA(props: PubId): JSX.Element {
     const [open, setOpen] = React.useState(false);
@@ -88,7 +89,7 @@ export default function ModalQA(props: PubId): JSX.Element {
 
     return (<>
         <div>
-            <Button onClick={handleOpen}>Q & A</Button>
+            <Button className='buttonSpan buttonMargin' color='primary' variant='outlined' onClick={handleOpen}>Q & A</Button>
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -117,7 +118,7 @@ export default function ModalQA(props: PubId): JSX.Element {
 
                     {isBuyer &&
 
-                        <Grid onSubmit={submitForm} component="form" container spacing={2} sx={{ my: 3 }}>
+                        <Grid onSubmit={submitForm} component="form" container spacing={2} style={{ margin: "3px 0" }}>
                             <Grid item xs={5}>
                                 <TextField
                                     onChange={handleForm}
@@ -154,7 +155,7 @@ export default function ModalQA(props: PubId): JSX.Element {
                                         </AnswerModal>
 
                                         :
-                                        <Typography component="p" sx={{ color: 'gray ' }}>
+                                        <Typography component="p" style={{ color: 'gray ' }}>
                                             {q.answer?.message ? q.answer?.message : 'Sin respuesta'} {q.answer?.createdAt && new Date(q.answer?.createdAt).toLocaleDateString()}
                                         </Typography>
                                     }
@@ -165,7 +166,7 @@ export default function ModalQA(props: PubId): JSX.Element {
 
                         :
 
-                        <Typography sx={{ color: 'gray', m: 2 }}>Aún no hay preguntas en esta publicación</Typography>
+                        <Typography style={{ color: 'gray', margin: 2 }}>Aún no hay preguntas en esta publicación</Typography>
 
                     }
                     </Box>

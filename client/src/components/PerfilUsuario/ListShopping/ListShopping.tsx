@@ -1,11 +1,36 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unreachable */
 import { ExpandLess, ExpandMore } from "@mui/icons-material"
-import { Box, Paper, Table, TableCell, TableContainer, TableHead, TableRow, TableBody, List, ListItemButton, ListItemText } from "@mui/material"
+import { ListItemButton, ListItem, ListItemIcon } from "@mui/material"
+import {
+    Box,
+    Paper,
+    Table,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    TableBody,
+    Collapse,
+    Checkbox,
+    Button,
+    List,
+    ListItemText,
+} from "@material-ui/core";
 import axios from "axios"
 import * as React from 'react'
-
+import { Link } from "react-router-dom"
+import { Publications } from "../../../redux/types"
 import ModalDetailsShopping from "./ModalDetailsShopping"
+import ModalShopping from "./ModalShopping"
+import ReviewForm from "./reviewForm/ReviewForm"
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+    tableRow: {
+        "&:last-child td, &:last-child th": { border: 0 },
+    },
+});
+
+
 
 
 interface Shopping {
@@ -19,7 +44,9 @@ interface Shopping {
     date: string;
     publications: any[]
 }
-
+interface Articulos {
+    articulos: [Shopping]
+}
 interface User {
     id: string | undefined
 }
@@ -42,7 +69,7 @@ export default function ListShopping(props: User) {
             })
         }
         getOneUser()
-    }, [props.id])
+    }, [])
 
     const [open1, setOpen1] = React.useState(true);
     const handleClick1 = () => {
@@ -150,6 +177,7 @@ export default function ListShopping(props: User) {
         }
     }
 
+    const classes = useStyles();
 
     return (
         <Box style={{ marginTop: "100px", marginLeft: "100px" }}>
@@ -158,7 +186,7 @@ export default function ListShopping(props: User) {
             </div>
             {articulos?.length > 0 ?
                 <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+                    <Table style={{ minWidth: 650 }} size="small" aria-label="a dense table">
                         <TableHead>
                             <TableRow>
                                 <TableCell>
@@ -227,7 +255,7 @@ export default function ListShopping(props: User) {
                             {articulos?.map((e) => (
                                 <TableRow
                                     key={e._id}
-                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                    className={classes.tableRow}
                                 >
                                     <TableCell component="th" scope="row" align="center">
                                         <List
@@ -240,14 +268,14 @@ export default function ListShopping(props: User) {
                                         <List
                                             component="nav"
                                             aria-labelledby="nested-list-subheader">
-                                            {e.date === "" ? e.date : e.date.split("T")[0]}
+                                            {e.date == "" ? e.date : e.date.split("T")[0]}
                                         </List>
                                     </TableCell>
                                     <TableCell align="center">
                                         <List
                                             component="nav"
                                             aria-labelledby="nested-list-subheader">
-                                            {e.date === "" ? e.date : e.date.split("T")[1].split(".")[0]}
+                                            {e.date == "" ? e.date : e.date.split("T")[1].split(".")[0]}
                                         </List>
                                     </TableCell>
                                     <TableCell align="center">
