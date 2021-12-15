@@ -78,7 +78,7 @@ const Denuncias = () => {
                     <p className="four">detalle</p>
                     <p className="four">Publicacion Denunciada</p>
                 </Box>
-                {denuncias?.map((e: DenunciationData) => {
+                { denuncias.every((d: DenunciationData) => d.denunciation.state === false) && denuncias.length > 0 ? denuncias?.map((e: DenunciationData) => {
                     const { denunciation, infractor, author, publication } = e
                     console.log(infractor)
                     console.log(author)
@@ -110,6 +110,13 @@ const Denuncias = () => {
                         return <div></div>
                     }
                 })
+
+                :
+                
+                <div style={{ marginTop: '20px', color: 'gray'}}>
+                        No hay denuncias nuevas
+                </div>
+                
                 }
 
             </Box >

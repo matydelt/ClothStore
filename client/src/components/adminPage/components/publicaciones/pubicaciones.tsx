@@ -65,8 +65,8 @@ const PublicacionesAdmPage = () => {
                     <p className="four">ver</p>
                 </Box>
                 {
-                    publications.map((e: Publication) => {
-                        if (!e.state && !e.isRejected) {
+                    publications.every((e: Publication) => e.state === false) ? publications.map((e: Publication) => {
+                        if (!e.state) {
                             return (
                                 <div style={{ flexDirection: "row", display: "flex", borderBottom: "#e6e6e6 solid 1px", justifyContent: "initial", width: "70%", alignItems: "center" }}>
                                     <div className="one">
@@ -125,6 +125,13 @@ const PublicacionesAdmPage = () => {
 
 
                     })
+
+                    :
+
+                    <div style={{ marginTop: '20px', color: 'gray'}}>
+                        No hay publicaciones nuevas
+                    </div>
+                    
                 }
 
             </Box >
