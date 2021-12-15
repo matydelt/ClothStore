@@ -6,7 +6,7 @@ import {
 } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import { styled } from '@mui/material/styles';
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 import * as React from "react"
 
 
@@ -39,53 +39,53 @@ const style = {
 
 
 interface Props {
-  photo: string|undefined;
-  phone: string|undefined;
-  email: string|undefined;
-  firstName: string|undefined;
-  lastName: string|undefined;
-  dni: string|undefined;
-  calle: string|undefined;
-  numero: string|undefined;
-  ciudad: string|undefined;
-  country:string|undefined;
-  cp: string|undefined;
+  photo: string | undefined;
+  phone: string | undefined;
+  email: string | undefined;
+  firstName: string | undefined;
+  lastName: string | undefined;
+  dni: string | undefined;
+  calle: string | undefined;
+  numero: string | undefined;
+  ciudad: string | undefined;
+  country: string | undefined;
+  cp: string | undefined;
 }
 
-const ProfileCover = (props:Props) => {
+const ProfileCover = (props: Props) => {
   const [open, setOpen] = React.useState(false);
   const [input, setInput] = React.useState<Props>({
     photo: "",
     phone: "",
     email: "",
-        firstName: "",
-        lastName: "",
+    firstName: "",
+    lastName: "",
     dni: "",
     calle: "",
     numero: "",
     ciudad: "",
     cp: "",
-    country:"",
-   
-});
+    country: "",
+
+  });
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [name, setName] = React.useState<Name>({
     firstName: "",
     lastName: ""
-})
-type Name = { firstName: string, lastName: string }
+  })
+  type Name = { firstName: string, lastName: string }
 
-function handleInputChange(e:React.ChangeEvent<HTMLInputElement>){
-  if (e.target.name === "firstName") {
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.name === "firstName") {
 
-    setName({ ...name, [e.target.name]: e.target.value });
-} else if (e.target.name === "lastName") {
-    setName({ ...name, ["lastName"]: e.target.value });
-} else {
-    setInput({ ...input, [e.target.name]: e.target.value });
-}
-}
+      setName({ ...name, [e.target.name]: e.target.value });
+    } else if (e.target.name === "lastName") {
+      setName({ ...name, ["lastName"]: e.target.value });
+    } else {
+      setInput({ ...input, [e.target.name]: e.target.value });
+    }
+  }
 
   return (
     <>
@@ -95,114 +95,114 @@ function handleInputChange(e:React.ChangeEvent<HTMLInputElement>){
             ¡Bienvenid@ {props.firstName}!
           </Typography>
           <Typography variant="subtitle2">
-           Este es tu perfil, aqui podras gestionar todas tus ventas y compras, ademas vas a poder ver las metricas de tus ventas
+            Este es tu perfil, aqui podras gestionar todas tus ventas y compras, ademas vas a poder ver las metricas de tus ventas
           </Typography>
         </Box>
       </Box>
-      <Box sx={{marginTop:"100px"}} py={2} pl={2} mb={3}>
-      <AvatarWrapper>
-        <Avatar variant="rounded" alt={props.firstName} src={props.photo} />
-        
-      </AvatarWrapper>
+      <Box sx={{ marginTop: "100px" }} py={2} pl={2} mb={3}>
+        <AvatarWrapper>
+          <Avatar variant="rounded" alt={props.firstName} src={props.photo} />
+
+        </AvatarWrapper>
         <Typography gutterBottom variant="h4">
           {props.firstName} {props.lastName}
         </Typography>
         <legend>Datos de la Cuenta</legend>
-                    <div className="div-field">
-                        <TextField
-                            name='phone'
-                            disabled
-                            label="Teléfono:"
-                            value={props.phone}
-                        />
-                        <TextField
-                            disabled
-                            label="E-mail:"
-                            value={props.email}
-                            
-                        />
-                    </div>
+        <div className="div-field">
+          <TextField
+            name='phone'
+            disabled
+            label="Teléfono:"
+            value={props.phone}
+          />
+          <TextField
+            disabled
+            label="E-mail:"
+            value={props.email}
+
+          />
+        </div>
 
 
-                    <legend>Datos personales</legend>
-                    <div className="div-field">
-                        <TextField
-                            name='firstName'
-                            disabled
-                            label="Nombre:"
-                            value={props.firstName}
-                            
-                        />
+        <legend>Datos personales</legend>
+        <div className="div-field">
+          <TextField
+            name='firstName'
+            disabled
+            label="Nombre:"
+            value={props.firstName}
 
-                        <TextField
-                            name='lastName'
-                            disabled
-                            label="Apellido:"
-                            value={props.lastName}
-                            
-                        />
-                    </div>
-                    <div className="div-field">
-                        <TextField
-                            name='dni'
-                            disabled
-                            label="DNI:"
-                            value={props.dni}
-                            
-                        />
-                    </div>
+          />
 
-                    <legend>Domicilio</legend>
-                    <div className="div-field">
-                        <TextField
-                            name='calle'
-                            disabled
-                            label="Calle:"
-                            value={props.calle}
-                            
-                        />
+          <TextField
+            name='lastName'
+            disabled
+            label="Apellido:"
+            value={props.lastName}
 
-                        <TextField
-                            name='numero'
+          />
+        </div>
+        <div className="div-field">
+          <TextField
+            name='dni'
+            disabled
+            label="DNI:"
+            value={props.dni}
 
-                            disabled
-                            label="Número:"
-                            value={props.numero}
-                            
-                        />
-                    </div>
-                    <div className="div-field">
-                        <TextField
-                            name='ciudad'
-                            disabled
-                            label="Ciudad:"
-                            value={props.ciudad}
-                            
-                        />
-                        <TextField
-                            name='country'
-                            disabled
-                            label="Pais:"
-                            value={props.country}
-                            
-                        />
+          />
+        </div>
 
-                        <TextField
-                            name='cp'
-                            disabled
-                            label="Código postal:"
-                            value={props.cp}
-                            
-                        />
-                    </div>
-                    
+        <legend>Domicilio</legend>
+        <div className="div-field">
+          <TextField
+            name='calle'
+            disabled
+            label="Calle:"
+            value={props.calle}
+
+          />
+
+          <TextField
+            name='numero'
+
+            disabled
+            label="Número:"
+            value={props.numero}
+
+          />
+        </div>
+        <div className="div-field">
+          <TextField
+            name='ciudad'
+            disabled
+            label="Ciudad:"
+            value={props.ciudad}
+
+          />
+          <TextField
+            name='country'
+            disabled
+            label="Pais:"
+            value={props.country}
+
+          />
+
+          <TextField
+            name='cp'
+            disabled
+            label="Código postal:"
+            value={props.cp}
+
+          />
+        </div>
+
         <Box
           display={{ xs: 'block', md: 'flex' }}
           alignItems="center"
           justifyContent="space-between"
         >
           <Box>
-          
+
             <Button size="medium" variant="contained" onClick={handleOpen}>Open modal</Button>
             <Modal
               open={open}
@@ -217,17 +217,17 @@ function handleInputChange(e:React.ChangeEvent<HTMLInputElement>){
                 <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                   Aqui podras modificar los datos
                 </Typography>
-                <Input type="text" id="nombre" name="firstName" value={props.firstName} onChange={handleInputChange}/>
+                <Input type="text" id="nombre" name="firstName" value={props.firstName} onChange={handleInputChange} />
               </Box>
 
             </Modal>
-        
+
             <Button size="medium" variant="contained">
-              <Link to="/nueva-publicacion" style={{textDecoration:"none",color:"black"}}>Nueva Publicacion</Link>
+              <Link to="/nueva-publicacion" style={{ textDecoration: "none", color: "black" }}>Nueva Publicacion</Link>
             </Button>
-           
+
           </Box>
-          
+
         </Box>
       </Box>
     </>
