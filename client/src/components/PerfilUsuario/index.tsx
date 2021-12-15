@@ -9,6 +9,7 @@ import ListProducts from "./ListProducts/ListProducts";
 import ListSales from "./ListSales/ListSales";
 import ListShopping from "./ListShopping/ListShopping";
 import Footer from "../Footer";
+import { Box } from "@material-ui/core";
 
 interface PropsUser {
     userName: string | undefined;
@@ -31,17 +32,17 @@ interface PropsUser {
     type: string
 }
 interface Publication {
-  name: string;
-  images: any[];
-  stock: number;
-  mark: string;
-  detail: string;
-  price: number;
-  categorie: string;
-  author: string;
-  gender: string;
-  key: string;
-  id: string;
+    name: string;
+    images: any[];
+    stock: number;
+    mark: string;
+    detail: string;
+    price: number;
+    categorie: string;
+    author: string;
+    gender: string;
+    key: string;
+    id: string;
 }
 export default function PefilUsuario() {
     const GetUser = useSelector((state: RootState) => state.userSignin.userInfo)
@@ -124,7 +125,10 @@ export default function PefilUsuario() {
                 <Route path="compras" element={<ListShopping id={GetUser?._id} />}></Route>
 
             </Routes>
-            <Footer />
+            <Box display='flex' flexDirection='column' height='100%'>
+                <Box sx={{ flexGrow: 1 }}></Box>
+                <Footer />
+            </Box>
         </>
     )
 }

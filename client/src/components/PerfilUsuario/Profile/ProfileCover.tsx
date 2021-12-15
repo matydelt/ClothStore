@@ -150,13 +150,15 @@ const ProfileCover = (props: Props) => {
             value={props.userName}
             variant='outlined'
             // name="phone"
-          />
+            classes={{ root: classes.inputProfile }}
+            />
           <TextField
             name='phone'
             disabled
             label="Teléfono:"
             value={props.phone}
             classes={{ root: classes.inputProfile }}
+            variant='outlined'
           />
           <TextField
             classes={{ root: classes.inputProfile }}

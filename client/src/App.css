@@ -80,6 +80,10 @@
   margin: 0px;
 }
 
+.buttonMargin  {
+  margin-right: 7px !important; 
+}
+
 
 
 html,

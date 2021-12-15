@@ -88,7 +88,7 @@ export default function DiscountModal({ children, userId, publicationId, getPubl
 
   return (
     <div>
-      <Button onClick={handleClickOpen}>{children}</Button>
+      <Button className='buttonSpan' color='secondary' variant='outlined' onClick={handleClickOpen}>{children}</Button>
       <Dialog fullWidth open={open} onClose={handleClose}>
         <DialogTitle>Aplicar descuento</DialogTitle>
         <DialogContent>

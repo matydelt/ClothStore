@@ -89,7 +89,7 @@ export default function ModalQA(props: PubId): JSX.Element {
 
     return (<>
         <div>
-            <Button onClick={handleOpen}>Q & A</Button>
+            <Button className='buttonSpan buttonMargin' color='primary' variant='outlined' onClick={handleOpen}>Q & A</Button>
             <Modal
                 open={open}
                 onClose={handleClose}

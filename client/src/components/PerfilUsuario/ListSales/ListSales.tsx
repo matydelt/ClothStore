@@ -9,7 +9,8 @@ import {
     TableRow,
     TableBody,
     List,
-    ListItemText
+    ListItemText,
+    Typography
 } from "@material-ui/core";
 import { ListItemButton } from "@mui/material"
 import { makeStyles } from "@material-ui/core/styles";
@@ -22,6 +23,9 @@ const useStyles = makeStyles({
     tableRow: {
         "&:last-child td, &:last-child th": { border: 0 },
     },
+    title: {
+        textDecoration: 'underline'
+    }
 });
 
 interface Sales {
@@ -191,9 +195,9 @@ export default function ListSales(props: User) {
     const classes = useStyles();
 
     return (
-        <Box style={{ marginTop: "100px", marginLeft: "100px" }}>
+        <Box style={{ width: '1700px', marginTop: "100px", marginLeft: "100px" }}>
             <div style={{ display: "flex", justifyContent: "center" }}>
-                <h3>Ventas</h3>
+                <Typography classes={{ root: classes.title }} color='primary' variant='h4' paragraph={true}>Ventas</Typography>
             </div>
             {articulos?.length > 0 ?
                 <TableContainer component={Paper}>

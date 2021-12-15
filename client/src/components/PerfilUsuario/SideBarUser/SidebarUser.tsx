@@ -146,7 +146,7 @@ export default function SideBarUser(props: Props) {
         </AppBar>
         <Drawer variant="permanent" open={open}>
           <DrawerHeader>
-            <IconButton className='buttonSpan'  onClick={handleDrawerClose}>
+            <IconButton className='buttonSpan' onClick={handleDrawerClose}>
               {theme.direction === "rtl" ? (
                 <ChevronRightIcon />
               ) : (
@@ -210,11 +210,11 @@ export default function SideBarUser(props: Props) {
               </ListItem>
             </Link>
             <ListItem key="LogOut">
-              <IconButton onClick={logout}>
-                <ListItemIcon>
+              <ListItemIcon>
+                <IconButton className="buttonSpan" onClick={logout}>
                   <LogoutIcon />
-                </ListItemIcon>
-              </IconButton>
+                </IconButton>
+              </ListItemIcon>
             </ListItem>
           </List>
         </Drawer>
