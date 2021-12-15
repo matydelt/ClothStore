@@ -80,13 +80,16 @@ export default function PefilUsuario() {
         shopping: []
     });
     async function getOneUser() {
+
         await axios.get(`/auth/${GetUser?._id}`).then(({ data }) => {
             console.log(data)
             setUser({ ...user, ...data })
         })
     }
     React.useEffect(() => {
-        getOneUser()
+        if (GetUser?._id) {
+            getOneUser()
+        }
     }, [GetUser?._id])
     const firstName: string | undefined = user.name.firstName;
     const lastName: string | undefined = user.name.lastName;

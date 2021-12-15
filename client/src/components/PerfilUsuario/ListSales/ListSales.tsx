@@ -57,9 +57,11 @@ export default function ListSales(props: User) {
     }])
     React.useEffect(() => {
         async function getOneUser() {
-            await axios.get(`/auth/${props.id}`).then(({ data }) => {
-                setArticulos(data.sales)
-            })
+            if (props.id) {
+                await axios.get(`/auth/${props.id}`).then(({ data }) => {
+                    setArticulos(data.sales)
+                })
+            }
         }
         getOneUser()
     }, [props.id])

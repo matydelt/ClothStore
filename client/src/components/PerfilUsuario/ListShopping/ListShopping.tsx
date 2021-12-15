@@ -63,9 +63,11 @@ export default function ListShopping(props: User) {
     }])
     React.useEffect(() => {
         async function getOneUser() {
-            await axios.get(`/auth/${props.id}`).then(({ data }) => {
-                setArticulos(data.shopping)
-            })
+            if (props.id) {
+                await axios.get(`/auth/${props.id}`).then(({ data }) => {
+                    setArticulos(data.shopping)
+                })
+            }
         }
         getOneUser()
     }, [props.id])

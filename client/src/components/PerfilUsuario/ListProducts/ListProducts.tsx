@@ -58,8 +58,10 @@ export default function ListProducts(props: User) {
     discount: ""
   }])
   React.useEffect(() => {
-    getPublications()
-  }, [])
+    if (props.id) {
+      getPublications()
+    }
+  }, [props.id])
 
   function getPublications(): void {
     axios.get(`/publications`, { params: { authorId: props.id } }).then(({ data }) => {
