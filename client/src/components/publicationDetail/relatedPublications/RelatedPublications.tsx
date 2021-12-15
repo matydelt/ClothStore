@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import Grid from "@mui/material/Grid";
+import { Container, makeStyles } from '@material-ui/core'
 import CardPublicacion from '../../HomePage/publicaciones/cardPublicaciones/cardPublicaciones';
 import Carousel from "react-material-ui-carousel";
 import { ArrowCircleUpOutlined } from '@mui/icons-material';
@@ -21,9 +22,17 @@ interface props {
     publicationId: string | undefined
 }
 
+const useStyles = makeStyles({
+    containRaltedPublication: {
+        marginBottom: '40px'
+    }
+})
+
 export default function RelatedPublications({ publicationId }: props): JSX.Element {
 
-    const [publications, setPublications] = React.useState([]);
+    const [publications, setPublications] = React.useState([]); 
+
+    const classes = useStyles();
 
 
     React.useEffect(() => {
@@ -36,7 +45,7 @@ export default function RelatedPublications({ publicationId }: props): JSX.Eleme
 
     return (
 
-        <Box sx={{ width: '100%' }}>
+        <Container classes={{ root: classes.containRaltedPublication }}>
 
 
             <Swiper
@@ -59,6 +68,6 @@ export default function RelatedPublications({ publicationId }: props): JSX.Eleme
                     })
                 }
             </Swiper>
-        </Box>
+        </Container>
     )
 };

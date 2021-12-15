@@ -1,8 +1,17 @@
-import { Button } from '@mui/material';
+import { Button, makeStyles } from '@material-ui/core';
 import axios from 'axios';
 import Resizer from "react-image-file-resizer";
 
+const useStyles = makeStyles({
+    buttonImageUpload: {
+        '& span': {
+            margin: '0'
+        }
+    }
+})
+
 export default function FileUpload({ form, setForm, setLoadingImage }: any): JSX.Element {
+    const classes = useStyles();
 
     function handleImagenes(e: { target: { files: any; }; }) {
 
@@ -24,11 +33,15 @@ export default function FileUpload({ form, setForm, setLoadingImage }: any): JSX
         }
     };
 
+
+
     return (
 
         <Button
             variant="contained"
             component="label"
+            color='primary'
+            classes={{ root: classes.buttonImageUpload }}
         >
             Subir imágenes
             <input

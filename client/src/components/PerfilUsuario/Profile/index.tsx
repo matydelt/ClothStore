@@ -3,8 +3,7 @@ import { Box } from "@mui/material";
 import { Container, Grid } from '@mui/material';
 import Addresses from './Addresses';
 import ModalCargaDomicilio from "./ModalCargaDomicilio";
-import ProfileCover from './ProfileCover';
-
+import ProfileCover from "./ProfileCover";
 
 interface Props {
   id: string | undefined;
@@ -21,15 +20,14 @@ interface Props {
   cp: string | undefined;
   getOneUser: Function;
 }
+
 function ManagementUserProfile(props: Props) {
   return (
     <>
-
-      <Box sx={{ marginTop: "100px", marginLeft: "100px" }}>
-
+      <Box style={{ marginTop: 100, marginLeft: 100 }}>
         <h1>Mis datos</h1>
       </Box>
-      <Container sx={{ mt: 3 }} maxWidth="lg">
+      <Container style={{ marginTop: 3 }} maxWidth="lg">
         <Grid
           container
           direction="row"
@@ -38,7 +36,9 @@ function ManagementUserProfile(props: Props) {
           spacing={3}
         >
           <Grid item xs={12} md={8}>
-            <ProfileCover id={props.id} firstName={props.firstName}
+            <ProfileCover
+              id={props.id}
+              firstName={props.firstName}
               lastName={props.lastName}
               userName={props.userName}
               phone={props.phone}

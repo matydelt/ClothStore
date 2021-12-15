@@ -17,7 +17,6 @@ const RegisterScreen = () => {
     <React.Fragment>
       <NavBar></NavBar>
       <RegisterForm />
-      <Box sx={{ display: "flex", height: "25%" }} />
       <Footer />
     </React.Fragment>
   );

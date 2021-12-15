@@ -54,7 +54,7 @@ const Header = () => {
       <header
         style={{ height: "100vh", background: "#f3f3f3", overflow: "hidden" }}
       >
-        <NavBar />
+        <NavBar flagButtonTranslate={true}/>
         <Swiper
           spaceBetween={30}
           slidesPerView={1}

@@ -34,7 +34,8 @@ const ProfileCover = (props: Props) => {
             ¡Bienvenid@ {props.firstName}!
           </Typography>
           <Typography variant="subtitle2">
-            Este es tu perfil, aqui podras gestionar todas tus ventas y compras, ademas vas a poder ver las metricas de tus ventas
+            Este es tu perfil, aqui podras gestionar todas tus ventas y compras,
+            ademas vas a poder ver las metricas de tus ventas
           </Typography>
         </Box>
       </Box>
@@ -57,46 +58,31 @@ const ProfileCover = (props: Props) => {
             label="Teléfono:"
             value={props.phone}
           />
-          <TextField
-            disabled
-            label="E-mail:"
-            value={props.email}
-
-          />
+          <TextField disabled label="E-mail:" value={props.email} />
         </div>
-
 
         <legend>Datos personales</legend>
         <div className="div-field">
           <TextField
-            name='firstName'
+            name="firstName"
             disabled
             label="Nombre:"
             value={props.firstName}
-
           />
 
           <TextField
-            name='lastName'
+            name="lastName"
             disabled
             label="Apellido:"
             value={props.lastName}
-
           />
         </div>
         <div className="div-field">
-          <TextField
-            name='dni'
-            disabled
-            label="DNI:"
-            value={props.dni}
-
-          />
+          <TextField name="dni" disabled label="DNI:" value={props.dni} />
         </div>
 
-
         <Box
-          display={{ xs: 'block', md: 'flex' }}
+          display={{ xs: "block", md: "flex" }}
           alignItems="center"
           justifyContent="space-between"
         >
@@ -105,16 +91,18 @@ const ProfileCover = (props: Props) => {
             <ModalUpdateUser id={props.id} getOneUser={props.getOneUser} />
 
             <Button size="medium" variant="contained">
-              <Link to="/nueva-publicacion" style={{ textDecoration: "none", color: "black" }}>Nueva Publicacion</Link>
+              <Link
+                to="/nueva-publicacion"
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                Nueva Publicacion
+              </Link>
             </Button>
-
           </Box>
-
         </Box>
       </Box>
     </>
   );
 };
-
 
 export default ProfileCover;

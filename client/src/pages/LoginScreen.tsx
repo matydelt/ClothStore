@@ -17,7 +17,7 @@ const LoginScreen = () => {
     <React.Fragment>
       <NavBar></NavBar>
       <LoginForm />
-      <Box sx={{ display: "flex", height: "43%" }} />
+      {/* <Box sx={{ display: "flex", height: "43%" }} /> */}
       <Footer />
     </React.Fragment>
   );

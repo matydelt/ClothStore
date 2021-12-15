@@ -76,7 +76,7 @@ const CardsBenefit = () => {
                             }}
                             component='span'
                         ></Box>
-                        <img className='imgGenderWoman imgGender' src={WomanGender} alt="Género Mujer" />
+                        <Box component='img' className='imgGenderWoman imgGender' src={WomanGender} alt="Género Mujer" />
                         <Box
                             sx={{
                                 display: 'block',
@@ -121,7 +121,7 @@ const CardsBenefit = () => {
                         >
 
                         </Box>
-                        <img className='imgGenderMan imgGender' src={ManGender} alt="Género Hombre" />
+                        <Box component='img' className='imgGenderMan imgGender' src={ManGender} alt="Género Hombre" />
                         <Box
                             sx={{
                                 display: 'block',
@@ -163,7 +163,7 @@ const CardsBenefit = () => {
                             }}
                             component='span'
                         ></Box>
-                        <img className='imgGenderkid imgGender' src={KidGender} alt="Género Kid" />
+                        <Box component='img' className='imgGenderkid imgGender' src={KidGender} alt="Género Kid" />
                         <Box
                             sx={{
                                 display: 'block',
