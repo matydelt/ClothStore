@@ -77,7 +77,7 @@
 }
 
 .buttonSpan span {
-  margin: 0px;
+  margin: 0px !important;
 }
 
 .buttonMargin  {
