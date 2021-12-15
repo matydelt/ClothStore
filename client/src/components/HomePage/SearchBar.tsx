@@ -40,6 +40,7 @@ function SearchBar() {
   return (
     <Box>
       <TextField
+        autoComplete="off"
         classes={{ root: classes.textField }}
         placeholder="Search"
         type="search"
@@ -58,7 +59,7 @@ function SearchBar() {
         }}
         onKeyPress={handleSearchBarEnter}
       />
-        <Autocomplete text={text}></Autocomplete>
+      <Autocomplete text={text}></Autocomplete>
     </Box>
   );
 }

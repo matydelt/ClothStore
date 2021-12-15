@@ -51,7 +51,7 @@ export default class Checkout {
                 additional_info: order._id,
                 statement_descriptor: "Clothstore",
                 back_urls: { failure: '', pending: '', success: 'http://localhost:3000/' },
-                notification_url: "https://cloth-store-henry.herokuapp.com/statusmp",
+                notification_url: "https://hookb.in/Px0gpPOPE7hpKPrrKWP9",
             }
             const response = await mercadoPago.preferences.create(preference)
             

@@ -62,7 +62,7 @@ export default class PublicationController {
       const charXPage: number = 12;
 
       let allPublications: Array<any>;
-      allPublications = await PublicationSchema.find().populate('discount');
+      allPublications = await PublicationSchema.find({ stock: { $gt: 0 } }).populate('discount');
 
       // allPublications = allPublications.filter((e) => {
       //   return e.state === true;
@@ -270,7 +270,7 @@ export default class PublicationController {
 
       const publication = await PublicationSchema.findById(publicationId);
 
-      const publications = await PublicationSchema.find({ category: publication?.category, gender: publication?.gender, name: { $ne: publication?.name } }).populate('discount').limit(12);
+      const publications = await PublicationSchema.find({ category: publication?.category, stock: { $gt: 0 }, gender: publication?.gender, name: { $ne: publication?.name } }).populate('discount').limit(12);
 
       if (publication) {
         res.json(publications);
