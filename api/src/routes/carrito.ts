@@ -1,7 +1,7 @@
 import { Router } from "express"
 import CarritoController from "../controllers/carritoController"
 
-const router:Router = Router()
+const router: Router = Router()
 
 
 router.post('/carrito/:_id', CarritoController.postCarrito);

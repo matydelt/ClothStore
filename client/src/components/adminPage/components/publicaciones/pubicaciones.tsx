@@ -19,7 +19,8 @@ interface State {
 
 const PublicacionesAdmPage = () => {
     const dispatch = useDispatch()
-    const { userSignin, publicationList } = useSelector((state: State) => state)
+    const state = useSelector((state: State) => state)
+    const { userSignin, publicationList } = state
     const { userInfo } = useSelector((state: State) => state.userSignin)
     const publications = publicationList.publications;
     const [mensaje, setMensaje] = useState("");
@@ -50,7 +51,7 @@ const PublicacionesAdmPage = () => {
             return (<Navigate to="/" />)
         }
     }
-    console.log(publications)
+    console.log(state)
     return (
         <Box>{userInfo?.type === "admin" ?
             <NavBar></NavBar> :
@@ -126,12 +127,12 @@ const PublicacionesAdmPage = () => {
 
                     })
 
-                    :
+                        :
 
-                    <div style={{ marginTop: '20px', color: 'gray'}}>
-                        No hay publicaciones nuevas
-                    </div>
-                    
+                        <div style={{ marginTop: '20px', color: 'gray' }}>
+                            No hay publicaciones nuevas
+                        </div>
+
                 }
 
             </Box >

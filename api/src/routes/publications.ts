@@ -12,5 +12,5 @@ router.get("/publications/marks", PublicationController.getPublicationsMarks);
 router.get("/publications/related", PublicationController.getRelatedPublications);
 router.put("/publications/state", PublicationController.putPublicationState);
 router.post("/publication/message", PublicationController.postPublicationMessageADM);
-
+router.get("/publications/all", PublicationController.getAllPublication);
 module.exports = router;

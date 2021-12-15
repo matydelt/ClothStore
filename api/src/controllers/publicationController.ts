@@ -320,6 +320,20 @@ export default class PublicationController {
       res.sendStatus(500);
     }
   }
+  static async getAllPublication(req: Request, res: Response): Promise<void> {
+    try {
+
+      const publications = await PublicationSchema.find();
+      if (publications) {
+        res.json(publications);
+      } else {
+        res.json({ msg: "La publicación no existe" }).status(404);
+      }
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  }
 
 }
 
