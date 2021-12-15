@@ -102,35 +102,33 @@ export default function NavBar({ flagButtonTranslate }: Props) {
               sx={{
                 display: "flex",
                 alignItems: { xl: "center" },
-                transform: { lg: "translateX(60%)", xl: "translateX(86%)" },
+                transform: { lg: "translateX(60%)", xl: "translateX(130%)" },
                 zIndex: "10",
               }}
-              id='containNavButton'
             >
               <Box
                 sx={{
-                  display: "flex",
-                  alignItems: { xl: "center" },
-                  transform: { lg: "translateX(60%)", xl: "translateX(130%)" },
-                  zIndex: "10",
+                  fontSize: { xl: "25px" },
+                  marginRight: { lg: "16px", xl: "25px" },
                 }}
               >
                 <ButtonsNav
                   link="/"
                   text="HOME"
-                  nameClass="textDecoration colorPrimary buttonLink buttonAnimate"
+                  nameClass="textDecoration colorPrimary buttonLink"
                 />
+              </Box>
+
+              <Box sx={{ marginRight: { lg: "16px", xl: "25px" } }}>
                 <Box
                   component="a"
                   href="#tienda"
-                  className="buttonLink colorPrimary textDecoration buttonAnimate"
+                  className="buttonLink colorPrimary textDecoration"
                   sx={{ fontSize: { xl: "25px" } }}
                 >
+                  TIENDA
                 </Box>
               </Box>
-
-              <Box sx={{ flexGrow: 1, transform: "translateX(50%)" }} />
-
             </Box>
             <Box sx={{ flexGrow: 1, transform: "translateX(50%)" }} />
 
