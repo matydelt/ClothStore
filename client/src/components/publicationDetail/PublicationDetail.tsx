@@ -1,9 +1,9 @@
-import React, { ChangeEvent, SetStateAction, useEffect, useState } from 'react';
+import React, { SetStateAction, useEffect, useState } from 'react';
 import { Avatar, Button, Container, FormControl, MenuItem, Divider, Select } from '@mui/material';
 
 import { Typography } from '@mui/material';
 import { makeStyles } from '@material-ui/core/styles';
-import { SelectChangeEvent, Grid, CircularProgress, Rating, } from '@mui/material';
+import { Grid, CircularProgress, Rating, } from '@mui/material';
 // import { Rating } from '@material-ui/lab';
 import { Box } from '@mui/system';
 import axios from 'axios';
@@ -23,7 +23,6 @@ import { CartItemType, CartType } from '../../pages/CartScreen';
 import "./publicationDetail.css"
 import CloseIcon from '@mui/icons-material/Close';
 import { postDenunciations } from '../../redux/actions/denunciationActions';
-import { DefaultRootState } from '../../redux/types';
 import { User } from '../../redux/reducer/stateTypes';
 import Footer from '../Footer';
 

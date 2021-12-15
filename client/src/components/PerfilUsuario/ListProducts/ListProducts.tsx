@@ -83,7 +83,7 @@ export default function ListProducts(props: User) {
 
           <Typography classes={{ root: classes.title }} color='primary' variant='h4' paragraph={true}>Publicaciones</Typography>
         </div>
-        {articulos?.length > 0 ?
+        {articulos?.length > 1 ?
           <TableContainer component={Paper}>
             <Table style={{ minWidth: 650 }} size="small" aria-label="a dense table">
               <TableHead>

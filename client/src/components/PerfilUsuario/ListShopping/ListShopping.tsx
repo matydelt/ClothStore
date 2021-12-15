@@ -12,6 +12,7 @@ import {
     TableBody,
     List,
     ListItemText,
+    Typography
 } from "@material-ui/core";
 import axios from "axios"
 import * as React from 'react'
@@ -175,10 +176,8 @@ export default function ListShopping(props: User) {
 
     return (
         <Box style={{ marginTop: "100px", marginLeft: "100px" }}>
-            <div style={{ display: "flex", justifyContent: "center" }}>
-                <h3>Compras</h3>
-            </div>
-            {articulos?.length > 0 ?
+            <Typography color='primary' variant='h4' paragraph={true} style={{ display: "flex", justifyContent: "center", textDecoration: "underline" }}>Compras</Typography>
+            {articulos?.length > 1 ?
                 <TableContainer component={Paper}>
                     <Table style={{ minWidth: 650 }} size="small" aria-label="a dense table">
                         <TableHead>
