@@ -97,6 +97,7 @@ export default function NavBar({ flagButtonTranslate }: Props) {
               }}
               id='logo'
             />
+
             <Box
               sx={{
                 display: "flex",
@@ -106,18 +107,6 @@ export default function NavBar({ flagButtonTranslate }: Props) {
               }}
               id='containNavButton'
             >
-              <Box
-                component="img"
-                src={Logo}
-                alt="ClothStore"
-                sx={{
-                  width: { lg: "15%", xl: "20%" },
-                  position: "absolute",
-                  zIndex: "1",
-                  left: "0",
-                  bottom: { xl: "-245%;" },
-                }}
-              />
               <Box
                 sx={{
                   display: "flex",

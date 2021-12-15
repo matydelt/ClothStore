@@ -1,10 +1,16 @@
-
-import { Box } from "@mui/material";
-import { Container, Grid } from '@mui/material';
-import Addresses from './Addresses';
+import { Box, Container, Grid, makeStyles } from "@material-ui/core";
+import Addresses from "./Addresses";
 import ModalCargaDomicilio from "./ModalCargaDomicilio";
 import ProfileCover from "./ProfileCover";
 
+const useStyles = makeStyles({
+  containerProfile: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
+})
 interface Props {
   id: string | undefined;
   userName: string | undefined;
@@ -18,10 +24,10 @@ interface Props {
   ciudad: string | undefined;
   country: string | undefined;
   cp: string | undefined;
-  getOneUser: Function;
 }
 
 function ManagementUserProfile(props: Props) {
+  const classes = useStyles()
   return (
     <>
       <Box style={{ marginTop: 100, marginLeft: 100 }}>
@@ -35,7 +41,7 @@ function ManagementUserProfile(props: Props) {
           alignItems="stretch"
           spacing={3}
         >
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} md={12} classes={{ root: classes.containerProfile }} >
             <ProfileCover
               id={props.id}
               firstName={props.firstName}
@@ -49,7 +55,7 @@ function ManagementUserProfile(props: Props) {
               ciudad={props.ciudad}
               country={props.country}
               cp={props.cp}
-              getOneUser={props.getOneUser} />
+            />
           </Grid >
           <Grid item xs={10}>
             <h1>Domicilios</h1>

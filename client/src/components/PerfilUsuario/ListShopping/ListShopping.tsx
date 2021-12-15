@@ -1,11 +1,31 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unreachable */
 import { ExpandLess, ExpandMore } from "@mui/icons-material"
-import { Box, Paper, Table, TableCell, TableContainer, TableHead, TableRow, TableBody, List, ListItemButton, ListItemText } from "@mui/material"
+import { ListItemButton } from "@mui/material"
+import {
+    Box,
+    Paper,
+    Table,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    TableBody,
+    List,
+    ListItemText,
+} from "@material-ui/core";
 import axios from "axios"
 import * as React from 'react'
 
 import ModalDetailsShopping from "./ModalDetailsShopping"
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+    tableRow: {
+        "&:last-child td, &:last-child th": { border: 0 },
+    },
+});
+
+
 
 
 interface Shopping {
@@ -150,6 +170,7 @@ export default function ListShopping(props: User) {
         }
     }
 
+    const classes = useStyles();
 
     return (
         <Box style={{ marginTop: "100px", marginLeft: "100px" }}>
@@ -158,7 +179,7 @@ export default function ListShopping(props: User) {
             </div>
             {articulos?.length > 0 ?
                 <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+                    <Table style={{ minWidth: 650 }} size="small" aria-label="a dense table">
                         <TableHead>
                             <TableRow>
                                 <TableCell>
@@ -227,7 +248,7 @@ export default function ListShopping(props: User) {
                             {articulos?.map((e) => (
                                 <TableRow
                                     key={e._id}
-                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                    className={classes.tableRow}
                                 >
                                     <TableCell component="th" scope="row" align="center">
                                         <List

@@ -70,15 +70,15 @@ export default function DiscountModal({ children, userId, publicationId, getPubl
   };
 
   const handleForm = (e: React.BaseSyntheticEvent) => {
-    if ( (e.target.value < 1 || e.target.value > 100) && e.target.value !== '') return;
+    if ((e.target.value < 1 || e.target.value > 100) && e.target.value !== '') return;
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleDate = (newValue: Date | null) => {
     if (newValue) {
 
-      setForm({ ...form, expirationDate: new Date(new Date(Date.UTC(newValue && newValue?.getFullYear(), newValue?.getMonth(), newValue?.getDate() + 1 )).setHours(23,59,0,0)) });
-      setExpirationDate(new Date(Date.UTC(newValue && newValue?.getFullYear(), newValue?.getMonth(), newValue?.getDate() + 1 )) );
+      setForm({ ...form, expirationDate: new Date(new Date(Date.UTC(newValue && newValue?.getFullYear(), newValue?.getMonth(), newValue?.getDate() + 1)).setHours(23, 59, 0, 0)) });
+      setExpirationDate(new Date(Date.UTC(newValue && newValue?.getFullYear(), newValue?.getMonth(), newValue?.getDate() + 1)));
     }
   };
 
@@ -86,9 +86,7 @@ export default function DiscountModal({ children, userId, publicationId, getPubl
 
   return (
     <div>
-      <Button onClick={handleClickOpen}>
-        {children}
-      </Button>
+      <Button className='buttonSpan' color='secondary' variant='outlined' onClick={handleClickOpen}>{children}</Button>
       <Dialog fullWidth open={open} onClose={handleClose}>
         <DialogTitle>Aplicar descuento</DialogTitle>
         <DialogContent>
@@ -98,9 +96,9 @@ export default function DiscountModal({ children, userId, publicationId, getPubl
 
           <Box component="div" sx={{ my: 6, display: "flex", flexDirection: "row", justifyContent: 'space-between' }}>
 
-          <DialogContentText>
-            El descuento finalizará a las 23:59 hs. del día seleccionado.
-          </DialogContentText>
+            <DialogContentText>
+              El descuento finalizará a las 23:59 hs. del día seleccionado.
+            </DialogContentText>
 
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
