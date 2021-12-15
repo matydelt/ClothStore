@@ -28,6 +28,7 @@ interface UpdateUserdata {
 }
 interface UserId {
     id: string | undefined;
+    getOneUser: Function;
 }
 export default function ModalUpdateUser(props: UserId) {
     const [open, setOpen] = React.useState(false);
@@ -46,9 +47,10 @@ export default function ModalUpdateUser(props: UserId) {
         setInput({ ...input, [event.target.name]: event.target.value })
     }
 
-    const handleSubmit = (event: React.BaseSyntheticEvent) => {
+    const handleSubmit = async (event: React.BaseSyntheticEvent) => {
         event.preventDefault();
-        axios.put("/auth/update", { id: props.id, phone: input.phone, firstName: input.firstName, userName: input.userName, lastName: input.lastName, dni: input.dni })
+        await axios.put("/auth/update", { id: props.id, phone: input.phone, firstName: input.firstName, userName: input.userName, lastName: input.lastName, dni: input.dni })
+        await props.getOneUser()
         handleClose()
     }
 

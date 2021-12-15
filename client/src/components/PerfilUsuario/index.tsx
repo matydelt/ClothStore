@@ -44,6 +44,7 @@ interface Publication {
     key: string;
     id: string;
 }
+
 export default function PefilUsuario() {
     const GetUser = useSelector((state: RootState) => state.userSignin.userInfo)
     const [user, setUser] = React.useState<PropsUser>({
@@ -78,13 +79,13 @@ export default function PefilUsuario() {
         }],
         shopping: []
     });
+    async function getOneUser() {
+        await axios.get(`/auth/${GetUser?._id}`).then(({ data }) => {
+            console.log(data)
+            setUser({ ...user, ...data })
+        })
+    }
     React.useEffect(() => {
-        async function getOneUser() {
-            await axios.get(`/auth/${GetUser?._id}`).then(({ data }) => {
-                console.log(data)
-                setUser({ ...user, ...data })
-            })
-        }
         getOneUser()
     }, [GetUser?._id])
     const firstName: string | undefined = user.name.firstName;
@@ -119,6 +120,7 @@ export default function PefilUsuario() {
                     ciudad={ciudad}
                     country={country}
                     cp={cp}
+                    getOneUser={getOneUser}
                 />} />
                 <Route path="productos" element={<ListProducts id={GetUser?._id} />}></Route>
                 <Route path="ventas" element={<ListSales id={GetUser?._id} />}></Route>

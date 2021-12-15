@@ -22,6 +22,7 @@ interface Props {
   ciudad: string | undefined;
   country: string | undefined;
   cp: string | undefined;
+  getOneUser: Function;
 }
 
 const ProfileCover = (props: Props) => {
@@ -101,7 +102,7 @@ const ProfileCover = (props: Props) => {
         >
           <Box>
 
-            <ModalUpdateUser id={props.id} />
+            <ModalUpdateUser id={props.id} getOneUser={props.getOneUser} />
 
             <Button size="medium" variant="contained">
               <Link to="/nueva-publicacion" style={{ textDecoration: "none", color: "black" }}>Nueva Publicacion</Link>

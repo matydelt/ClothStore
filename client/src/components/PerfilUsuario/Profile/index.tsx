@@ -19,6 +19,7 @@ interface Props {
   ciudad: string | undefined;
   country: string | undefined;
   cp: string | undefined;
+  getOneUser: Function;
 }
 function ManagementUserProfile(props: Props) {
   return (
@@ -47,7 +48,8 @@ function ManagementUserProfile(props: Props) {
               numero={props.numero}
               ciudad={props.ciudad}
               country={props.country}
-              cp={props.cp} />
+              cp={props.cp}
+              getOneUser={props.getOneUser} />
           </Grid >
           <Grid item xs={10}>
             <h1>Domicilios</h1>
