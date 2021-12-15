@@ -5,6 +5,7 @@ export interface PublicationState {
   publicationList: any;
   loading: boolean;
   publications?: Publication[] | string | any;
+  publicationsAdm: Publication[] | any;
   error?: string;
   cartLength: number;
   mark: string;
@@ -23,6 +24,7 @@ const publicationListReducer = (
     publicationList: {},
     loading: false,
     publications: [],
+    publicationsAdm: [],
     error: "",
     cartLength: 0,
     mark: "",
@@ -31,7 +33,7 @@ const publicationListReducer = (
     price: "",
     author: "",
     name: "",
-    order: "Asendente",
+    order: "Ascendente",
     page: "1",
     count: 0
   },
@@ -68,6 +70,23 @@ const publicationListReducer = (
         loading: false,
         error: action.payload?.error
       }
+    case "GET_PUBLICATIONS_REQUEST":
+      return {
+        ...state,
+        loading: true
+      }
+    case "GET_PUBLICATIONS_SUCCESS":
+      return {
+        ...state,
+        loading: false,
+        publicationsAdm: action.payload?.success
+      }
+    case "GET_PUBLICATIONS_FAIL":
+      return {
+        ...state,
+        loading: false,
+        error: action.payload?.error
+      }
     default:
       return state;
   }
@@ -78,6 +97,7 @@ const publicationSaveReducer = (
     publicationList: {},
     loading: false,
     publications: [],
+    publicationsAdm: [],
     error: "",
     cartLength: 0,
     mark: "",

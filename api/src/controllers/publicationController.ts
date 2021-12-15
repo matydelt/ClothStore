@@ -323,7 +323,7 @@ export default class PublicationController {
   static async getAllPublication(req: Request, res: Response): Promise<void> {
     try {
 
-      const publications = await PublicationSchema.find();
+      const publications = await PublicationSchema.find({ state: false });
       if (publications) {
         res.json(publications);
       } else {
