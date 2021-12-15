@@ -62,7 +62,7 @@ export default function ListProducts(props: User) {
   }, [])
 
   function getPublications(): void {
-    axios.get(`/publications`, { params: { authorId: props.id } }).then(({ data }) => {
+    axios.get(`http://localhost:3001/publications`, { params: { authorId: props.id } }).then(({ data }) => {
       setArticulos(data)
     });
   };
