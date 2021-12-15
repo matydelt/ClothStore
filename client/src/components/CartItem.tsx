@@ -1,9 +1,6 @@
 import * as React from "react";
 import { Button } from "@mui/material";
 import {
-  withStyles,
-  Theme,
-  createStyles,
   makeStyles,
 } from "@material-ui/core/styles";
 import TableBody from "@mui/material/TableBody";
@@ -39,17 +36,6 @@ const useStyles = makeStyles({
   },
 });
 
-// const StyledTableRow = withStyles((theme: Theme) =>
-//   createStyles({
-//     root: {
-//       "&:nth-of-type(odd)": {
-//         backgroundColor: theme.palette.action.hover,
-//       },
-//       width: "77px",
-//     },
-//   })
-// )(TableRow);
-
 type CartItemType = {
   id: string;
   quantity: number;
@@ -57,6 +43,7 @@ type CartItemType = {
   image: string;
   title: string;
   category: string;
+  discount: number | undefined;
 };
 
 type Props = {
@@ -70,7 +57,6 @@ const CartItem = ({ item, addToCart, removeFromCart }: Props) => {
   return (
     <>
       <TableBody>
-        {/* <StyledTableRow> */}
         <TableCell classes={{ root: classes.tableCell }}>
           <Box
             className={classes.imgCell}
@@ -84,7 +70,8 @@ const CartItem = ({ item, addToCart, removeFromCart }: Props) => {
           <Typography variant="h5">{item.title}</Typography>
         </TableCell>
         <TableCell align="center">
-          <Typography>${item.price}</Typography>
+          <Typography>$ {item.price.toFixed(2)}</Typography>
+          { item.discount && <Typography color={'green'}>{item.discount}% OFF</Typography>}
         </TableCell>
         <TableCell classes={{ root: classes.cellButton }} align="center">
           <Button
@@ -125,7 +112,6 @@ const CartItem = ({ item, addToCart, removeFromCart }: Props) => {
         <TableCell align="center">
           <Typography>${(item.quantity * item.price).toFixed(2)}</Typography>
         </TableCell>
-        {/* </StyledTableRow> */}
       </TableBody>
     </>
   );

@@ -24,19 +24,27 @@ import {
 import { RootState } from "./redux/store/store";
 import PublicacionesAdmPage from "./components/adminPage/components/publicaciones/pubicaciones";
 import Denuncias from "./components/adminPage/components/denuncias/denunias";
-import { User } from "./redux/reducer/stateTypes";
 import { getAuth } from "firebase/auth";
 import { setSignedInUser } from "./redux/actions/userActions";
+import ReactGa from "react-ga"
+import { useLocation } from "react-router-dom";
 
 // const user = useSelector((state: RootState) => state.userSignin.userInfo)
 
 const App = (): JSX.Element => {
+  const location = useLocation();
+
+  //google analytics
+  useEffect(() => {
+    ReactGa.initialize("UA-215041281-1")
+    ReactGa.pageview(location.pathname)
+  }, [location])
+  //google analytics
   const dispatch = useDispatch();
   const { name, order, page, mark, category, gender, price, author } =
     useSelector((state: RootState) => state.publicationList);
 
   const auth = useAuth();
-
   useEffect(() => {
     if (auth?.user && auth.user.email) {
       dispatch(getCarrito(auth.user.email));
@@ -56,7 +64,7 @@ const App = (): JSX.Element => {
         author: author,
       })
     );
-  }, []);
+  }, [author, category, dispatch, gender, mark, name, order, page, price]);
 
   useEffect(() => {
     const auth = getAuth();

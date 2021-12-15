@@ -1,6 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import axios from 'axios'
 import * as React from 'react'
-import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store/store'
 import SidebarUser from './SideBarUser/SidebarUser'
@@ -9,9 +9,10 @@ import ManagementUserProfile from './Profile'
 import ListProducts from './ListProducts/ListProducts'
 import ListSales from './ListSales/ListSales'
 import ListShopping from './ListShopping/ListShopping'
+import Footer from '../Footer'
 
 interface PropsUser {
-    photo: string | undefined;
+    userName: string | undefined;
     phone: string | undefined;
     email: string | undefined;
     name: {
@@ -28,6 +29,7 @@ interface PropsUser {
     }]
     publications: Publication[];
     shopping: any[] | undefined;
+    type: string
 }
 interface Publication {
     name: string;
@@ -44,9 +46,9 @@ interface Publication {
 }
 export default function PefilUsuario() {
     const GetUser = useSelector((state: RootState) => state.userSignin.userInfo)
-    console.log(GetUser, "getuser")
     const [user, setUser] = React.useState<PropsUser>({
-        photo: "",
+        userName: "",
+        type: "",
         phone: "",
         email: "",
         name: {
@@ -79,15 +81,15 @@ export default function PefilUsuario() {
     React.useEffect(() => {
         async function getOneUser() {
             await axios.get(`/auth/${GetUser?._id}`).then(({ data }) => {
+                console.log(data)
                 setUser({ ...user, ...data })
             })
         }
         getOneUser()
-    }, [])
-
+    }, [GetUser?._id])
     const firstName: string | undefined = user.name.firstName;
     const lastName: string | undefined = user.name.lastName;
-    const photo: string | undefined = user.photo
+    const userName: string | undefined = user.userName
     const phone: string | undefined = user.phone
     const email: string | undefined = user?.email
     const dni: string | undefined = user.dni
@@ -96,27 +98,19 @@ export default function PefilUsuario() {
     const ciudad: string | undefined = user.domicilio[0]?.city
     const country: string | undefined = user.domicilio[0]?.country
     const cp: string | undefined = user.domicilio[0]?.cp
-    console.log(calle, numero, ciudad)
+    const type: string | undefined = user.type
 
     return (
         <>
             <SidebarUser
-                firstName={firstName}
-                lastName={lastName}
-                photo={photo}
-                phone={phone}
-                email={email}
-                dni={dni}
-                calle={calle}
-                numero={numero}
-                ciudad={ciudad}
-                country={country}
-                cp={cp}
+                type={type}
             />
             <Routes>
-                <Route path="detalles" element={<ManagementUserProfile firstName={firstName}
+                <Route index element={<ManagementUserProfile
+                    id={GetUser?._id}
+                    firstName={firstName}
                     lastName={lastName}
-                    photo={photo}
+                    userName={userName}
                     phone={phone}
                     email={email}
                     dni={dni}
@@ -131,6 +125,7 @@ export default function PefilUsuario() {
                 <Route path="compras" element={<ListShopping id={GetUser?._id} />}></Route>
 
             </Routes>
+            <Footer />
         </>
     )
 }

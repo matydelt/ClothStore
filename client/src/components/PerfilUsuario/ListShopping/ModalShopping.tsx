@@ -42,13 +42,15 @@ const useStyles = makeStyles({
         marginBottom: '2px'
     }
 })
+interface ID {
+    id: string
+}
 
-
-export default function Reviews({ children }: any) {
+export default function ModalShopping(props: ID) {
 
     const user = useSelector((state: RootState): User | undefined => state?.userSignin?.userInfo);
 
-    const { publicationId } = useParams();
+    const publicationId = props.id
 
     const [open, setOpen] = React.useState(false);
     const classes = useStyles()
@@ -110,7 +112,7 @@ export default function Reviews({ children }: any) {
             // setFrom(1)
             // getReviews('all');
             handleTab(undefined, 0)
-            
+
         }
     }, [open]);
 
@@ -188,10 +190,8 @@ export default function Reviews({ children }: any) {
     return (
         <>
             <Button onClick={handleClickOpen}>
-                {children}
+                Ver
             </Button>
-
-
 
             <Dialog open={open} onClose={handleClose} fullWidth
                 maxWidth="md">
@@ -212,46 +212,6 @@ export default function Reviews({ children }: any) {
                     :
 
                     <DialogContent>
-                        {/* <Box component="form"
-                        onSubmit={(e: any) => submitReviewForm(e)}
-                    >
-
-                        <Rating
-                            name="score"
-                            value={Number(score)}
-                            onChange={(e) => handleReviewForm(e)}
-                        />
-
-                        <TextField
-                            margin="dense"
-                            id="title"
-                            label="Título de la reseña"
-                            type="title"
-                            name="title"
-                            fullWidth
-                            variant="standard"
-                            value={title}
-                            onChange={(e) => handleReviewForm(e)}
-                        />
-                        <TextField
-                            margin="dense"
-                            id="message"
-                            label="Escribe un comentario sobre el producto..."
-                            type="message"
-                            name="message"
-                            multiline
-                            fullWidth
-                            variant="standard"
-                            value={message}
-                            onChange={(e) => handleReviewForm(e)}
-                        />
-                        <DialogActions>
-                            <Button type="button" onClick={handleClose}>Cancelar</Button>
-                            <Button type="submit" >Publicar reseña</Button>
-                        </DialogActions>
-
-                    </Box> */}
-
 
                         <Box component="div" sx={{ my: 6, textAlign: 'center' }}>
                             <Typography variant="h3" sx={{}}>{scoreAverage}</Typography>

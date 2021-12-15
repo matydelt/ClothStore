@@ -30,6 +30,41 @@ export const registerUser =
       }
     };
 
+export const registerUserGoogle =
+  (user: { email: string; password: string }) =>
+    async (dispatch: Dispatch<Action>) => {
+      const cart = localStorage.getItem("cart")
+      dispatch({ type: "USER_REGISTER_REQUEST" });
+      try {
+        const response = await axios.post("/auth/google", user);
+        if (cart && cart.length > 0) {
+          axios.post(`/carrito/${response.data._id}`, JSON.parse(cart))
+        }
+
+        localStorage.setItem('cart', '[]');
+
+        console.log(response);
+
+        dispatch({
+          type: "USER_REGISTER_SUCCESS",
+          payload: { success: response.data },
+        });
+        dispatch({
+          type: "USER_SIGNIN_SUCCESS",
+          payload: { success: response.data },
+        });
+      } catch (error) {
+        dispatch({
+          type: "USER_REGISTER_FAIL",
+          payload: { error: (error as Error).message },
+        });
+        dispatch({
+          type: "USER_SIGNIN_FAIL",
+          payload: { error: (error as Error).message },
+        });
+      }
+    };
+
 export const signinUser =
 
   (user: any) => async (dispatch: Dispatch<Action>) => {

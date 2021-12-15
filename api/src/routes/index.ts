@@ -8,6 +8,9 @@ const qAndAs = require("./qAndA");
 const mercadoPago = require("./checkout")
 const carrito = require("./carrito")
 const denunciation = require("./denunciation")
+const discount = require("./discount")
+const autocomplete = require("./autocomplete")
+
 
 module.exports = {
     router,
@@ -18,5 +21,7 @@ module.exports = {
     qAndAs,
     mercadoPago,
     carrito,
-    denunciation
+    discount,
+    denunciation,
+    autocomplete
 };

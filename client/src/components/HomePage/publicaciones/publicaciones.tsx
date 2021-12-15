@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import { Publication } from "../../../redux/types";
 import CardPublicacion from "./cardPublicaciones/cardPublicaciones";
 import { PublicationState } from "../../../redux/reducer/publicationReducer"
+import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
-import { Box } from "@mui/material";
 
 
 export default function Publicaciones() {
@@ -24,7 +24,7 @@ export default function Publicaciones() {
                     state.publicationList.publications.map((e: Publication) => {
                         return (
                             <>
-                                <CardPublicacion name={e.name} author={e.author} images={e.images} mark={e.mark} stock={e.stock} price={e.price} categorie={e.categorie} detail={e.detail} gender={e.gender} key={e._id} id={e._id}
+                                <CardPublicacion discount={e.discount} name={e.name} author={e.author} images={e.images} mark={e.mark} stock={e.stock} price={e.price} categorie={e.categorie} detail={e.detail} gender={e.gender} key={e._id} id={e._id}
                                 />
                             </>
                         )
