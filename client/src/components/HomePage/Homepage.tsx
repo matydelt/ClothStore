@@ -89,7 +89,7 @@ const Homepage = () => {
         <Box sx={{ height: "200px" }} />
         <Footer />
       </Box>
-      <CartScreen idHomepage='cartAnimation' />
+      <CartScreen />
     </Box>
   );
 };

@@ -10,9 +10,9 @@ import axios from "axios";
 import { ProvideAuth } from "./hooks/useAuth";
 import dotenv from "dotenv"
 dotenv.config();
-axios.defaults.baseURL = "https://cloth-store-henry.herokuapp.com";
+// axios.defaults.baseURL = "https://cloth-store-henry.herokuapp.com";
 
-
+axios.defaults.baseURL = "http://localhost:3001"
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
