@@ -184,7 +184,7 @@ export default class UserController {
   static async updateUser(req: Request, res: Response) {
     try {
       const { id, phone, firstName, lastName, dni, userName } = req.body;
-      await UserSchema.updateOne(
+      const user = await UserSchema.findByIdAndUpdate(
         { _id: id },
         {
           $set: {
@@ -195,6 +195,7 @@ export default class UserController {
           },
         }
       );
+      console.log(user)
       res.json("usuario modificado");
     } catch (error) {
       console.log("error en updateUser");
