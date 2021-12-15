@@ -44,12 +44,6 @@ export default function QAndA(): JSX.Element {
             } else if (data?.author === user?._id) {
                 setIsSeller(true)
             }
-            // .then(({ data }) => {
-                // console.log(data, user._id)
-                // if (data.author !== user?._id) {
-                //     setIsBuyer(true);
-                // }
-            // });
         }
     }
 
