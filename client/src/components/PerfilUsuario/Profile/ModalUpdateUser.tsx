@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Button, Typography, Modal, TextField } from "@material-ui/core";
+import { Box, Button, Typography, Modal, TextField, makeStyles } from "@material-ui/core";
 import axios from "axios";
 
 const style = {
@@ -9,10 +9,28 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: 400,
   bgcolor: "background.paper",
-  border: "2px solid #000",
+  border: "2px solid #00c2cb",
   boxShadow: 24,
   p: 4,
+  height: '450px',
+  borderRadius: '10px'
 };
+
+const useStyles = makeStyles({
+  buttonProfileUpdate: {
+    '& span': {
+      margin: '0px'
+    }
+  },
+  buttonProfileUpdateModal: {
+    marginRight: '5px',
+    '& span': {
+      margin: '0px'
+    }
+  }
+})
+
+
 interface UpdateUserdata {
   firstName: String;
   lastName: string;
@@ -26,6 +44,9 @@ export default function ModalUpdateUser(props: UserId) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const classes = useStyles();
+
 
   const [input, setInput] = React.useState<UpdateUserdata>({
     firstName: "",
@@ -52,7 +73,14 @@ export default function ModalUpdateUser(props: UserId) {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Modificar Datos</Button>
+      <Button
+        fullWidth
+        color='primary'
+        variant="contained"
+        classes={{ root: classes.buttonProfileUpdate }}
+        onClick={handleOpen}>
+        Modificar Datos
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -67,7 +95,14 @@ export default function ModalUpdateUser(props: UserId) {
             En este sector vas a poder actualizar tus datos de cuenta y datos
             personales
           </Typography>
-          <Box>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-around',
+              height: '276px'
+            }}
+          >
             <TextField
               id="outlined-basic"
               onChange={handleChange}
@@ -101,10 +136,10 @@ export default function ModalUpdateUser(props: UserId) {
               variant="outlined"
             />
           </Box>
-          <Button onClick={handleSubmit}>Enviar</Button>
-          <Button onClick={handleClose}>Cancelar</Button>
+          <Button color='primary' classes={{ root: classes.buttonProfileUpdateModal }}  variant='outlined' onClick={handleSubmit}>Enviar</Button>
+          <Button color='primary' classes={{ root: classes.buttonProfileUpdate }} variant='outlined' onClick={handleClose}>Cancelar</Button>
         </Box>
       </Modal>
-    </div>
+    </div >
   );
 }

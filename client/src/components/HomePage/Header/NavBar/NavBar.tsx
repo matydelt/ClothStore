@@ -97,51 +97,38 @@ export default function NavBar({ flagButtonTranslate }: Props) {
               }}
               id='logo'
             />
+
             <Box
               sx={{
                 display: "flex",
                 alignItems: { xl: "center" },
-                transform: { lg: "translateX(60%)", xl: "translateX(86%)" },
+                transform: { lg: "translateX(60%)", xl: "translateX(130%)" },
                 zIndex: "10",
               }}
-              id='containNavButton'
             >
               <Box
-                component="img"
-                src={Logo}
-                alt="ClothStore"
                 sx={{
-                  width: { lg: "15%", xl: "20%" },
-                  position: "absolute",
-                  zIndex: "1",
-                  left: "0",
-                  bottom: { xl: "-245%;" },
-                }}
-              />
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: { xl: "center" },
-                  transform: { lg: "translateX(60%)", xl: "translateX(130%)" },
-                  zIndex: "10",
+                  fontSize: { xl: "25px" },
+                  marginRight: { lg: "16px", xl: "25px" },
                 }}
               >
                 <ButtonsNav
                   link="/"
                   text="HOME"
-                  nameClass="textDecoration colorPrimary buttonLink buttonAnimate"
+                  nameClass="textDecoration colorPrimary buttonLink"
                 />
+              </Box>
+
+              <Box sx={{ marginRight: { lg: "16px", xl: "25px" } }}>
                 <Box
                   component="a"
                   href="#tienda"
-                  className="buttonLink colorPrimary textDecoration buttonAnimate"
+                  className="buttonLink colorPrimary textDecoration"
                   sx={{ fontSize: { xl: "25px" } }}
                 >
+                  TIENDA
                 </Box>
               </Box>
-
-              <Box sx={{ flexGrow: 1, transform: "translateX(50%)" }} />
-
             </Box>
             <Box sx={{ flexGrow: 1, transform: "translateX(50%)" }} />
 

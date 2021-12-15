@@ -7,11 +7,17 @@ import {
   TableRow,
   Typography,
   TableContainer,
+  makeStyles
 } from "@material-ui/core";
 import { useState } from "react";
 import axios from "axios";
 import React from "react";
 
+const useStyles = makeStyles({
+  tableAddress: {
+    marginBottom: '40px'
+  }
+})
 interface Props {
   id: String | undefined;
 }
@@ -45,10 +51,13 @@ function Addresses(props: Props) {
     getOneUser();
   }, [state]);
 
+
+  const classes = useStyles();
+
   return (
     <>
       {state.length > 0 ? (
-        <TableContainer component={Paper}>
+        <TableContainer classes={{ root: classes.tableAddress }}  component={Paper}>
           <Table
             style={{ maxHeight: "900px", width: "1000px" }}
             aria-label="simple table"
@@ -78,7 +87,7 @@ function Addresses(props: Props) {
           </Table>
         </TableContainer>
       ) : (
-        <Typography>No hay domicilios cargados</Typography>
+        <Typography align="center" paragraph={true}>No hay domicilios cargados</Typography>
       )}
     </>
   );

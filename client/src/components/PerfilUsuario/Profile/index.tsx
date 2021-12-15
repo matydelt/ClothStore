@@ -1,8 +1,16 @@
-import { Box, Container, Grid } from "@material-ui/core";
+import { Box, Container, Grid, makeStyles } from "@material-ui/core";
 import Addresses from "./Addresses";
 import ModalCargaDomicilio from "./ModalCargaDomicilio";
 import ProfileCover from "./ProfileCover";
 
+const useStyles = makeStyles({
+  containerProfile: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
+})
 interface Props {
   id: string | undefined;
   photo: string | undefined;
@@ -19,6 +27,7 @@ interface Props {
 }
 
 function ManagementUserProfile(props: Props) {
+  const classes = useStyles()
   return (
     <>
       <Box style={{ marginTop: 100, marginLeft: 100 }}>
@@ -32,7 +41,7 @@ function ManagementUserProfile(props: Props) {
           alignItems="stretch"
           spacing={3}
         >
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} md={12} classes={{ root: classes.containerProfile }} >
             <ProfileCover
               id={props.id}
               firstName={props.firstName}

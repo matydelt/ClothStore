@@ -147,6 +147,7 @@ export default function SideBarUser(props: Props) {
               onClick={handleDrawerOpen}
               edge="start"
               style={{ marginRight: 36, ...(open && { display: "none" }) }}
+              className='buttonSpan'
             >
               <MenuIcon />
             </IconButton>
@@ -154,7 +155,7 @@ export default function SideBarUser(props: Props) {
         </AppBar>
         <Drawer variant="permanent" open={open}>
           <DrawerHeader>
-            <IconButton onClick={handleDrawerClose}>
+            <IconButton className='buttonSpan'  onClick={handleDrawerClose}>
               {theme.direction === "rtl" ? (
                 <ChevronRightIcon />
               ) : (

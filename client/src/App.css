@@ -72,6 +72,14 @@
   transform: translateX(-300%);
 }
 
+.heightInputProfile {
+  height: 57px !important;
+}
+
+.buttonSpan span {
+  margin: 0px;
+}
+
 
 
 html,
