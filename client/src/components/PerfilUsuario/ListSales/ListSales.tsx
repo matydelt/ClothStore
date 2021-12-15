@@ -1,10 +1,34 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unreachable */
 import { ExpandLess, ExpandMore } from "@mui/icons-material"
-import { Box, Paper, Table, TableCell, TableContainer, TableHead, TableRow, TableBody, List, ListItemButton, ListItemText } from "@mui/material"
-import axios from "axios"
-import * as React from 'react'
+import {
+    Box,
+    Paper,
+    Table,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    TableBody,
+    List,
+    ListItemText,
+    Typography
+} from "@material-ui/core";
+import { ListItemButton } from "@mui/material"
+import { makeStyles } from "@material-ui/core/styles";
+import axios from "axios";
+import * as React from "react";
+import { Link } from "react-router-dom";
 import ModalDetailsShopping from "../ListShopping/ModalDetailsShopping"
+
+const useStyles = makeStyles({
+    tableRow: {
+        "&:last-child td, &:last-child th": { border: 0 },
+    },
+    title: {
+        textDecoration: 'underline'
+    }
+});
 
 interface Sales {
     amount: number;
@@ -167,15 +191,16 @@ export default function ListSales(props: User) {
     }
 
 
+    const classes = useStyles();
 
     return (
-        <Box style={{ marginTop: "100px", marginLeft: "100px" }}>
+        <Box style={{ width: '1700px', marginTop: "100px", marginLeft: "100px" }}>
             <div style={{ display: "flex", justifyContent: "center" }}>
-                <h3>Ventas</h3>
+                <Typography classes={{ root: classes.title }} color='primary' variant='h4' paragraph={true}>Ventas</Typography>
             </div>
             {articulos?.length > 0 ?
                 <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+                    <Table style={{ minWidth: 650 }} size="small" aria-label="a dense table">
                         <TableHead>
                             <TableRow>
                                 <TableCell>
@@ -253,7 +278,7 @@ export default function ListSales(props: User) {
                             {articulos?.map((e) => (
                                 <TableRow
                                     key={e._id}
-                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                    className={classes.tableRow}
                                 >
                                     <TableCell component="th" scope="row" align="center">
                                         <List

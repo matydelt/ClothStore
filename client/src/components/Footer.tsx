@@ -7,11 +7,9 @@ import Typography from "@mui/material/Typography";
 import Logo from "../assets/images/ClothStore_logotipo_sin_fondo.png";
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles({
-
-
-})
-
+interface Props {
+  background?: string;
+}
 
 const Copyright = (props: any) => {
   return (
@@ -28,16 +26,12 @@ const Copyright = (props: any) => {
   );
 };
 
-const Footer = () => {
+const Footer = ({ background }: Props) => {
   return (
     <Box
       component='footer'
       sx={{ height: '260px !important' }}
-      bgcolor={(theme) =>
-        theme.palette.mode === "light"
-          ? theme.palette.grey[200]
-          : theme.palette.grey[800]
-      }
+      bgcolor={background || '#c5c5c5'}
     >
       <Box
         px={{ xs: 3, sm: 10 }}

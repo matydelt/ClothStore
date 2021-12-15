@@ -26,7 +26,7 @@ export default class QAndAControllers {
                 mensaje: message,
                 subject: "Pregunta recibida",
                 htmlFile: "question.html",
-              });
+            });
 
             // const publication: Publication | null = await PublicationSchema.findById(publicationId);
 
@@ -37,7 +37,7 @@ export default class QAndAControllers {
 
         } catch (e) {
             console.log(e);
-            return res.sendStatus(500);
+            return res.sendStatus(404);
         }
     }
 
@@ -46,11 +46,11 @@ export default class QAndAControllers {
 
         try {
             const question: QAndA | null = await QAndASchema.findById(questionId);
-            
+
             // Validar que el vendedor pueda responder
-            const publication: Publication | null = await PublicationSchema.findOne({ _id: question?.publication.toString()});
-            if(publication?.author.toString() !== authorId) return res.sendStatus(403);
-        
+            const publication: Publication | null = await PublicationSchema.findOne({ _id: question?.publication.toString() });
+            if (publication?.author.toString() !== authorId) return res.sendStatus(403);
+
 
             if (question) {
 
@@ -73,13 +73,13 @@ export default class QAndAControllers {
                     mensaje: message,
                     subject: "Pregunta Respondida",
                     htmlFile: "answer.html",
-                  });
+                });
 
             }
             return res.sendStatus(200);
         } catch (e) {
             console.log(e);
-            return res.sendStatus(500);
+            return res.sendStatus(404);
         }
     }
 
@@ -92,7 +92,7 @@ export default class QAndAControllers {
             return res.json(qandas);
         } catch (error) {
             console.log(error);
-            return res.sendStatus(500);
+            return res.sendStatus(404);
         }
     }
 

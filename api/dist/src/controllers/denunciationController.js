@@ -26,7 +26,7 @@ class DenunciationController {
             }
             catch (e) {
                 console.log(e);
-                return res.sendStatus(500);
+                return res.sendStatus(404);
             }
         });
     }
@@ -49,7 +49,7 @@ class DenunciationController {
             }
             catch (error) {
                 console.log(error);
-                return res.sendStatus(500);
+                return res.sendStatus(404);
             }
         });
     }
@@ -62,7 +62,7 @@ class DenunciationController {
             }
             catch (error) {
                 console.log(error);
-                return res.sendStatus(500);
+                return res.sendStatus(404);
             }
         });
     }
@@ -90,7 +90,7 @@ class DenunciationController {
             }
             catch (e) {
                 console.log(e);
-                return res.sendStatus(500);
+                return res.sendStatus(404);
             }
         });
     }

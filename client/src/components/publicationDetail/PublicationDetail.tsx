@@ -15,7 +15,7 @@ import QAndA from './qAndA/QAndA';
 // import { Publication } from '../../redux/reducer/stateTypes';
 import { SideBySideMagnifier } from "react-image-magnifiers";
 import { useAuth } from '../../hooks/useAuth';
-import { putCarritoAmount } from '../../redux/actions/carritoAction';
+import { getCarrito, putCarritoAmount } from '../../redux/actions/carritoAction';
 import { useDispatch, useSelector } from 'react-redux';
 import RelatedPublications from './relatedPublications/RelatedPublications';
 import useLocalStorage from '../../hooks/useLocalStorage';
@@ -25,19 +25,23 @@ import CloseIcon from '@mui/icons-material/Close';
 import { postDenunciations } from '../../redux/actions/denunciationActions';
 import { DefaultRootState } from '../../redux/types';
 import { User } from '../../redux/reducer/stateTypes';
+import Footer from '../Footer';
 
 const useStyles = makeStyles({
   containerPublicationDetail: {
-    marginTop: '0px',
+    marginTop: '300px',
+    marginBottom: '350px',
     display: 'flex',
     justifyContent: 'center',
-
+    position: 'relative'
   },
   avatarPublicationDetatil: {
-    width: '350px',
-    height: '500px',
+    width: '350px !important',
+    height: '500px !important',
+    objectFit: 'contain',
     borderRadius: '1px',
     bgcolor: 'white',
+    overflow: 'inherit',
     '&:hover': {
       boxShadow: '5px'
     }
@@ -149,10 +153,11 @@ export default function PublicationDetail(): JSX.Element {
 
       if (auth?.user) {
         dispatch(putCarritoAmount(auth?.user?.email, publication?._id, amount))
+
       } else {
 
-        const { data } = await axios.get('publication', { params: { publicationId }});
-               
+        const { data } = await axios.get('publication', { params: { publicationId } });
+
         setCart(() => {
           let aux: any = localStorage.getItem("cart");
           if (typeof aux === "string") aux = JSON.parse(aux);
@@ -165,7 +170,7 @@ export default function PublicationDetail(): JSX.Element {
             return aux;
           }
           if (!isItemInCart && publication.images) {
-            return [...aux, { title: publication?.name, id: publication?._id, image: publication?.images[0].url, quantity: amount, price: publication?.discount ? publication?.price - publication?.price*publication?.discount.percentage/100 : publication?.price, discount: publication?.discount ? publication?.discount.percentage : undefined  }];
+            return [...aux, { title: publication?.name, id: publication?._id, image: publication?.images[0].url, quantity: amount, price: publication?.discount ? publication?.price - publication?.price * publication?.discount.percentage / 100 : publication?.price, discount: publication?.discount ? publication?.discount.percentage : undefined }];
           }
         });
       }
@@ -184,7 +189,7 @@ export default function PublicationDetail(): JSX.Element {
 
   }
   return (<>
-    <Box sx={{ backgroundColor: '#eeeeee', minHeight: '80vh', height: 'max-content', pb: 20 }}>
+    <Box sx={{ backgroundColor: '#eeeeee', minHeight: '100vh', /* height: 'max-content',  */position: 'relative' }}>
       <NavBar></NavBar>
       {/* <Box sx={{ backgroundColor: '#f5f5f5', minHeight: '15vh' }}>
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -192,24 +197,25 @@ export default function PublicationDetail(): JSX.Element {
         </Box>
       </Box> */}
 
-      <Box sx={{ mt: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', height: '1000px', marginTop: "100px" }}>
+      <Box sx={{ mt: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', height: '800px' }}>
 
         <Container classes={{ root: classes.containerPublicationDetail }}>
 
 
 
-          <Grid item component="div"
-
+          <Grid
+            item
+            component="div"
             container
             // boxShadow={1} sx={{ backgroundColor: 'white', borderRadius: 2, justifyContent: 'center' }}>
             boxShadow={1} sx={{ backgroundColor: 'white', borderRadius: 2, p: 3 }}>
-
             {loading ? <CircularProgress sx={{ p: 25, mx: 'auto' }} /> : <>
 
               <Grid item
                 xs={1}
                 sx={{
-                  my: 4, cursor: 'pointer'
+                  my: 4,
+                  cursor: 'pointer'
                   // '& > :not(style)': { m: 5, width: '25ch', display: 'flex', flexWrap: 'wrap' },
                 }}
 
@@ -293,27 +299,27 @@ export default function PublicationDetail(): JSX.Element {
                   {publication && publication?.detail}
                 </Typography>
 
-{ publication?.discount ?
-<div style={{ marginTop: '20px', marginBottom: '20px'}}>
+                {publication?.discount ?
+                  <div style={{ marginTop: '20px', marginBottom: '20px' }}>
 
-                {/* <Typography component="p" sx={{ pt: 3, color: 'gray', textDecoration: 'line-through' }}> */}
-                <Typography component="p" classes={{ root: classes.publicationPriceWithoutDiscount }}>
-                  $ {publication?.price}
-                </Typography>
-                <Typography variant="h5" component="h5" classes={{ root: classes.publicationPriceWithDiscount }}>
-                  $ { (publication?.price - (Number(publication?.price)*Number(publication?.discount.percentage)) / 100).toFixed(2)  }
-                </Typography>
-                <Typography component="p" classes={{ root: classes.offPercentage }}>
-                  {publication?.discount?.percentage}% OFF
-                </Typography>
-</div>
-:
+                    {/* <Typography component="p" sx={{ pt: 3, color: 'gray', textDecoration: 'line-through' }}> */}
+                    <Typography component="p" classes={{ root: classes.publicationPriceWithoutDiscount }}>
+                      $ {publication?.price}
+                    </Typography>
+                    <Typography variant="h5" component="h5" classes={{ root: classes.publicationPriceWithDiscount }}>
+                      $ {(publication?.price - (Number(publication?.price) * Number(publication?.discount.percentage)) / 100).toFixed(2)}
+                    </Typography>
+                    <Typography component="p" classes={{ root: classes.offPercentage }}>
+                      {publication?.discount?.percentage}% OFF
+                    </Typography>
+                  </div>
+                  :
 
-                // <Typography variant="h5" component="h5" sx={{ py: 3, color: 'gray' }}>
-                <Typography variant="h5" component="h5" classes={{ root: classes.publicationPriceTypografy }}>
-                  $ {publication?.price}
-                </Typography>
-}
+                  // <Typography variant="h5" component="h5" sx={{ py: 3, color: 'gray' }}>
+                  <Typography variant="h5" component="h5" classes={{ root: classes.publicationPriceTypografy }}>
+                    $ {publication?.price}
+                  </Typography>
+                }
 
                 {publication && publication?.stock > 0 ?
                   <Grid item container component="div"
@@ -392,11 +398,31 @@ export default function PublicationDetail(): JSX.Element {
 
 
 
+          <a href='#denunciar'
+            style={{
+              marginTop: '20px',
+              display: 'inline-block',
+              textAlign: 'right',
+              textDecoration: "none",
+              color: "#000",
+              position: 'relative',
+              left: '1033px',
+              border: '1px solid #00c2cb',
+              padding: '7px',
+              borderRadius: '5px',
+              textTransform: 'uppercase',
+              fontSize: '19px',
+              // zIndex: 10
+            }}
+            className='buttonDenuncia'
+          >
+            Denunciar
+
+          </a>
         </Container>
       </Box>
-      <div style={{ marginLeft: "25%", width: "55%" }}>
-        <a href='#denunciar' style={{ display: "flex", justifyContent: "end", textDecoration: "none", color: "#2968c8" }}>Denunciar</a>
-      </div>
+      {/* <div style={{ zIndex: 1200, marginLeft: "25%", width: "55%" }}> */}
+      {/* </div> */}
       <div id="denunciar" className="modal">
         <div className="modal-contenido2" style={{ display: "flex", flexDirection: "column" }}>
           <a href="#" style={{ display: "flex", justifyContent: "end" }}>
@@ -429,6 +455,7 @@ export default function PublicationDetail(): JSX.Element {
         </Box>
 
       }
+      <Footer background='#8b8b8b' />
     </Box>
   </>)
 }

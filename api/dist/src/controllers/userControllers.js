@@ -52,7 +52,7 @@ class UserController {
             }
             catch (e) {
                 console.log(e);
-                res.sendStatus(500);
+                res.sendStatus(404);
             }
         });
     }
@@ -102,7 +102,7 @@ class UserController {
             }
             catch (e) {
                 console.log(e);
-                res.sendStatus(500);
+                res.sendStatus(404);
             }
         });
     }
@@ -118,7 +118,7 @@ class UserController {
             }
             catch (e) {
                 console.log(e);
-                res.sendStatus(500);
+                res.sendStatus(404);
             }
         });
     }
@@ -130,7 +130,7 @@ class UserController {
             }
             catch (e) {
                 console.log(e);
-                res.sendStatus(500);
+                res.sendStatus(404);
             }
         });
     }
@@ -144,9 +144,9 @@ class UserController {
                 });
                 users = users
                     .map((e) => {
-                    if (e.publications.length > 0)
-                        return e.userName;
-                })
+                        if (e.publications.length > 0)
+                            return e.userName;
+                    })
                     .filter((e) => e != undefined);
                 console.log(users);
                 res.json(users);
@@ -172,7 +172,7 @@ class UserController {
             }
             catch (error) {
                 console.log("error en banUser");
-                res.sendStatus(500);
+                res.sendStatus(404);
             }
         });
     }
@@ -186,7 +186,7 @@ class UserController {
             }
             catch (error) {
                 console.log("error en get one user");
-                res.sendStatus(500);
+                res.sendStatus(404);
             }
         });
     }
@@ -220,7 +220,7 @@ class UserController {
             }
             catch (error) {
                 console.log("error en get one user");
-                res.sendStatus(500);
+                res.sendStatus(404);
             }
         });
     }
@@ -241,7 +241,7 @@ class UserController {
             }
             catch (error) {
                 console.log("error en updateUser");
-                res.sendStatus(500);
+                res.sendStatus(404);
             }
         });
     }
@@ -264,7 +264,7 @@ class UserController {
             }
             catch (error) {
                 console.log("error en updateaddres");
-                res.sendStatus(500);
+                res.sendStatus(404);
             }
         });
     }

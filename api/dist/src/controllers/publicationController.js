@@ -53,7 +53,7 @@ class PublicationController {
             }
             catch (e) {
                 console.log(e);
-                res.sendStatus(500);
+                res.sendStatus(404);
             }
         });
     }
@@ -138,9 +138,9 @@ class PublicationController {
                     console.log(autor === null || autor === void 0 ? void 0 : autor._id);
                     allPublications = allPublications
                         .map((e) => {
-                        if (e.author.equals(autor === null || autor === void 0 ? void 0 : autor._id))
-                            return e;
-                    })
+                            if (e.author.equals(autor === null || autor === void 0 ? void 0 : autor._id))
+                                return e;
+                        })
                         .filter((e) => e != null);
                 }
                 if (price && price !== "") {
@@ -169,7 +169,7 @@ class PublicationController {
             }
             catch (e) {
                 console.log(e);
-                res.sendStatus(500);
+                res.sendStatus(404);
             }
         });
     }
@@ -182,7 +182,7 @@ class PublicationController {
             }
             catch (error) {
                 console.log(error);
-                res.sendStatus(500);
+                res.sendStatus(404);
             }
         });
     }
@@ -213,7 +213,7 @@ class PublicationController {
             }
             catch (error) {
                 console.log(error);
-                res.sendStatus(500);
+                res.sendStatus(404);
             }
         });
     }
@@ -230,7 +230,7 @@ class PublicationController {
             }
             catch (e) {
                 console.log(e);
-                res.sendStatus(500);
+                res.sendStatus(404);
             }
         });
     }
@@ -274,7 +274,7 @@ class PublicationController {
             }
             catch (error) {
                 console.log(error);
-                res.sendStatus(500);
+                res.sendStatus(404);
             }
         });
     }
@@ -293,7 +293,7 @@ class PublicationController {
             }
             catch (error) {
                 console.log(error);
-                res.sendStatus(500);
+                res.sendStatus(404);
             }
         });
     }
@@ -317,7 +317,7 @@ class PublicationController {
             }
             catch (error) {
                 console.log(error);
-                res.sendStatus(500);
+                res.sendStatus(404);
             }
         });
     }
@@ -335,7 +335,7 @@ class PublicationController {
             }
             catch (error) {
                 console.log(error);
-                res.sendStatus(500);
+                res.sendStatus(404);
             }
         });
     }
@@ -352,7 +352,7 @@ class PublicationController {
             }
             catch (error) {
                 console.log(error);
-                res.sendStatus(500);
+                res.sendStatus(404);
             }
         });
     }

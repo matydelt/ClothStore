@@ -37,7 +37,7 @@ export default class CloudinaryController {
       });
     } catch (error) {
       console.log(error);
-      return res.sendStatus(500);
+      return res.sendStatus(404);
     }
   }
 
@@ -53,7 +53,7 @@ export default class CloudinaryController {
       });
     } catch (error) {
       console.log(error);
-      return res.sendStatus(500);
+      return res.sendStatus(404);
     }
   }
 }

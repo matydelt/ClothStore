@@ -40,7 +40,7 @@ class ReviewControlllers {
             }
             catch (e) {
                 console.log(e);
-                return res.sendStatus(500);
+                return res.sendStatus(404);
             }
         });
     }
@@ -73,7 +73,7 @@ class ReviewControlllers {
             }
             catch (error) {
                 console.log(error);
-                return res.sendStatus(500);
+                return res.sendStatus(404);
             }
         });
     }
@@ -86,7 +86,7 @@ class ReviewControlllers {
             }
             catch (error) {
                 console.log(error);
-                return res.sendStatus(500);
+                return res.sendStatus(404);
             }
         });
     }

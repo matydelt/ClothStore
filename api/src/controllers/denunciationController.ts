@@ -19,7 +19,7 @@ export default class DenunciationController {
 
         } catch (e) {
             console.log(e);
-            return res.sendStatus(500);
+            return res.sendStatus(404);
         }
     }
 
@@ -41,7 +41,7 @@ export default class DenunciationController {
 
         } catch (error) {
             console.log(error);
-            return res.sendStatus(500);
+            return res.sendStatus(404);
         }
     }
 
@@ -53,7 +53,7 @@ export default class DenunciationController {
             return res.sendStatus(200);
         } catch (error) {
             console.log(error);
-            return res.sendStatus(500);
+            return res.sendStatus(404);
         }
     }
     static async put(req: Request, res: Response): Promise<Response> {
@@ -82,7 +82,7 @@ export default class DenunciationController {
 
         } catch (e) {
             console.log(e);
-            return res.sendStatus(500);
+            return res.sendStatus(404);
         }
     }
 }

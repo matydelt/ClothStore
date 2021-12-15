@@ -48,7 +48,7 @@ export default class PublicationController {
       }
     } catch (e) {
       console.log(e);
-      res.sendStatus(500);
+      res.sendStatus(404);
     }
   }
 
@@ -165,7 +165,7 @@ export default class PublicationController {
       });
     } catch (e) {
       console.log(e);
-      res.sendStatus(500);
+      res.sendStatus(404);
     }
   }
 
@@ -176,7 +176,7 @@ export default class PublicationController {
       res.json("Elemento Borrado");
     } catch (error) {
       console.log(error);
-      res.sendStatus(500);
+      res.sendStatus(404);
     }
   }
 
@@ -204,7 +204,7 @@ export default class PublicationController {
       }
     } catch (error) {
       console.log(error);
-      res.sendStatus(500);
+      res.sendStatus(404);
     }
   }
 
@@ -222,7 +222,7 @@ export default class PublicationController {
       res.json(allMarks);
     } catch (e) {
       console.log(e);
-      res.sendStatus(500);
+      res.sendStatus(404);
     }
   }
   static async putPublicationState(req: Request, res: Response): Promise<void> {
@@ -235,7 +235,6 @@ export default class PublicationController {
       if (flag) {
         if (publication) {
           publication.state = true;
-          publication.stock = 1
           await publication.save();
           sendEMail.send({
             publicationImage: publication?.images[0]?.url,
@@ -260,7 +259,7 @@ export default class PublicationController {
       }
     } catch (error) {
       console.log(error);
-      res.sendStatus(500);
+      res.sendStatus(404);
     }
   }
 
@@ -279,7 +278,7 @@ export default class PublicationController {
       }
     } catch (error) {
       console.log(error);
-      res.sendStatus(500);
+      res.sendStatus(404);
     }
   }
 
@@ -301,7 +300,7 @@ export default class PublicationController {
       res.sendStatus(200);
     } catch (error) {
       console.log(error);
-      res.sendStatus(500);
+      res.sendStatus(404);
     }
   }
 
@@ -318,7 +317,7 @@ export default class PublicationController {
       }
     } catch (error) {
       console.log(error);
-      res.sendStatus(500);
+      res.sendStatus(404);
     }
   }
   static async getAllPublication(req: Request, res: Response): Promise<void> {
@@ -332,7 +331,7 @@ export default class PublicationController {
       }
     } catch (error) {
       console.log(error);
-      res.sendStatus(500);
+      res.sendStatus(404);
     }
   }
 

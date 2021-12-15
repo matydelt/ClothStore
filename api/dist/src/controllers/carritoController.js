@@ -94,7 +94,7 @@ class CarritoController {
             }
             catch (error) {
                 console.error(error);
-                return res.sendStatus(500);
+                return res.sendStatus(404);
             }
         });
     }

@@ -39,7 +39,7 @@ export default class UserController {
       }
     } catch (e) {
       console.log(e);
-      res.sendStatus(500);
+      res.sendStatus(404);
     }
   }
 
@@ -85,7 +85,7 @@ export default class UserController {
       }
     } catch (e) {
       console.log(e);
-      res.sendStatus(500);
+      res.sendStatus(404);
     }
   }
 
@@ -97,7 +97,7 @@ export default class UserController {
       else res.send("usuario o contraseña erronea");
     } catch (e) {
       console.log(e);
-      res.sendStatus(500);
+      res.sendStatus(404);
     }
   }
   static async getUsers(req: Request, res: Response) {
@@ -106,7 +106,7 @@ export default class UserController {
       res.json(user);
     } catch (e) {
       console.log(e);
-      res.sendStatus(500);
+      res.sendStatus(404);
     }
   }
 
@@ -141,7 +141,7 @@ export default class UserController {
       }
     } catch (error) {
       console.log("error en banUser");
-      res.sendStatus(500);
+      res.sendStatus(404);
     }
   }
 
@@ -153,7 +153,7 @@ export default class UserController {
       res.json(user);
     } catch (error) {
       console.log("error en get one user");
-      res.sendStatus(500);
+      res.sendStatus(404);
     }
   }
   static async putStateUser(req: Request, res: Response) {
@@ -178,7 +178,7 @@ export default class UserController {
       res.json(user);
     } catch (error) {
       console.log("error en get one user");
-      res.sendStatus(500);
+      res.sendStatus(404);
     }
   }
   static async updateUser(req: Request, res: Response) {
@@ -199,7 +199,7 @@ export default class UserController {
       res.json("usuario modificado");
     } catch (error) {
       console.log("error en updateUser");
-      res.sendStatus(500);
+      res.sendStatus(404);
     }
   }
   static async updateAddress(req: Request, res: Response) {
@@ -222,7 +222,7 @@ export default class UserController {
       res.json("Domicilio agregado correctamente");
     } catch (error) {
       console.log("error en updateaddres");
-      res.sendStatus(500);
+      res.sendStatus(404);
     }
   }
 }

@@ -1,0 +1,22 @@
+.opacityCirleCart {
+    opacity: .3;
+}
+
+.rightCircle {
+    display: block;
+    position: absolute;
+    height: 500px !important;
+    width : 581px !important;
+    right : -189px !important;
+    top   : -191px !important;
+}
+
+.lefttCircle {
+    display: block;
+    position: absolute;
+    height: 500px !important;
+    width : 581px !important;
+    left : -189px !important;
+    bottom   : -191px !important;
+
+}

@@ -14,6 +14,7 @@ import CardsBenefit from "./CardsBenefit/CardsBenefit";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import CardsCallToAction from "./CardsCallToAction/CardsCallToAction";
+import CartScreen from "../../pages/CartScreen";
 
 const useStyles = makeStyles({
   titleTienda: {
@@ -60,42 +61,36 @@ const Homepage = () => {
   }, []);
 
   return (
-    <Box>
-      <Header />
-      <CardsCallToAction />
-      <CardsBenefit />
-      <Container
-        classes={{ root: classes.containerMain }}
-        id="tienda"
-        maxWidth="lg"
-      >
-        <Typography
-          classes={{ root: classes.titleTienda }}
-          align="center"
-          variant="h3"
-          color="primary"
-        >
-          Tienda
-        </Typography>
-        <Box
-          component="main"
-          sx={{
-            height: "100%",
-            maxWidth: "1215px",
-            paddingLeft: "10px",
-            paddingRight: "28px",
-            width: "100%",
-            display: "flex",
-            marginBottom: "30px",
-          }}
-        >
-          <SideBarHomePage />
-          <Publicaciones />
-        </Box>
-        <Paginations />
-      </Container>
-      <Box sx={{ height: "200px" }} />
-      <Footer />
+    <Box id='containerHomePage' sx={{ position: 'relative', overflow: 'hidden' }}>
+      <Box id='homepage'>
+        <Header />
+        <CardsCallToAction />
+        <CardsBenefit />
+        <Container classes={{ root: classes.containerMain }} id="tienda" maxWidth="lg">
+          <Typography classes={{ root: classes.titleTienda }} align='center' variant="h3" color="primary">
+            Tienda
+          </Typography>
+          <Box
+            component="main"
+            sx={{
+              height: "100%",
+              maxWidth: "1215px",
+              paddingLeft: "10px",
+              paddingRight: "28px",
+              width: "100%",
+              display: "flex",
+              marginBottom: "30px",
+            }}
+          >
+            <SideBarHomePage />
+            <Publicaciones />
+          </Box>
+          <Paginations />
+        </Container>
+        <Box sx={{ height: "200px" }} />
+        <Footer />
+      </Box>
+      <CartScreen idHomepage='cartAnimation' />
     </Box>
   );
 };

@@ -159,7 +159,7 @@ class Checkout {
             }
             catch (error) {
                 console.log(error);
-                return res.sendStatus(500);
+                return res.sendStatus(404);
             }
         });
     }

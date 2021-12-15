@@ -1,14 +1,14 @@
 import { TextField } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import GoogleIcon from "@mui/icons-material/Google";
-import LockOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
-import { Button } from "@mui/material";
+import LockOutlinedIcon from "@material-ui/icons/LockOpenOutlined";
+import { Button } from "@material-ui/core";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
-import Link from "@mui/material/Link";
+import Link from '@material-ui/core/Link';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
@@ -16,6 +16,8 @@ import { useDispatch } from "react-redux";
 import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { signinUser } from "../redux/actions/userActions";
+import Clothing from './assets/img/cloting.jpg'
+import Logo from './assets/logo/ClothStore_sin_fondo.png'
 
 type FormState = { email: string; password: string };
 
@@ -26,9 +28,28 @@ const useStyles = makeStyles({
     marginTop: "10px",
     marginBottom: "10px",
   },
-  avatarLock: {
-    backgroundColor: "#f1f1f1",
+  rootButtonLoginGoogle: {
+    marginTop: "10px",
+    marginBottom: "10px",
+    backgroundColor: '#de4e3b'
   },
+  inputsLogin: {
+    width: '100%',
+    marginRight: 'auto',
+    marginLeft: 'auto'
+  },
+  linkRegister: {
+    display: 'inline-block',
+    width: '100%',
+    textAlign: 'center'
+  },
+  cicleLoginForm: {
+    display: 'block',
+    position: 'absolute',
+    width: '300px',
+    height: '300px',
+    backgroundColor: '#00c2cb'
+  }
 });
 
 const LoginForm = () => {
@@ -57,92 +78,167 @@ const LoginForm = () => {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
+    // <Box >
+    <Container sx={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '70vh',
+      boxShadow: '1px 2px 5px #ccc',
+      marginTop: '50px',
+      marginBottom: '50px',
+      maxWidth: "1000px !important",
+      overflow: 'hidden',
+      borderRadius: '13px',
+    }}
+      component="main"
+    >
+      <Box sx={{
+        width: '50%',
+        position: 'relative',
+        height: '100%',
+        overflow: 'hidden',
+        left: '-24px',
+        borderTopRightRadius: '14%'
+      }}>
         <Box
+          component='img'
+          src={Clothing}
+          alt='Cloting'
           sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
+            width: '500px',
+            position: 'absolute',
+            left: '0',
+            top: '0',
+            objectFit: 'contain',
           }}
+        />
+        <Box
+          component='span'
+          sx={{
+            position: 'absolute',
+            left: '0',
+            top: '0',
+            width: '100%',
+            height: '100%',
+            backgroundColor: '#333',
+            margin: '0px',
+            opacity: '.2'
+          }}
+        />
+      </Box>
+      <CssBaseline />
+      <Box
+        sx={{
+          margin: 'auto',
+          width: '50%',
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          position: 'relative'
+        }}
+      >
+        <Box
+          component='img'
+          src={Logo}
+          alt='Logo'
+          sx={{
+            position: 'absolute',
+            top: '-173px',
+            width: '47%'
+          }}
+        />
+        <Box
+          component='span'
+          sx={{
+            display: 'block',
+            position: 'absolute',
+            bottom: '-284px',
+            left: '-126px',
+            width: '300px',
+            height: '300px',
+            backgroundColor: '#00c2cb',
+            zIndex: '-1',
+            borderRadius: '50%',
+            opacity: '.3'
+          }}
+        />
+        <Avatar sx={{ backgroundColor: '#fff', boxShadow: '0px 1px 1px #00c2cb' }}>
+          <LockOutlinedIcon color="primary" />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Iniciar Sesión
+        </Typography>
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '75%' }}
+          noValidate
         >
-          <Avatar classes={{ root: classes.avatarLock }}>
-            <LockOutlinedIcon color="primary" />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Iniciar Sesión
-          </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            sx={{ mt: 1 }}
-            noValidate
+          <TextField
+            classes={{ root: classes.inputsLogin }}
+            margin="normal"
+            required
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            value={input.email}
+            onChange={handleChange}
+            variant="outlined"
+          />
+          <TextField
+            classes={{ root: classes.inputsLogin }}
+            margin="normal"
+            required
+            id="password"
+            name="password"
+            label="Contraseña"
+            type="password"
+            autoComplete="current-password"
+            value={input.password}
+            onChange={handleChange}
+            variant="outlined"
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            classes={{ root: classes.rootButtonLogin }}
           >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              value={input.email}
-              onChange={handleChange}
-              variant="outlined"
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="password"
-              name="password"
-              label="Contraseña"
-              type="password"
-              autoComplete="current-password"
-              value={input.password}
-              onChange={handleChange}
-              variant="outlined"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              classes={{ root: classes.rootButtonLogin }}
-            >
-              Iniciar Sesión
-            </Button>
-            <Button
-              fullWidth
-              variant="contained"
-              classes={{ root: classes.rootButtonLogin }}
-              onClick={googleSignin}
-              endIcon={<GoogleIcon />}
-            >
-              Iniciar Sesión con Google
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link variant="body2">Olvidaste tu contraseña?</Link>
-              </Grid>
-              <Grid item>
-                <Link
-                  component={RouterLink}
-                  to="/register"
-                  variant="body2"
-                  underline="hover"
-                >
-                  No tienes una cuenta? Registrate
-                </Link>
-              </Grid>
+            Iniciar Sesión
+          </Button>
+          <Button
+            fullWidth
+            variant="contained"
+            classes={{ root: classes.rootButtonLoginGoogle }}
+            onClick={googleSignin}
+            endIcon={<GoogleIcon sx={{ color: '#fff' }} />}
+          >
+            Iniciar Sesión con Google
+          </Button>
+          <Grid container>
+            {/* <Grid item xs>
+              <Link variant="body2">Olvidaste tu contraseña?</Link>
+            </Grid> */}
+            <Grid item sx={{ width: '100%' }}>
+              <Link
+                component={RouterLink}
+                to="/register"
+                variant="body2"
+                underline="hover"
+                classes={{ root: classes.linkRegister }}
+              >
+                No tienes una cuenta? Registrate
+              </Link>
             </Grid>
-          </Box>
+          </Grid>
         </Box>
-      </Container>
-    </ThemeProvider>
+      </Box>
+    </Container>
+    // </Box>
   );
 };
 

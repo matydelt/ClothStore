@@ -95,7 +95,7 @@ export default class CarritoController {
             return res.json(carritoBuscado);
         } catch (error) {
             console.error(error);
-            return res.sendStatus(500);
+            return res.sendStatus(404);
         }
     }
 

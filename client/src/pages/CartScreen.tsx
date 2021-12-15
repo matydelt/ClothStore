@@ -1,4 +1,5 @@
-import { Box, Button, Container } from "@material-ui/core";
+import { Button, Container } from "@material-ui/core";
+import { Box } from "@mui/material"
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -17,7 +18,8 @@ import { useAuth } from "../hooks/useAuth";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { putCarrito, putCarritoRemove } from "../redux/actions/carritoAction";
 import { RootState } from "../redux/store/store";
-
+import './CartScreen.css';
+import img from "../components/assets/logo/ClothStore_sin_fondo.png"
 const useStyles = makeStyles({
   rootContainer: {
     width: "100%",
@@ -28,19 +30,31 @@ const useStyles = makeStyles({
     maxHeight: 440,
   },
   checkoutContainer: {
-    padding: "1%",
+    padding: "2%",
     width: "85%",
-    background: "#D6D6D6",
+    background: "#FAF6F6",
     display: "flex",
     justifyContent: "space-between",
     margin: "2% auto",
     borderRadius: "25px",
+    boxShadow: '0px 1px 2px #00c2cb'
   },
   button: {
     "& span": {
       marginLeft: 0,
     },
   },
+  buttonTitle: {
+    width: '271px',
+    height: '42px',
+    "& span": {
+      marginLeft: 0,
+    },
+  },
+  title: {
+    display: 'inline',
+    margin: '2%'
+  }
 });
 
 export type CartItemType = {
@@ -63,9 +77,13 @@ export type CartItemTypeDB = {
   discount: number | undefined;
 };
 
+interface Props {
+  idHomepage?: string
+}
+
 export type CartType = CartItemType[];
 
-export default function CartScreen() {
+export default function CartScreen({ idHomepage }: Props) {
   const [cart, setCart] = useLocalStorage<CartType>("cart", []);
   const carrito: any = useSelector((state: RootState) => state.carrito.carrito);
   const auth = useAuth();
@@ -87,23 +105,11 @@ export default function CartScreen() {
   };
 
   const handleAddToCart = async (clickedItem: CartItemType) => {
-    // setCart((prev) => {
-    //   const isItemInCart = prev.find((item) => item.id === clickedItem.id);
 
-    //   if (isItemInCart) {
-    //     return prev.map((item) =>
-    //       item.id === clickedItem.id
-    //         ? { ...item, quantity: item.quantity + 1 }
-    //         : item
-    //     );
-    //   }
 
-    //   return [...prev, { ...clickedItem, quantity: 1 }];
-    // });
+    const { data } = await axios.get('publication', { params: { publicationId: clickedItem.id } })
 
-    const {data} = await axios.get('publication', { params: { publicationId: clickedItem.id }})
-
-    let cartCopy = [ ...cart ];
+    let cartCopy = [...cart];
 
     cartCopy.forEach(item => {
       if (item.id === clickedItem.id && item.quantity < data.stock) {
@@ -154,39 +160,73 @@ export default function CartScreen() {
     });
   };
 
-  return (
-    <Container>
-      {/* Botón para regresar a la homepage */}
-      <Button
-        onClick={() => navigate("/")}
-        startIcon={<ArrowBackIcon />}
-        variant="contained"
-        color="primary"
-        style={{ margin: "2%" }}
-      >
-        Continua con tus compras
-      </Button>
+  const handleShowHomepage = () => {
+    const cartAnimation = document.getElementById("cartAnimation");
+    const homePage = document.getElementById("homepage");
+    const containerHomePage = document.getElementById("containerHomePage");
+    cartAnimation?.classList.remove("translateCart");
+    homePage?.classList.remove("translateLeft");
+    containerHomePage?.classList.remove("heightContainerHomePage");
+  };
 
-      {/* Tabla de items a comprar */}
-      <Paper className={classes.rootContainer}>
-        {!cart.length && !carrito?.publications?.length ? (
-          <Typography>Aún no has seleccionado nada</Typography>
-        ) : (
-          <TableContainer className={classes.container}>
-            <Table stickyHeader aria-label="sticky table">
-              <TableHead>
-                <TableRow>
-                  {["Producto", "Precio", "Cantidad", "Total"].map(
-                    (column, index) => (
-                      <TableCell key={index} align="center">
-                        {column}
-                      </TableCell>
-                    )
-                  )}
-                </TableRow>
-              </TableHead>
-              {auth.user
-                ? carrito?.publications.map((item: any) => (
+  return (
+    <Box
+      id={idHomepage}
+      sx={{
+        overflow: 'hidden',
+        position: 'relative',
+        height: '100vh'
+      }}
+    >
+      <Container >
+        {/* Botón para regresar a la homepage */}
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} >
+          <Typography classes={{ root: classes.title }} variant='h4' color='primary'>
+            Mi Carritto
+          </Typography>
+          {idHomepage ?
+            <Button
+              onClick={handleShowHomepage}
+              startIcon={<ArrowBackIcon />}
+              variant="contained"
+              color="primary"
+              classes={{ root: classes.buttonTitle }}
+            >
+              Continua con tus compras
+            </Button> :
+            <Button
+              onClick={() => navigate("/")}
+              startIcon={<ArrowBackIcon />}
+              variant="contained"
+              color="primary"
+              classes={{ root: classes.buttonTitle }}
+            >
+              Continua con tus compras
+            </Button>
+          }
+        </Box>
+
+
+        {/* Tabla de items a comprar */}
+        <Paper className={classes.rootContainer}>
+          {(!auth?.user && cart?.length === 0) || (auth?.user && carrito?.publications?.length === 0) ? (
+            <Typography>Aún no has seleccionado nada</Typography>
+          ) : (
+            <TableContainer className={classes.container}>
+              <Table stickyHeader aria-label="sticky table">
+                <TableHead>
+                  <TableRow>
+                    {["Producto", "Precio", "Cantidad", "Total"].map(
+                      (column, index) => (
+                        <TableCell key={index} align="center">
+                          {column}
+                        </TableCell>
+                      )
+                    )}
+                  </TableRow>
+                </TableHead>
+                {auth.user
+                  ? carrito?.publications?.map((item: any) => (
                     <CartItem
                       key={item.id}
                       item={item}
@@ -204,7 +244,7 @@ export default function CartScreen() {
                       }
                     />
                   ))
-                : cart.map((item) => (
+                  : cart?.map((item) => (
                     <CartItem
                       key={item.id}
                       item={item}
@@ -212,34 +252,52 @@ export default function CartScreen() {
                       removeFromCart={handleRemoveFromCart}
                     />
                   ))}
-            </Table>
-          </TableContainer>
-        )}
-      </Paper>
-      <Box className={classes.checkoutContainer}>
-        <Box style={{ border: "1px solid", width: "25%" }}>
-          <Typography>Descuento: </Typography>
+              </Table>
+            </TableContainer>
+          )}
+        </Paper>
+        <Box className={classes.checkoutContainer} style={{ alignItems: "center" }}>
+          <Box style={{ width: "20%" }} component={"img"} src={img} >
+
+          </Box>
+          <Box style={{ width: "25%", }}>
+
+            <Typography variant="h6" align="center">
+              Total: ${calculateTotal().toFixed(2)}{" "}
+            </Typography>
+            <Button
+              variant="contained"
+              color="secondary"
+              fullWidth
+              onClick={handleMercadoPago}
+              disabled={!cart.length && !carrito?.publications?.length}
+              className={classes.button}
+            >
+              Checkout
+            </Button>
+          </Box>
         </Box>
-        <Box style={{ width: "25%" }}>
-          <Typography variant="h6">
-            Subtotal: ${calculateTotal().toFixed(2)}
-          </Typography>
-          <Typography variant="h6">Descuento: 0%</Typography>
-          <Typography variant="h6" style={{ borderTop: "1px solid gray" }}>
-            Total: ${calculateTotal().toFixed(2)}{" "}
-          </Typography>
-          <Button
-            variant="contained"
-            color="secondary"
-            fullWidth
-            onClick={handleMercadoPago}
-            disabled={!cart.length && !carrito?.publications?.length}
-            className={classes.button}
-          >
-            Checkout
-          </Button>
-        </Box>
-      </Box>
-    </Container>
+      </Container>
+      <Box
+        component="span"
+        sx={{
+          display: "block",
+          zIndex: "-1",
+          bgcolor: "#00c2cb",
+          borderRadius: "50%"
+        }}
+        className='opacityCirleCart rightCircle'
+      />
+      <Box
+        component="span"
+        sx={{
+          display: "block",
+          zIndex: "-1",
+          bgcolor: "#00c2cb",
+          borderRadius: "50%"
+        }}
+        className='opacityCirleCart lefttCircle'
+      />
+    </Box>
   );
 }

@@ -34,14 +34,14 @@ export default class DiscountController {
 
         } catch (error) {
             console.log(error);
-            return res.sendStatus(500);
+            return res.sendStatus(404);
         }
 
     }
 
     static async removeDiscount(req: Request, res: Response) {
         const { publicationId } = req.body;
-        
+
         try {
             const publication = await PublicationSchema.findById(publicationId);
             console.log(publication)
@@ -54,7 +54,7 @@ export default class DiscountController {
 
         } catch (error) {
             console.log(error);
-            return res.sendStatus(500);
+            return res.sendStatus(404);
         }
 
     }
