@@ -191,15 +191,25 @@ export default function SideBarUser(props: Props) {
                 <ListItemText primary="Mis Compras" />
               </ListItem>
             </Link>
+            {props.type === "admin" ?
 
-            <Link to="/admin" style={{ textDecoration: "none" }}>
-              <ListItem key="Admin Page">
-                <ListItemIcon>
-                  <AdminPanelSettingsIcon />
-                </ListItemIcon>
-                <ListItemText primary="Admin Page" />
-              </ListItem>
-            </Link>
+              <Link to="/admin" style={{ textDecoration: "none" }}>
+                <ListItem key="Admin Page">
+                  <ListItemIcon>
+                    <AdminPanelSettingsIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Admin Page" />
+                </ListItem>
+              </Link> : props.type === "employee" ?
+                <Link to="/employee" style={{ textDecoration: "none" }}>
+                  <ListItem key="Admin Page">
+                    <ListItemIcon>
+                      <AdminPanelSettingsIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Admin Page" />
+                  </ListItem>
+                </Link> : <div></div>
+            }
 
             <Link to="/perfil" style={{ textDecoration: "none" }}>
               <ListItem key="Mi Perfil">
