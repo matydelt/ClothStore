@@ -13,15 +13,14 @@ export default class CarritoController {
             const carrito = req.body
             const { _id } = req.params
 
-            console.log(carrito)
-
             const carritoBuscado: Carrito | null = await carritoSchema.findOne({ userId: _id } as FilterQuery<Carrito>)
 
             if (carritoBuscado) {
                 let length = carritoBuscado?.publications?.length;
 
                 if (length === 0) {
-                    carrito.forEach((p: any) => {
+                    carrito.forEach(async (p: any) => {
+                        // const public = 
                         carritoBuscado.publications.push({
                             publication: p.id,
                             price: p.price,
@@ -67,10 +66,36 @@ export default class CarritoController {
         try {
             const { email } = req.params;
             const user = await UserSchema.findOne({ email })
-            const carritoBuscado: Carrito | null = await carritoSchema.findOne({ userId: user?._id })
-            res.json(carritoBuscado)
+            let carritoBuscado: Carrito | null = await carritoSchema.findOne({ userId: user?._id });
+
+            let change = false;
+
+            if (carritoBuscado) {
+
+                for (let index = 0; index < carritoBuscado?.publications?.length; index++) {
+                    const publicationStock = await PublicationSchema.findById(carritoBuscado?.publications[index].publication);
+                    if (publicationStock) {
+                        if (carritoBuscado?.publications[index].quantity > publicationStock.stock) {
+                            change = true;
+                            carritoBuscado.publications[index].quantity = publicationStock.stock;
+                        }
+                    }
+                }
+
+                if (change) {
+                    carritoBuscado.markModified('publications')
+                    await carritoBuscado.save()
+                }
+
+
+            }
+
+
+
+            return res.json(carritoBuscado);
         } catch (error) {
             console.error(error);
+            return res.sendStatus(500);
         }
     }
 
@@ -79,11 +104,16 @@ export default class CarritoController {
         try {
             const { id, email, amount } = req.params
             const user = await UserSchema.findOne({ "email": `${email}` })
+            const findPublic = await PublicationSchema.findById(id).populate('discount')
 
             const carritoBuscado: any = await carritoSchema.findOne({ userId: user?._id })
             const publicationSearched = carritoBuscado?.publications?.find((p: any) => {
                 if (p?.publication.equals(id)) {
-                    p.quantity = p.quantity + parseInt(amount)
+                    if (p?.quantity + parseInt(amount) < findPublic?.stock) {
+                        p.quantity = p.quantity + parseInt(amount);
+                    } else if (p?.quantity + parseInt(amount) >= findPublic?.stock) {
+                        p.quantity = findPublic?.stock;
+                    }
                     nuevo = false;
                     return p;
                 } else {
@@ -92,8 +122,7 @@ export default class CarritoController {
             })
 
             if (!publicationSearched) {
-                const findPublic = await PublicationSchema.findById(id).populate('discount')
-                
+
                 if (findPublic) {
                     carritoBuscado?.publications?.push({
                         publication: findPublic._id,
@@ -114,7 +143,7 @@ export default class CarritoController {
             console.error(error);
         }
     }
-    
+
     static async putCarrito(req: Request, res: Response) {
         let nuevo: boolean = false;
         try {
@@ -124,10 +153,15 @@ export default class CarritoController {
             const user = await UserSchema.findOne({ "email": `${email}` })
 
             const carritoBuscado: any = await carritoSchema.findOne({ userId: user?._id })
+            const findPublic = await PublicationSchema.findById(id).populate('discount');
+
+            if (findPublic.stock < 1) return res.json({ msg: 'No hay stock' })
 
             const publicationSearched = carritoBuscado?.publications?.find((p: any) => {
                 if (p?.publication.equals(id)) {
-                    p.quantity++
+                    if (p?.quantity < findPublic.stock) {
+                        p.quantity++
+                    }
                     nuevo = false;
                     return p;
                 } else {
@@ -136,8 +170,7 @@ export default class CarritoController {
             })
 
             if (!publicationSearched) {
-                const findPublic = await PublicationSchema.findById(id).populate('discount');
-                
+
                 if (findPublic) {
                     carritoBuscado?.publications?.push({
                         publication: findPublic._id,
