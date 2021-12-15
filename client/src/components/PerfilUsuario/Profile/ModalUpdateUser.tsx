@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { Box, Button, Typography, Modal, TextField, makeStyles } from "@material-ui/core";
 import axios from "axios";
 
@@ -32,10 +32,11 @@ const useStyles = makeStyles({
 
 
 interface UpdateUserdata {
-  firstName: String;
-  lastName: string;
-  dni: string;
-  phone: string;
+    firstName: String;
+    lastName: string;
+    userName: string;
+    dni: string;
+    phone: string;
 }
 interface UserId {
   id: string | undefined;
@@ -44,16 +45,18 @@ export default function ModalUpdateUser(props: UserId) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
   const classes = useStyles();
 
+    const [input, setInput] = useState<UpdateUserdata>({
+        firstName: "",
+        lastName: "",
+        userName: "",
+        dni: "",
+        phone: ""
+    })
 
-  const [input, setInput] = React.useState<UpdateUserdata>({
-    firstName: "",
-    lastName: "",
-    dni: "",
-    phone: "",
-  });
+
+  
 
   const handleChange = (event: React.BaseSyntheticEvent) => {
     setInput({ ...input, [event.target.name]: event.target.value });
@@ -67,6 +70,7 @@ export default function ModalUpdateUser(props: UserId) {
       firstName: input.firstName,
       lastName: input.lastName,
       dni: input.dni,
+      userName: input.userName
     });
     handleClose();
   };

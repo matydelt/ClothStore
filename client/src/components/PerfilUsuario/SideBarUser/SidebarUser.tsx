@@ -66,17 +66,8 @@ interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
 interface Props {
-  photo: string | undefined;
-  phone: string | undefined;
-  email: string | undefined;
-  firstName: string | undefined;
-  lastName: string | undefined;
-  dni: string | undefined;
-  calle: string | undefined;
-  numero: string | undefined;
-  ciudad: string | undefined;
-  country: string | undefined;
-  cp: string | undefined;
+  type: string | undefined;
+
 }
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",

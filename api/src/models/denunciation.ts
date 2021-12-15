@@ -1,10 +1,12 @@
 import mongoose, { Schema, model } from "mongoose";
+import { Publication } from "./publication";
+import { User } from "./user";
 
 export interface Denunciation extends mongoose.Document {
     message: string;
     state: boolean;
-    author: Schema.Types.ObjectId;
-    publication: Schema.Types.ObjectId;
+    author: [User];
+    publication: [Publication];
 }
 
 const DenunciationSchema = new Schema({
@@ -13,12 +15,12 @@ const DenunciationSchema = new Schema({
         required: [true, "falta message"],
     },
     author: {
-        type: Schema.Types.ObjectId,
-        require: [true, "necesita id de author"]
+        type: ["User"],
+        ref: "User",
     },
     publication: {
-        type: Schema.Types.ObjectId,
-        require: [true, "necesita id de publicación"]
+        type: ["Publication"],
+        ref: "Publication",
     },
     state: {
         type: Boolean,

@@ -19,6 +19,7 @@ export default class QAndAControllers {
             await question.save();
 
             sendEMail.send({
+                publicationImage: publication?.images[0]?.url,
                 publicationName: publication?.name,
                 publicationPrice: publication?.price,
                 email: seller?.email,
@@ -65,6 +66,7 @@ export default class QAndAControllers {
                 console.log(buyer)
 
                 sendEMail.send({
+                    publicationImage: publication?.images[0]?.url,
                     publicationName: publication?.name,
                     publicationPrice: publication?.price,
                     email: buyer?.email,

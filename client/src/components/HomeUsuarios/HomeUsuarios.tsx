@@ -78,10 +78,12 @@ export default function HomeUsuarios() {
     });
     useEffect(() => {
         async function getOneUser() {
-            await axios.get(`http://localhost:3001/auth/${user?._id}`).then(({ data }) => {
-                setInput({ ...input, ...data })
-                setName(data.name)
-            })
+            if(user && user._id){
+                await axios.get(`http://localhost:3001/auth/${user?._id}`).then(({ data }) => {
+                    setInput({ ...input, ...data })
+                    setName(data.name)
+                })
+            }
         }
         getOneUser()
     }, [])

@@ -8,6 +8,7 @@ import {
   publicationSaveReducer,
 } from "./publicationReducer";
 import { carritoReducer } from './carritoReducer'
+import { DenunciationReducer } from "./denunciationReducers";
 
 
 
@@ -22,4 +23,5 @@ export default combineReducers({
   carrito: carritoReducer,
   allUsers: allUsersReducer,
   allMarks: allMarksReducer,
+  denunciation: DenunciationReducer
 });

@@ -41,7 +41,7 @@ const PublicationSchema = new Schema({
     },
     stockInicial: {
         type: Number,
-        required: [true, "falta stock"]
+
     },
     mark: {
         type: String,

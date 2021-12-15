@@ -55,6 +55,7 @@ export default function CardPublicacion(props: Props) {
     image: images[0]?.url,
     title: name,
     category: categorie,
+    discount: undefined
   };
   useEffect(() => {
     dispatch(cartLength());
@@ -70,7 +71,7 @@ export default function CardPublicacion(props: Props) {
         return aux;
       }
       console.log(clickedItem);
-      return [...aux, { ...clickedItem, amount: 1, price: discount ? price - price*discount.percentage/100 : price  }];
+      return [...aux, { ...clickedItem, amount: 1, price: discount ? price - price*discount.percentage/100 : price, discount: discount ? discount.percentage : undefined }];
     });
   };
 
@@ -163,7 +164,7 @@ export default function CardPublicacion(props: Props) {
             variant="body2"
           >
             $ {discount ? 
-            price - (price * discount?.percentage / 100)
+            (price - (price * discount?.percentage / 100)).toFixed(2)
             :
              `  ${price}`
              }

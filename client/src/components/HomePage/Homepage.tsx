@@ -22,10 +22,11 @@ const useStyles = makeStyles({
     textDecoration: "underline",
   },
   containerMain: {
-    height: "100vh",
-    marginTop: "80px",
-  },
-});
+    height: 'max-content',
+    marginTop: '80px',
+  }
+})
+
 
 const Homepage = () => {
   const {

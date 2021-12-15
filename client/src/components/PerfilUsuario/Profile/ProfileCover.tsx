@@ -45,7 +45,7 @@ const useStyles = makeStyles({
 
 interface Props {
   id: string | undefined;
-  photo: string | undefined;
+  userName: string | undefined;
   phone: string | undefined;
   email: string | undefined;
   firstName: string | undefined;
@@ -59,6 +59,26 @@ interface Props {
 }
 
 const ProfileCover = (props: Props) => {
+  const [input, setInput] = React.useState<Props>({
+    id: "",
+    userName: "",
+    phone: "",
+    email: "",
+    firstName: "",
+    lastName: "",
+    dni: "",
+    calle: "",
+    numero: "",
+    ciudad: "",
+    cp: "",
+    country: "",
+
+  });
+  const [name, setName] = React.useState<Name>({
+    firstName: "",
+    lastName: ""
+  })
+  type Name = { firstName: string, lastName: string }
 
   const classes = useStyles();
 
@@ -125,8 +145,14 @@ const ProfileCover = (props: Props) => {
           </Typography>
           <Typography color='primary' classes={{ root: classes.titledate }} variant='h4'>Datos de la Cuenta</Typography>
           <TextField
+            disabled
+            label="User name"
+            value={props.userName}
             variant='outlined'
-            name="phone"
+            // name="phone"
+          />
+          <TextField
+            name='phone'
             disabled
             label="Teléfono:"
             value={props.phone}

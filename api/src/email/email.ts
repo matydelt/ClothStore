@@ -19,19 +19,29 @@ exports.send = async (options: any) => {
 
     let result;
 
-    if(true) {
+    if(options.publicationPrice) {
         let mapObj: any = {
-            mensaje: options.mensaje,
+            mensaje: options?.mensaje,
             publicationName: options.publicationName,
             publicationPrice: options.publicationPrice,
+            publicationImage: options.publicationImage,
         }
-        result = file.replace(/mensaje|publicationName|publicationPrice/gi,function(matched: any ){
+        result = file.replace(/mensaje|publicationName|publicationPrice|publicationImage/gi,function(matched: any ){
             return mapObj[matched];
         });
     }
-    //  else {
-    //     result = file.replace('[[mensaje]]', options.mensaje);
-    // }
+    else if (options.htmlFile === 'purchaseReceived.html') {
+        let mapObj: any = {
+            purchaseTotal: options.purchaseTotal,
+            purchaseCode: options.purchaseCode,
+        }
+        result = file.replace(/purchaseCode|purchaseTotal/gi,function(matched: any ){
+            return mapObj[matched];
+        });
+    }
+     else if (options.htmlFile === 'purchaseSuccess.html') {
+        result = file.replace('purchaseTotal', options.purchaseTotal);
+    }
     
     
     let mailOptions = {

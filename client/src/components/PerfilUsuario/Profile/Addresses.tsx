@@ -48,8 +48,8 @@ function Addresses(props: Props) {
           setstate(data.address);
         });
     }
-    getOneUser();
-  }, [state]);
+    getOneUser()
+  }, [])
 
 
   const classes = useStyles();

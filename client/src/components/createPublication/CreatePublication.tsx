@@ -12,6 +12,31 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store/store';
 import { User } from '../../redux/reducer/stateTypes';
 import NavBar from '../HomePage/Header/NavBar/NavBar';
+import { setTimeout } from 'timers';
+// import { useAuth } from '../../hooks/useAuth';
+
+interface CreatePublicationForm {
+  name: string;
+  detail: string;
+  mark: string;
+  category: string;
+  gender: string;
+  stock: 0;
+  price: 0;
+  images: { public_id: string; url: string }[];
+  id: string | undefined;
+}
+// interface CreatePublicationForm {
+//   name: string,
+//   detail: string,
+//   mark: string,
+//   category: string,
+//   gender: string,
+//   stock: 0,
+//   price: 0,
+//   images: { public_id: string, url: string }[],
+//   id: string | undefined
+// }
 
 const useStyles = makeStyles({
   buttonPublicOrUpdate: {
@@ -26,17 +51,6 @@ const useStyles = makeStyles({
 })
 
 
-interface CreatePublicationForm {
-  name: string,
-  detail: string,
-  mark: string,
-  category: string,
-  gender: string,
-  stock: 0,
-  price: 0,
-  images: { public_id: string, url: string }[],
-  id: string | undefined
-}
 
 export default function CreatePublication(): JSX.Element {
 
@@ -91,13 +105,11 @@ export default function CreatePublication(): JSX.Element {
   function submitForm(e: BaseSyntheticEvent): void {
     e.preventDefault();
 
-    axios
-      .post("http://localhost:3001/publications/new", form, {
-        params: { publicationId },
-      })
-      .then(({ data }) => {
-        navigate(`/publication/${data}`);
-      });
+    axios.post('http://localhost:3001/publications/new', form, { params: { publicationId } }).then(({ data }) => {
+ 
+        navigate(`/publication/${data}`)
+ 
+    });
   }
 
   function removeImage(imageId: string): void {

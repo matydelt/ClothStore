@@ -3,6 +3,7 @@ import UserController from "../controllers/userControllers";
 const router = express.Router();
 
 router.post("/auth/new", UserController.setUser);
+router.post("/auth/google", UserController.setUserGoogle);
 router.get("/auth", UserController.getUser);
 router.get("/usersname", UserController.getUserName);
 router.get("/auth/:id", UserController.getOneUser); //trae un solo usuario

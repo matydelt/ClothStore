@@ -7,7 +7,6 @@ export default class UserController {
     try {
       const { firstName, lastName, phone, email, password, photo } = req.body;
       const users = await UserSchema.find();
-      console.log("----------------U---", users);
       if (users.length > 0) {
         const user: User = new UserSchema({
           phone,
@@ -43,12 +42,57 @@ export default class UserController {
       res.sendStatus(500);
     }
   }
+
+  static async setUserGoogle(req: Request, res: Response) {
+    try {
+      const { firstName, lastName, phone, email, password, photo } = req.body;
+      const users = await UserSchema.find();
+      if (users.length > 0) {
+        const usersGoo = await UserSchema.findOne({ email: email });
+        if (!usersGoo) {
+          const user: User = new UserSchema({
+            phone,
+            email,
+            password,
+            name: { firstName, lastName },
+            photo,
+            type: "normal",
+          });
+          const userSave = await user.save();
+
+          const carrito: Carrito = new carritoSchema({
+            publications: undefined,
+            userId: userSave._id,
+          });
+
+          await carrito.save();
+          res.json(user);
+        } else {
+          if (usersGoo && usersGoo.password === password) res.json(usersGoo);
+          else res.send("usuario o contraseña erronea");
+        }
+      } else {
+        const user: User = new UserSchema({
+          phone,
+          email,
+          password,
+          name: { firstName, lastName },
+          photo,
+          type: "admin",
+        });
+        await user.save();
+        res.sendStatus(200);
+      }
+    } catch (e) {
+      console.log(e);
+      res.sendStatus(500);
+    }
+  }
+
   static async getUser(req: Request, res: Response) {
     try {
       const { email, password } = req.query;
-      // const user = await UserSchema.findOne({ "email": `${email}` });
       const user = await UserSchema.findOne({ email: email as string });
-      // const user = await UserSchema.find().findOne({ _email: email });
       if (user && user.password === password) res.json(user);
       else res.send("usuario o contraseña erronea");
     } catch (e) {
@@ -104,8 +148,8 @@ export default class UserController {
   static async getOneUser(req: Request, res: Response) {
     try {
       const { id } = req.params;
+      console.log(req.params);
       const user = await UserSchema.findOne({ _id: id });
-      console.log("----------------user--------------", user);
       res.json(user);
     } catch (error) {
       console.log("error en get one user");
@@ -139,7 +183,7 @@ export default class UserController {
   }
   static async updateUser(req: Request, res: Response) {
     try {
-      const { id, phone, firstName, lastName, dni } = req.body;
+      const { id, phone, firstName, lastName, dni, userName } = req.body;
       await UserSchema.updateOne(
         { _id: id },
         {
@@ -147,6 +191,7 @@ export default class UserController {
             phone: phone,
             name: { firstName: firstName, lastName: lastName },
             dni: dni,
+            userName: userName,
           },
         }
       );

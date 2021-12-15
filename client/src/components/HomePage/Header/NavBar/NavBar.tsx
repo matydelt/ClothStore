@@ -93,7 +93,7 @@ export default function NavBar({ flagButtonTranslate }: Props) {
                 position: "absolute",
                 zIndex: "1",
                 left: "0",
-                bottom: { xl: "-245%;" },
+                // bottom: { xl: "-245%;" },
               }}
               id='logo'
             />
