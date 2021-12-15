@@ -292,6 +292,7 @@ export default class PublicationController {
       sendEMail.send({
         publicationImage: publication?.images[0]?.url,
         publicationName: publication?.name,
+        publicationPrice: publication?.price,
         email: seller?.email,
         mensaje: message,
         subject: "Tu publicacion fue rechazada",
