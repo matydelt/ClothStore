@@ -42,7 +42,7 @@ function SearchBar() {
       <TextField
         autoComplete="off"
         classes={{ root: classes.textField }}
-        placeholder="Search"
+        placeholder="Buscar"
         type="search"
         variant="standard"
         value={text}
