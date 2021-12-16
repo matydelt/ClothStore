@@ -94,6 +94,7 @@ export default function ListProducts(props: User) {
                   <TableCell align="right">Marca</TableCell>
                   <TableCell align="right">Categoria</TableCell>
                   <TableCell align="right">Genero</TableCell>
+                  <TableCell align="right">Stock</TableCell>
                   <TableCell align="right">Precio</TableCell>
                   <TableCell align="center">Descuento</TableCell>
                   <TableCell align="center">Opciones</TableCell>
@@ -112,6 +113,7 @@ export default function ListProducts(props: User) {
                     <TableCell align="right">{e.mark}</TableCell>
                     <TableCell align="right">{e.category}</TableCell>
                     <TableCell align="right">{e.gender}</TableCell>
+                    <TableCell align="right">{e.stock == 0 ? "Sin stock" : e.stock}</TableCell>
                     <TableCell align="right">{e.price}</TableCell>
                     <TableCell align="right">
                       {e.discount &&

@@ -180,7 +180,7 @@ const LoginForm = () => {
             margin="normal"
             required
             id="email"
-            label="Email Address"
+            label="Dirección de email"
             name="email"
             autoComplete="email"
             autoFocus
