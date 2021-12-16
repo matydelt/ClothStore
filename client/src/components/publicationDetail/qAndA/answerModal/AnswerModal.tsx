@@ -45,7 +45,7 @@ export default function AnswerModal({ children, questionId, authorId, getQuestio
     function submitForm(e: React.BaseSyntheticEvent) {
         e.preventDefault();
         console.log(answerForm);
-        axios.post('/answer', answerForm).then(({data}) => {
+        axios.post('/answer', answerForm).then(({ data }) => {
             getQuestions();
         })
     }
@@ -60,7 +60,7 @@ export default function AnswerModal({ children, questionId, authorId, getQuestio
                     <DialogTitle>Responder</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                    
+
                         </DialogContentText>
                         <TextField
                             onChange={handleForm}
