@@ -60,13 +60,13 @@ const Footer = ({ background }: Props) => {
                 Categorias
               </Typography>
               <Box>
-                <Link color="inherit">Hombre</Link>
+                <Link color="inherit">Remera</Link>
               </Box>
               <Box>
-                <Link color="inherit">Mujer</Link>
+                <Link color="inherit">Pantalon</Link>
               </Box>
               <Box>
-                <Link color="inherit">Niños</Link>
+                <Link color="inherit">Zapatillas</Link>
               </Box>
             </Grid>
             <Grid item xs={12} sm={4}>

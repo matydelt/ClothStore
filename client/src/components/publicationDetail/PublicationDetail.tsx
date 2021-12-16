@@ -27,11 +27,12 @@ import Footer from '../Footer';
 
 const useStyles = makeStyles({
   containerPublicationDetail: {
-    marginTop: '400px',
-    marginBottom: '350px',
+    marginTop: '100px',
+    marginBottom: '100px', 
     display: 'flex',
     justifyContent: 'center',
-    position: 'relative'
+    position: 'relative',
+    // height: '70vh'
   },
   avatarPublicationDetatil: {
     width: '350px !important',
@@ -187,15 +188,15 @@ export default function PublicationDetail(): JSX.Element {
 
   }
   return (<>
-    <Box sx={{ backgroundColor: '#eeeeee', minHeight: '100vh', /* height: 'max-content',  */position: 'relative' }}>
-      <NavBar></NavBar>
+    <Box sx={{ backgroundColor: '#eeeeee', minHeight: '100vh', /* height: 'max-content', */ position: 'relative' }}>
+      <NavBar siteDetail={true}/>
       {/* <Box sx={{ backgroundColor: '#f5f5f5', minHeight: '15vh' }}>
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
 
         </Box>
       </Box> */}
 
-      <Box sx={{ mt: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', height: '800px' }}>
+      <Box sx={{ mt: 0, display: 'flex', justifyContent: 'center', alignItems: 'center',/*  height: '800px'  */}}>
 
         <Container classes={{ root: classes.containerPublicationDetail }}>
 
@@ -471,7 +472,7 @@ export default function PublicationDetail(): JSX.Element {
       </div>
       {!loading &&
 
-        <Box sx={{ width: '100%', my: 10, height: 'max-content' }}>
+        <Box sx={{ width: '100%',  marginTop: '50px', marginBottom: '80px', height: 'max-content' }}>
 
           <Typography align='center' variant="h5" component="h5" style={{ marginBottom: '20px' }}>Publicaciones relacionadas</Typography>
 

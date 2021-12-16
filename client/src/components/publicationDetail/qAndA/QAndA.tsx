@@ -90,7 +90,7 @@ export default function QAndA(): JSX.Element {
 
     return (<>
 
-        <Box component="div" sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+        <Box component="div" sx={{display: 'flex', flexDirection: 'column', width: '100%' }}>
 
             <Typography variant="h5">Preguntas y respuestas</Typography>
 
@@ -117,6 +117,7 @@ export default function QAndA(): JSX.Element {
                             <Grid item xs={5}>
                                 <TextField
                                     onChange={handleForm}
+                                    variant='outlined'
                                     fullWidth
                                     name="message"
                                     value={message}
@@ -124,10 +125,20 @@ export default function QAndA(): JSX.Element {
                                     label="Escribe tu pregunta..."
                                     helperText="Consejo: ¡Busca entre las respuestas antes de preguntar!"
                                     autoComplete="off"
+                                    classes={{ root: classes.inputQandA }}
                                 />
                             </Grid>
                             <Grid item xs={1}>
-                                <Button disabled={!message} type="submit">Preguntar</Button>
+                                <Button
+                                className='buttonSpan'
+                                    variant='contained'
+                                    color='primary'
+                                    classes={{ root: classes.inputQandA }}
+                                    disabled={!message}
+                                    type="submit"
+                                >
+                                    Preguntar
+                                </Button>
                             </Grid>
                         </Grid>
                     }

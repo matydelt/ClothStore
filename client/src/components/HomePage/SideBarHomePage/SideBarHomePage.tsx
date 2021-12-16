@@ -208,7 +208,7 @@ const SideBarHomePage = () => {
           {open2 ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
         <Collapse in={open2} timeout="auto" unmountOnExit>
-          {["Remera", "Patanlon", "Zapatillas", "Zapatos"].map((value) => {
+          {["Remera", "Pantalon", "Zapatillas", "Zapatos"].map((value) => {
             const labelId = `checkbox-list-label-${value}`;
 
             return (

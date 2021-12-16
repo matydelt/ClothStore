@@ -24,7 +24,7 @@ interface props {
 
 const useStyles = makeStyles({
     containRaltedPublication: {
-        marginBottom: '40px'
+        marginBottom: '40px',
     }
 })
 
