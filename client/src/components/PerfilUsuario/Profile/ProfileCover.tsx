@@ -20,7 +20,23 @@ import * as React from "react";
 import ModalUpdateUser from "./ModalUpdateUser";
 // import FileUpload from "../../fileUpload/FileUpload";
 import Logo from '../../assets/logo/ClothStore_sin_fondo.png'
-import { toast, ToastContainer } from "react-toastify"
+import swal from 'sweetalert';
+
+interface Alerta {
+  title: string,
+  text: string,
+  icon: string,
+  button: string
+}
+const datosA : Alerta = {
+  title: "Informacion importante",
+  text: 'Es Requerido el nombre de la Tienda',
+  icon: "warning",
+  button: "Aceptar"
+};
+const Alert = () => {
+    swal(datosA)
+}
 
 const useStyles = makeStyles({
   inputProfile: {
@@ -63,28 +79,9 @@ interface Props {
 const ProfileCover = (props: Props) => {
   const classes = useStyles();
 
-  toast.info('Es necesario tener un nombre de Tienda !!', {
-    position: "top-center",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    });
 
   const Alerta = ()=>{
-      return(
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />)
+      return Alert()
   }
 
   return (
