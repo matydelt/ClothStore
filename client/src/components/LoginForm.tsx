@@ -21,7 +21,6 @@ import Logo from './assets/logo/ClothStore_sin_fondo.png'
 
 type FormState = { email: string; password: string };
 
-const theme = createTheme();
 
 const useStyles = makeStyles({
   rootButtonLogin: {
