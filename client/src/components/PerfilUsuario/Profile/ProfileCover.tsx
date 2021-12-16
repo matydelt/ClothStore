@@ -126,7 +126,7 @@ const ProfileCover = (props: Props) => {
           <Typography color='primary' classes={{ root: classes.titledate }} variant='h4'>Datos de la Cuenta</Typography>
           <TextField
             disabled
-            label="User name"
+            label="Tienda"
             value={props.userName}
             variant='outlined'
             // name="phone"
@@ -181,14 +181,14 @@ const ProfileCover = (props: Props) => {
             <Button fullWidth color='secondary' classes={{ root: classes.buttonProfile }} size="medium" variant="contained">
               {
                 props.userName == "" ?
-                <>Nueva Publicacion</>
-                :
-              <Link
-                to="/nueva-publicacion"
-                style={{ textDecoration: "none", color: "black" }}
-              >
-                Nueva Publicacion
-              </Link>
+                  <>Nueva Publicacion</>
+                  :
+                  <Link
+                    to="/nueva-publicacion"
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
+                    Nueva Publicacion
+                  </Link>
               }
             </Button>
           </Box >
