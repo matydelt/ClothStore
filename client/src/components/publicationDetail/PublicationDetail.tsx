@@ -172,8 +172,8 @@ export default function PublicationDetail(): JSX.Element {
 
       if (auth?.user) {
         if ( user?._id != publication?.author){
-          Alert();
           dispatch(putCarritoAmount(auth?.user?.email, publication?._id, amount))
+          Alert();
         }
       } else {
 
@@ -194,6 +194,7 @@ export default function PublicationDetail(): JSX.Element {
             return [...aux, { title: publication?.name, id: publication?._id, image: publication?.images[0].url, quantity: amount, price: publication?.discount ? publication?.price - publication?.price * publication?.discount.percentage / 100 : publication?.price, discount: publication?.discount ? publication?.discount.percentage : undefined }];
           }
         });
+        Alert();
       }
 
     }

@@ -95,6 +95,7 @@ export default function CardPublicacion(props: Props) {
       }
       return [...aux];
     });
+    Alert();
   };
 
   const handleAddToCartDB = (
@@ -102,13 +103,9 @@ export default function CardPublicacion(props: Props) {
     id: string,
     author: string
   ): void => {
-    console.log("--------- userInfo---------",user)
-    console.log("--------- usuario---------",user?._id)
-    console.log("--------- autor---------",author)
-    console.log("--------- compara---------",user?._id == author)
     if(user?._id != author){
-      Alert();
       dispatch(putCarrito(email, id));
+      Alert();
     }
   };
 
