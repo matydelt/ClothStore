@@ -23,8 +23,23 @@ import { cartLength } from "../../../../redux/actions/publicationActions";
 import { RootState } from "../../../../redux/store/store";
 import { putCarrito } from "../../../../redux/actions/carritoAction";
 import { useAuth } from "../../../../hooks/useAuth";
+import swal from 'sweetalert';
 
-
+interface Alerta {
+  title: string,
+  text: string,
+  icon: string,
+  button: string
+}
+const datosA : Alerta = {
+  title: "Articulo Agregado Exitosamente",
+  text: '',
+  icon: "success",
+  button: "Aceptar"
+};
+const Alert = () => {
+    swal(datosA)
+}
 
 type Props = {
   name: string;
@@ -83,6 +98,7 @@ export default function CardPublicacion(props: Props) {
     email: string | null | undefined,
     id: string
   ): void => {
+    Alert();
     dispatch(putCarrito(email, id));
   };
 
