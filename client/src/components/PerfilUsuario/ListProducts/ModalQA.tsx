@@ -133,7 +133,7 @@ export default function ModalQA(props: PubId): JSX.Element {
                                                                 margin="dense"
                                                                 id="message"
                                                                 name="message"
-                                                                value={answerForm.message}
+                                                                // value={answerForm.message}
                                                                 label="Escribe una respuesta"
                                                                 type="text"
                                                                 fullWidth
