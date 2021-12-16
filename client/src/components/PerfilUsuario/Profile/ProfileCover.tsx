@@ -91,8 +91,7 @@ const ProfileCover = (props: Props) => {
           ¡Bienvenid@ {props.firstName}!
         </Typography>
         <Typography align='center' variant="subtitle2">
-          Este es tu perfil, aqui podras gestionar todas tus ventas y compras,
-          ademas vas a poder ver las metricas de tus ventas
+          Este es tu perfil, aqui podras gestionar todas tus ventas y compras.
         </Typography>
       </Box>
 
