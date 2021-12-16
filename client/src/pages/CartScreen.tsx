@@ -85,7 +85,7 @@ export type CartType = CartItemType[];
 
 export default function CartScreen({ idHomepage }: Props) {
   const [cart, setCart] = useLocalStorage<CartType>("cart", []);
-  const carrito: any = useSelector((state: RootState) => state.carrito.carrito);
+  const { carrito }: any = useSelector((state: RootState) => state);
   const auth = useAuth();
   const dispatch = useDispatch();
 
@@ -111,18 +111,21 @@ export default function CartScreen({ idHomepage }: Props) {
 
     let cartCopy = [...cart];
 
-    cartCopy.forEach(item => {
+    await cartCopy.forEach(item => {
+      console.log('asdsa', item.quantity)
       if (item.id === clickedItem.id && item.quantity < data.stock) {
-        console.log('asdsa', item.quantity)
         item.quantity += 1
       }
     })
 
-    setCart(cartCopy);
+    await setCart(cartCopy);
+    console.log(cartCopy)
+    dispatch({ type: "CARRITO_LOCAL_CHECKOUT_GET", payload: { success: cartCopy } })
 
   };
 
   const handleRemoveFromCart = (id: string) => {
+
     setCart((prev) =>
       prev.reduce((acc, item) => {
         if (item.id === id) {
@@ -134,7 +137,8 @@ export default function CartScreen({ idHomepage }: Props) {
           return [...acc, item];
         }
       }, [] as CartType)
-    );
+    )
+    dispatch({ type: "CARRITO_LOCAL_CHECKOUT_GET", payload: { success: cart } })
   };
 
   const handleAddQuantityToCartDB = (
@@ -168,7 +172,6 @@ export default function CartScreen({ idHomepage }: Props) {
     homePage?.classList.remove("translateLeft");
     containerHomePage?.classList.remove("heightContainerHomePage");
   };
-
   return (
     <Box
       id={idHomepage}
@@ -182,7 +185,7 @@ export default function CartScreen({ idHomepage }: Props) {
         {/* Botón para regresar a la homepage */}
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} >
           <Typography classes={{ root: classes.title }} variant='h4' color='primary'>
-            Mi Carritto
+            Mi Carrito
           </Typography>
           {idHomepage ?
             <Button
@@ -226,7 +229,7 @@ export default function CartScreen({ idHomepage }: Props) {
                   </TableRow>
                 </TableHead>
                 {auth.user
-                  ? carrito?.publications?.map((item: any) => (
+                  ? carrito?.map((item: any) => (
                     <CartItem
                       key={item.id}
                       item={item}
@@ -244,7 +247,7 @@ export default function CartScreen({ idHomepage }: Props) {
                       }
                     />
                   ))
-                  : cart?.map((item) => (
+                  : carrito?.carritoLocal?.map((item: any) => (
                     <CartItem
                       key={item.id}
                       item={item}

@@ -67,9 +67,9 @@ export default function CardPublicacion(props: Props) {
       const isItemInCart = aux.find((item: any) => item.id === clickedItem.id);
 
       if (!isItemInCart) {
-        return [...aux, { ...clickedItem, amount: 1, price: discount ? price - price*discount.percentage/100 : price, discount: discount ? discount.percentage : undefined }];
+        return [...aux, { ...clickedItem, amount: 1, price: discount ? price - price * discount.percentage / 100 : price, discount: discount ? discount.percentage : undefined }];
       }
-      
+
       if (isItemInCart && (isItemInCart.quantity < stock)) {
         console.log(isItemInCart.quantity, stock);
         isItemInCart.quantity += 1;
@@ -77,8 +77,11 @@ export default function CardPublicacion(props: Props) {
       }
       return [...aux];
     });
-  };
 
+  };
+  useEffect(() => {
+    dispatch({ type: "CARRITO_LOCAL_CHECKOUT_GET", payload: { success: cart } })
+  }, [cart])
   const handleAddToCartDB = (
     email: string | null | undefined,
     id: string

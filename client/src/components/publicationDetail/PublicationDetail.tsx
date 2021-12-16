@@ -145,7 +145,6 @@ export default function PublicationDetail(): JSX.Element {
     setImageShow(img)
   }
 
-
   const handleAddCart = async () => {
     if (publication) {
 
