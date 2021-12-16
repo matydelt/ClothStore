@@ -84,10 +84,13 @@ interface Props {
 export type CartType = CartItemType[];
 
 export default function CartScreen({ idHomepage }: Props) {
+
   const [cart, setCart] = useLocalStorage<CartType>("cart", []);
   const carrito: any = useSelector((state: RootState) => state.carrito.carrito);
   const auth = useAuth();
   const dispatch = useDispatch();
+  
+  console.log(cart)
 
   const navigate = useNavigate();
 
@@ -210,7 +213,7 @@ export default function CartScreen({ idHomepage }: Props) {
         {/* Tabla de items a comprar */}
         <Paper className={classes.rootContainer}>
           {(!auth?.user && cart?.length === 0) || (auth?.user && carrito?.publications?.length === 0) ? (
-            <Typography>Aún no has seleccionado nada</Typography>
+            <Typography align='center'>Aún no has seleccionado nada</Typography>
           ) : (
             <TableContainer className={classes.container}>
               <Table stickyHeader aria-label="sticky table">
