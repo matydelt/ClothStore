@@ -74,6 +74,7 @@ const ProfileCover = (props: Props) => {
     });
 
   const Alerta = ()=>{
+      return(
       <ToastContainer
         position="top-center"
         autoClose={5000}
@@ -83,7 +84,7 @@ const ProfileCover = (props: Props) => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-      />
+      />)
   }
 
   return (
@@ -202,7 +203,7 @@ const ProfileCover = (props: Props) => {
           <Box sx={{ width: '70%' }}>
             <ModalUpdateUser id={props.id} getOneUser={props.getOneUser} />
             {
-                props.userName == "" ?
+                props.userName == "" || undefined?
                 <Button onClick={Alerta} fullWidth color='secondary' classes={{ root: classes.buttonProfile }} size="medium" variant="contained">
                   Nueva Publicacion
                 </Button>
