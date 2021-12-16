@@ -103,7 +103,7 @@ export default function CardPublicacion(props: Props) {
     id: string,
     author: string
   ): void => {
-    console.log("--------- user---------",user?)
+    console.log("--------- user---------",user)
     console.log("--------- userInfo---------",user?.userInfo)
     console.log("--------- usuario---------",user?.userInfo?._id)
     console.log("--------- autor---------",author)
