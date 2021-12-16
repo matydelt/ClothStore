@@ -29,13 +29,14 @@ const useStyles = makeStyles({
 
 interface Props {
   flagButtonTranslate?: boolean;
+  siteDetail?: boolean;
 }
 
 
 
 
 
-export default function NavBar({ flagButtonTranslate }: Props) {
+export default function NavBar({ flagButtonTranslate, siteDetail }: Props) {
   const cartLength = useSelector(
     (state: RootState) => state.publicationSave.cartLength
   );
@@ -193,15 +194,26 @@ export default function NavBar({ flagButtonTranslate }: Props) {
       <>
         <AppBar id='appbar' classes={{ root: classes.navBarContain }} position="static">
           <Toolbar>
-            <Button
-              onClick={() => navigate(-1)}
+            {siteDetail ?
+              <Button
+              onClick={() => navigate('/')}
               startIcon={<ArrowBackIcon />}
               variant="contained"
               color="primary"
               className={classes.button}
             >
               Volver
-            </Button>
+            </Button> :
+
+              <Button
+                onClick={() => navigate(-1)}
+                startIcon={<ArrowBackIcon />}
+                variant="contained"
+                color="primary"
+                className={classes.button}
+              >
+                Volver
+              </Button>}
             <Box
               component="img"
               src={Logo}

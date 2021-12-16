@@ -12,7 +12,7 @@ const style = {
   border: "2px solid #00c2cb",
   boxShadow: 24,
   p: 4,
-  height: '450px',
+  height: '523px',
   borderRadius: '10px'
 };
 
@@ -105,7 +105,7 @@ export default function ModalUpdateUser(props: UserId) {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-around',
-              height: '276px'
+              height: '335px'
             }}
           >
             <TextField
