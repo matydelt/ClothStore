@@ -1,4 +1,4 @@
-.modal {
+.modalDetailPublication {
   background-color: rgba(0, 0, 0, .8);
   position        : fixed;
   top             : 0;
@@ -7,23 +7,88 @@
   left            : 0;
   opacity         : 0;
   pointer-events  : none;
-  transition      : all 1s;
+  transition      : all .3s ease-in-out;
   z-index         : 100;
+  height          : 100%;
 }
+
+.textDetailDenuncia {
+  transition: all .3s ease-in-out;
+  transition-delay: .2s;
+}
+
+.textDetailDenuncia:focus-visible {
+  outline: none;
+  border : 3px solid #00c2cb !important;
+}
+
+
+.modal-denuncia-detail {
+  display         : flex;
+  flex-direction  : column;
+  justify-content : space-around;
+  height          : 343px;
+  background-color: rgba(233, 233, 233, 0.993);
+  width           : 320px;
+  padding         : 20px;
+  margin          : auto auto;
+  position        : relative;
+  border-radius   : 10px;
+  transform       : translate(0px, 270px);
+  font-family     : 'Playfair Display', serif;
+}
+
+
+.aceptar-Detail-Publication {
+  background-color: #7ed957;
+  color           : white;
+  padding         : 7px;
+  border          : none;
+  border-radius   : 5px;
+  cursor          : pointer;
+  text-decoration : none;
+  width           : 85%;
+  color           : black;
+  font-family     : 'Playfair Display', serif;
+  font-weight     : 400;
+  transition      : all .4s ease-in-out;
+}
+
+.aceptar-Detail-Publication:hover {
+  transform: scale(1.1)
+}
+
+.aceptar-Detail-Publication:active {
+  transform: scale(.8)
+}
+
 
 #denunciar:target {
   opacity       : 1;
   pointer-events: auto;
 }
 
+.hoverIcon {
+  transition: all .1s ease-in-out !important;
+  transition-delay: .1s !important;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+.hoverIcon:hover {
+  background-color: #ccc;
+}
+
+
 .text {
   border: gray solid 1px;
 }
 
 .buttonDenuncia {
-  margin: 0px;
+  margin    : 0px;
   transition: all .5s ease;
-  overflow: hidden;
+  overflow  : hidden;
 }
 
 .buttonDenuncia:hover span {
@@ -31,16 +96,16 @@
 }
 
 .buttonDenuncia::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  content         : '';
+  position        : absolute;
+  top             : 0;
+  left            : 0;
+  width           : 100%;
+  height          : 100%;
   background-color: #00c2cb;
-  transform: scale(0);
-  transition: all .5s ease-in-out;
-  opacity: .4;
+  transform       : scale(0);
+  transition      : all .5s ease-in-out;
+  opacity         : .4;
 }
 
 .buttonDenuncia:hover::before {

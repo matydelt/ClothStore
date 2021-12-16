@@ -2,7 +2,7 @@ import * as React from "react";
 import { useDispatch } from "react-redux";
 import { putPublications } from "../../redux/actions/publicationActions";
 import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
+import { TextField } from "@material-ui/core";
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from "@mui/icons-material/Search";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";

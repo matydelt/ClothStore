@@ -1,5 +1,5 @@
-import React, { BaseSyntheticEvent, useState } from "react";
-import { Button, Grid, TextField, Typography, Modal } from "@material-ui/core";
+import React, { useState } from "react";
+import { Button, Typography, Modal, TextField, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@material-ui/core";
 import { Box } from "@mui/system";
 import { Skeleton, Stack } from '@mui/material';
 import axios from "axios";
@@ -7,27 +7,26 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
 import { User } from "../../../redux/reducer/stateTypes";
 import AnswerModal from "../../publicationDetail/qAndA/answerModal/AnswerModal";
-import { useParams } from 'react-router';
 
-
-interface Form {
-  message: string;
-  publicationId: string;
-  authorId: string;
+interface IAnswerForm {
+    questionId: string;
+    authorId: string;
+    message: string;
 }
+
 interface PubId {
-  id: string;
+    id: string;
 }
 const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "white",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
+    position: "absolute" as "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 600,
+    bgcolor: "white",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
 };
 export default function ModalQA(props: PubId): JSX.Element {
     const [open, setOpen] = React.useState(false);
@@ -37,145 +36,139 @@ export default function ModalQA(props: PubId): JSX.Element {
     const publicationId = props.id;
     const user = useSelector((state: RootState): User | undefined => state?.userSignin?.userInfo);
 
-    const [form, setForm] = useState<Form>({ message: '', publicationId: publicationId || '', authorId: user?._id || '' });
     const [isBuyer, setIsBuyer] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
 
-    const { message } = form;
-
     const [questions, setQuestions] = React.useState<[]>();
-
-
-    // React.useEffect(() => {
-    //     if (open) {
-    //         setLoading(true)
-    //     }
-    // }, [open])
-
-
+    const [answerForm, setAnswerForm] = React.useState<IAnswerForm>({
+        questionId: '',
+        authorId: '',
+        message: ''
+    });
     React.useEffect(() => {
         if (user) {
             setLoading(true)
             getQuestions();
         }
-    }, [publicationId, user]);
+    }, [user]);
 
-    // React.useEffect(() => {
-    //     if (user) {
-    //         setIsBuyer(user && !(user?.publications?.find(p => p._id === publicationId)));
-    //     }
-    // }, []);
 
     async function getQuestions() {
         await setIsBuyer(!!!(user?.publications?.find(p => p._id === publicationId)));
-        axios.get('/qAndAs/' + publicationId).then(({ data }) => {
-            setQuestions(data);
-            setLoading(false)
-        });
+        if (publicationId) {
+            axios.get('/qAndAs/' + publicationId).then(({ data }) => {
+                setQuestions(data);
+                setLoading(false)
+            });
+        }
     };
-
-    function handleForm(e: BaseSyntheticEvent) {
-        setForm({ ...form, [e.target.name]: e.target.value })
+    function handleForm(e: React.BaseSyntheticEvent, questionId: string, authorId: string) {
+        setAnswerForm({ message: e.target.value, authorId, questionId });
     }
-
-    function submitForm(e: BaseSyntheticEvent) {
+    console.log(answerForm);
+    function submitForm(e: React.BaseSyntheticEvent) {
         e.preventDefault();
-
-        axios.post('/question', form).then(({ data }) => {
-            setForm({ message: '', publicationId: publicationId || '', authorId: user?._id || '' });
-            getQuestions();
-        })
+        if (answerForm.message !== "") {
+            console.log(answerForm)
+            axios.post('/answer', answerForm).then(({ data }) => {
+                getQuestions();
+                setAnswerForm({ message: "", authorId: "", questionId: "" });
+            })
+        }
     }
+    if (user) {
 
-    return (<>
-        <div>
-            <Button className='buttonSpan buttonMargin' color='primary' variant='outlined' onClick={handleOpen}>Q & A</Button>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
+        return (<>
+            <div>
+                <Button className='buttonSpan buttonMargin' color='primary' variant='outlined' onClick={handleOpen}>Q & A</Button>
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box sx={style}>
 
-                    <Typography variant="h5">Preguntas y respuestas</Typography>
+                        <Typography variant="h5">Preguntas y respuestas</Typography>
 
-                    { loading ?
-        
-        <Stack spacing={2} width={700} marginY={3}>
-            <Skeleton variant="rectangular" height={20} width={300} style={{ marginLeft: 0 }} />
-            <Skeleton variant="rectangular" height={50} width={300} />
-            <Skeleton variant="rectangular" height={20} width={300} />
-            <Skeleton variant="rectangular" height={50} width={300} />
-            <Skeleton variant="rectangular" height={20} width={300} />
-            <Skeleton variant="rectangular" height={50} width={300} />
-        </Stack>
-    
-            :
+                        {loading ?
+
+                            <Stack spacing={2} width={700} marginY={3}>
+                                <Skeleton variant="rectangular" height={20} width={300} style={{ marginLeft: 0 }} />
+                                <Skeleton variant="rectangular" height={50} width={300} />
+                                <Skeleton variant="rectangular" height={20} width={300} />
+                                <Skeleton variant="rectangular" height={50} width={300} />
+                                <Skeleton variant="rectangular" height={20} width={300} />
+                                <Skeleton variant="rectangular" height={50} width={300} />
+                            </Stack>
+
+                            :
 
 
-            <Box>
+                            <Box >
 
-                    {isBuyer &&
 
-                        <Grid onSubmit={submitForm} component="form" container spacing={2} style={{ margin: "3px 0" }}>
-                            <Grid item xs={5}>
-                                <TextField
-                                    onChange={handleForm}
-                                    fullWidth
-                                    name="message"
-                                    value={message}
-                                    id="outlined-helperText"
-                                    label="Escribe tu pregunta..."
-                                    helperText="Consejo: ¡Busca entre las respuestas antes de preguntar!"
-                                    autoComplete="off"
-                                />
-                            </Grid>
-                            <Grid item xs={1}>
-                                <Button disabled={!message} type="submit">Preguntar</Button>
-                            </Grid>
-                        </Grid>
-                    }
+                                {/* </Box> */}
 
-                    {/* </Box> */}
+                                {questions && questions.length > 0 ?
 
-                    {questions && questions.length > 0 ?
+                                    <Box component="div" overflow={"auto"} sx={{ maxHeight: "600px" }}>
+                                        {questions?.map((q: any) => {
+                                            console.log(q)
+                                            return <Box key={q._id} component="div" sx={{ my: 3 }}>
+                                                <Typography component="p">
+                                                    {q.message}
+                                                </Typography>
 
-                        <Box component="div">
-                            {questions?.map((q: any) => {
-                                return <Box key={q._id} component="div" sx={{ my: 3 }}>
-                                    <Typography component="p">
-                                        {q.message}
-                                    </Typography>
+                                                {!isBuyer && !q.answer?.message?.length ?
 
-                                    {!isBuyer && !q.answer?.message?.length ?
+                                                    <Box component="form" onSubmit={submitForm} >
+                                                        <DialogContent>
+                                                            <DialogContentText>
 
-                                        <AnswerModal questionId={q._id} authorId={user?._id} getQuestions={getQuestions}>
-                                            <div>Responder</div>
-                                        </AnswerModal>
+                                                            </DialogContentText>
+                                                            <TextField
+                                                                onChange={(k) => handleForm(k, q._id, user?._id)}
+                                                                autoFocus
+                                                                margin="dense"
+                                                                id="message"
+                                                                name="message"
+                                                                value={answerForm.message}
+                                                                label="Escribe una respuesta"
+                                                                type="text"
+                                                                fullWidth
+                                                                multiline
+                                                                variant="standard"
+                                                            />
+                                                        </DialogContent>
+                                                        <DialogActions>
+                                                            <Button type="submit" variant="contained" color="primary" className="buttonSpan">Responder</Button>
+                                                        </DialogActions>
+                                                    </Box>
 
-                                        :
-                                        <Typography component="p" style={{ color: 'gray ' }}>
-                                            {q.answer?.message ? q.answer?.message : 'Sin respuesta'} {q.answer?.createdAt && new Date(q.answer?.createdAt).toLocaleDateString()}
-                                        </Typography>
-                                    }
-                                </Box>
-                            })
-                            }
-                        </Box>
+                                                    :
+                                                    <Typography component="p" style={{ color: 'gray ' }}>
+                                                        {q.answer?.message ? q.answer?.message : 'Sin respuesta'} {q.answer?.createdAt && new Date(q.answer?.createdAt).toLocaleDateString()}
+                                                    </Typography>
+                                                }
+                                            </Box>
+                                        })
+                                        }
+                                    </Box>
 
-                        :
+                                    :
 
-                        <Typography style={{ color: 'gray', margin: 2 }}>Aún no hay preguntas en esta publicación</Typography>
+                                    <Typography style={{ color: 'gray', margin: 2 }}>Aún no hay preguntas en esta publicación</Typography>
 
-                    }
+                                }
+                            </Box>
+                        }
+
+
                     </Box>
-            }
-
-
-                </Box>
-            </Modal>
-        </div>
-    </>)
+                </Modal>
+            </div>
+        </>)
+    } else return (<></>)
 
 }

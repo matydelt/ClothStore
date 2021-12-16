@@ -187,7 +187,7 @@ export default function Reviews({ children }: any) {
 
     return (
         <>
-            <Button onClick={handleClickOpen}>
+            <Button className='buttonSpan' onClick={handleClickOpen}>
                 {children}
             </Button>
 

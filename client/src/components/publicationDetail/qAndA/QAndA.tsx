@@ -111,12 +111,11 @@ export default function QAndA(): JSX.Element {
                 <Box>
 
 
-                    {isBuyer &&
+                    {(user && isBuyer) &&
 
                         <Grid onSubmit={submitForm} component="form" container spacing={2} sx={{ my: 3 }}>
                             <Grid item xs={5}>
                                 <TextField
-                                    variant='outlined'
                                     onChange={handleForm}
                                     fullWidth
                                     name="message"
@@ -125,19 +124,10 @@ export default function QAndA(): JSX.Element {
                                     label="Escribe tu pregunta..."
                                     helperText="Consejo: ¡Busca entre las respuestas antes de preguntar!"
                                     autoComplete="off"
-                                    classes={{ root: classes.inputQandA }}
                                 />
                             </Grid>
                             <Grid item xs={1}>
-                                <Button
-                                    variant='contained'
-                                    color='primary'
-                                    disabled={!message}
-                                    type="submit"
-                                    classes={{ root: classes.buttonQandA }}
-                                >
-                                    Preguntar
-                                </Button>
+                                <Button disabled={!message} type="submit">Preguntar</Button>
                             </Grid>
                         </Grid>
                     }
