@@ -24,7 +24,6 @@ import { RootState } from "../../../../redux/store/store";
 import { putCarrito } from "../../../../redux/actions/carritoAction";
 import { useAuth } from "../../../../hooks/useAuth";
 import swal from 'sweetalert';
-import { UserState } from "../../../../redux/reducer/userReducer";
 
 interface Alerta {
   title: string,
@@ -74,7 +73,7 @@ export default function CardPublicacion(props: Props) {
     category: categorie,
     discount: undefined
   };
-  const user = useSelector((state: UserState) => state.userInfo)
+  const user = useSelector((state: RootState) => state.userSignin.userInfo)
 
   useEffect(() => {
     dispatch(cartLength());
@@ -103,14 +102,14 @@ export default function CardPublicacion(props: Props) {
     id: string,
     author: string
   ): void => {
-    // console.log("--------- user---------",user)
     console.log("--------- userInfo---------",user)
     console.log("--------- usuario---------",user?._id)
     console.log("--------- autor---------",author)
     console.log("--------- compara---------",user?._id == author)
-
-    Alert();
-    dispatch(putCarrito(email, id));
+    if(user?._id != author){
+      Alert();
+      dispatch(putCarrito(email, id));
+    }
   };
 
   return (

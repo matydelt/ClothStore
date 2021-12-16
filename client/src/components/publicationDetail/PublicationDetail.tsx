@@ -25,7 +25,7 @@ import { DefaultRootState } from '../../redux/types';
 import { User } from '../../redux/reducer/stateTypes';
 import Footer from '../Footer';
 import swal from 'sweetalert';
-import { UserState } from "../../redux/reducer/userReducer";
+import { RootState } from '../../redux/store/store';
 
 interface Alerta {
   title: string,
@@ -141,7 +141,7 @@ export default function PublicationDetail(): JSX.Element {
   const navigate = useNavigate();
   const userInfo: UserSignin = useSelector((state: state) => state.userSignin)
 
-  const user = useSelector((state: UserState) => state)
+  const user = useSelector((state: RootState) => state.userSignin.userInfo)
 
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -171,7 +171,7 @@ export default function PublicationDetail(): JSX.Element {
     if (publication) {
 
       if (auth?.user) {
-        if ( user?.userInfo?._id != publication?.author){
+        if ( user?._id != publication?.author){
           Alert();
           dispatch(putCarritoAmount(auth?.user?.email, publication?._id, amount))
         }
