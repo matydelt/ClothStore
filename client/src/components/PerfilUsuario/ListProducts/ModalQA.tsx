@@ -143,7 +143,7 @@ export default function ModalQA(props: PubId): JSX.Element {
 
                         <Box component="div">
                             {questions?.map((q: any) => {
-                                return <Box key={q._id} component="div" sx={{ my: 3 }}>
+                                <Box key={q._id} component="div" sx={{ my: 3 }}>
                                     <Typography component="p">
                                         {q.message}
                                     </Typography>
