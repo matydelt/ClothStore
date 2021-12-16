@@ -74,7 +74,7 @@ export default function CardPublicacion(props: Props) {
     category: categorie,
     discount: undefined
   };
-  const user = useSelector((state: UserState) => state)
+  const user = useSelector((state: UserState) => state.userInfo)
 
   useEffect(() => {
     dispatch(cartLength());
@@ -103,11 +103,11 @@ export default function CardPublicacion(props: Props) {
     id: string,
     author: string
   ): void => {
-    console.log("--------- user---------",user)
-    console.log("--------- userInfo---------",user?.userInfo)
-    console.log("--------- usuario---------",user?.userInfo?._id)
+    // console.log("--------- user---------",user)
+    console.log("--------- userInfo---------",user)
+    console.log("--------- usuario---------",user?._id)
     console.log("--------- autor---------",author)
-    console.log("--------- compara---------",user?.userInfo?._id == author)
+    console.log("--------- compara---------",user?._id == author)
 
     Alert();
     dispatch(putCarrito(email, id));
