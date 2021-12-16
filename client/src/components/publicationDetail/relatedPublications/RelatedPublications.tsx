@@ -50,7 +50,7 @@ export default function RelatedPublications({ publicationId }: props): JSX.Eleme
 
             <Swiper
                 spaceBetween={-335}
-                slidesPerView={5}
+                slidesPerView={3}
                 navigation={true}
                 effect={"slide"}
                 loop={false}

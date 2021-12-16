@@ -102,7 +102,7 @@ export default function NavBar({ flagButtonTranslate }: Props) {
               sx={{
                 display: "flex",
                 alignItems: { xl: "center" },
-                transform: { lg: "translateX(60%)", xl: "translateX(130%)" },
+                transform: { lg: "translateX(60%)", xl: "translate(130%, 10%)" },
                 zIndex: "10",
               }}
             >

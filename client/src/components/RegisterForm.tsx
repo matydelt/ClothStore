@@ -1,7 +1,6 @@
-import { Button, Link, TextField } from "@mui/material";
-import Avatar from "@material-ui/core/Avatar";
+import { Button, Link, TextField, Avatar } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 // import FormControlLabel from "@mui/material/FormControlLabel";
 // import Checkbox from "@mui/material/Checkbox";
 // import Link from "@mui/material/Link";
