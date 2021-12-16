@@ -20,7 +20,7 @@ import * as React from "react";
 import ModalUpdateUser from "./ModalUpdateUser";
 // import FileUpload from "../../fileUpload/FileUpload";
 import Logo from '../../assets/logo/ClothStore_sin_fondo.png'
-import Alert from '@material-ui/lab/Alert';
+import { toast, ToastContainer } from "react-toastify"
 
 const useStyles = makeStyles({
   inputProfile: {
@@ -62,6 +62,30 @@ interface Props {
 
 const ProfileCover = (props: Props) => {
   const classes = useStyles();
+
+  toast.info('🦄 Wow so easy!', {
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    });
+
+  const Alerta = ()=>{
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+  }
 
   return (
     <>
@@ -183,6 +207,7 @@ const ProfileCover = (props: Props) => {
               {
                 props.userName == "" ?
                 <>
+                <div onClick={Alerta}/>
                 Nueva Publicacion</>
                 :
               <Link
