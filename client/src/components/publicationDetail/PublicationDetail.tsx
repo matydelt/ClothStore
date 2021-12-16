@@ -1,7 +1,5 @@
 import React, { ChangeEvent, SetStateAction, useEffect, useState } from 'react';
-import { Avatar, Button, Container, FormControl, MenuItem, Divider, Select } from '@mui/material';
-
-import { Typography } from '@mui/material';
+import { Avatar, Button, Container, FormControl, MenuItem, Typography, Divider, Select } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { SelectChangeEvent, Grid, CircularProgress, Rating, } from '@mui/material';
 // import { Rating } from '@material-ui/lab';
@@ -29,7 +27,7 @@ import Footer from '../Footer';
 
 const useStyles = makeStyles({
   containerPublicationDetail: {
-    marginTop: '300px',
+    marginTop: '400px',
     marginBottom: '350px',
     display: 'flex',
     justifyContent: 'center',
@@ -286,9 +284,9 @@ export default function PublicationDetail(): JSX.Element {
                   </Grid>
                 </Grid>
 
-                <Box component="div" sx={{ alignItems: 'center', display: 'flex', mt: 0.2 }}>
+                <Box component="div" sx={{ justifyContent: 'space-evenly', alignItems: 'center', display: 'flex', mt: 0.2 }}>
                   <Reviews>
-                    <Rating sx={{ color: '#00c2cb' }} name="read-only" value={scoreAverage} readOnly />
+                    <Rating sx={{ color: '#00c2cb', '& span': { marginLeft: '0px' } }} name="read-only" value={scoreAverage} readOnly />
                   </Reviews>
                   <Typography component="span" classes={{ root: classes.typografyReview }}>
                     {publication?.reviews.length} opiniones
@@ -405,8 +403,9 @@ export default function PublicationDetail(): JSX.Element {
               textAlign: 'right',
               textDecoration: "none",
               color: "#000",
-              position: 'relative',
-              left: '1033px',
+              position: 'absolute',
+              right: '29px',
+              bottom: '-72px',
               border: '1px solid #00c2cb',
               padding: '7px',
               borderRadius: '5px',
@@ -423,23 +422,48 @@ export default function PublicationDetail(): JSX.Element {
       </Box>
       {/* <div style={{ zIndex: 1200, marginLeft: "25%", width: "55%" }}> */}
       {/* </div> */}
-      <div id="denunciar" className="modal">
-        <div className="modal-contenido2" style={{ display: "flex", flexDirection: "column" }}>
+      <div id="denunciar" className="modalDetailPublication">
+        <div className="modal-denuncia-detail">
           <a href="#" style={{ display: "flex", justifyContent: "end" }}>
-            <button style={{ color: "red", backgroundColor: "transparent", border: "none", cursor: "pointer" }}><CloseIcon /></button>
+            <button
+              style={{
+                color: "red",
+                backgroundColor: "transparent",
+                border: "none",
+                cursor: "pointer"
+              }}
+            >
+              <CloseIcon className='hoverIcon' /></button>
           </a>
           <p>Por favor , especifique el motivo por el cual cree que la publicacion deberia ser procesada</p>
-          <div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column"
+            }}>
             <form onSubmit={(k: React.SyntheticEvent<EventTarget>) => HandlerSubmit(k)}>
               <div style={{ display: "flex", justifyContent: "center", minWidth: "100px" }}>
 
-                <textarea style={{ minWidth: "310px", resize: "none", minHeight: "150px" }} value={mensaje} className="text"
+                <textarea
+                  style={{
+                    padding: '10px',
+                    fontSize: '20px',
+                    fontFamily: 'Playfair Display, serif',
+                    minWidth: "300px",
+                    resize: "none",
+                    minHeight: "150px",
+                    borderRadius: '10px',
+                    border: '1px solid #00c2cb'
+                  }}
+                  value={mensaje}
+                  className="textDetailDenuncia"
                   onChange={(e: React.ChangeEvent<HTMLTextAreaElement>): any =>
                     setMensaje(e.target.value)
                   } />
               </div >
-              <div style={{ display: "flex", justifyContent: "center", marginTop: "3px" }}>
-                <input type={"submit"} className="aceptar" />
+              <div style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
+                <input type={"submit"} className="aceptar-Detail-Publication" value='ENVIAR' />
               </div>
             </form>
           </div>
@@ -447,7 +471,7 @@ export default function PublicationDetail(): JSX.Element {
       </div>
       {!loading &&
 
-        <Box sx={{ width: '100%', my: 6, height: 'max-content' }}>
+        <Box sx={{ width: '100%', my: 10, height: 'max-content' }}>
 
           <Typography align='center' variant="h5" component="h5" style={{ marginBottom: '20px' }}>Publicaciones relacionadas</Typography>
 
