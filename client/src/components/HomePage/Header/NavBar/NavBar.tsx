@@ -141,7 +141,7 @@ export default function NavBar({ flagButtonTranslate, siteDetail }: Props) {
               }}
               id='containButtonShoppingLogin'
             >
-              {flagButtonTranslate ?
+              {/* {flagButtonTranslate ?
                 <IconButton className='buttonNavRight' onClick={handleCartAnimate} size="medium" color="secondary">
                   <Badge
                     badgeContent={
@@ -152,7 +152,7 @@ export default function NavBar({ flagButtonTranslate, siteDetail }: Props) {
                     <ShoppingCartIcon />
                   </Badge>
                 </IconButton>
-                :
+                : */}
                 <Link className='buttonNavRight' to="/cart">
                   <IconButton className='buttonNavRight' onClick={handleCartAnimate} size="medium" color="secondary">
                     <Badge
@@ -165,7 +165,7 @@ export default function NavBar({ flagButtonTranslate, siteDetail }: Props) {
                     </Badge>
                   </IconButton>
                 </Link>
-              }
+              {/* } */}
 
               {user ? (
                 <Box className='buttonNavRight' sx={{ fontSize: { xl: "25px" }, marginLeft: "16px" }}>

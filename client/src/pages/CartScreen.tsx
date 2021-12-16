@@ -186,7 +186,7 @@ export default function CartScreen({ idHomepage }: Props) {
         {/* Botón para regresar a la homepage */}
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} >
           <Typography classes={{ root: classes.title }} variant='h4' color='primary'>
-            Mi Carritto
+            Mi Carrito
           </Typography>
           {idHomepage ?
             <Button

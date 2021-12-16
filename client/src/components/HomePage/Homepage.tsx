@@ -61,8 +61,8 @@ const Homepage = () => {
   }, []);
 
   return (
-    <Box id='containerHomePage' sx={{ position: 'relative', overflow: 'hidden' }}>
-      <Box id='homepage'>
+    <Box sx={{ position: 'relative', overflow: 'hidden' }}>
+      <Box>
         <Header />
         <CardsCallToAction />
         <CardsBenefit />
@@ -90,7 +90,6 @@ const Homepage = () => {
         <Box sx={{ height: "200px" }} />
         <Footer />
       </Box>
-      <CartScreen idHomepage='cartAnimation' />
     </Box>
   );
 };
