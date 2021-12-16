@@ -179,12 +179,17 @@ const ProfileCover = (props: Props) => {
             <ModalUpdateUser id={props.id} getOneUser={props.getOneUser} />
 
             <Button fullWidth color='secondary' classes={{ root: classes.buttonProfile }} size="medium" variant="contained">
+              {
+                props.userName == "" ?
+                <></>
+                :
               <Link
                 to="/nueva-publicacion"
                 style={{ textDecoration: "none", color: "black" }}
               >
                 Nueva Publicacion
               </Link>
+              }
             </Button>
           </Box >
         </Box >
