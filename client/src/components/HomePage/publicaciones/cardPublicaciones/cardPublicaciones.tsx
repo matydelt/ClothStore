@@ -107,7 +107,7 @@ export default function CardPublicacion(props: Props) {
     console.log("--------- userInfo---------",user?.userInfo)
     console.log("--------- usuario---------",user?.userInfo?._id)
     console.log("--------- autor---------",author)
-  console.log("--------- compara---------",user?.userInfo?._id == author)
+    console.log("--------- compara---------",user?.userInfo?._id == author)
 
     Alert();
     dispatch(putCarrito(email, id));
