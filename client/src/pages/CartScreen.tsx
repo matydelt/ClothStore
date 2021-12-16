@@ -59,6 +59,7 @@ const useStyles = makeStyles({
 
 export type CartItemType = {
   id: string;
+  author: string;
   quantity: number;
   price: number;
   image: string;

@@ -24,6 +24,7 @@ import { RootState } from "../../../../redux/store/store";
 import { putCarrito } from "../../../../redux/actions/carritoAction";
 import { useAuth } from "../../../../hooks/useAuth";
 import swal from 'sweetalert';
+import { UserState } from "../../../../redux/reducer/userReducer";
 
 interface Alerta {
   title: string,
@@ -57,7 +58,7 @@ type Props = {
 };
 export default function CardPublicacion(props: Props) {
   const [cart, setCart] = useLocalStorage<CartType | undefined>("cart", []);
-  const { name, images, price, categorie, id, stock, discount } = props;
+  const { name, images, price, categorie, id, stock, discount, author } = props;
   const dispatch = useDispatch();
   const carrito: any = useSelector((state: RootState) => state.carrito.carrito);
   const auth = useAuth();
@@ -65,6 +66,7 @@ export default function CardPublicacion(props: Props) {
   const item: CartItemType = {
     id,
     // quantity: stock,
+    author: author,
     quantity: 1,
     price,
     image: images[0]?.url,
@@ -72,6 +74,8 @@ export default function CardPublicacion(props: Props) {
     category: categorie,
     discount: undefined
   };
+  const user = useSelector((state: UserState) => state)
+
   useEffect(() => {
     dispatch(cartLength());
   }, [cart, dispatch]);
@@ -150,7 +154,7 @@ export default function CardPublicacion(props: Props) {
               onClick={
                 !auth.user
                   ? () => handleAddToCart(item)
-                  : () => handleAddToCartDB(auth.user && auth?.user?.email, id)
+                  : () => user.userInfo?._id !== author ? handleAddToCartDB(auth.user && auth?.user?.email, id) : ''
               }
             >
               <ShoppingCartIcon />

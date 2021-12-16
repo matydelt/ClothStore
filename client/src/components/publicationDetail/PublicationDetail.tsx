@@ -24,6 +24,24 @@ import { postDenunciations } from '../../redux/actions/denunciationActions';
 import { DefaultRootState } from '../../redux/types';
 import { User } from '../../redux/reducer/stateTypes';
 import Footer from '../Footer';
+import swal from 'sweetalert';
+import { UserState } from "../../redux/reducer/userReducer";
+
+interface Alerta {
+  title: string,
+  text: string,
+  icon: string,
+  button: string
+}
+const datosA : Alerta = {
+  title: "Articulo Agregado Exitosamente",
+  text: '',
+  icon: "success",
+  button: "Aceptar"
+};
+const Alert = () => {
+    swal(datosA)
+}
 
 const useStyles = makeStyles({
   containerPublicationDetail: {
@@ -123,6 +141,8 @@ export default function PublicationDetail(): JSX.Element {
   const navigate = useNavigate();
   const userInfo: UserSignin = useSelector((state: state) => state.userSignin)
 
+  const user = useSelector((state: UserState) => state)
+
   const dispatch = useDispatch();
   const classes = useStyles();
 
@@ -151,8 +171,10 @@ export default function PublicationDetail(): JSX.Element {
     if (publication) {
 
       if (auth?.user) {
-        dispatch(putCarritoAmount(auth?.user?.email, publication?._id, amount))
-
+        if ( user?.userInfo?._id != publication?.author){
+          Alert();
+          dispatch(putCarritoAmount(auth?.user?.email, publication?._id, amount))
+        }
       } else {
 
         const { data } = await axios.get('publication', { params: { publicationId } });
