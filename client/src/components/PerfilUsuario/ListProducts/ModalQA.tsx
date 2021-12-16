@@ -76,98 +76,99 @@ export default function ModalQA(props: PubId): JSX.Element {
             })
         }
     }
+    if (user) {
 
-    return (<>
-        <div>
-            <Button className='buttonSpan buttonMargin' color='primary' variant='outlined' onClick={handleOpen}>Q & A</Button>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
+        return (<>
+            <div>
+                <Button className='buttonSpan buttonMargin' color='primary' variant='outlined' onClick={handleOpen}>Q & A</Button>
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box sx={style}>
 
-                    <Typography variant="h5">Preguntas y respuestas</Typography>
+                        <Typography variant="h5">Preguntas y respuestas</Typography>
 
-                    {loading ?
+                        {loading ?
 
-                        <Stack spacing={2} width={700} marginY={3}>
-                            <Skeleton variant="rectangular" height={20} width={300} style={{ marginLeft: 0 }} />
-                            <Skeleton variant="rectangular" height={50} width={300} />
-                            <Skeleton variant="rectangular" height={20} width={300} />
-                            <Skeleton variant="rectangular" height={50} width={300} />
-                            <Skeleton variant="rectangular" height={20} width={300} />
-                            <Skeleton variant="rectangular" height={50} width={300} />
-                        </Stack>
+                            <Stack spacing={2} width={700} marginY={3}>
+                                <Skeleton variant="rectangular" height={20} width={300} style={{ marginLeft: 0 }} />
+                                <Skeleton variant="rectangular" height={50} width={300} />
+                                <Skeleton variant="rectangular" height={20} width={300} />
+                                <Skeleton variant="rectangular" height={50} width={300} />
+                                <Skeleton variant="rectangular" height={20} width={300} />
+                                <Skeleton variant="rectangular" height={50} width={300} />
+                            </Stack>
 
-                        :
-
-
-                        <Box >
+                            :
 
 
-                            {/* </Box> */}
+                            <Box >
 
-                            {questions && questions.length > 0 ?
 
-                                <Box component="div">
-                                    {questions?.map((q: any) => {
-                                        console.log(q)
-                                        return <Box key={q._id} component="div" sx={{ my: 3 }}>
-                                            <Typography component="p">
-                                                {q.message}
-                                            </Typography>
+                                {/* </Box> */}
 
-                                            {!isBuyer && !q.answer?.message?.length ?
+                                {questions && questions.length > 0 ?
 
-                                                <Box component="form" onSubmit={submitForm}>
-                                                    <DialogTitle>Responder</DialogTitle>
-                                                    <DialogContent>
-                                                        <DialogContentText>
-
-                                                        </DialogContentText>
-                                                        <TextField
-                                                            onChange={(k) => handleForm(k, q._id, user?._id)}
-                                                            autoFocus
-                                                            margin="dense"
-                                                            id="message"
-                                                            name="message"
-                                                            value={answerForm.message}
-                                                            label="Escribe una respuesta"
-                                                            type="text"
-                                                            fullWidth
-                                                            multiline
-                                                            variant="standard"
-                                                        />
-                                                    </DialogContent>
-                                                    <DialogActions>
-                                                        <Button type="submit" >Responder</Button>
-                                                    </DialogActions>
-                                                </Box>
-
-                                                :
-                                                <Typography component="p" style={{ color: 'gray ' }}>
-                                                    {q.answer?.message ? q.answer?.message : 'Sin respuesta'} {q.answer?.createdAt && new Date(q.answer?.createdAt).toLocaleDateString()}
+                                    <Box component="div" overflow={"auto"} sx={{ maxHeight: "600px" }}>
+                                        {questions?.map((q: any) => {
+                                            console.log(q)
+                                            return <Box key={q._id} component="div" sx={{ my: 3 }}>
+                                                <Typography component="p">
+                                                    {q.message}
                                                 </Typography>
-                                            }
-                                        </Box>
-                                    })
-                                    }
-                                </Box>
 
-                                :
+                                                {!isBuyer && !q.answer?.message?.length ?
 
-                                <Typography style={{ color: 'gray', margin: 2 }}>Aún no hay preguntas en esta publicación</Typography>
+                                                    <Box component="form" onSubmit={submitForm} >
+                                                        <DialogContent>
+                                                            <DialogContentText>
 
-                            }
-                        </Box>
-                    }
+                                                            </DialogContentText>
+                                                            <TextField
+                                                                onChange={(k) => handleForm(k, q._id, user?._id)}
+                                                                autoFocus
+                                                                margin="dense"
+                                                                id="message"
+                                                                name="message"
+                                                                value={answerForm.message}
+                                                                label="Escribe una respuesta"
+                                                                type="text"
+                                                                fullWidth
+                                                                multiline
+                                                                variant="standard"
+                                                            />
+                                                        </DialogContent>
+                                                        <DialogActions>
+                                                            <Button type="submit" variant="contained" color="primary" className="buttonSpan">Responder</Button>
+                                                        </DialogActions>
+                                                    </Box>
+
+                                                    :
+                                                    <Typography component="p" style={{ color: 'gray ' }}>
+                                                        {q.answer?.message ? q.answer?.message : 'Sin respuesta'} {q.answer?.createdAt && new Date(q.answer?.createdAt).toLocaleDateString()}
+                                                    </Typography>
+                                                }
+                                            </Box>
+                                        })
+                                        }
+                                    </Box>
+
+                                    :
+
+                                    <Typography style={{ color: 'gray', margin: 2 }}>Aún no hay preguntas en esta publicación</Typography>
+
+                                }
+                            </Box>
+                        }
 
 
-                </Box>
-            </Modal>
-        </div>
-    </>)
+                    </Box>
+                </Modal>
+            </div>
+        </>)
+    } else return (<></>)
 
 }
