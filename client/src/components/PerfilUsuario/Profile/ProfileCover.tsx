@@ -202,10 +202,20 @@ const ProfileCover = (props: Props) => {
           <Box sx={{ width: '70%' }}>
             <ModalUpdateUser id={props.id} getOneUser={props.getOneUser} />
 
-            <Button fullWidth color='secondary' onClick={()=>{props.userName == "" ? Alerta() : "" }} classes={{ root: classes.buttonProfile }} size="medium" variant="contained">
+            <Button fullWidth color='secondary' classes={{ root: classes.buttonProfile }} size="medium" variant="contained">
               {
                 props.userName == "" ?
                 <>
+                  <ToastContainer
+                    position="top-center"
+                    autoClose={5000}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                  />
                 Nueva Publicacion</>
                 :
               <Link
