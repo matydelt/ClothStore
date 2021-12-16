@@ -150,7 +150,7 @@ export default class Checkout {
                                     sendEMail.send({
                                         purchaseTotal: compras,
                                         email: userVenta.email,
-                                        purchaseCode: mpApi.codigo,
+                                        purchaseCode: mpApi.id,
                                         subject: "Han realizado una compra de tus productos",
                                         htmlFile: "purchaseReceived.html",
                                     })
