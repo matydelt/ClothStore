@@ -141,6 +141,7 @@ export default function ModalUpdateUser(props: UserId) {
               variant="outlined"
             />
             <TextField
+
               id="outlined-basic"
               onChange={handleChange}
               name="phone"
@@ -149,8 +150,9 @@ export default function ModalUpdateUser(props: UserId) {
               variant="outlined"
             />
           </Box>
-          <Button color='primary' classes={{ root: classes.buttonProfileUpdateModal }} variant='outlined' onClick={handleSubmit}>Enviar</Button>
-          <Button color='primary' classes={{ root: classes.buttonProfileUpdate }} variant='outlined' onClick={handleClose}>Cancelar</Button>
+
+          <Button color='primary' classes={{ root: classes.buttonProfileUpdateModal }} variant='outlined' onClick={handleSubmit} style={{ marginTop: "5px" }}>Enviar</Button>
+          <Button color='primary' classes={{ root: classes.buttonProfileUpdate }} variant='outlined' onClick={handleClose} style={{ marginTop: "5px" }}>Cancelar</Button>
         </Box>
       </Modal>
     </div >
