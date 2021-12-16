@@ -310,7 +310,7 @@ const SideBarHomePage = () => {
         classes={{ root: classes.buttonGroupChild }}
         onClick={handleSubmit}
       >
-        Submit
+        Enviar
       </Button>
       <Button
         color="primary"
@@ -318,7 +318,7 @@ const SideBarHomePage = () => {
         classes={{ root: classes.buttonGroupChild }}
         onClick={handleReset}
       >
-        Reset
+        Reiniciar
       </Button>
     </Box>
   );
