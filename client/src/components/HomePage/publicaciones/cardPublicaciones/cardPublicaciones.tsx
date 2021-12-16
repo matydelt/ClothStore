@@ -100,8 +100,13 @@ export default function CardPublicacion(props: Props) {
 
   const handleAddToCartDB = (
     email: string | null | undefined,
-    id: string
+    id: string,
+    author: string
   ): void => {
+    console.log("--------- usuario---------",user.userInfo?._id)
+    console.log("--------- autor---------",author)
+  console.log("--------- compara---------",user.userInfo?._id == author)
+
     Alert();
     dispatch(putCarrito(email, id));
   };
@@ -154,7 +159,7 @@ export default function CardPublicacion(props: Props) {
               onClick={
                 !auth.user
                   ? () => handleAddToCart(item)
-                  : () => user.userInfo?._id !== author ? handleAddToCartDB(auth.user && auth?.user?.email, id) : ''
+                  : () => handleAddToCartDB(auth.user && auth?.user?.email, id, author)
               }
             >
               <ShoppingCartIcon />
