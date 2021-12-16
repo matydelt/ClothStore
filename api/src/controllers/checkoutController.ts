@@ -50,7 +50,7 @@ export default class Checkout {
                 marketplace: 'Cloth Store',
                 additional_info: order._id,
                 statement_descriptor: "Clothstore",
-                back_urls: { failure: '', pending: '', success: "https://cloth-store-henry.herokuapp.com" },
+                back_urls: { failure: '', pending: '', success: "https://clothstore-wine.vercel.app/" },
                 notification_url: "https://cloth-store-henry.herokuapp.com/statusmp",
             }
             const response = await mercadoPago.preferences.create(preference)
