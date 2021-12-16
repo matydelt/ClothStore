@@ -135,6 +135,14 @@ export default function ModalUpdateUser(props: UserId) {
             <TextField
               id="outlined-basic"
               onChange={handleChange}
+              name="Tienda"
+              value={input.userName}
+              label="Apellido"
+              variant="outlined"
+            />
+            <TextField
+              id="outlined-basic"
+              onChange={handleChange}
               name="phone"
               value={input.phone}
               label="Teléfono"
