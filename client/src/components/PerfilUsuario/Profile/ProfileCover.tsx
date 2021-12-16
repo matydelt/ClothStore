@@ -20,7 +20,23 @@ import * as React from "react";
 import ModalUpdateUser from "./ModalUpdateUser";
 // import FileUpload from "../../fileUpload/FileUpload";
 import Logo from '../../assets/logo/ClothStore_sin_fondo.png'
-import Alert from '@material-ui/lab/Alert';
+import swal from 'sweetalert';
+
+interface Alerta {
+  title: string,
+  text: string,
+  icon: string,
+  button: string
+}
+const datosA : Alerta = {
+  title: "Informacion importante",
+  text: 'Es Requerido el nombre de la Tienda',
+  icon: "warning",
+  button: "Aceptar"
+};
+const Alert = () => {
+    swal(datosA)
+}
 
 const useStyles = makeStyles({
   inputProfile: {
@@ -62,6 +78,11 @@ interface Props {
 
 const ProfileCover = (props: Props) => {
   const classes = useStyles();
+
+
+  const Alerta = ()=>{
+      return Alert()
+  }
 
   return (
     <>
@@ -178,21 +199,22 @@ const ProfileCover = (props: Props) => {
 
           <Box sx={{ width: '70%' }}>
             <ModalUpdateUser id={props.id} getOneUser={props.getOneUser} />
-
-            <Button fullWidth color='secondary' classes={{ root: classes.buttonProfile }} size="medium" variant="contained">
-              {
-                props.userName == "" ?
-                <>
-                Nueva Publicacion</>
+            {
+                props.userName == "" || undefined?
+                <Button onClick={Alerta} fullWidth color='secondary' classes={{ root: classes.buttonProfile }} size="medium" variant="contained">
+                  Nueva Publicacion
+                </Button>
                 :
+            <Button fullWidth color='secondary' classes={{ root: classes.buttonProfile }} size="medium" variant="contained">
+              
               <Link
                 to="/nueva-publicacion"
                 style={{ textDecoration: "none", color: "black" }}
               >
                 Nueva Publicacion
               </Link>
-              }
             </Button>
+            }
           </Box >
         </Box >
       </Box >
