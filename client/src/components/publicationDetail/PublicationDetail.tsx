@@ -281,9 +281,9 @@ export default function PublicationDetail(): JSX.Element {
                     </Typography>
                   </Grid>
 
-                  <Grid item xs={2} sx={{ justifyContent: 'right', display: 'flex', cursor: 'pointer' }}>
+                  {/* <Grid item xs={2} sx={{ justifyContent: 'right', display: 'flex', cursor: 'pointer' }}>
                     <FavoriteBorderOutlined></FavoriteBorderOutlined>
-                  </Grid>
+                  </Grid> */}
                 </Grid>
 
                 <Box component="div" sx={{ alignItems: 'center', display: 'flex', mt: 0.2 }}>
