@@ -8,7 +8,7 @@ export default class DiscountController {
 
         try {
 
-            const searchedTexts = await PublicationSchema.find({ name: { $regex: '.*' + text + '.*', $options: 'i' } }).select("_id, name").limit(8);
+            const searchedTexts = await PublicationSchema.find({ name: { $regex: '.*' + text + '.*', $options: 'i' }, state: true }).select("_id, name").limit(8);
 
             return res.json(searchedTexts);
 
