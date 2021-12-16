@@ -181,7 +181,7 @@ const ProfileCover = (props: Props) => {
             <Button fullWidth color='secondary' classes={{ root: classes.buttonProfile }} size="medium" variant="contained">
               {
                 props.userName == "" ?
-                <></>
+                <>Nueva Publicacion</>
                 :
               <Link
                 to="/nueva-publicacion"
