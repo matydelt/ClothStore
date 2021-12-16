@@ -20,6 +20,8 @@ import * as React from "react";
 import ModalUpdateUser from "./ModalUpdateUser";
 // import FileUpload from "../../fileUpload/FileUpload";
 import Logo from '../../assets/logo/ClothStore_sin_fondo.png'
+import Alert from '@material-ui/lab/Alert';
+import AlertTitle from '@material-ui/lab/AlertTitle';
 
 const useStyles = makeStyles({
   inputProfile: {
@@ -61,6 +63,10 @@ interface Props {
 
 const ProfileCover = (props: Props) => {
   const classes = useStyles();
+
+  const Alerta = ()=>{
+    <Alert severity="warning">Es requerido un nombre como vendedor o Tienda!</Alert>
+  }
 
   return (
     <>
@@ -181,7 +187,9 @@ const ProfileCover = (props: Props) => {
             <Button fullWidth color='secondary' classes={{ root: classes.buttonProfile }} size="medium" variant="contained">
               {
                 props.userName == "" ?
-                <>Nueva Publicacion</>
+                <>
+                <div onClick={Alerta}/>
+                Nueva Publicacion</>
                 :
               <Link
                 to="/nueva-publicacion"
