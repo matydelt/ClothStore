@@ -78,7 +78,7 @@ const Denuncias = () => {
                     <p className="four">detalle</p>
                     <p className="four">Publicacion Denunciada</p>
                 </Box>
-                { denuncias.every((d: DenunciationData) => d.denunciation.state === false) && denuncias.length > 0 ? denuncias?.map((e: DenunciationData) => {
+                { !!(denuncias.find((d: DenunciationData) => d.denunciation.state === false)) && denuncias.length > 0 ? denuncias?.map((e: DenunciationData) => {
                     const { denunciation, infractor, author, publication } = e
                     console.log(infractor)
                     console.log(author)

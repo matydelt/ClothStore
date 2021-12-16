@@ -7,6 +7,7 @@
     cursor: pointer;
     width: 64px;
     text-decoration: none;
+    width           : 74px;
 }
 .aceptar:hover{
     background-color: rgb(22, 139, 22);
@@ -21,6 +22,7 @@
     width: 64px;
     cursor: pointer;
     text-decoration: none;
+    width           : 74px;
 }
 .rechazar:hover{
     background-color: rgb(170, 25, 25);

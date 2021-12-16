@@ -81,10 +81,10 @@ const PublicacionesAdmPage = () => {
                                     <div style={{ display: "flex", justifyContent: "initial", marginBottom: "2px" }}>
                                     </div>
                                     <div style={{ display: "flex", justifyContent: "initial", marginBottom: "2px" }}>
-                                        <button className="rechazar" onClick={() => setFlag(!flag)}>Rechazar</button>
+                                        <button className="rechazar" onClick={() => setFlag(!flag)}>RECHAZAR</button>
                                     </div> <div style={{ display: "flex", justifyContent: "initial" }}>
 
-                                        <input type="button" value={"aceptar"} className="aceptar" style={{ display: "flex", justifyContent: "center" }} onClick={async () => {
+                                        <input type="button" value={"ACEPTAR"} className="aceptar" style={{ display: "flex", justifyContent: "center" }} onClick={async () => {
                                             await dispatch(activatePublication(e._id, true))
                                             await dispatch(getAllPublications())
                                         }} />
@@ -92,17 +92,18 @@ const PublicacionesAdmPage = () => {
 
                                     : <form onSubmit={(k: React.SyntheticEvent<EventTarget>) => HandlerSubmit(k, e._id)} style={{ marginTop: "3px", marginBottom: "3px" }}>
                                         <div style={{ display: "flex", justifyContent: "initial" }}>
-                                            <textarea style={{ minWidth: "90%", resize: "none", minHeight: "80px" }} value={mensaje} className="text"
+                                            <textarea style={{ minWidth: "90%", resize: "none", minHeight: "80px" }} 
+                                             className="text"
                                                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>): any =>
                                                     setMensaje(e.target.value)
                                                 } />
                                         </div >
                                         <div style={{ display: "flex", justifyContent: "center", marginTop: "3px" }}>
-                                            <input type={"submit"} className="aceptar" />
+                                            <input type={"submit"} value='ENVIAR' className="aceptar" />
 
                                         </div>
                                         <div style={{ display: "flex", justifyContent: "center", marginTop: "3px" }}>
-                                            <input type={"button"} className="rechazar" value={"Salir"} onClick={() => setFlag(!flag)} />
+                                            <input type={"button"} className="rechazar" value={"SALIR"} onClick={() => setFlag(!flag)} />
 
                                         </div>
                                     </form>}
