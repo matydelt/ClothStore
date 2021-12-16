@@ -12,6 +12,41 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store/store';
 import NavBar from '../HomePage/Header/NavBar/NavBar';
 import { User } from '../../redux/reducer/stateTypes';
+import swal from 'sweetalert';
+
+interface Alerta {
+  title: string,
+  text: string,
+  icon: string,
+  button: string
+}
+const datosA : Alerta = {
+  title: "Publicacion Creada Exitosamente",
+  text: '',
+  icon: "success",
+  button: "Aceptar"
+};
+const datosB : Alerta = {
+  title: "Publicacion Modificada Exitosamente",
+  text: '',
+  icon: "success",
+  button: "Aceptar"
+};
+const datosC : Alerta = {
+  title: "Alerta!!",
+  text: 'Es requerido Logearse',
+  icon: "warning",
+  button: "Aceptar"
+};
+const Alert = () => {
+    swal(datosA)
+}
+const Alert2 = () => {
+    swal(datosB)
+}
+const Alert3 = () => {
+    swal(datosC)
+}
 
 interface CreatePublicationForm {
   name: string;
@@ -122,6 +157,17 @@ export default function CreatePublication(): JSX.Element {
       .catch((err) => console.log(err));
   }
 
+  const Alerta = ()=>{
+    if(name != '' &&
+    detail != '' &&
+    mark != '' &&
+    category != '' &&
+    gender != '' &&
+    stock != 0 &&
+    price != 0 &&
+    images != [])
+    return (user?._id ? (publicationId ? Alert() : Alert2()) : Alert3()) 
+}
 
   return (<>
 
@@ -312,6 +358,7 @@ export default function CreatePublication(): JSX.Element {
                 color='secondary'
                 variant='contained'
                 classes={{ root: classes.buttonPublicOrUpdate }}
+                onClick={Alerta}
               >
                 {publicationId ? 'Actualizar publicación' : 'Publicar'}
               </Button>
