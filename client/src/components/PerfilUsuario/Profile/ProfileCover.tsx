@@ -63,7 +63,7 @@ interface Props {
 const ProfileCover = (props: Props) => {
   const classes = useStyles();
 
-  toast.info('🦄 Wow so easy!', {
+  toast.info('Es necesario tener un nombre de Tienda !!', {
     position: "top-center",
     autoClose: 5000,
     hideProgressBar: false,
@@ -73,11 +73,10 @@ const ProfileCover = (props: Props) => {
     progress: undefined,
     });
 
-  const Alerta = ()=>{
+  function Alerta (){
       <ToastContainer
         position="top-center"
         autoClose={5000}
-        hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
         rtl={false}
