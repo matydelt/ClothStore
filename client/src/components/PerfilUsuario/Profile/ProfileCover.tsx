@@ -201,31 +201,22 @@ const ProfileCover = (props: Props) => {
 
           <Box sx={{ width: '70%' }}>
             <ModalUpdateUser id={props.id} getOneUser={props.getOneUser} />
-
-            <Button fullWidth color='secondary' classes={{ root: classes.buttonProfile }} size="medium" variant="contained">
-              {
+            {
                 props.userName == "" ?
-                <>
-                  <ToastContainer
-                    position="top-center"
-                    autoClose={5000}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                  />
-                Nueva Publicacion</>
+                <Button onClick={Alerta} fullWidth color='secondary' classes={{ root: classes.buttonProfile }} size="medium" variant="contained">
+                  Nueva Publicacion
+                </Button>
                 :
+            <Button fullWidth color='secondary' classes={{ root: classes.buttonProfile }} size="medium" variant="contained">
+              
               <Link
                 to="/nueva-publicacion"
                 style={{ textDecoration: "none", color: "black" }}
               >
                 Nueva Publicacion
               </Link>
-              }
             </Button>
+            }
           </Box >
         </Box >
       </Box >
