@@ -73,7 +73,7 @@ const ProfileCover = (props: Props) => {
     progress: undefined,
     });
 
-  function Alerta (){
+  const Alerta = ()=>{
       <ToastContainer
         position="top-center"
         autoClose={5000}
