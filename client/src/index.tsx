@@ -15,15 +15,13 @@ axios.defaults.baseURL = "https://cloth-store-henry.herokuapp.com";
 
 
 ReactDOM.render(
-  <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
         <ProvideAuth>
           <App />
         </ProvideAuth>
       </BrowserRouter>
-    </Provider>
-  </React.StrictMode>,
+    </Provider>,
   document.getElementById("root")
 );
 
