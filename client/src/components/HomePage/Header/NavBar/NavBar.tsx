@@ -1,23 +1,24 @@
-import React, { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import ButtonsNav from "../../../GeneralComponents/ButtonsNav";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Logo from "../../../assets/logo/ClothStore_logotipo_sin_fondo.png";
 // import Toolbar from "@mui/material/Toolbar";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import IconButton from "@material-ui/core/IconButton";
-import { AppBar, Toolbar, makeStyles } from '@material-ui/core';
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import IconButton from "@mui/material/IconButton";
+import { AppBar, Toolbar } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import { Box } from "@mui/system";
-import { Badge, Button } from "@material-ui/core";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import { Badge, Button } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store/store";
-import { gsap } from 'gsap'
+import { gsap } from "gsap";
 import { useAuth } from "../../../../hooks/useAuth";
 
 const useStyles = makeStyles({
   navBarContain: {
-    background: 'transparent',
-    boxShadow: '0px 0px 0px'
+    background: "transparent",
+    boxShadow: "0px 0px 0px",
   },
   button: {
     "& span": {
@@ -25,16 +26,12 @@ const useStyles = makeStyles({
     },
     marginLeft: "2%",
   },
-})
+});
 
 interface Props {
   flagButtonTranslate?: boolean;
   siteDetail?: boolean;
 }
-
-
-
-
 
 export default function NavBar({ flagButtonTranslate, siteDetail }: Props) {
   const cartLength = useSelector(
@@ -50,26 +47,35 @@ export default function NavBar({ flagButtonTranslate, siteDetail }: Props) {
   const timeline = gsap.timeline({
     defaults: {
       opacity: 0,
-      duration: 1
-    }
-  })
+      duration: 1,
+    },
+  });
 
+  // refs
+  const logo = useRef<HTMLImageElement>(null);
+  const containButtonShoppingLogin = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const logo = document.getElementById('logo');
-    const buttonAnimate = document.querySelectorAll('.buttonAnimate');
-    const containNavButton = document.getElementById('containNavButton');
-    const containButtonShoppingLogin = document.getElementById('containButtonShoppingLogin');
-    const buttonNavRight = document.querySelectorAll('.buttonNavRight');
+    const buttonAnimate = document.querySelectorAll(".buttonAnimate");
+    const containNavButton = document.getElementById("containNavButton");
+    const buttonNavRight = document.querySelectorAll(".buttonNavRight");
 
-    timeline.from(logo, { x: -500 }, "-=.7")
-      .from(containNavButton, { opacity: .4, y: -300 }, '-=.6')
-      .from(buttonAnimate, { opacity: 0, stagger: 0.1 }, '-=.6')
-
-    timeline.from(containButtonShoppingLogin, { x: 500 }, '-=.6')
-      .from(buttonNavRight, { y: -300, stagger: .3 })
-
-  }, [])
+    if (logo.current) {
+      timeline.from(logo.current, { x: -500 }, "-=.7");
+    }
+    if (containNavButton) {
+      timeline.from(containNavButton, { opacity: 0.4, y: -300 }, "-=.6");
+    }
+    if (buttonAnimate.length > 0) {
+      timeline.from(buttonAnimate, { opacity: 0, stagger: 0.1 }, "-=.6");
+    }
+    if (containButtonShoppingLogin.current) {
+      timeline.from(containButtonShoppingLogin.current, { x: 500 }, "-=.6");
+    }
+    if (buttonNavRight.length > 0) {
+      timeline.from(buttonNavRight, { y: -300, stagger: 0.3 });
+    }
+  }, []);
 
   const handleCartAnimate = () => {
     const cartAnimation = document.getElementById("cartAnimation");
@@ -80,10 +86,14 @@ export default function NavBar({ flagButtonTranslate, siteDetail }: Props) {
     containerHomePage?.classList.add("heightContainerHomePage");
   };
 
-  if (pathname === '/') {
+  if (pathname === "/") {
     return (
       <>
-        <AppBar id='appbar' classes={{ root: classes.navBarContain }} position="static">
+        <AppBar
+          id="appbar"
+          classes={{ root: classes.navBarContain }}
+          position="static"
+        >
           <Toolbar>
             <Box
               component="img"
@@ -96,14 +106,18 @@ export default function NavBar({ flagButtonTranslate, siteDetail }: Props) {
                 left: "0",
                 // bottom: { xl: "-245%;" },
               }}
-              id='logo'
+              id="logo"
+              ref={logo}
             />
 
             <Box
               sx={{
                 display: "flex",
                 alignItems: { xl: "center" },
-                transform: { lg: "translateX(60%)", xl: "translate(130%, 10%)" },
+                transform: {
+                  lg: "translateX(60%)",
+                  xl: "translate(130%, 10%)",
+                },
                 zIndex: "10",
               }}
             >
@@ -139,7 +153,8 @@ export default function NavBar({ flagButtonTranslate, siteDetail }: Props) {
                 display: "flex",
                 alignItems: "center",
               }}
-              id='containButtonShoppingLogin'
+              id="containButtonShoppingLogin"
+              ref={containButtonShoppingLogin}
             >
               {/* {flagButtonTranslate ?
                 <IconButton className='buttonNavRight' onClick={handleCartAnimate} size="medium" color="secondary">
@@ -153,22 +168,30 @@ export default function NavBar({ flagButtonTranslate, siteDetail }: Props) {
                   </Badge>
                 </IconButton>
                 : */}
-                <Link className='buttonNavRight' to="/cart">
-                  <IconButton className='buttonNavRight' onClick={handleCartAnimate} size="medium" color="secondary">
-                    <Badge
-                      badgeContent={
-                        !user ? cartLength : carrito?.publications?.length
-                      }
-                      color="primary"
-                    >
-                      <ShoppingCartIcon />
-                    </Badge>
-                  </IconButton>
-                </Link>
+              <Link className="buttonNavRight" to="/cart">
+                <IconButton
+                  className="buttonNavRight"
+                  onClick={handleCartAnimate}
+                  size="medium"
+                  color="secondary"
+                >
+                  <Badge
+                    badgeContent={
+                      !user ? cartLength : carrito?.publications?.length
+                    }
+                    color="primary"
+                  >
+                    <ShoppingCartIcon />
+                  </Badge>
+                </IconButton>
+              </Link>
               {/* } */}
 
               {user ? (
-                <Box className='buttonNavRight' sx={{ fontSize: { xl: "25px" }, marginLeft: "16px" }}>
+                <Box
+                  className="buttonNavRight"
+                  sx={{ fontSize: { xl: "25px" }, marginLeft: "16px" }}
+                >
                   <ButtonsNav
                     link="/perfil"
                     text="PERFIL"
@@ -176,7 +199,10 @@ export default function NavBar({ flagButtonTranslate, siteDetail }: Props) {
                   />
                 </Box>
               ) : (
-                <Box className='buttonNavRight' sx={{ fontSize: { xl: "25px" }, marginLeft: "16px" }}>
+                <Box
+                  className="buttonNavRight"
+                  sx={{ fontSize: { xl: "25px" }, marginLeft: "16px" }}
+                >
                   <ButtonsNav
                     link="/login"
                     text="INICIAR SESION"
@@ -188,23 +214,27 @@ export default function NavBar({ flagButtonTranslate, siteDetail }: Props) {
           </Toolbar>
         </AppBar>
       </>
-    )
+    );
   } else {
     return (
       <>
-        <AppBar id='appbar' classes={{ root: classes.navBarContain }} position="static">
+        <AppBar
+          id="appbar"
+          classes={{ root: classes.navBarContain }}
+          position="static"
+        >
           <Toolbar>
-            {siteDetail ?
+            {siteDetail ? (
               <Button
-              onClick={() => navigate('/')}
-              startIcon={<ArrowBackIcon />}
-              variant="contained"
-              color="primary"
-              className={classes.button}
-            >
-              Volver
-            </Button> :
-
+                onClick={() => navigate("/")}
+                startIcon={<ArrowBackIcon />}
+                variant="contained"
+                color="primary"
+                className={classes.button}
+              >
+                Volver
+              </Button>
+            ) : (
               <Button
                 onClick={() => navigate(-1)}
                 startIcon={<ArrowBackIcon />}
@@ -213,7 +243,8 @@ export default function NavBar({ flagButtonTranslate, siteDetail }: Props) {
                 className={classes.button}
               >
                 Volver
-              </Button>}
+              </Button>
+            )}
             <Box
               component="img"
               src={Logo}
