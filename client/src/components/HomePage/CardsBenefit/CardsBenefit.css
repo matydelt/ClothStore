@@ -1,58 +1,55 @@
 .imgGenderWoman {
-    height  : 403px;
-    position: relative;
-    bottom  : -60px;
-    right   : -21px;
+  height: 403px;
+  position: relative;
+  bottom: -60px;
+  right: -21px;
 }
 
 .imgGenderMan {
-    height  : 530px;
-    position: relative;
-    left    : -47px;
-    bottom  : -50px;
+  height: 530px;
+  position: relative;
+  left: -47px;
+  bottom: -50px;
 }
 
 .imgGenderkid {
-    height    : 478px;
-    position  : relative;
-    bottom    : -49px;
-    right     : 34px;
-    object-fit: contain !important;
+  height: 478px;
+  position: relative;
+  bottom: -49px;
+  right: 34px;
+  object-fit: contain !important;
 }
 
 .imgGender {
-    width     : 280px;
-    object-fit: cover;
+  width: 280px;
+  object-fit: cover;
 }
 
 .containedButtonBenefit {
-    display   : block;
-    transition: all .5s ease-in-out !important;
-    box-shadow: 0px 1px 1px #00c2cb, 1px 0px 1px #000 !important;
+  display: block;
+  transition: all 0.5s ease-in-out !important;
+  box-shadow: 0px 1px 1px #00c2cb, 1px 0px 1px #000 !important;
 }
 
 .containedButtonBenefit span {
-    margin: 0 !important;
+  margin: 0 !important;
 }
 
 /* .containedButtonBenefit:hover img {
     opacity: 0.3 !important;
 } */
 .containedButtonBenefit:hover {
-    transform: perspective(700px) rotateY(0deg) !important;
-    opacity  : 1 !important;
+  transform: perspective(700px) rotateY(0deg) !important;
+  opacity: 1 !important;
 }
-
-
-
 
 /* Hover Woman */
 
 .overlayWoman,
 .overlayMan,
 .overlayKid {
-    margin  : 0;
-    position: relative;
+  margin: 0;
+  position: relative;
 }
 
 .containedButtonBenefitWoman .overlayWoman,
@@ -60,142 +57,130 @@
 .overlayMan::before,
 .containedButtonBenefitKid .overlayKid,
 .overlayKid::before {
-    transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 
 .overlayWoman p,
 .overlayMan p,
 .overlayKid p {
-    font-size       : 30px;
-    font-weight     : 500;
-    text-transform  : capitalize;
-    transition      : all .4s ease;
-    opacity         : 0;
-    transition-delay: .4s;
+  font-size: 30px;
+  font-weight: 500;
+  text-transform: capitalize;
+  transition: all 0.4s ease;
+  opacity: 0;
+  transition-delay: 0.4s;
 }
 
-
 .overlayWoman p {
-    position         : absolute;
-    transform        : translate(343%, -40%);
-    /* top           : -23%;
+  position: absolute;
+  transform: translate(343%, -40%);
+  /* top           : -23%;
     left             : 10%; */
-
 }
 
 .containedButtonBenefitWoman:hover p {
-    transform: translate(151%, -51%);
-    opacity  : 1;
+  transform: translate(151%, -51%);
+  opacity: 1;
 }
 
-
 .containedButtonBenefitWoman:hover .overlayWoman {
-    right: -10%;
+  right: -10%;
 }
 
 .containedButtonBenefitWoman img,
 .containedButtonBenefitMan img,
 .containedButtonBenefitKid img {
-    transition: all .5s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 
 .containedButtonBenefitWoman:hover img,
-.containedButtonBenefitMan:hover img, 
-.containedButtonBenefitKid:hover img{
-    opacity: .6
+.containedButtonBenefitMan:hover img,
+.containedButtonBenefitKid:hover img {
+  opacity: 0.6;
 }
 
 .containedButtonBenefitWoman .overlayWoman {
-    border-top   : 220px solid transparent;
-    border-bottom: 190px solid transparent;
-    border-right : 288px solid #00c2cb;
-    opacity      : 0.9;
-    position     : absolute;
-    display      : block;
-    top          : 5px;
-    right        : -100%;
-    transition   : all 0.5s ease-in-out;
+  border-top: 220px solid transparent;
+  border-bottom: 190px solid transparent;
+  border-right: 288px solid #00c2cb;
+  opacity: 0.9;
+  position: absolute;
+  display: block;
+  top: 5px;
+  right: -100%;
+  transition: all 0.5s ease-in-out;
 }
-
-
 
 /* Hover Man */
 .overlayMan {
-    position: relative;
-    overflow: hidden;
+  position: relative;
+  overflow: hidden;
 }
 
 .overlayMan p {
-    position : absolute !important;
-    bottom   : 87px;
-    right    : 59px;
-    font-size: 28px;
+  position: absolute !important;
+  bottom: 87px;
+  right: 59px;
+  font-size: 28px;
 }
 
-
-
 .overlayMan::before {
-    content         : 'Hombre';
-    position        : absolute;
-    width           : 100%;
-    height          : 100%;
-    bottom          : -7px;
-    left            : -7px;
-    background-color: #00c2cb;
-    border-radius   : 50% !important;
-    transform       : scale(0);
+  content: ".";
+  position: absolute;
+  width: 6rem;
+  height: 6rem;
+  bottom: -7px;
+  left: -7px;
+  background-color: #00c2cb;
+  border-radius: 50% !important;
+  transform: scale(0);
 }
 
 .containedButtonBenefitMan:hover .overlayMan {
-    opacity: 1;
-    z-index  : 10;
+  opacity: 1;
+  z-index: 10;
 }
 
 .containedButtonBenefitMan:hover .overlayMan::before {
-    transform: scale(5);
+  transform: scale(5);
 }
-
 
 .containedButtonBenefitMan:hover .overlayMan p {
-    opacity: 1;
+  opacity: 1;
 }
-
-
-
 
 /* Hover Niño */
 .overlayKid {
-    z-index      : 1000;
-    opacity      : 1;
-    margin       : 0;
-    display      : block;
-    position     : absolute;
-    left         : -90px;
-    bottom       : -300px;
-    border-left  : 249px solid transparent;
-    border-right : 236px solid transparent;
-    border-bottom: 288px solid #00c2cb;
-    opacity      : 0.9;
+  z-index: 1000;
+  opacity: 1;
+  margin: 0;
+  display: block;
+  position: absolute;
+  left: -90px;
+  bottom: -300px;
+  border-left: 249px solid transparent;
+  border-right: 236px solid transparent;
+  border-bottom: 288px solid #00c2cb;
+  opacity: 0.9;
 }
 
-
 .overlayKid p {
-    position        : absolute;
-    bottom          : -134px;
-    left            : -42px;
-    opacity         : 0;
-    bottom          : -300px;
-    transition      : all .4s ease-in-out;
-    transition-delay: .4s;
+  position: absolute;
+  bottom: -134px;
+  left: -42px;
+  opacity: 0;
+  bottom: -300px;
+  transition: all 0.4s ease-in-out;
+  transition-delay: 0.4s;
 }
 
 .containedButtonBenefitKid:hover p {
-    opacity: 1;
-    bottom : -134px;
-    left   : -42px;
+  opacity: 1;
+  bottom: -134px;
+  left: -42px;
 }
 
 .containedButtonBenefitKid:hover .overlayKid {
-    bottom: -94px;
-    left  : -90px;
+  bottom: -94px;
+  left: -90px;
 }
