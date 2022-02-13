@@ -1,13 +1,15 @@
-import { Button } from "@material-ui/core";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { Button } from "@mui/material";
+import { Theme } from "@mui/material/styles";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import Checkbox from "@material-ui/core/Checkbox";
+import Checkbox from "@mui/material/Checkbox";
 import Collapse from "@mui/material/Collapse";
 import ListItemButton from "@mui/material/ListItemButton";
-import { List, ListItemIcon, ListItemText, ListItem } from "@material-ui/core";
+import { List, ListItemIcon, ListItemText, ListItem } from "@mui/material";
 import { Box } from "@mui/system";
-import * as React from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getallMarks } from "../../../redux/actions/marksActions";
 import { putPublications } from "../../../redux/actions/publicationActions";
@@ -45,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const SideBarHomePage = () => {
   const dispatch = useDispatch();
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(getAllUsers());
     dispatch(getallMarks());
     return () => {};
@@ -61,16 +63,15 @@ const SideBarHomePage = () => {
 
   const { marks } = useSelector((state: RootState) => state.allMarks);
 
-  const [selectedValueGender, setSelectedValueGender] = React.useState(gender);
-  const [selectedValueMark, setSelectedValueMark] = React.useState(mark);
-  const [selectedValueCategory, setSelectedValueCategory] =
-    React.useState(category);
-  const [selectedValueAuthor, setSelectedValueAuthor] = React.useState(author);
+  const [selectedValueGender, setSelectedValueGender] = useState(gender);
+  const [selectedValueMark, setSelectedValueMark] = useState(mark);
+  const [selectedValueCategory, setSelectedValueCategory] = useState(category);
+  const [selectedValueAuthor, setSelectedValueAuthor] = useState(author);
 
-  const [open1, setOpen1] = React.useState(true);
-  const [open2, setOpen2] = React.useState(true);
-  const [open3, setOpen3] = React.useState(true);
-  const [open4, setOpen4] = React.useState(true);
+  const [open1, setOpen1] = useState<boolean>(false);
+  const [open2, setOpen2] = useState<boolean>(false);
+  const [open3, setOpen3] = useState<boolean>(false);
+  const [open4, setOpen4] = useState<boolean>(false);
 
   const handleClick1 = () => {
     setOpen1(!open1);
@@ -84,40 +85,28 @@ const SideBarHomePage = () => {
   const handleClick4 = () => {
     setOpen4(!open4);
   };
-  React.useEffect(() => {
+
+  useEffect(() => {
     dispatch(getAllUsers());
     return () => {};
   }, [dispatch]);
 
-  const handleListItemClickGender = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    value: string
-  ) => {
-    console.log();
+  const handleListItemClickGender = (value: string) => {
     selectedValueGender === value
       ? setSelectedValueGender("")
       : setSelectedValueGender(value);
   };
-  const handleListItemClickCategory = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    value: string
-  ) => {
+  const handleListItemClickCategory = (value: string) => {
     selectedValueCategory === value
       ? setSelectedValueCategory("")
       : setSelectedValueCategory(value);
   };
-  const handleListItemClickMark = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    value: string
-  ) => {
+  const handleListItemClickMark = (value: string) => {
     selectedValueMark === value
       ? setSelectedValueMark("")
       : setSelectedValueMark(value);
   };
-  const handleListItemClickAuthor = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    value: string
-  ) => {
+  const handleListItemClickAuthor = (value: string) => {
     selectedValueAuthor === value
       ? setSelectedValueAuthor("")
       : setSelectedValueAuthor(value);
@@ -183,7 +172,7 @@ const SideBarHomePage = () => {
                 dense
                 role={undefined}
                 button
-                onClick={(event) => handleListItemClickGender(event, value)}
+                onClick={() => handleListItemClickGender(value)}
                 disabled={loading}
                 classes={{ root: classes.list }}
               >
@@ -217,7 +206,7 @@ const SideBarHomePage = () => {
                 dense
                 role={undefined}
                 button
-                onClick={(event) => handleListItemClickCategory(event, value)}
+                onClick={() => handleListItemClickCategory(value)}
                 disabled={loading}
                 classes={{ root: classes.list }}
               >
@@ -251,7 +240,7 @@ const SideBarHomePage = () => {
                 dense
                 role={undefined}
                 button
-                onClick={(event) => handleListItemClickAuthor(event, value)}
+                onClick={() => handleListItemClickAuthor(value)}
                 disabled={loading}
                 classes={{ root: classes.list }}
               >
@@ -285,7 +274,7 @@ const SideBarHomePage = () => {
                 dense
                 role={undefined}
                 button
-                onClick={(event) => handleListItemClickMark(event, value)}
+                onClick={() => handleListItemClickMark(value)}
                 disabled={loading}
                 classes={{ root: classes.list }}
               >
