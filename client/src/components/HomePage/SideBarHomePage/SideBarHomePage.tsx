@@ -151,8 +151,12 @@ const SideBarHomePage = () => {
       component="aside"
       sx={{
         width: "40% !important",
+        height: "fit-content",
         marginRight: "30px !important",
-        marginTop: "20px !important",
+        marginTop: "50px !important",
+        boxShadow: "0 3px 10px rgb(0 0 0 / 0.2)",
+        paddingBottom: "1rem",
+        borderRadius: "10px",
       }}
     >
       <SearchBar />
@@ -293,22 +297,30 @@ const SideBarHomePage = () => {
           })}
         </Collapse>
       </List>
-      <Button
-        color="primary"
-        variant="contained"
-        classes={{ root: classes.buttonGroupChild }}
-        onClick={handleSubmit}
+      <Box
+        component="div"
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+        }}
       >
-        Enviar
-      </Button>
-      <Button
-        color="primary"
-        variant="contained"
-        classes={{ root: classes.buttonGroupChild }}
-        onClick={handleReset}
-      >
-        Reiniciar
-      </Button>
+        <Button
+          color="primary"
+          variant="contained"
+          classes={{ root: classes.buttonGroupChild }}
+          onClick={handleSubmit}
+        >
+          Enviar
+        </Button>
+        <Button
+          color="primary"
+          variant="contained"
+          classes={{ root: classes.buttonGroupChild }}
+          onClick={handleReset}
+        >
+          Reiniciar
+        </Button>
+      </Box>
     </Box>
   );
 };
