@@ -1,26 +1,23 @@
-import { makeStyles } from "@material-ui/core/styles";
+import makeStyles from "@mui/styles/makeStyles";
 import GoogleIcon from "@mui/icons-material/Google";
-import LockOutlinedIcon from "@material-ui/icons/LockOpenOutlined";
-import { Button, TextField } from "@material-ui/core";
+import LockOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
+import { Button, TextField } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
-import Link from '@material-ui/core/Link';
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { signinUser } from "../redux/actions/userActions";
-import Clothing from './assets/img/cloting.jpg'
-import Logo from './assets/logo/ClothStore_sin_fondo.png'
+import Clothing from "./assets/img/cloting.jpg";
+import Logo from "./assets/logo/ClothStore_sin_fondo.png";
 
 type FormState = { email: string; password: string };
-
-const theme = createTheme();
 
 const useStyles = makeStyles({
   rootButtonLogin: {
@@ -30,25 +27,25 @@ const useStyles = makeStyles({
   rootButtonLoginGoogle: {
     marginTop: "10px",
     marginBottom: "10px",
-    backgroundColor: '#de4e3b'
+    backgroundColor: "#de4e3b",
   },
   inputsLogin: {
-    width: '100%',
-    marginRight: 'auto',
-    marginLeft: 'auto'
+    width: "100%",
+    marginRight: "auto",
+    marginLeft: "auto",
   },
   linkRegister: {
-    display: 'inline-block',
-    width: '100%',
-    textAlign: 'center'
+    display: "inline-block",
+    width: "100%",
+    textAlign: "center",
   },
   cicleLoginForm: {
-    display: 'block',
-    position: 'absolute',
-    width: '300px',
-    height: '300px',
-    backgroundColor: '#00c2cb'
-  }
+    display: "block",
+    position: "absolute",
+    width: "300px",
+    height: "300px",
+    backgroundColor: "#00c2cb",
+  },
 });
 
 const LoginForm = () => {
@@ -62,7 +59,7 @@ const LoginForm = () => {
 
   const classes = useStyles();
 
-  const from = location.state?.from?.pathname || "/";
+  const from = location.pathname || "/";
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
@@ -78,91 +75,96 @@ const LoginForm = () => {
 
   return (
     // <Box >
-    <Container sx={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: '70vh',
-      boxShadow: '1px 2px 5px #ccc',
-      marginTop: '50px',
-      marginBottom: '50px',
-      maxWidth: "1000px !important",
-      overflow: 'hidden',
-      borderRadius: '13px',
-    }}
+    <Container
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "70vh",
+        boxShadow: "1px 2px 5px #ccc",
+        marginTop: "50px",
+        marginBottom: "50px",
+        maxWidth: "1000px !important",
+        overflow: "hidden",
+        borderRadius: "13px",
+      }}
       component="main"
     >
-      <Box sx={{
-        width: '50%',
-        position: 'relative',
-        height: '100%',
-        overflow: 'hidden',
-        left: '-24px',
-        borderTopRightRadius: '14%'
-      }}>
+      <Box
+        sx={{
+          width: "50%",
+          position: "relative",
+          height: "100%",
+          overflow: "hidden",
+          left: "-24px",
+          borderTopRightRadius: "14%",
+        }}
+      >
         <Box
-          component='img'
+          component="img"
           src={Clothing}
-          alt='Cloting'
+          alt="Cloting"
           sx={{
-            width: '500px',
-            position: 'absolute',
-            left: '0',
-            top: '0',
-            objectFit: 'contain',
+            width: "500px",
+            position: "absolute",
+            left: "0",
+            top: "0",
+            objectFit: "contain",
           }}
         />
         <Box
-          component='span'
+          component="span"
           sx={{
-            position: 'absolute',
-            left: '0',
-            top: '0',
-            width: '100%',
-            height: '100%',
-            backgroundColor: '#333',
-            margin: '0px',
-            opacity: '.2'
+            position: "absolute",
+            left: "0",
+            top: "0",
+            width: "100%",
+            height: "100%",
+            backgroundColor: "#333",
+            margin: "0px",
+            opacity: ".2",
           }}
         />
       </Box>
       <CssBaseline />
       <Box
         sx={{
-          margin: 'auto',
-          width: '50%',
+          margin: "auto",
+          width: "50%",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          position: 'relative'
+          position: "relative",
         }}
       >
         <Box
-          component='img'
+          component="img"
           src={Logo}
-          alt='Logo'
+          alt="Logo"
           sx={{
-            position: 'absolute',
-            top: '-173px',
-            width: '47%'
+            position: "absolute",
+            top: "-173px",
+            width: "47%",
           }}
         />
         <Box
-          component='span'
+          component="span"
           sx={{
-            display: 'block',
-            position: 'absolute',
-            bottom: '-284px',
-            left: '-126px',
-            width: '300px',
-            height: '300px',
-            backgroundColor: '#00c2cb',
-            zIndex: '-1',
-            borderRadius: '50%',
-            opacity: '.3'
+            display: "block",
+            position: "absolute",
+            bottom: "-284px",
+            left: "-126px",
+            width: "300px",
+            height: "300px",
+            backgroundColor: "#00c2cb",
+            zIndex: "-1",
+            borderRadius: "50%",
+            opacity: ".3",
           }}
         />
-        <Avatar sx={{ backgroundColor: '#fff', boxShadow: '0px 1px 1px #00c2cb' }}>
+        <Avatar
+          sx={{ backgroundColor: "#fff", boxShadow: "0px 1px 1px #00c2cb" }}
+        >
           <LockOutlinedIcon color="primary" />
         </Avatar>
         <Typography component="h1" variant="h5">
@@ -171,7 +173,12 @@ const LoginForm = () => {
         <Box
           component="form"
           onSubmit={handleSubmit}
-          sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '75%' }}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            width: "75%",
+          }}
           noValidate
         >
           <TextField
@@ -214,7 +221,7 @@ const LoginForm = () => {
             variant="contained"
             classes={{ root: classes.rootButtonLoginGoogle }}
             onClick={googleSignin}
-            endIcon={<GoogleIcon sx={{ color: '#fff' }} />}
+            endIcon={<GoogleIcon sx={{ color: "#fff" }} />}
           >
             Iniciar Sesión con Google
           </Button>
@@ -222,7 +229,7 @@ const LoginForm = () => {
             {/* <Grid item xs>
               <Link variant="body2">Olvidaste tu contraseña?</Link>
             </Grid> */}
-            <Grid item sx={{ width: '100%' }}>
+            <Grid item sx={{ width: "100%" }}>
               <Link
                 component={RouterLink}
                 to="/register"

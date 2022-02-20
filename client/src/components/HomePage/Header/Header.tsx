@@ -1,66 +1,60 @@
-import React, { useEffect } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/swiper-bundle.min.css";
+import { useEffect, useRef } from "react";
+import { Autoplay, EffectFade, Navigation, Pagination } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
 import "swiper/swiper.min.css";
-import "swiper/components/navigation/navigation.min.css";
-import "swiper/components/pagination/pagination.min.css";
-import "swiper/components/scrollbar/scrollbar.min.css";
-import "swiper/components/autoplay";
+import "swiper/modules/navigation/navigation.min.css";
+import "swiper/modules/pagination/pagination.min.css";
+import "swiper/modules/autoplay/autoplay.min.css";
+import "swiper/modules/effect-fade/effect-fade.min.css";
 import "./Header.css";
-import SwiperCore, {
-  Autoplay,
-  EffectFade,
-  Navigation,
-  Pagination,
-} from "swiper";
 import NavBar from "./NavBar/NavBar";
 import Woman from "../../assets/img/woman.png";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Man from "../../assets/img/man.png";
 import Kids from "../../assets/img/kids.png";
-import { gsap } from 'gsap';
-
-
-// install Swiper modules
-SwiperCore.use([Autoplay, EffectFade, Navigation, Pagination]);
+import { gsap } from "gsap";
 
 const Header = () => {
-
   const timeline = gsap.timeline({
     defaults: {
       opacity: 0,
-      duration: 1
-    }
-  })
+      duration: 1,
+    },
+  });
 
+  const typoOne = useRef<HTMLSpanElement>(null!);
+  const titleWoman = useRef<HTMLSpanElement>(null!);
+  const imgWoman = useRef<HTMLImageElement>(null!);
+  const circleWoman = useRef<HTMLSpanElement>(null!);
 
   useEffect(() => {
-    const typoOne = document.getElementById('typoOne');
-    const titleWoman = document.getElementById('titleWoman');
-    const imgWoman = document.getElementById('imgWoman');
-    const circleWoman = document.getElementById('circleWoman');
+    // const typoOne = document.getElementById("typoOne");
+    // const titleWoman = document.getElementById("titleWoman");
+    // const imgWoman = document.getElementById("imgWoman");
+    // const circleWoman = document.getElementById("circleWoman");
 
-    timeline.from(typoOne, { y: 150 })
-      .from(titleWoman, { x: -500 }, "-=.5")
-      .from(imgWoman, { y: 100 }, "-=.4")
-      .from(circleWoman, { x: 100 }, "-=2")
-  }, [])
-
+    timeline
+      .from(typoOne.current, { y: 150 })
+      .from(titleWoman.current, { x: -500 }, "-=.5")
+      .from(imgWoman.current, { y: 100 }, "-=.4")
+      .from(circleWoman.current, { x: 100 }, "-=2");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
-
       <header
         style={{ height: "100vh", background: "#f3f3f3", overflow: "hidden" }}
       >
-        <NavBar flagButtonTranslate={true}/>
+        <NavBar flagButtonTranslate={true} />
         <Swiper
+          modules={[Navigation, Pagination, Autoplay, EffectFade]}
           spaceBetween={30}
           slidesPerView={1}
-          navigation={true}
-          effect={"fade"}
-          loop={true}
+          navigation
+          effect="fade"
+          loop
           pagination={{ clickable: true }}
           autoplay={{
             delay: 4000,
@@ -68,11 +62,11 @@ const Header = () => {
         >
           {/*********** SLIDE 1 ************/}
           <SwiperSlide>
-
             <Typography
+              ref={typoOne}
               sx={{
-                width: '231px !important',
-                textAlign: 'left',
+                width: "231px !important",
+                textAlign: "left",
                 fontSize: { xl: "25px !important" },
                 transform: { lg: "translate(0%, 10%)", xl: "translateY(30%)" },
               }}
@@ -82,6 +76,7 @@ const Header = () => {
               SIEMPRE PARA TI
             </Typography>
             <Typography
+              ref={titleWoman}
               sx={{
                 fontSize: { lg: "10px !important", xl: "98px !important" },
                 width: { lg: "400px !important", xl: "400px !important" },
@@ -91,7 +86,7 @@ const Header = () => {
                 },
                 textAlign: "center",
                 fontWeight: "400 !important",
-                lineHeight: '128px !important'
+                lineHeight: "128px !important",
               }}
               variant="h2"
               id="titleWoman"
@@ -100,6 +95,7 @@ const Header = () => {
             </Typography>
             <Box
               component="img"
+              ref={imgWoman}
               src={Woman}
               alt="Woman"
               sx={{
@@ -111,10 +107,11 @@ const Header = () => {
                 bottom: "0%",
                 height: "87%",
               }}
-              id='imgWoman'
+              id="imgWoman"
             />
             <Box
               component="span"
+              ref={circleWoman}
               sx={{
                 position: "absolute",
                 right: { lg: "25%", xl: "15%" },
@@ -125,7 +122,7 @@ const Header = () => {
                 zIndex: "-1",
                 borderRadius: "50%",
               }}
-              id='circleWoman'
+              id="circleWoman"
             />
           </SwiperSlide>
 
@@ -159,7 +156,7 @@ const Header = () => {
                 top: { lg: "49% !important", xl: "49% !important" },
                 fontWeight: "lighter",
               }}
-            /* color="initial" */
+              /* color="initial" */
             >
               siempre para ti.
             </Typography>

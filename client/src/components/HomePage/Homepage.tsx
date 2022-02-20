@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Header from "./Header/Header";
 import { useSelector, useDispatch } from "react-redux";
 import Publicaciones from "./publicaciones/publicaciones";
@@ -11,10 +11,9 @@ import Paginations from "./Pagination";
 import { putPublications } from "../../redux/actions/publicationActions";
 import { RootState } from "../../redux/store/store";
 import CardsBenefit from "./CardsBenefit/CardsBenefit";
-import { Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { Typography } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import CardsCallToAction from "./CardsCallToAction/CardsCallToAction";
-import CartScreen from "../../pages/CartScreen";
 
 const useStyles = makeStyles({
   titleTienda: {
@@ -22,11 +21,10 @@ const useStyles = makeStyles({
     textDecoration: "underline",
   },
   containerMain: {
-    height: 'max-content',
-    marginTop: '80px',
-  }
-})
-
+    height: "max-content",
+    marginTop: "80px",
+  },
+});
 
 const Homepage = () => {
   const {
@@ -58,16 +56,26 @@ const Homepage = () => {
         author: author,
       })
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <Box sx={{ position: 'relative', overflow: 'hidden' }}>
+    <Box sx={{ position: "relative", overflow: "hidden" }}>
       <Box>
         <Header />
         <CardsCallToAction />
         <CardsBenefit />
-        <Container classes={{ root: classes.containerMain }} id="tienda" maxWidth="lg">
-          <Typography classes={{ root: classes.titleTienda }} align='center' variant="h3" color="primary">
+        <Container
+          classes={{ root: classes.containerMain }}
+          id="tienda"
+          maxWidth="lg"
+        >
+          <Typography
+            classes={{ root: classes.titleTienda }}
+            align="center"
+            variant="h3"
+            color="primary"
+          >
             Tienda
           </Typography>
           <Box

@@ -84,7 +84,7 @@ function SearchOrder() {
               const labelId = `checkbox-list-label-${value}`;
 
               return (
-                <List component="div" disablePadding>
+                <List component="div" disablePadding key={value}>
                   <ListItem
                     key={value}
                     dense

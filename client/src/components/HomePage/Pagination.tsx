@@ -2,13 +2,12 @@ import * as React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import { putPublications } from "../../redux/actions/publicationActions";
-import  Stack  from "@mui/material/Stack";
+import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
 import { Box } from "@mui/system";
 
-function Paginations() {  
-
-  const { 
+function Paginations() {
+  const {
     mark,
     gender,
     category,
@@ -16,18 +15,13 @@ function Paginations() {
     author,
     name,
     order,
-    page,
-    count
-  } = useSelector(
-    (state: RootState) => state.publicationList
-  );
+    // page,
+    count,
+  } = useSelector((state: RootState) => state.publicationList);
 
   const dispatch = useDispatch();
 
-  const handleChange = (
-    event: React.ChangeEvent<unknown>,
-    page: number
-  ) => {
+  const handleChange = (event: React.ChangeEvent<unknown>, page: number) => {
     dispatch(
       putPublications({
         name: name,
@@ -41,7 +35,7 @@ function Paginations() {
       })
     );
   };
-  let pag:number = Math.ceil(count/12);
+  let pag: number = Math.ceil(count / 12);
   return (
     <Box
       component="aside"
@@ -50,14 +44,21 @@ function Paginations() {
         marginTop: "20px",
         marginBottom: "20px",
         display: "flex",
-        justifyContent: "center"
+        justifyContent: "center",
       }}
     >
-    <Stack>
-      <Pagination count={pag} variant="outlined" color="primary" showFirstButton showLastButton onChange={handleChange} />
-    </Stack>
+      <Stack>
+        <Pagination
+          count={pag}
+          variant="outlined"
+          color="primary"
+          showFirstButton
+          showLastButton
+          onChange={handleChange}
+        />
+      </Stack>
     </Box>
-    );
+  );
 }
 
 export default Paginations;

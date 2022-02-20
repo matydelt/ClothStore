@@ -5,7 +5,6 @@ import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import Logo from "../assets/images/ClothStore_logotipo_sin_fondo.png";
-import { makeStyles } from '@material-ui/core/styles';
 
 interface Props {
   background?: string;
@@ -29,16 +28,16 @@ const Copyright = (props: any) => {
 const Footer = ({ background }: Props) => {
   return (
     <Box
-      component='footer'
-      sx={{ height: '260px !important' }}
-      bgcolor={background || '#c5c5c5'}
+      component="footer"
+      sx={{ height: "260px !important" }}
+      bgcolor={background || "#c5c5c5"}
     >
       <Box
         px={{ xs: 3, sm: 10 }}
         py={{ xs: 5, sm: 5 }}
-      // position="absolute"
-      // bottom={0}
-      // width="100%"
+        // position="absolute"
+        // bottom={0}
+        // width="100%"
       >
         <Container maxWidth="lg">
           <Grid container spacing={0} flexWrap="nowrap">

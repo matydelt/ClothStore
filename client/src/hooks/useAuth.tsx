@@ -44,8 +44,6 @@ export const useAuth = () => {
   return useContext(authContext);
 };
 
-
-
 function useProvideAuth() {
   const [user, setUser] = useState<User>();
   const dispatch = useDispatch();
@@ -87,17 +85,21 @@ function useProvideAuth() {
 
   const googleSignin = async (): Promise<User | undefined> => {
     try {
-      const response = await signInWithPopup(auth, provider)
+      const response = await signInWithPopup(auth, provider);
       if (response.user.email) {
         const obj = {
-          firstName: response.user.displayName ? response.user.displayName.split(" ")[0] : "",
-          lastName: response.user.displayName ? response.user.displayName.split(" ")[1] : "",
+          firstName: response.user.displayName
+            ? response.user.displayName.split(" ")[0]
+            : "",
+          lastName: response.user.displayName
+            ? response.user.displayName.split(" ")[1]
+            : "",
           email: response.user.email,
           password: `${response.user.email}${response.user.email}`,
-          photo: response.user.photoURL ? response.user.photoURL : ""
-        }
+          photo: response.user.photoURL ? response.user.photoURL : "",
+        };
 
-        dispatch(registerUserGoogle(obj))
+        dispatch(registerUserGoogle(obj));
         return response.user;
       }
     } catch (error) {
@@ -107,7 +109,6 @@ function useProvideAuth() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      console.log(user);
       if (user) {
         dispatch(setSignedInUser(user));
         setUser(user);

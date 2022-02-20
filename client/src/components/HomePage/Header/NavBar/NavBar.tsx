@@ -75,6 +75,7 @@ export default function NavBar({ flagButtonTranslate, siteDetail }: Props) {
     if (buttonNavRight.length > 0) {
       timeline.from(buttonNavRight, { y: -300, stagger: 0.3 });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleCartAnimate = () => {
@@ -287,7 +288,13 @@ export default function NavBar({ flagButtonTranslate, siteDetail }: Props) {
                   />
                 </Box>
               ) : (
-                <Box sx={{ fontSize: { xl: "25px" }, marginLeft: "16px" }}>
+                <Box
+                  sx={{
+                    fontSize: { xl: "25px" },
+                    marginLeft: "16px",
+                    display: pathname === "/login" ? "none" : "inline",
+                  }}
+                >
                   <ButtonsNav
                     link="/login"
                     text="INICIAR SESION"

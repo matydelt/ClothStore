@@ -1,6 +1,5 @@
-import { Button, Link, TextField, Avatar } from "@material-ui/core";
-import { makeStyles } from '@material-ui/core/styles';
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { Avatar, Button, Link, TextField } from "@mui/material";
 // import FormControlLabel from "@mui/material/FormControlLabel";
 // import Checkbox from "@mui/material/Checkbox";
 // import Link from "@mui/material/Link";
@@ -8,17 +7,16 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
-import { createTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import React, { useState } from "react";
+import makeStyles from "@mui/styles/makeStyles";
+import type { ChangeEventHandler, FormEventHandler } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { registerUser } from "../redux/actions/userActions";
-import ClothingRegiter from './assets/img/clotingRegister.jpg';
-import Logo from './assets/logo/ClothStore_sin_fondo.png'
-
-
+import ClothingRegiter from "./assets/img/clotingRegister.jpg";
+import Logo from "./assets/logo/ClothStore_sin_fondo.png";
 
 type FormState = {
   firstName: string;
@@ -35,27 +33,26 @@ const useStyles = makeStyles({
   },
   avatarLock: {
     backgroundColor: "#fff",
-    boxShadow: '0px 1px 1px #00c2cb'
+    boxShadow: "0px 1px 1px #00c2cb",
   },
   inputsLogin: {
-    width: '100%',
-    marginRight: 'auto',
-    marginLeft: 'auto'
+    width: "100%",
+    marginRight: "auto",
+    marginLeft: "auto",
   },
   linkRegister: {
-    display: 'inline-block',
-    width: '100%',
-    textAlign: 'center'
+    display: "inline-block",
+    width: "100%",
+    textAlign: "center",
   },
   cicleLoginForm: {
-    display: 'block',
-    position: 'absolute',
-    width: '300px',
-    height: '300px',
-    backgroundColor: '#00c2cb'
-  }
+    display: "block",
+    position: "absolute",
+    width: "300px",
+    height: "300px",
+    backgroundColor: "#00c2cb",
+  },
 });
-
 
 const RegisterForm = () => {
   const [input, setInput] = useState<FormState>({
@@ -72,11 +69,11 @@ const RegisterForm = () => {
 
   const { signup } = useAuth();
 
-  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     if (input.confirmPassword !== input.password) {
       alert("The passwords must be the same");
       return;
@@ -96,64 +93,70 @@ const RegisterForm = () => {
   return (
     <Container
       sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '70vh',
-        boxShadow: '1px 2px 5px #ccc',
-        marginTop: '50px',
-        marginBottom: '50px',
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "70vh",
+        boxShadow: "1px 2px 5px #ccc",
+        marginTop: "50px",
+        marginBottom: "50px",
         maxWidth: "1000px !important",
-        overflow: 'hidden',
-        borderRadius: '13px',
+        overflow: "hidden",
+        borderRadius: "13px",
       }}
-      component="main">
+      component="main"
+    >
       <CssBaseline />
       <Box
         sx={{
-          margin: 'auto',
-          width: '50%',
+          margin: "auto",
+          width: "50%",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          position: 'relative'
+          position: "relative",
         }}
       >
         <Box
-          component='img'
+          component="img"
           src={Logo}
-          alt='Logo'
+          alt="Logo"
           sx={{
-            position: 'absolute',
-            top: '-121px',
-            left: '-72px',
-            width: '47%'
+            position: "absolute",
+            top: "-121px",
+            left: "-72px",
+            width: "47%",
           }}
         />
         <Box
-          component='span'
+          component="span"
           sx={{
-            display: 'block',
-            position: 'absolute',
-            bottom: '-253px',
-            left: '-187px',
-            width: '300px',
-            height: '300px',
-            backgroundColor: '#00c2cb',
-            zIndex: '-1',
-            borderRadius: '50%',
-            opacity: '.3'
+            display: "block",
+            position: "absolute",
+            bottom: "-253px",
+            left: "-187px",
+            width: "300px",
+            height: "300px",
+            backgroundColor: "#00c2cb",
+            zIndex: "-1",
+            borderRadius: "50%",
+            opacity: ".3",
           }}
         />
         <Avatar classes={{ root: classes.avatarLock }}>
           <LockOutlinedIcon color="primary" />
         </Avatar>
-        <Typography component="h1" variant="h5" sx={{ my: '10px' }}>
+        <Typography component="h1" variant="h5" sx={{ my: "10px" }}>
           Registrate
         </Typography>
         <Box
           component="form"
-          sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '75%' }}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            width: "75%",
+          }}
           onSubmit={handleSubmit}
           noValidate
         >
@@ -213,9 +216,7 @@ const RegisterForm = () => {
                 autoComplete="new-password"
                 value={input.password}
                 onChange={handleChange}
-                error={
-                  input.password.length >= 1 && input.password.length < 6
-                }
+                error={input.password.length >= 1 && input.password.length < 6}
                 helperText={
                   input.password.length >= 1 &&
                   input.password.length < 6 &&
@@ -255,50 +256,57 @@ const RegisterForm = () => {
               input.confirmPassword !== input.password ||
               input.password.length < 6
             }
-            color='primary'
+            color="primary"
           >
             Sign up
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link component={RouterLink} to="/login" variant="body2" underline='hover'>
+              <Link
+                component={RouterLink}
+                to="/login"
+                variant="body2"
+                underline="hover"
+              >
                 Ya tienes una cuenta?
               </Link>
             </Grid>
           </Grid>
         </Box>
       </Box>
-      <Box sx={{
-        width: '50%',
-        position: 'relative',
-        height: '100%',
-        overflow: 'hidden',
-        right: '-24px',
-        borderTopLeftRadius: '14%'
-      }}>
+      <Box
+        sx={{
+          width: "50%",
+          position: "relative",
+          height: "100%",
+          overflow: "hidden",
+          right: "-24px",
+          borderTopLeftRadius: "14%",
+        }}
+      >
         <Box
-          component='img'
+          component="img"
           src={ClothingRegiter}
-          alt='Cloting'
+          alt="Cloting"
           sx={{
-            width: '500px',
-            position: 'absolute',
-            left: '0',
-            top: '0',
-            objectFit: 'contain',
+            width: "500px",
+            position: "absolute",
+            left: "0",
+            top: "0",
+            objectFit: "contain",
           }}
         />
         <Box
-          component='span'
+          component="span"
           sx={{
-            position: 'absolute',
-            left: '0',
-            top: '0',
-            width: '100%',
-            height: '100%',
-            backgroundColor: '#333',
-            margin: '0px',
-            opacity: '.2'
+            position: "absolute",
+            left: "0",
+            top: "0",
+            width: "100%",
+            height: "100%",
+            backgroundColor: "#333",
+            margin: "0px",
+            opacity: ".2",
           }}
         />
       </Box>
