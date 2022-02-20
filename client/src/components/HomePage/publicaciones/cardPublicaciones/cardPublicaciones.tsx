@@ -1,21 +1,21 @@
 import { Box, Typography } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import "./cardPublication.css";
 import { Link } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 // import IconButton from '@mui/material/IconButton'
-import { IconButton } from "@material-ui/core";
+import { IconButton } from "@mui/material";
 // import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import InfoIcon from '@material-ui/icons/Info';
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import InfoIcon from "@mui/icons-material/Info";
 import Grid from "@mui/material/Grid";
 import {
   CartItemType,
   CartType,
-  CartItemTypeDB,
+  // CartItemTypeDB,
 } from "../../../../pages/CartScreen";
 import useLocalStorage from "../../../../hooks/useLocalStorage";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,23 +23,23 @@ import { cartLength } from "../../../../redux/actions/publicationActions";
 import { RootState } from "../../../../redux/store/store";
 import { putCarrito } from "../../../../redux/actions/carritoAction";
 import { useAuth } from "../../../../hooks/useAuth";
-import swal from 'sweetalert';
+import swal from "sweetalert";
 
 interface Alerta {
-  title: string,
-  text: string,
-  icon: string,
-  button: string
+  title: string;
+  text: string;
+  icon: string;
+  button: string;
 }
-const datosA : Alerta = {
+const datosA: Alerta = {
   title: "Articulo Agregado Exitosamente",
-  text: '',
+  text: "",
   icon: "success",
-  button: "Aceptar"
+  button: "Aceptar",
 };
 const Alert = () => {
-    swal(datosA)
-}
+  swal(datosA);
+};
 
 type Props = {
   name: string;
@@ -59,7 +59,7 @@ export default function CardPublicacion(props: Props) {
   const [cart, setCart] = useLocalStorage<CartType | undefined>("cart", []);
   const { name, images, price, categorie, id, stock, discount, author } = props;
   const dispatch = useDispatch();
-  const carrito: any = useSelector((state: RootState) => state.carrito.carrito);
+  // const carrito: any = useSelector((state: RootState) => state.carrito.carrito);
   const auth = useAuth();
 
   const item: CartItemType = {
@@ -71,9 +71,9 @@ export default function CardPublicacion(props: Props) {
     image: images[0]?.url,
     title: name,
     category: categorie,
-    discount: undefined
+    discount: undefined,
   };
-  const user = useSelector((state: RootState) => state.userSignin.userInfo)
+  const user = useSelector((state: RootState) => state.userSignin.userInfo);
 
   useEffect(() => {
     dispatch(cartLength());
@@ -85,10 +85,20 @@ export default function CardPublicacion(props: Props) {
       const isItemInCart = aux.find((item: any) => item.id === clickedItem.id);
 
       if (!isItemInCart) {
-        return [...aux, { ...clickedItem, amount: 1, price: discount ? price - price*discount.percentage/100 : price, discount: discount ? discount.percentage : undefined }];
+        return [
+          ...aux,
+          {
+            ...clickedItem,
+            amount: 1,
+            price: discount
+              ? price - (price * discount.percentage) / 100
+              : price,
+            discount: discount ? discount.percentage : undefined,
+          },
+        ];
       }
-      
-      if (isItemInCart && (isItemInCart.quantity < stock)) {
+
+      if (isItemInCart && isItemInCart.quantity < stock) {
         console.log(isItemInCart.quantity, stock);
         isItemInCart.quantity += 1;
         return aux;
@@ -103,18 +113,27 @@ export default function CardPublicacion(props: Props) {
     id: string,
     author: string
   ): void => {
-    if(user?._id != author){
+    if (user?._id !== author) {
       dispatch(putCarrito(email, id));
       Alert();
     }
   };
 
   return (
-    <Grid className='itemPublicationRelated' sx={{ paddingRight: '100px' }} item xs={12} sm={6} md={4} lg={4} xl={4}>
+    <Grid
+      className="itemPublicationRelated"
+      sx={{ paddingRight: "100px" }}
+      item
+      xs={12}
+      sm={6}
+      md={4}
+      lg={4}
+      xl={4}
+    >
       <Card
         className="cardMain"
         sx={{
-          width: { lg: '195px !important', xl: "260px !important" },
+          width: { lg: "195px !important", xl: "260px !important" },
           height: { lg: "400px !important", xl: "400px !important" },
           borderBottom: "2px solid #00c2cb !important",
         }}
@@ -123,10 +142,7 @@ export default function CardPublicacion(props: Props) {
           className="showButton_Cart_Info"
           sx={{ overflow: "hidden", height: "75%" }}
         >
-          <Carousel
-            className="Carousel-root-1 CarouselItem"
-            autoPlay={false}
-          >
+          <Carousel className="Carousel-root-1 CarouselItem" autoPlay={false}>
             {images.length === 0 ? (
               <Item
                 style={{
@@ -157,7 +173,12 @@ export default function CardPublicacion(props: Props) {
               onClick={
                 !auth.user
                   ? () => handleAddToCart(item)
-                  : () => handleAddToCartDB(auth.user && auth?.user?.email, id, author)
+                  : () =>
+                      handleAddToCartDB(
+                        auth.user && auth?.user?.email,
+                        id,
+                        author
+                      )
               }
             >
               <ShoppingCartIcon />
@@ -177,22 +198,28 @@ export default function CardPublicacion(props: Props) {
             {name}
           </Typography>
 
-          <Box component="div" textAlign={'center'}>
+          <Box component="div" textAlign={"center"}>
             <Typography
-              sx={{ fontSize: "17px", textAlign: "center", display: 'inline' }}
+              sx={{ fontSize: "17px", textAlign: "center", display: "inline" }}
               // sx={{ fontSize: "17px !important", textAlign: "center" }}
               variant="body2"
             >
-              $ {discount ?
-                (price - (price * discount?.percentage / 100)).toFixed(2)
-                :
-                `  ${price}`
-              }
+              ${" "}
+              {discount
+                ? (price - (price * discount?.percentage) / 100).toFixed(2)
+                : `  ${price}`}
             </Typography>
-            {discount &&
-              <Typography component="span" color="green" fontSize={13} sx={{ display: 'inline' }}> {discount.percentage}% OFF</Typography>
-
-            }
+            {discount && (
+              <Typography
+                component="span"
+                color="green"
+                fontSize={13}
+                sx={{ display: "inline" }}
+              >
+                {" "}
+                {discount.percentage}% OFF
+              </Typography>
+            )}
           </Box>
 
           <Typography variant="body1">{categorie}</Typography>
