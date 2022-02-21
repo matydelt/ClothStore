@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Dispatch } from "react";
+import { Dispatch } from "redux";
 import { ActionTypes } from "./actionTypes";
 import { Publication } from "../reducer/stateTypes";
 
@@ -30,27 +30,27 @@ export const putPublications =
     price?: string;
     author?: string;
   }) =>
-    async (dispatch: Dispatch<Action>) => {
-      dispatch({ type: "PUBLICATION_LIST_REQUEST" });
-      try {
-        let filter = { mark, category, gender, price, author };
-        const response = await axios.put(
-          `/publications?order=${order}&name=${name}&page=${page}`,
-          { mark, category, gender, price, author }
-        );
-        dispatch({
-          type: "PUBLICATION_LIST_SUCCESS",
-          payload: { success: response.data.result },
-          cartPayload: filter,
-          countPayload: response.data.count,
-        });
-      } catch (error) {
-        dispatch({
-          type: "PUBLICATION_LIST_FAIL",
-          payload: { error: (error as Error).message },
-        });
-      }
-    };
+  async (dispatch: Dispatch<Action>) => {
+    dispatch({ type: "PUBLICATION_LIST_REQUEST" });
+    try {
+      let filter = { mark, category, gender, price, author };
+      const response = await axios.put(
+        `/publications?order=${order}&name=${name}&page=${page}`,
+        { mark, category, gender, price, author }
+      );
+      dispatch({
+        type: "PUBLICATION_LIST_SUCCESS",
+        payload: { success: response.data.result },
+        cartPayload: filter,
+        countPayload: response.data.count,
+      });
+    } catch (error) {
+      dispatch({
+        type: "PUBLICATION_LIST_FAIL",
+        payload: { error: (error as Error).message },
+      });
+    }
+  };
 
 export const getNamePublications =
   (name: string) => async (dispatch: Dispatch<Action>) => {
@@ -105,25 +105,28 @@ export const activatePublication =
     }
   };
 
-export const publicationMessage = (id: string, message: string) => async (dispatch: Dispatch<Action>) => {
-  dispatch({ type: "MESSAGE_PUBLICATION_REQUEST" });
-  try {
-    await axios.post("/publication/message", { id, message })
-    dispatch({ type: "MESSAGE_PUBLICATION_SUCCESS" });
-    alert("mensaje enviado")
-  } catch (e) {
-    console.log(e)
-    dispatch({ type: "MESSAGE_PUBLICATION_FAIL" });
-  }
-}
+export const publicationMessage =
+  (id: string, message: string) => async (dispatch: Dispatch<Action>) => {
+    dispatch({ type: "MESSAGE_PUBLICATION_REQUEST" });
+    try {
+      await axios.post("/publication/message", { id, message });
+      dispatch({ type: "MESSAGE_PUBLICATION_SUCCESS" });
+      alert("mensaje enviado");
+    } catch (e) {
+      console.log(e);
+      dispatch({ type: "MESSAGE_PUBLICATION_FAIL" });
+    }
+  };
 export const getAllPublications = () => async (dispatch: Dispatch<Action>) => {
   dispatch({ type: "GET_PUBLICATIONS_REQUEST" });
   try {
-    const response = await axios.get("/publications/all")
-    dispatch({ type: "GET_PUBLICATIONS_SUCCESS", payload: { success: response.data }, });
-
+    const response = await axios.get("/publications/all");
+    dispatch({
+      type: "GET_PUBLICATIONS_SUCCESS",
+      payload: { success: response.data },
+    });
   } catch (e) {
-    console.log(e)
+    console.log(e);
     dispatch({ type: "GET_PUBLICATIONS_FAIL" });
   }
-}
+};
