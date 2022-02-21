@@ -1,4 +1,5 @@
-import { Action } from "../actions/usersActions";
+import type { Reducer } from "redux";
+import type { Action } from "../actions/usersActions";
 // import { User } from "./stateTypes";
 
 export interface AllUsersState {
@@ -7,10 +8,10 @@ export interface AllUsersState {
   error?: string;
 }
 
-const allUsersReducer = (
-  state: AllUsersState = { loading: false },
-  action: Action
-): AllUsersState => {
+const allUsersReducer: Reducer<AllUsersState, Action> = (
+  state = { loading: false },
+  action
+) => {
   switch (action.type) {
     case "ALL_USERS_REQUEST":
       return { ...state, loading: true };

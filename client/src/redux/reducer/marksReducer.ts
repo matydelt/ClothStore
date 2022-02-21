@@ -1,4 +1,5 @@
-import { Action } from "../actions/marksActions";
+import type { Reducer } from "redux";
+import type { Action } from "../actions/marksActions";
 
 export interface AllMarksState {
   loading: boolean;
@@ -6,10 +7,10 @@ export interface AllMarksState {
   error?: string;
 }
 
-const allMarksReducer = (
-  state: AllMarksState = { loading: false },
-  action: Action
-): AllMarksState => {
+const allMarksReducer: Reducer<AllMarksState, Action> = (
+  state = { loading: false },
+  action
+) => {
   switch (action.type) {
     case "ALL_MARKS_REQUEST":
       return { ...state, loading: true };

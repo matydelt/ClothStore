@@ -1,5 +1,6 @@
-import { Action } from "../actions/publicationActions";
-import { Publication } from "./stateTypes";
+import type { Reducer } from "redux";
+import type { Action } from "../actions/publicationActions";
+import type { Publication } from "./stateTypes";
 
 export interface PublicationState {
   publicationList: any;
@@ -19,8 +20,8 @@ export interface PublicationState {
   count: number | any;
 }
 
-const publicationListReducer = (
-  state: PublicationState = {
+const publicationListReducer: Reducer<PublicationState, Action> = (
+  state = {
     publicationList: {},
     loading: false,
     publications: [],
@@ -35,10 +36,10 @@ const publicationListReducer = (
     name: "",
     order: "Ascendente",
     page: "1",
-    count: 0
+    count: 0,
   },
-  action: Action
-): PublicationState => {
+  action
+) => {
   switch (action.type) {
     case "PUBLICATION_LIST_REQUEST":
       return { ...state, loading: true };
@@ -63,37 +64,37 @@ const publicationListReducer = (
         ...state,
         loading: false,
         publications: action.payload?.success,
-      }
+      };
     case "PUBLICATION_NAME_FAIL":
       return {
         ...state,
         loading: false,
-        error: action.payload?.error
-      }
+        error: action.payload?.error,
+      };
     case "GET_PUBLICATIONS_REQUEST":
       return {
         ...state,
-        loading: true
-      }
+        loading: true,
+      };
     case "GET_PUBLICATIONS_SUCCESS":
       return {
         ...state,
         loading: false,
-        publicationsAdm: action.payload?.success
-      }
+        publicationsAdm: action.payload?.success,
+      };
     case "GET_PUBLICATIONS_FAIL":
       return {
         ...state,
         loading: false,
-        error: action.payload?.error
-      }
+        error: action.payload?.error,
+      };
     default:
       return state;
   }
 };
 
-const publicationSaveReducer = (
-  state: PublicationState = {
+const publicationSaveReducer: Reducer<PublicationState, Action> = (
+  state = {
     publicationList: {},
     loading: false,
     publications: [],
@@ -110,8 +111,8 @@ const publicationSaveReducer = (
     page: "1",
     count: 0,
   },
-  action: Action
-): PublicationState => {
+  action
+) => {
   switch (action.type) {
     case "CART_LENGTH":
       return { ...state, cartLength: action.cartPayload };

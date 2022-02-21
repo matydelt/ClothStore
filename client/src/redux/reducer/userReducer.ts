@@ -1,5 +1,6 @@
-import { Action } from "../actions/userActions";
-import { User } from "./stateTypes";
+import type { Reducer } from "redux";
+import type { Action } from "../actions/userActions";
+import type { User } from "./stateTypes";
 
 export interface UserState {
   loading?: boolean;
@@ -8,10 +9,10 @@ export interface UserState {
   error?: string;
 }
 
-const userRegisterReducer = (
-  state: UserState = {},
-  action: Action
-): UserState => {
+const userRegisterReducer: Reducer<UserState, Action> = (
+  state = {},
+  action
+) => {
   switch (action.type) {
     case "USER_REGISTER_REQUEST":
       return { ...state, loading: true };
@@ -24,10 +25,7 @@ const userRegisterReducer = (
   }
 };
 
-const userSigninReducer = (
-  state: UserState = {},
-  action: Action
-): UserState => {
+const userSigninReducer: Reducer<UserState, Action> = (state = {}, action) => {
   switch (action.type) {
     case "USER_SIGNIN_REQUEST":
       return { ...state, loading: true };
@@ -42,10 +40,7 @@ const userSigninReducer = (
   }
 };
 
-const getUSersReducer = (
-  state: UserState = {},
-  action: Action
-): UserState => {
+const getUsersReducer: Reducer<UserState, Action> = (state = {}, action) => {
   switch (action.type) {
     case "GET_USERS_REQUEST":
       return { ...state, loading: true };
@@ -54,9 +49,9 @@ const getUSersReducer = (
     case "GET_USERS_FAIL":
       return { ...state, loading: false, error: action.payload?.error };
     case "BANN_CONTROL":
-      return state
+      return state;
     case "SET_EMPLOYEE":
-      return state
+      return state;
     case "SET_EMPLOYEE_FAIL":
       return { ...state, loading: false, error: action.payload?.error };
     default:
@@ -64,4 +59,4 @@ const getUSersReducer = (
   }
 };
 
-export { userRegisterReducer, userSigninReducer, getUSersReducer };
+export { userRegisterReducer, userSigninReducer, getUsersReducer };
