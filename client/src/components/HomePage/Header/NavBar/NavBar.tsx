@@ -10,8 +10,7 @@ import makeStyles from "@mui/styles/makeStyles";
 import { Box } from "@mui/system";
 import { Badge, Button } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../redux/store/store";
+import { useAppSelector } from "../../../../hooks/useAppSelector";
 import { gsap } from "gsap";
 import { useAuth } from "../../../../hooks/useAuth";
 
@@ -34,11 +33,9 @@ interface Props {
 }
 
 export default function NavBar({ flagButtonTranslate, siteDetail }: Props) {
-  const cartLength = useSelector(
-    (state: RootState) => state.publicationSave.cartLength
-  );
-  const user = useSelector((state: RootState) => state.userSignin.userInfo);
-  const carrito: any = useSelector((state: RootState) => state.carrito.carrito);
+  const { cartLength } = useAppSelector((state) => state.publicationSave);
+  const user = useAppSelector((state) => state.userSignin.userInfo);
+  const { carrito } = useAppSelector((state) => state.carrito);
   const auth = useAuth();
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -177,9 +174,7 @@ export default function NavBar({ flagButtonTranslate, siteDetail }: Props) {
                   color="secondary"
                 >
                   <Badge
-                    badgeContent={
-                      !user ? cartLength : carrito?.publications?.length
-                    }
+                    badgeContent={!user ? cartLength : carrito?.length}
                     color="primary"
                   >
                     <ShoppingCartIcon />
@@ -269,9 +264,7 @@ export default function NavBar({ flagButtonTranslate, siteDetail }: Props) {
               <Link to="/cart">
                 <IconButton size="medium" color="secondary">
                   <Badge
-                    badgeContent={
-                      !user ? cartLength : carrito?.publications?.length
-                    }
+                    badgeContent={!user ? cartLength : carrito?.length}
                     color="primary"
                   >
                     <ShoppingCartIcon />

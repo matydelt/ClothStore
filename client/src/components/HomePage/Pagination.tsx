@@ -1,27 +1,18 @@
-import * as React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../redux/store/store";
+import { ChangeEvent } from "react";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../../hooks/useAppSelector";
 import { putPublications } from "../../redux/actions/publicationActions";
 import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";
 import { Box } from "@mui/system";
 
 function Paginations() {
-  const {
-    mark,
-    gender,
-    category,
-    price,
-    author,
-    name,
-    order,
-    // page,
-    count,
-  } = useSelector((state: RootState) => state.publicationList);
+  const { mark, gender, category, price, author, name, order, count } =
+    useAppSelector((state) => state.publicationList);
 
   const dispatch = useDispatch();
 
-  const handleChange = (event: React.ChangeEvent<unknown>, page: number) => {
+  const handleChange = (event: ChangeEvent<unknown>, page: number) => {
     dispatch(
       putPublications({
         name: name,
@@ -35,7 +26,9 @@ function Paginations() {
       })
     );
   };
+
   let pag: number = Math.ceil(count / 12);
+
   return (
     <Box
       component="aside"

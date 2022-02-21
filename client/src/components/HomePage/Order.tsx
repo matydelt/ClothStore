@@ -1,6 +1,6 @@
-import * as React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../redux/store/store";
+import { useState, MouseEvent } from "react";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../../hooks/useAppSelector";
 import { putPublications } from "../../redux/actions/publicationActions";
 import { Box } from "@mui/system";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -44,17 +44,18 @@ function SearchOrder() {
   const classes = useStyles();
 
   const { loading, mark, gender, category, price, author, name, order, page } =
-    useSelector((state: RootState) => state.publicationList);
+    useAppSelector((state) => state.publicationList);
 
-  const [text, setText] = React.useState(order);
+  const [text, setText] = useState(order);
   const dispatch = useDispatch();
-  const [open, setOpen] = React.useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
 
   const handleClick = () => {
     setOpen(!open);
   };
+
   const handleListItemClick = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    event: MouseEvent<HTMLDivElement, globalThis.MouseEvent>,
     value: string
   ) => {
     setText(value);
@@ -71,6 +72,7 @@ function SearchOrder() {
       })
     );
   };
+
   return (
     <Box>
       <List component="nav" aria-labelledby="nested-list-subheader">

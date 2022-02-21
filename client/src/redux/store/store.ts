@@ -8,4 +8,6 @@ const composedEnhancer = composeWithDevTools(applyMiddleware(thunkMiddleware));
 // The store now has the ability to accept thunk functions in `dispatch`
 const store = createStore(rootReducer, composedEnhancer);
 export default store;
-export type RootState = ReturnType<typeof rootReducer>;
+
+export type RootState = ReturnType<typeof store.getState>;
+// export type AppDispatch = typeof store.dispatch;

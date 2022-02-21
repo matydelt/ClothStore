@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import Header from "./Header/Header";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../../hooks/useAppSelector";
 import Publicaciones from "./publicaciones/publicaciones";
 import { Box } from "@mui/system";
 import SideBarHomePage from "./SideBarHomePage/SideBarHomePage";
@@ -9,7 +10,6 @@ import { Container } from "@mui/material";
 // import SearchBar from "./SearchBar";
 import Paginations from "./Pagination";
 import { putPublications } from "../../redux/actions/publicationActions";
-import { RootState } from "../../redux/store/store";
 import CardsBenefit from "./CardsBenefit/CardsBenefit";
 import { Typography } from "@mui/material";
 import makeStyles from "@mui/styles/makeStyles";
@@ -27,17 +27,8 @@ const useStyles = makeStyles({
 });
 
 const Homepage = () => {
-  const {
-    mark,
-    gender,
-    category,
-    price,
-    author,
-    name,
-    order,
-    page,
-    // count
-  } = useSelector((state: RootState) => state.publicationList);
+  const { mark, gender, category, price, author, name, order, page } =
+    useAppSelector((state) => state.publicationList);
 
   const dispatch = useDispatch();
 

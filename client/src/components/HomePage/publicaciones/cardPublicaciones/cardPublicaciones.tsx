@@ -18,9 +18,9 @@ import {
   // CartItemTypeDB,
 } from "../../../../pages/CartScreen";
 import useLocalStorage from "../../../../hooks/useLocalStorage";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../../../../hooks/useAppSelector";
 import { cartLength } from "../../../../redux/actions/publicationActions";
-import { RootState } from "../../../../redux/store/store";
 import { putCarrito } from "../../../../redux/actions/carritoAction";
 import { useAuth } from "../../../../hooks/useAuth";
 import swal from "sweetalert";
@@ -55,9 +55,17 @@ type Props = {
   id: string;
   discount: any;
 };
-export default function CardPublicacion(props: Props) {
+export default function CardPublicacion({
+  name,
+  images,
+  price,
+  categorie,
+  id,
+  stock,
+  discount,
+  author,
+}: Props) {
   const [cart, setCart] = useLocalStorage<CartType | undefined>("cart", []);
-  const { name, images, price, categorie, id, stock, discount, author } = props;
   const dispatch = useDispatch();
   // const carrito: any = useSelector((state: RootState) => state.carrito.carrito);
   const auth = useAuth();
@@ -73,7 +81,7 @@ export default function CardPublicacion(props: Props) {
     category: categorie,
     discount: undefined,
   };
-  const user = useSelector((state: RootState) => state.userSignin.userInfo);
+  const user = useAppSelector((state) => state.userSignin.userInfo);
 
   useEffect(() => {
     dispatch(cartLength());

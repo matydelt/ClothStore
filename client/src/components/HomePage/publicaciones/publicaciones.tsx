@@ -1,12 +1,11 @@
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../../hooks/useAppSelector";
 import { Publication } from "../../../redux/types";
 import CardPublicacion from "./cardPublicaciones/cardPublicaciones";
-import { PublicationState } from "../../../redux/reducer/publicationReducer";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 
 export default function Publicaciones() {
-  const state = useSelector((state: PublicationState) => state);
+  const { publications } = useAppSelector((state) => state.publicationList);
 
   return (
     <Box>
@@ -23,7 +22,7 @@ export default function Publicaciones() {
           borderRadius: "10px",
         }}
       >
-        {state.publicationList.publications.map((e: Publication) => {
+        {publications.map((e: Publication) => {
           return (
             <CardPublicacion
               discount={e.discount}

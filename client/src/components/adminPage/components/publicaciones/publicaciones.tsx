@@ -1,8 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable array-callback-return */
 import { Box } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState, SyntheticEvent, ChangeEvent } from "react";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../../../../hooks/useAppSelector";
 import { getUsers } from "../../../../redux/actions/userActions";
 import { Publication } from "../../../../redux/types";
 import ENavBar from "../../employeeNavBar";
@@ -16,21 +17,11 @@ import {
   publicationMessage,
 } from "../../../../redux/actions/publicationActions";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
-interface publicationList {
-  publicationsAdm: Publication[];
-}
-interface State {
-  publicationList: publicationList;
-  userSignin: any;
-}
 
 const PublicacionesAdmPage = () => {
   const dispatch = useDispatch();
-  const state = useSelector((state: State) => {
-    return state;
-  });
-  const { userSignin, publicationList } = state;
-  const { userInfo } = useSelector((state: State) => state.userSignin);
+  const { userSignin, publicationList } = useAppSelector((state) => state);
+  const { userInfo } = userSignin;
   const publications = publicationList.publicationsAdm;
   const [mensaje, setMensaje] = useState("");
   const [flag, setFlag] = useState(true);
@@ -39,25 +30,25 @@ const PublicacionesAdmPage = () => {
     dispatch(getUsers());
     dispatch(getAllPublications());
   }, [dispatch]);
+
   if (!userInfo?.type) return <div></div>;
-  console.log(publications);
-  async function HandlerSubmit(
-    e: React.SyntheticEvent<EventTarget>,
-    id: string
-  ) {
+  // console.log(publications);
+
+  async function HandlerSubmit(e: SyntheticEvent<EventTarget>, id: string) {
     e.preventDefault();
     await dispatch(publicationMessage(id, mensaje));
     await dispatch(getAllPublications());
   }
+
   if (userSignin.loading === false) {
     if (
-      userSignin.userInfo.type !== "admin" &&
-      userSignin.userInfo.type !== "employee"
+      userSignin.userInfo?.type !== "admin" &&
+      userSignin.userInfo?.type !== "employee"
     ) {
       return <Navigate to="/" />;
     }
   } else {
-    if (userSignin.loading === true) {
+    if (userSignin?.loading === true) {
       return (
         <div
           style={{
@@ -75,6 +66,7 @@ const PublicacionesAdmPage = () => {
       return <Navigate to="/" />;
     }
   }
+
   return (
     <Box>
       {userInfo?.type === "admin" ? <NavBar></NavBar> : <ENavBar></ENavBar>}
@@ -162,7 +154,7 @@ const PublicacionesAdmPage = () => {
                     </div>
                   ) : (
                     <form
-                      onSubmit={(k: React.SyntheticEvent<EventTarget>) =>
+                      onSubmit={(k: SyntheticEvent<EventTarget>) =>
                         HandlerSubmit(k, e._id)
                       }
                       style={{ marginTop: "3px", marginBottom: "3px" }}
@@ -178,7 +170,7 @@ const PublicacionesAdmPage = () => {
                           }}
                           className="text"
                           onChange={(
-                            e: React.ChangeEvent<HTMLTextAreaElement>
+                            e: ChangeEvent<HTMLTextAreaElement>
                           ): any => setMensaje(e.target.value)}
                         />
                       </div>

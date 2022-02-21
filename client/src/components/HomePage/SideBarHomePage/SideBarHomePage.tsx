@@ -10,11 +10,11 @@ import ListItemButton from "@mui/material/ListItemButton";
 import { List, ListItemIcon, ListItemText, ListItem } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../../../hooks/useAppSelector";
 import { getallMarks } from "../../../redux/actions/marksActions";
 import { putPublications } from "../../../redux/actions/publicationActions";
 import { getAllUsers } from "../../../redux/actions/usersActions";
-import { RootState } from "../../../redux/store/store";
 import SearchOrder from "../Order";
 import SearchBar from "../SearchBar";
 
@@ -55,13 +55,13 @@ const SideBarHomePage = () => {
 
   const classes = useStyles();
 
-  const { loading, mark, gender, category, price, author } = useSelector(
-    (state: RootState) => state.publicationList
+  const { loading, mark, gender, category, price, author } = useAppSelector(
+    (state) => state.publicationList
   );
 
-  const { users } = useSelector((state: RootState) => state.allUsers);
+  const { users } = useAppSelector((state) => state.allUsers);
 
-  const { marks } = useSelector((state: RootState) => state.allMarks);
+  const { marks } = useAppSelector((state) => state.allMarks);
 
   const [selectedValueGender, setSelectedValueGender] = useState(gender);
   const [selectedValueMark, setSelectedValueMark] = useState(mark);
