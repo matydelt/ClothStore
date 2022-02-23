@@ -1,8 +1,6 @@
 import * as React from "react";
 import { Button } from "@mui/material";
-import {
-  makeStyles,
-} from "@material-ui/core/styles";
+import makeStyles from "@mui/styles/makeStyles";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import { Box } from "@mui/system";
@@ -72,7 +70,9 @@ const CartItem = ({ item, addToCart, removeFromCart }: Props) => {
         </TableCell>
         <TableCell align="center">
           <Typography>$ {item.price.toFixed(2)}</Typography>
-          { item.discount && <Typography color={'green'}>{item.discount}% OFF</Typography>}
+          {item.discount && (
+            <Typography color={"green"}>{item.discount}% OFF</Typography>
+          )}
         </TableCell>
         <TableCell classes={{ root: classes.cellButton }} align="center">
           <Button

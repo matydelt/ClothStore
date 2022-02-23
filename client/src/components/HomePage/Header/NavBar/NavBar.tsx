@@ -10,7 +10,7 @@ import makeStyles from "@mui/styles/makeStyles";
 import { Box } from "@mui/system";
 import { Badge, Button } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useAppSelector } from "../../../../hooks/useAppSelector";
+import { useAppSelector } from "../../../../hooks/reduxHooks";
 import { gsap } from "gsap";
 import { useAuth } from "../../../../hooks/useAuth";
 

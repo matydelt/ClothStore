@@ -1,6 +1,6 @@
 import { ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "../../hooks/useAppSelector";
+import { useAppSelector } from "../../hooks/reduxHooks";
 import { putPublications } from "../../redux/actions/publicationActions";
 import Stack from "@mui/material/Stack";
 import Pagination from "@mui/material/Pagination";

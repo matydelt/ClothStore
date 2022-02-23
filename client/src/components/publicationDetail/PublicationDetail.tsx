@@ -20,7 +20,8 @@ import type { SyntheticEvent, ChangeEvent } from "react";
 import { SetStateAction, useEffect, useState } from "react";
 // import { Publication } from '../../redux/reducer/stateTypes';
 import { SideBySideMagnifier } from "react-image-magnifiers";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../../hooks/reduxHooks";
 import { useNavigate, useParams } from "react-router";
 import swal from "sweetalert";
 import { useAuth } from "../../hooks/useAuth";
@@ -28,8 +29,6 @@ import useLocalStorage from "../../hooks/useLocalStorage";
 import { CartItemType, CartType } from "../../pages/CartScreen";
 import { putCarritoAmount } from "../../redux/actions/carritoAction";
 import { postDenunciations } from "../../redux/actions/denunciationActions";
-import { User } from "../../redux/reducer/stateTypes";
-import { RootState } from "../../redux/store/store";
 import Footer from "../Footer";
 import NavBar from "../HomePage/Header/NavBar/NavBar";
 import "./publicationDetail.css";
@@ -134,17 +133,11 @@ export interface Publication {
   __v: number;
   discount: any;
 }
-interface UserSignin {
-  loading: boolean;
-  userInfo: User;
-}
-interface state {
-  userSignin: UserSignin;
-}
 
 export default function PublicationDetail() {
   const [publication, setPublication] = useState<Publication | undefined>();
   const [scoreAverage, setScoreAverage] = useState<number>(0);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [cart, setCart] = useLocalStorage<CartType | undefined>("cart", []);
 
   const [imageShow, setImageShow] = useState<string>();
@@ -154,11 +147,10 @@ export default function PublicationDetail() {
   const { publicationId } = useParams();
   const auth = useAuth();
   const navigate = useNavigate();
-  const userInfo: UserSignin = useSelector((state: state) => state.userSignin);
 
-  const user = useSelector((state: RootState) => state.userSignin.userInfo);
-
+  const user = useAppSelector((state) => state.userSignin.userInfo);
   const dispatch = useDispatch();
+
   const classes = useStyles();
 
   useEffect(() => {
@@ -249,7 +241,7 @@ export default function PublicationDetail() {
       dispatch(
         postDenunciations({
           message: mensaje,
-          authorId: userInfo.userInfo._id,
+          authorId: user?._id as string,
           publicationId: publication._id,
         })
       );
@@ -584,6 +576,7 @@ export default function PublicationDetail() {
         {/* </div> */}
         <div id="denunciar" className="modalDetailPublication">
           <div className="modal-denuncia-detail">
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <a href="#" style={{ display: "flex", justifyContent: "end" }}>
               <button
                 style={{

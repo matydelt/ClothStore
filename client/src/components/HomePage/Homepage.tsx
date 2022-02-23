@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Header from "./Header/Header";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "../../hooks/useAppSelector";
+import { useAppSelector } from "../../hooks/reduxHooks";
 import Publicaciones from "./publicaciones/publicaciones";
 import { Box } from "@mui/system";
 import SideBarHomePage from "./SideBarHomePage/SideBarHomePage";

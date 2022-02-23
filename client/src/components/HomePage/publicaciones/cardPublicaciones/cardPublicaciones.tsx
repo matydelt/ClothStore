@@ -19,7 +19,7 @@ import {
 } from "../../../../pages/CartScreen";
 import useLocalStorage from "../../../../hooks/useLocalStorage";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "../../../../hooks/useAppSelector";
+import { useAppSelector } from "../../../../hooks/reduxHooks";
 import { cartLength } from "../../../../redux/actions/publicationActions";
 import { putCarrito } from "../../../../redux/actions/carritoAction";
 import { useAuth } from "../../../../hooks/useAuth";

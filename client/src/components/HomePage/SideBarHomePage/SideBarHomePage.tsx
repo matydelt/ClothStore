@@ -11,7 +11,7 @@ import { List, ListItemIcon, ListItemText, ListItem } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "../../../hooks/useAppSelector";
+import { useAppSelector, useAppDispatch } from "../../../hooks/reduxHooks";
 import { getallMarks } from "../../../redux/actions/marksActions";
 import { putPublications } from "../../../redux/actions/publicationActions";
 import { getAllUsers } from "../../../redux/actions/usersActions";

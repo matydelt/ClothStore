@@ -1,6 +1,6 @@
 import { useState, MouseEvent } from "react";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "../../hooks/useAppSelector";
+import { useAppSelector } from "../../hooks/reduxHooks";
 import { putPublications } from "../../redux/actions/publicationActions";
 import { Box } from "@mui/system";
 import ListItemButton from "@mui/material/ListItemButton";
