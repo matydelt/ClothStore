@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Dispatch } from "redux";
+import { AppThunk } from "../../hooks/reduxHooks";
 import { ActionTypes } from "./actionTypes";
 import { User } from "../reducer/stateTypes";
 
@@ -8,16 +8,16 @@ export type Action = {
   payload?: { success?: User[]; error?: string };
 };
 
-export const getallMarks = () => async (dispatch: Dispatch<Action>) => {
+export const getallMarks = (): AppThunk => async (dispatch) => {
   dispatch({ type: "ALL_MARKS_REQUEST" });
   try {
     const response = await axios.get("/publications/marks");
-    dispatch({
+    return dispatch({
       type: "ALL_MARKS_SUCCESS",
       payload: { success: response.data },
     });
   } catch (error) {
-    dispatch({
+    return dispatch({
       type: "ALL_MARKS_FAIL",
       payload: { error: (error as Error).message },
     });

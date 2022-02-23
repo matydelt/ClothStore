@@ -1,7 +1,7 @@
 import axios from "axios";
+import { AppThunk } from "../../hooks/reduxHooks";
 import { ActionTypes } from "./actionTypes";
 import { DenunciationData } from "../reducer/denunciationReducers";
-import { Dispatch } from "redux";
 
 export type Action = {
   type: ActionTypes;
@@ -13,16 +13,16 @@ interface postDenunciation {
   publicationId: string;
 }
 
-export const getDenunciations = () => async (dispatch: Dispatch<Action>) => {
+export const getDenunciations = (): AppThunk => async (dispatch) => {
   dispatch({ type: "DENUNCIATION_GET_REQUEST" });
   try {
     const response = await axios.get("/denunciation/get");
-    dispatch({
+    return dispatch({
       type: "DENUNCIATION_GET_SUCCESS",
       payload: { success: response.data },
     });
   } catch (error) {
-    dispatch({
+    return dispatch({
       type: "DENUNCIATION_GET_FAIL",
       payload: { error: (error as Error).message },
     });
@@ -30,45 +30,48 @@ export const getDenunciations = () => async (dispatch: Dispatch<Action>) => {
 };
 
 export const putDenunciations =
-  (id: string) => async (dispatch: Dispatch<Action>) => {
+  (id: string): AppThunk =>
+  async (dispatch) => {
     dispatch({ type: "DENUNCIATION_PUT_REQUEST" });
     try {
       await axios.put("/denunciation/put", { denunciationId: id });
-      dispatch({
+      return dispatch({
         type: "DENUNCIATION_PUT_SUCCESS",
       });
     } catch (error) {
-      dispatch({
+      return dispatch({
         type: "DENUNCIATION_PUT_FAIL",
         payload: { error: (error as Error).message },
       });
     }
   };
 export const deleteDenunciations =
-  (id: string) => async (dispatch: Dispatch<Action>) => {
+  (id: string): AppThunk =>
+  async (dispatch) => {
     dispatch({ type: "DENUNCIATION_DELETE_REQUEST" });
     try {
       await axios.delete("/denunciation/delete/" + id);
-      dispatch({
+      return dispatch({
         type: "DENUNCIATION_DELETE_SUCCESS",
       });
     } catch (error) {
-      dispatch({
+      return dispatch({
         type: "DENUNCIATION_DELETE_FAIL",
         payload: { error: (error as Error).message },
       });
     }
   };
 export const postDenunciations =
-  (denunciation: postDenunciation) => async (dispatch: Dispatch<Action>) => {
+  (denunciation: postDenunciation): AppThunk =>
+  async (dispatch) => {
     dispatch({ type: "DENUNCIATION_DELETE_REQUEST" });
     try {
       await axios.post("/denunciation/post", { denunciation });
-      dispatch({
+      return dispatch({
         type: "DENUNCIATION_DELETE_SUCCESS",
       });
     } catch (error) {
-      dispatch({
+      return dispatch({
         type: "DENUNCIATION_DELETE_FAIL",
         payload: { error: (error as Error).message },
       });
