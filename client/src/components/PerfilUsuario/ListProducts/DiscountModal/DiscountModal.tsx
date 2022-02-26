@@ -7,7 +7,7 @@ import {
   DialogContentText,
   DialogTitle,
   InputAdornment,
-} from "@material-ui/core";
+} from "@mui/material";
 import * as React from "react";
 import { TextField } from "@mui/material";
 // import Dialog from "@mui/material/Dialog";
@@ -34,8 +34,12 @@ interface Props {
 //   return tomorrow
 // }
 
-export default function DiscountModal({ children, userId, publicationId, getPublications }: Props) {
-
+export default function DiscountModal({
+  children,
+  userId,
+  publicationId,
+  getPublications,
+}: Props) {
   const [open, setOpen] = React.useState(false);
 
   const [expirationDate, setExpirationDate] = React.useState<Date | null>(null);
@@ -65,30 +69,56 @@ export default function DiscountModal({ children, userId, publicationId, getPubl
         authorId: userId || "",
         publicationId: publicationId || "",
         amount: 10,
-        percentage: '',
-        expirationDate
-      })
+        percentage: "",
+        expirationDate,
+      });
       getPublications();
       setExpirationDate(null);
     });
   };
 
   const handleForm = (e: React.BaseSyntheticEvent) => {
-    if ( (e.target.value < 1 || e.target.value > 100) && e.target.value !== '') return;
+    if ((e.target.value < 1 || e.target.value > 100) && e.target.value !== "")
+      return;
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleDate = (newValue: Date | null) => {
     if (newValue) {
-
-      setForm({ ...form, expirationDate: new Date(new Date(Date.UTC(newValue && newValue?.getFullYear(), newValue?.getMonth(), newValue?.getDate() + 1 )).setHours(23,59,0,0)) });
-      setExpirationDate(new Date(Date.UTC(newValue && newValue?.getFullYear(), newValue?.getMonth(), newValue?.getDate() + 1 )) );
+      setForm({
+        ...form,
+        expirationDate: new Date(
+          new Date(
+            Date.UTC(
+              newValue && newValue?.getFullYear(),
+              newValue?.getMonth(),
+              newValue?.getDate() + 1
+            )
+          ).setHours(23, 59, 0, 0)
+        ),
+      });
+      setExpirationDate(
+        new Date(
+          Date.UTC(
+            newValue && newValue?.getFullYear(),
+            newValue?.getMonth(),
+            newValue?.getDate() + 1
+          )
+        )
+      );
     }
   };
 
   return (
     <div>
-      <Button className='buttonSpan' color='secondary' variant='outlined' onClick={handleClickOpen}>{children}</Button>
+      <Button
+        className="buttonSpan"
+        color="secondary"
+        variant="outlined"
+        onClick={handleClickOpen}
+      >
+        {children}
+      </Button>
       <Dialog fullWidth open={open} onClose={handleClose}>
         <DialogTitle>Aplicar descuento</DialogTitle>
         <DialogContent>
@@ -96,11 +126,18 @@ export default function DiscountModal({ children, userId, publicationId, getPubl
             Aplicar un nuevo descuento reemplazará al actual.
           </DialogContentText>
 
-          <Box component="div" sx={{ my: 6, display: "flex", flexDirection: "row", justifyContent: 'space-between' }}>
-
-          <DialogContentText>
-            El descuento finalizará a las 23:59 hs. del día seleccionado.
-          </DialogContentText>
+          <Box
+            component="div"
+            sx={{
+              my: 6,
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <DialogContentText>
+              El descuento finalizará a las 23:59 hs. del día seleccionado.
+            </DialogContentText>
 
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
@@ -135,7 +172,12 @@ export default function DiscountModal({ children, userId, publicationId, getPubl
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancelar</Button>
-          <Button disabled={!percentage || !expirationDate} onClick={submitForm}>Aceptar</Button>
+          <Button
+            disabled={!percentage || !expirationDate}
+            onClick={submitForm}
+          >
+            Aceptar
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

@@ -2,7 +2,6 @@ import axios from "axios";
 import { AppThunk } from "../../hooks/reduxHooks";
 import { ActionTypes } from "./actionTypes";
 import { Publication } from "../reducer/stateTypes";
-import { AnyAction } from "redux";
 
 export type Action = {
   type: ActionTypes;

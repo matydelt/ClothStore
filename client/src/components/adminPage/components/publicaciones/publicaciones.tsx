@@ -3,7 +3,7 @@
 import { Box } from "@mui/material";
 import { useEffect, useState, SyntheticEvent, ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "../../../../hooks/useAppSelector";
+import { useAppSelector } from "../../../../hooks/reduxHooks";
 import { getUsers } from "../../../../redux/actions/userActions";
 import { Publication } from "../../../../redux/types";
 import ENavBar from "../../employeeNavBar";

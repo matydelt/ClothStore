@@ -10,13 +10,12 @@ import {
   ListItem,
   ListItemText,
   List,
-  ListItemAvatar
-} from '@mui/material';
+  ListItemAvatar,
+} from "@mui/material";
 
-import { styled } from '@mui/material/styles';
-import TrendingUp from '@mui/icons-material/TrendingUp';
-import Text from '../Text';
-
+import { styled } from "@mui/material/styles";
+import TrendingUp from "@mui/icons-material/TrendingUp";
+import Text from "../Text";
 
 const AvatarSuccess = styled(Avatar)(
   ({ theme }) => `
@@ -28,15 +27,14 @@ const AvatarSuccess = styled(Avatar)(
 );
 
 function AccountBalance() {
-
   const cryptoBalance = {
     datasets: [
       {
         data: [20, 10, 40, 30],
-        backgroundColor: ['#ff9900', '#1c81c2', '#333', '#5c6ac0']
-      }
+        backgroundColor: ["#ff9900", "#1c81c2", "#333", "#5c6ac0"],
+      },
     ],
-    labels: ['Bitcoin', 'Ripple', 'Cardano', 'Ethereum']
+    labels: ["Bitcoin", "Ripple", "Cardano", "Ethereum"],
   };
 
   return (
@@ -85,14 +83,14 @@ function AccountBalance() {
           </Box>
         </Grid>
         <Grid
-          sx={{ position: 'relative' }}
+          sx={{ position: "relative" }}
           display="flex"
           alignItems="center"
           item
           xs={12}
           md={6}
         >
-          <Hidden mdDown>
+          <Hidden lgDown>
             <Divider absolute orientation="vertical" />
           </Hidden>
           <Box p={4} flex={1}>
@@ -105,17 +103,16 @@ function AccountBalance() {
                 justifyContent="center"
                 alignItems="center"
               >
-                <Box style={{ height: '160px' }}>
-                </Box>
+                <Box style={{ height: "160px" }}></Box>
               </Grid>
               <Grid xs={12} sm={7} item display="flex" alignItems="center">
-                <List disablePadding sx={{ width: '100%' }}>
+                <List disablePadding sx={{ width: "100%" }}>
                   <ListItem disableGutters>
                     <ListItemAvatar
                       sx={{
-                        minWidth: '46px',
-                        display: 'flex',
-                        alignItems: 'center'
+                        minWidth: "46px",
+                        display: "flex",
+                        alignItems: "center",
                       }}
                     >
                       <img
@@ -125,11 +122,11 @@ function AccountBalance() {
                     </ListItemAvatar>
                     <ListItemText
                       primary="BTC"
-                      primaryTypographyProps={{ variant: 'h5', noWrap: true }}
+                      primaryTypographyProps={{ variant: "h5", noWrap: true }}
                       secondary="Bitcoin"
                       secondaryTypographyProps={{
-                        variant: 'subtitle2',
-                        noWrap: true
+                        variant: "subtitle2",
+                        noWrap: true,
                       }}
                     />
                     <Box>
@@ -142,9 +139,9 @@ function AccountBalance() {
                   <ListItem disableGutters>
                     <ListItemAvatar
                       sx={{
-                        minWidth: '46px',
-                        display: 'flex',
-                        alignItems: 'center'
+                        minWidth: "46px",
+                        display: "flex",
+                        alignItems: "center",
                       }}
                     >
                       <img
@@ -154,11 +151,11 @@ function AccountBalance() {
                     </ListItemAvatar>
                     <ListItemText
                       primary="XRP"
-                      primaryTypographyProps={{ variant: 'h5', noWrap: true }}
+                      primaryTypographyProps={{ variant: "h5", noWrap: true }}
                       secondary="Ripple"
                       secondaryTypographyProps={{
-                        variant: 'subtitle2',
-                        noWrap: true
+                        variant: "subtitle2",
+                        noWrap: true,
                       }}
                     />
                     <Box>
@@ -171,9 +168,9 @@ function AccountBalance() {
                   <ListItem disableGutters>
                     <ListItemAvatar
                       sx={{
-                        minWidth: '46px',
-                        display: 'flex',
-                        alignItems: 'center'
+                        minWidth: "46px",
+                        display: "flex",
+                        alignItems: "center",
                       }}
                     >
                       <img
@@ -183,11 +180,11 @@ function AccountBalance() {
                     </ListItemAvatar>
                     <ListItemText
                       primary="ADA"
-                      primaryTypographyProps={{ variant: 'h5', noWrap: true }}
+                      primaryTypographyProps={{ variant: "h5", noWrap: true }}
                       secondary="Cardano"
                       secondaryTypographyProps={{
-                        variant: 'subtitle2',
-                        noWrap: true
+                        variant: "subtitle2",
+                        noWrap: true,
                       }}
                     />
                     <Box>
@@ -200,9 +197,9 @@ function AccountBalance() {
                   <ListItem disableGutters>
                     <ListItemAvatar
                       sx={{
-                        minWidth: '46px',
-                        display: 'flex',
-                        alignItems: 'center'
+                        minWidth: "46px",
+                        display: "flex",
+                        alignItems: "center",
                       }}
                     >
                       <img
@@ -212,11 +209,11 @@ function AccountBalance() {
                     </ListItemAvatar>
                     <ListItemText
                       primary="ETH"
-                      primaryTypographyProps={{ variant: 'h5', noWrap: true }}
+                      primaryTypographyProps={{ variant: "h5", noWrap: true }}
                       secondary="Ethereum"
                       secondaryTypographyProps={{
-                        variant: 'subtitle2',
-                        noWrap: true
+                        variant: "subtitle2",
+                        noWrap: true,
                       }}
                     />
                     <Box>

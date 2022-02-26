@@ -1,4 +1,4 @@
-import { useAppSelector } from "../../../hooks/useAppSelector";
+import { useAppSelector } from "../../../hooks/reduxHooks";
 import { Publication } from "../../../redux/types";
 import CardPublicacion from "./cardPublicaciones/cardPublicaciones";
 import Box from "@mui/material/Box";

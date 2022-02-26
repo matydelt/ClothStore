@@ -1,30 +1,30 @@
 import * as React from "react";
-import { Box, Button, Typography, Modal, TextField, makeStyles } from "@material-ui/core";
+import { Box, Button, Typography, Modal, TextField } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import axios from "axios";
-
 
 const useStyles = makeStyles({
   buttonDomicilio: {
     zIndex: 10,
-    marginBottom: '10px',
-    '& span': {
-      margin: '0px'
+    marginBottom: "10px",
+    "& span": {
+      margin: "0px",
     },
   },
   buttonAddDomicile: {
-    marginTop: '5px',
-    '& span': {
-      margin: '0px'
-    }
+    marginTop: "5px",
+    "& span": {
+      margin: "0px",
+    },
   },
   buttonAddDomicileModal: {
-    marginRight: '5px',
-    marginTop: '5px',
-    '& span': {
-      margin: '0px'
-    }
-  }
-})
+    marginRight: "5px",
+    marginTop: "5px",
+    "& span": {
+      margin: "0px",
+    },
+  },
+});
 
 const style = {
   position: "absolute" as "absolute",
@@ -36,8 +36,8 @@ const style = {
   border: "2px solid #00c2cb",
   boxShadow: 24,
   p: 4,
-  height: '480px',
-  borderRadius: '10px'
+  height: "480px",
+  borderRadius: "10px",
 };
 interface DomData {
   street: String;
@@ -83,7 +83,14 @@ export default function ModalCargaDomicilio(props: UserId) {
 
   return (
     <div>
-      <Button classes={{ root: classes.buttonDomicilio }} color='primary' variant='outlined' onClick={handleOpen}>Agregar domicilio</Button>
+      <Button
+        classes={{ root: classes.buttonDomicilio }}
+        color="primary"
+        variant="outlined"
+        onClick={handleOpen}
+      >
+        Agregar domicilio
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -99,10 +106,10 @@ export default function ModalCargaDomicilio(props: UserId) {
           </Typography>
           <Box
             sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-around',
-              height: '332px',
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-around",
+              height: "332px",
             }}
           >
             <TextField
@@ -146,8 +153,22 @@ export default function ModalCargaDomicilio(props: UserId) {
               variant="outlined"
             />
           </Box>
-          <Button variant='outlined' color='primary' classes={{ root: classes.buttonAddDomicileModal }} onClick={handleSubmit}>Enviar</Button>
-          <Button variant='outlined' color='primary' classes={{ root: classes.buttonAddDomicile }} onClick={handleClose}>Cancelar</Button>
+          <Button
+            variant="outlined"
+            color="primary"
+            classes={{ root: classes.buttonAddDomicileModal }}
+            onClick={handleSubmit}
+          >
+            Enviar
+          </Button>
+          <Button
+            variant="outlined"
+            color="primary"
+            classes={{ root: classes.buttonAddDomicile }}
+            onClick={handleClose}
+          >
+            Cancelar
+          </Button>
         </Box>
       </Modal>
     </div>

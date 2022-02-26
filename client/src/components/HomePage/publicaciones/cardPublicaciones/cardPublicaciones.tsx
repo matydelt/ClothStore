@@ -107,7 +107,7 @@ export default function CardPublicacion({
       }
 
       if (isItemInCart && isItemInCart.quantity < stock) {
-        console.log(isItemInCart.quantity, stock);
+        // console.log(isItemInCart.quantity, stock);
         isItemInCart.quantity += 1;
         return aux;
       }

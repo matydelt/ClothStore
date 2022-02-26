@@ -7,17 +7,17 @@ import {
   TableRow,
   Typography,
   TableContainer,
-  makeStyles
-} from "@material-ui/core";
+} from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import { useState } from "react";
 import axios from "axios";
 import React from "react";
 
 const useStyles = makeStyles({
   tableAddress: {
-    marginBottom: '40px'
-  }
-})
+    marginBottom: "40px",
+  },
+});
 interface Props {
   id: String | undefined;
 }
@@ -43,22 +43,23 @@ function Addresses(props: Props) {
   React.useEffect(() => {
     async function getOneUser() {
       if (props.id) {
-        console.log(props.id)
         await axios.get(`/auth/${props.id}`).then(({ data }) => {
-          setstate(data.address)
-        })
+          setstate(data.address);
+        });
       }
     }
-    getOneUser()
-  }, [props.id])
-
+    getOneUser();
+  }, [props.id]);
 
   const classes = useStyles();
 
   return (
     <>
       {state.length > 0 ? (
-        <TableContainer classes={{ root: classes.tableAddress }} component={Paper}>
+        <TableContainer
+          classes={{ root: classes.tableAddress }}
+          component={Paper}
+        >
           <Table
             style={{ maxHeight: "900px", width: "1000px" }}
             aria-label="simple table"
@@ -88,7 +89,9 @@ function Addresses(props: Props) {
           </Table>
         </TableContainer>
       ) : (
-        <Typography align="center" paragraph={true}>No hay domicilios cargados</Typography>
+        <Typography align="center" paragraph={true}>
+          No hay domicilios cargados
+        </Typography>
       )}
     </>
   );

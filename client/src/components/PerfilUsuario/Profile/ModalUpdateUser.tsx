@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { Box, Button, Typography, Modal, TextField, makeStyles } from "@material-ui/core";
+import React, { useState, BaseSyntheticEvent } from "react";
+import { Box, Button, Typography, Modal, TextField } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import axios from "axios";
 
 const style = {
@@ -12,24 +13,23 @@ const style = {
   border: "2px solid #00c2cb",
   boxShadow: 24,
   p: 4,
-  height: '523px',
-  borderRadius: '10px'
+  height: "523px",
+  borderRadius: "10px",
 };
 
 const useStyles = makeStyles({
   buttonProfileUpdate: {
-    '& span': {
-      margin: '0px'
-    }
+    "& span": {
+      margin: "0px",
+    },
   },
   buttonProfileUpdateModal: {
-    marginRight: '5px',
-    '& span': {
-      margin: '0px'
-    }
-  }
-})
-
+    marginRight: "5px",
+    "& span": {
+      margin: "0px",
+    },
+  },
+});
 
 interface UpdateUserdata {
   firstName: String;
@@ -43,7 +43,7 @@ interface UserId {
   getOneUser: Function;
 }
 export default function ModalUpdateUser(props: UserId) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const classes = useStyles();
@@ -53,17 +53,14 @@ export default function ModalUpdateUser(props: UserId) {
     lastName: "",
     userName: "",
     dni: "",
-    phone: ""
-  })
+    phone: "",
+  });
 
-
-
-
-  const handleChange = (event: React.BaseSyntheticEvent) => {
+  const handleChange = (event: BaseSyntheticEvent) => {
     setInput({ ...input, [event.target.name]: event.target.value });
   };
 
-  const handleSubmit = (event: React.BaseSyntheticEvent) => {
+  const handleSubmit = (event: BaseSyntheticEvent) => {
     event.preventDefault();
     axios.put("/auth/update", {
       id: props.id,
@@ -71,19 +68,31 @@ export default function ModalUpdateUser(props: UserId) {
       firstName: input.firstName,
       lastName: input.lastName,
       dni: input.dni,
-      userName: input.userName
+      userName: input.userName,
     });
     handleClose();
+  };
+
+  const handleCancel = () => {
+    handleClose();
+    setInput({
+      firstName: "",
+      lastName: "",
+      userName: "",
+      dni: "",
+      phone: "",
+    });
   };
 
   return (
     <div>
       <Button
         fullWidth
-        color='primary'
+        color="primary"
         variant="contained"
         classes={{ root: classes.buttonProfileUpdate }}
-        onClick={handleOpen}>
+        onClick={handleOpen}
+      >
         Modificar Datos
       </Button>
       <Modal
@@ -102,10 +111,10 @@ export default function ModalUpdateUser(props: UserId) {
           </Typography>
           <Box
             sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-around',
-              height: '335px'
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-around",
+              height: "335px",
             }}
           >
             <TextField
@@ -141,7 +150,6 @@ export default function ModalUpdateUser(props: UserId) {
               variant="outlined"
             />
             <TextField
-
               id="outlined-basic"
               onChange={handleChange}
               name="phone"
@@ -151,10 +159,26 @@ export default function ModalUpdateUser(props: UserId) {
             />
           </Box>
 
-          <Button color='primary' classes={{ root: classes.buttonProfileUpdateModal }} variant='outlined' onClick={handleSubmit} style={{ marginTop: "5px" }}>Enviar</Button>
-          <Button color='primary' classes={{ root: classes.buttonProfileUpdate }} variant='outlined' onClick={handleClose} style={{ marginTop: "5px" }}>Cancelar</Button>
+          <Button
+            color="primary"
+            classes={{ root: classes.buttonProfileUpdateModal }}
+            variant="outlined"
+            onClick={handleSubmit}
+            style={{ marginTop: "5px" }}
+          >
+            Enviar
+          </Button>
+          <Button
+            color="primary"
+            classes={{ root: classes.buttonProfileUpdate }}
+            variant="outlined"
+            onClick={handleCancel}
+            style={{ marginTop: "5px" }}
+          >
+            Cancelar
+          </Button>
         </Box>
       </Modal>
-    </div >
+    </div>
   );
 }

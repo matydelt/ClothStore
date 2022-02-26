@@ -1,13 +1,12 @@
-import { FC } from 'react';
-import PropTypes from 'prop-types';
-import { Doughnut } from 'react-chartjs-2';
-import { useTheme } from '@mui/material';
+import PropTypes from "prop-types";
+import { Doughnut } from "react-chartjs-2";
+import { useTheme } from "@mui/material";
 
 interface ChartProps {
   data: any;
 }
 
-const AccountBalanceChart: FC<ChartProps> = ({ data: dataProp, ...rest }) => {
+const AccountBalanceChart = ({ data: dataProp, ...rest }: ChartProps) => {
   const theme = useTheme();
 
   const data = {
@@ -15,9 +14,9 @@ const AccountBalanceChart: FC<ChartProps> = ({ data: dataProp, ...rest }) => {
       ...dataset,
       borderWidth: 10,
       borderColor: theme.palette.primary.main,
-      hoverBorderColor: theme.palette.primary.main
+      hoverBorderColor: theme.palette.primary.main,
     })),
-    labels: dataProp.labels
+    labels: dataProp.labels,
   };
 
   const options: any = {
@@ -26,16 +25,16 @@ const AccountBalanceChart: FC<ChartProps> = ({ data: dataProp, ...rest }) => {
     animation: false,
     cutoutPercentage: 60,
     legend: {
-      display: false
+      display: false,
     },
     layout: {
-      padding: 0
+      padding: 0,
     },
     tooltips: {
       enabled: true,
       caretSize: 6,
       displayColors: false,
-      mode: 'label',
+      mode: "label",
       intersect: true,
       yPadding: 8,
       xPadding: 16,
@@ -52,16 +51,16 @@ const AccountBalanceChart: FC<ChartProps> = ({ data: dataProp, ...rest }) => {
           const value = _data.datasets[0].data[tooltipItem.index];
 
           return `${label}: ${value}%`;
-        }
-      }
-    }
+        },
+      },
+    },
   };
 
   return <Doughnut data={data} options={options} {...rest} />;
 };
 
 AccountBalanceChart.propTypes = {
-  data: PropTypes.object.isRequired
+  data: PropTypes.object.isRequired,
 };
 
 export default AccountBalanceChart;

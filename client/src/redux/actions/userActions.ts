@@ -91,7 +91,7 @@ export const getUsers = (): AppThunk => async (dispatch) => {
   dispatch({ type: "GET_USERS_REQUEST" });
   try {
     const response = await axios.get("/users");
-    console.log(response);
+    // console.log(response);
 
     return dispatch({
       type: "GET_USERS_SUCCESS",
@@ -154,7 +154,6 @@ export const setSignedInUser =
     dispatch({ type: "USER_SIGNIN_REQUEST" });
     try {
       const response = await axios.get("/auth/email/" + user.email);
-      console.log(response);
 
       return dispatch({
         type: "USER_SIGNIN_SUCCESS",

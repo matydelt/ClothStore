@@ -6,9 +6,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
-import MuiAppBar, {
-  AppBarProps as MuiAppBarProps,
-} from "@material-ui/core/AppBar";
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import {
   Box,
   CssBaseline,
@@ -19,9 +17,9 @@ import {
   ListItemIcon,
   ListItemText,
   Toolbar,
-} from "@material-ui/core";
-import MuiDrawer from "@material-ui/core/Drawer";
-import { useTheme } from "@material-ui/core/styles";
+} from "@mui/material";
+import MuiDrawer from "@mui/material/Drawer";
+import { useTheme } from "@mui/material/styles";
 import { CSSObject, styled, Theme } from "@mui/material/styles";
 import * as React from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -67,7 +65,6 @@ interface AppBarProps extends MuiAppBarProps {
 }
 interface Props {
   type: string | undefined;
-
 }
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -138,7 +135,8 @@ export default function SideBarUser(props: Props) {
               onClick={handleDrawerOpen}
               edge="start"
               style={{ marginRight: 36, ...(open && { display: "none" }) }}
-              className='buttonSpan'
+              className="buttonSpan"
+              size="large"
             >
               <MenuIcon />
             </IconButton>
@@ -146,7 +144,11 @@ export default function SideBarUser(props: Props) {
         </AppBar>
         <Drawer variant="permanent" open={open}>
           <DrawerHeader>
-            <IconButton className='buttonSpan' onClick={handleDrawerClose}>
+            <IconButton
+              className="buttonSpan"
+              onClick={handleDrawerClose}
+              size="large"
+            >
               {theme.direction === "rtl" ? (
                 <ChevronRightIcon />
               ) : (
@@ -192,7 +194,7 @@ export default function SideBarUser(props: Props) {
               </ListItem>
             </Link>
 
-            {props.type === "admin" ?
+            {props.type === "admin" ? (
               <Link to="/admin" style={{ textDecoration: "none" }}>
                 <ListItem key="Admin Page">
                   <ListItemIcon>
@@ -200,16 +202,19 @@ export default function SideBarUser(props: Props) {
                   </ListItemIcon>
                   <ListItemText primary="Admin Page" />
                 </ListItem>
-              </Link> : props.type === "employee" ?
-                <Link to="/employee" style={{ textDecoration: "none" }}>
-                  <ListItem key="Admin Page">
-                    <ListItemIcon>
-                      <AdminPanelSettingsIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Admin Page" />
-                  </ListItem>
-                </Link> : <div></div>
-            }
+              </Link>
+            ) : props.type === "employee" ? (
+              <Link to="/employee" style={{ textDecoration: "none" }}>
+                <ListItem key="Admin Page">
+                  <ListItemIcon>
+                    <AdminPanelSettingsIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Admin Page" />
+                </ListItem>
+              </Link>
+            ) : (
+              <div></div>
+            )}
 
             <Link to="/perfil" style={{ textDecoration: "none" }}>
               <ListItem key="Mi Perfil">
@@ -221,7 +226,11 @@ export default function SideBarUser(props: Props) {
             </Link>
             <ListItem key="LogOut">
               <ListItemIcon>
-                <IconButton className="buttonSpan" onClick={logout}>
+                <IconButton
+                  className="buttonSpan"
+                  onClick={logout}
+                  size="large"
+                >
                   <LogoutIcon />
                 </IconButton>
               </ListItemIcon>

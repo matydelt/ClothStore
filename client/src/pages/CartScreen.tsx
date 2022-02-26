@@ -115,7 +115,7 @@ export default function CartScreen({ idHomepage }: Props) {
 
     cartCopy.forEach((item) => {
       if (item.id === clickedItem.id && item.quantity < data.stock) {
-        console.log("asdsa", item.quantity);
+        // console.log("asdsa", item.quantity);
         item.quantity += 1;
       }
     });
@@ -157,7 +157,7 @@ export default function CartScreen({ idHomepage }: Props) {
     axios.post("/checkout", order).then(({ data }) => {
       var win = window.open(data, "_blank");
       win?.focus();
-      console.log(data);
+      // console.log(data);
     });
   };
 

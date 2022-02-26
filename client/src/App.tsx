@@ -1,9 +1,11 @@
-import React, { useEffect } from "react";
-import "./App.css";
-import { MuiThemeProvider } from "@material-ui/core/styles";
-import { useDispatch, useSelector } from "react-redux";
-import { Route, Routes } from "react-router";
-import "./App.css";
+import { useEffect } from "react";
+import {
+  ThemeProvider,
+  // Theme,
+  StyledEngineProvider,
+} from "@mui/material/styles";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "./hooks/reduxHooks";
 import AdminPage from "./components/adminPage/adminPage";
 import UsuariosAdmPage from "./components/adminPage/components/usuarios/usuarios";
 import EmployeePage from "./components/adminPage/employeePage";
@@ -21,13 +23,13 @@ import {
   cartLength,
   putPublications,
 } from "./redux/actions/publicationActions";
-import { RootState } from "./redux/store/store";
-import PublicacionesAdmPage from "./components/adminPage/components/publicaciones/pubicaciones";
-import Denuncias from "./components/adminPage/components/denuncias/denunias";
+import PublicacionesAdmPage from "./components/adminPage/components/publicaciones/publicaciones";
+import Denuncias from "./components/adminPage/components/denuncias/denuncias";
 import { getAuth } from "firebase/auth";
 import { setSignedInUser } from "./redux/actions/userActions";
-import ReactGa from "react-ga"
-import { useLocation } from "react-router-dom";
+import ReactGa from "react-ga";
+import { useLocation, Route, Routes } from "react-router-dom";
+import "./App.css";
 
 // const user = useSelector((state: RootState) => state.userSignin.userInfo)
 
@@ -36,13 +38,13 @@ const App = (): JSX.Element => {
 
   //google analytics
   useEffect(() => {
-    ReactGa.initialize("UA-215041281-1")
-    ReactGa.pageview(location.pathname)
-  }, [location])
+    ReactGa.initialize("UA-215041281-1");
+    ReactGa.pageview(location.pathname);
+  }, [location]);
   //google analytics
   const dispatch = useDispatch();
   const { name, order, page, mark, category, gender, price, author } =
-    useSelector((state: RootState) => state.publicationList);
+    useAppSelector((state) => state.publicationList);
 
   const auth = useAuth();
   useEffect(() => {
@@ -92,39 +94,47 @@ const App = (): JSX.Element => {
   }, [dispatch]);
 
   return (
-    // <StylesProvider injectFirst>
-    <MuiThemeProvider theme={theme}>
-      <Routes>
-        <Route path="/admin" element={<AdminPage />} />
-        <Route path="/employee" element={<EmployeePage />} />
-        <Route path="/admin/publicaciones" element={<PublicacionesAdmPage />} />
-        <Route path="/employee/publicaciones" element={<PublicacionesAdmPage />} />
-        <Route path="/admin/denuncias" element={<Denuncias />} />
-        <Route path="/employee/denuncias" element={<Denuncias />} />
-        <Route path="/admin/usuarios" element={<UsuariosAdmPage />} />
-        <Route path="/" element={<Homepage />} />
-        <Route path="/nueva-publicacion" element={<CreatePublication />} />
-        <Route
-          path="/actualizar-publicacion/:publicationId"
-          element={<CreatePublication />}
-        />
-        <Route
-          path="/publication/:publicationId"
-          element={<PublicationDetail />}
-        />
-        <Route path="/register" element={<RegisterScreen />}></Route>
-        <Route path="/login" element={<LoginScreen />}></Route>
-        <Route path="/cart" element={<CartScreen />}></Route>
-        <Route path="/perfil/*" element={<PerfilUsuario />}>
-          <Route path="detalles" />
-          <Route path="compras" />
-          <Route path="productos" />
-          <Route path="ventas" />
-          <Route path="deseos" />
-        </Route>
-      </Routes>
-    </MuiThemeProvider>
-    // </StylesProvider>
+    <StyledEngineProvider injectFirst>
+      {/* // <StylesProvider injectFirst>
+      // </StylesProvider> */}
+      <ThemeProvider theme={theme}>
+        <Routes>
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/employee" element={<EmployeePage />} />
+          <Route
+            path="/admin/publicaciones"
+            element={<PublicacionesAdmPage />}
+          />
+          <Route
+            path="/employee/publicaciones"
+            element={<PublicacionesAdmPage />}
+          />
+          <Route path="/admin/denuncias" element={<Denuncias />} />
+          <Route path="/employee/denuncias" element={<Denuncias />} />
+          <Route path="/admin/usuarios" element={<UsuariosAdmPage />} />
+          <Route path="/" element={<Homepage />} />
+          <Route path="/nueva-publicacion" element={<CreatePublication />} />
+          <Route
+            path="/actualizar-publicacion/:publicationId"
+            element={<CreatePublication />}
+          />
+          <Route
+            path="/publication/:publicationId"
+            element={<PublicationDetail />}
+          />
+          <Route path="/register" element={<RegisterScreen />}></Route>
+          <Route path="/login" element={<LoginScreen />}></Route>
+          <Route path="/cart" element={<CartScreen />}></Route>
+          <Route path="/perfil/*" element={<PerfilUsuario />}>
+            <Route path="detalles" />
+            <Route path="compras" />
+            <Route path="productos" />
+            <Route path="ventas" />
+            <Route path="deseos" />
+          </Route>
+        </Routes>
+      </ThemeProvider>
+    </StyledEngineProvider>
   );
 };
 

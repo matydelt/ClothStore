@@ -3,7 +3,7 @@
 import { Box } from "@mui/material";
 import { useEffect, SyntheticEvent } from "react";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "../../../../hooks/useAppSelector";
+import { useAppSelector } from "../../../../hooks/reduxHooks";
 import ENavBar from "../../employeeNavBar";
 import NavBar from "../../navBar";
 import { Link, Navigate } from "react-router-dom";
